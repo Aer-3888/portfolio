@@ -1,11 +1,15 @@
+import { useRef } from 'react'
 import { Physics, RigidBody, CuboidCollider } from '@react-three/rapier'
 import Player from './components/Player'
 import Laptop from './components/Laptop'
 import Desk from './components/Desk'
 import Chair from './components/Chair'
 import Project from './components/Project'
+import ThirdPersonCamera from './components/ThirdPersonCamera'
 
 export default function Experience() {
+  const playerRef = useRef(null)
+
   return (
     <>
       {/* Lights */}
@@ -19,7 +23,8 @@ export default function Experience() {
       {/* The Physics World */}
       <Physics debug={true} timeStep="vary">        
         
-        <Player position={[0, 3, 0]} />
+        <Player ref={playerRef} position={[0, 3, 0]} />
+        <ThirdPersonCamera targetRef={playerRef} />
 
         {/* THE STAGE (Floor & Walls) */}
         <RigidBody type="fixed" friction={2}>
