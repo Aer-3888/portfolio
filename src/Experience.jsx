@@ -1,6 +1,6 @@
 import { Physics, RigidBody, CuboidCollider } from '@react-three/rapier'
 import Ecctrl from 'ecctrl'
-import ComputerDesk from './components/ComputerDesk'
+import Laptop from './components/Laptop'
 
 export default function Experience() {
   return (
@@ -70,7 +70,7 @@ export default function Experience() {
              <meshStandardMaterial color="orange" />
            </mesh>
         </RigidBody>
-        <ComputerDesk />
+        <Laptop position={[3, 0, -3]} rotation-y={0.5} scale={0.08} />
       </Physics>
     </>
   )
