@@ -1,9 +1,22 @@
 import React, { forwardRef, useImperativeHandle, useRef } from 'react'
+import { useFrame, useThree } from '@react-three/fiber'
+import { useKeyboardControls } from '@react-three/drei'
 import Ecctrl from 'ecctrl'
+import useGame from '../stores/useGame'
+import { Vector3 } from 'three'
 
 const Player = forwardRef(function Player(props, ref) {
   const ecctrlRef = useRef(null)
   const visualRef = useRef(null)
+  const { scene } = useThree()
+  
+  const setNearbyObject = useGame((state) => state.setNearbyObject)
+  const clearNearbyObject = useGame((state) => state.clearNearbyObject)
+  const openInterface = useGame((state) => state.openInterface)
+  
+  const [, getKeys] = useKeyboardControls()
+  const playerPos = useRef(new Vector3())
+  const interactionDistance = 3 // meters
 
   useImperativeHandle(ref, () => {
     if (ecctrlRef.current && typeof ecctrlRef.current.getWorldPosition === 'function') {
@@ -11,6 +24,52 @@ const Player = forwardRef(function Player(props, ref) {
     }
     return visualRef.current
   })
+
+  useFrame(() => {
+    if (!visualRef.current) return
+
+    // Get player position from the visual group
+    visualRef.current.getWorldPosition(playerPos.current)
+
+    // Find nearby interactables
+    let closestObject = null
+    let closestDistance = interactionDistance
+
+    scene.traverse((obj) => {
+      if (obj.userData?.interactable) {
+        const distance = playerPos.current.distanceTo(obj.position)
+        if (distance < closestDistance) {
+          closestDistance = distance
+          closestObject = obj
+        }
+      }
+    })
+
+    // Update nearby object state
+    if (closestObject) {
+      setNearbyObject({
+        name: closestObject.userData.type,
+        prompt: closestObject.userData.prompt,
+        data: closestObject.userData
+      })
+
+      // Check for interact key press
+      const { interact } = getKeys()
+      if (interact) {
+        handleInteraction(closestObject.userData)
+      }
+    } else {
+      clearNearbyObject()
+    }
+  })
+
+  const handleInteraction = (userData) => {
+    if (userData.type === 'laptop') {
+      openInterface()
+    } else if (userData.type === 'project' && userData.url) {
+      window.open(userData.url, '_blank')
+    }
+  }
 
   return (
     <Ecctrl

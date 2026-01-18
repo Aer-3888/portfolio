@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Text, useCursor, RoundedBox } from '@react-three/drei' 
+import React, { useRef } from 'react'
+import { Text, RoundedBox } from '@react-three/drei' 
 import RoundedImage from './RoundedImage'
 import { RigidBody } from '@react-three/rapier'
 
@@ -11,6 +11,7 @@ export default function Project({
   url = null, 
   ...props 
 }) {
+  const groupRef = useRef()
   
   const screenScale = [0.8, 1.6] 
   const gap = 0.1 
@@ -19,24 +20,8 @@ export default function Project({
     ? (screenScale[0] + gap) * screenshots.length + 0.5 
     : 2.5 
 
-  const [hovered, setHovered] = useState(false)
-  useCursor(hovered && !!url)
-
-  const handleClick = () => {
-    if (url) {
-      window.open(url, '_blank')
-    }
-  }
-
-  // Shared props for interactivity on images
-  const interactProps = {
-      onClick: handleClick,
-      onPointerOver: () => setHovered(true),
-      onPointerOut: () => setHovered(false)
-  }
-
   return (
-    <group {...props}>
+    <group {...props} ref={groupRef} userData={{ interactable: true, type: 'project', title, url, prompt: `View ${title}` }}>
       
       {/* 1. The Dynamic Rounded Board (Background) */}
       <RigidBody type="fixed" colliders="cuboid">
@@ -45,9 +30,11 @@ export default function Project({
           radius={0.15} 
           smoothness={8} 
           position-y={1.5}
-          {...interactProps}
+          onPointerOver={(e) => e.stopPropagation()}
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
-          <meshStandardMaterial color={hovered ? "#ffebd6" : "#f0f0f0"} />
+          <meshStandardMaterial color="#f0f0f0" />
         </RoundedBox>
       </RigidBody>
 
@@ -60,7 +47,6 @@ export default function Project({
           scale={[2.2, 1.2]}
           radius={0.1} 
           position={[0, 1.5, 0.07]}
-          {...interactProps}
         />
       )}
 
@@ -74,9 +60,8 @@ export default function Project({
             key={index}
             url={url}
             scale={screenScale} 
-            radius={0.08} // Slightly smaller radius for phones
+            radius={0.08}
             position={[xPos, 1.5, 0.07]}
-            {...interactProps}
           />
         )
       })}

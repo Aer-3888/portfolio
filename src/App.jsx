@@ -11,6 +11,7 @@ function App() {
     { name: 'rightward', keys: ['ArrowRight', 'KeyD'] },
     { name: 'jump', keys: ['Space'] },
     { name: 'run', keys: ['Shift'] },
+    { name: 'interact', keys: ['KeyE'] },
   ]
 
   return (

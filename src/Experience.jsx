@@ -21,7 +21,7 @@ export default function Experience() {
       />
 
       {/* The Physics World */}
-      <Physics debug={true} timeStep="vary">        
+      <Physics debug={false} timeStep="vary" interpolate={true}>        
         
         <Player ref={playerRef} position={[0, 3, 0]} />
         <ThirdPersonCamera targetRef={playerRef} />

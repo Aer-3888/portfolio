@@ -6,14 +6,11 @@ const MIN_PITCH = -0.9
 const MAX_PITCH = 0.4
 const BASE_DISTANCE = 6
 const COLLISION_PADDING = 0.25
-const BASE_FOV = 45
-const MAX_FOV = 52
-const MIN_FOV = 42
 const SENSITIVITY = 0.003
 const VELOCITY_DAMP = 6
-const ROT_LAG = 8
-const POS_LAG = 10
-const DIST_LAG = 6
+const ROT_LAG = 12
+const POS_LAG = 8
+const DIST_LAG = 8
 
 function dampAngle(current, target, lambda, delta) {
   const twoPi = Math.PI * 2
@@ -27,12 +24,10 @@ export default function ThirdPersonCamera({ targetRef }) {
 
   const raycaster = useMemo(() => new Raycaster(), [])
   const targetPos = useMemo(() => new Vector3(), [])
-  const smoothedPos = useMemo(() => new Vector3(), [])
-  const lookAtPos = useMemo(() => new Vector3(), [])
+  const desiredPos = useMemo(() => new Vector3(), [])
   const dragDelta = useMemo(() => new Vector2(), [])
   const tempDir = useMemo(() => new Vector3(), [])
   const euler = useMemo(() => new Euler(0, 0, 0, 'YXZ'), [])
-  const prevTargetPos = useMemo(() => new Vector3(), [])
 
   const dragActive = useRef(false)
   const pointerLocked = useRef(false)
@@ -46,7 +41,7 @@ export default function ThirdPersonCamera({ targetRef }) {
     currentDistance: BASE_DISTANCE,
     smoothedYaw: 0,
     smoothedPitch: -0.35,
-    fov: BASE_FOV
+    initialized: false
   })
 
   useEffect(() => {
@@ -96,25 +91,36 @@ export default function ThirdPersonCamera({ targetRef }) {
     const player = targetRef?.current
     if (!player) return
 
+    // Cap delta to prevent physics instability
+    const cappedDelta = Math.min(delta, 0.1)
+
     player.getWorldPosition(targetPos)
     targetPos.y += 1.2
 
     const s = state.current
 
-    s.yaw += s.yawVel * delta
-    s.pitch = MathUtils.clamp(s.pitch + s.pitchVel * delta, MIN_PITCH, MAX_PITCH)
+    // Initialize camera position on first frame
+    if (!s.initialized) {
+      camera.position.set(targetPos.x, targetPos.y + 2, targetPos.z + BASE_DISTANCE)
+      s.initialized = true
+      return
+    }
 
-    s.yawVel = MathUtils.damp(s.yawVel, 0, VELOCITY_DAMP, delta)
-    s.pitchVel = MathUtils.damp(s.pitchVel, 0, VELOCITY_DAMP, delta)
+    s.yaw += s.yawVel * cappedDelta
+    s.pitch = MathUtils.clamp(s.pitch + s.pitchVel * cappedDelta, MIN_PITCH, MAX_PITCH)
 
-    s.smoothedYaw = dampAngle(s.smoothedYaw, s.yaw, ROT_LAG, delta)
-    s.smoothedPitch = MathUtils.damp(s.smoothedPitch, s.pitch, ROT_LAG, delta)
+    s.yawVel = MathUtils.damp(s.yawVel, 0, VELOCITY_DAMP, cappedDelta)
+    s.pitchVel = MathUtils.damp(s.pitchVel, 0, VELOCITY_DAMP, cappedDelta)
+
+    s.smoothedYaw = dampAngle(s.smoothedYaw, s.yaw, ROT_LAG, cappedDelta)
+    s.smoothedPitch = MathUtils.damp(s.smoothedPitch, s.pitch, ROT_LAG, cappedDelta)
 
     euler.set(s.smoothedPitch, s.smoothedYaw, 0)
-    tempDir.set(0, 0, 1).applyEuler(euler)
+    tempDir.set(0, 0, 1).applyEuler(euler).normalize()
 
-    raycaster.set(targetPos, tempDir.normalize())
-    const hits = raycaster.intersectObjects(scene.children, true)
+    // Optimized raycasting: only check meshes, not debug helpers
+    raycaster.set(targetPos, tempDir.clone().multiplyScalar(-1))
+    const hits = raycaster.intersectObjects(scene.children, true).filter(hit => hit.object.isMesh)
     const blockingHit = hits.find((hit) => {
       let obj = hit.object
       while (obj) {
@@ -126,21 +132,13 @@ export default function ThirdPersonCamera({ targetRef }) {
     })
 
     const desiredDistance = blockingHit ? Math.max(blockingHit.distance - COLLISION_PADDING, 1) : s.distance
-    s.currentDistance = MathUtils.damp(s.currentDistance, desiredDistance, DIST_LAG, delta)
+    s.currentDistance = MathUtils.damp(s.currentDistance, desiredDistance, DIST_LAG, cappedDelta)
 
-    smoothedPos.copy(tempDir.multiplyScalar(s.currentDistance)).add(targetPos)
-    camera.position.lerp(smoothedPos, 1 - Math.exp(-POS_LAG * delta))
-
-    lookAtPos.lerpVectors(lookAtPos, targetPos, 1 - Math.exp(-POS_LAG * delta))
-    camera.lookAt(lookAtPos)
-    camera.up.set(0, 1, 0)
-
-    const frameSpeed = prevTargetPos.distanceTo(targetPos) / Math.max(delta, 1e-4)
-    prevTargetPos.copy(targetPos)
-    const targetFov = MathUtils.clamp(BASE_FOV + MathUtils.clamp(frameSpeed * 0.15, -5, 5), MIN_FOV, MAX_FOV)
-    s.fov = MathUtils.damp(s.fov, targetFov, 4, delta)
-    camera.fov = s.fov
-    camera.updateProjectionMatrix()
+    desiredPos.copy(targetPos).addScaledVector(tempDir, -s.currentDistance)
+    
+    const smoothFactor = 1 - Math.exp(-POS_LAG * cappedDelta)
+    camera.position.lerp(desiredPos, smoothFactor)
+    camera.lookAt(targetPos)
   })
 
   return null
