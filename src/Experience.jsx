@@ -1,6 +1,7 @@
 import { Physics, RigidBody, CuboidCollider } from '@react-three/rapier'
 import Ecctrl from 'ecctrl'
 import Laptop from './components/Laptop'
+import Desk from './components/Desk'
 
 export default function Experience() {
   return (
@@ -23,6 +24,8 @@ export default function Experience() {
           camMaxDis={-5} 
           maxVelLimit={5} 
           jumpVel={4}
+          capsuleRadius={0.3}
+          capsuleHalfHeight={0.5}
         >
           {/* This is the visual representation of "You" (a floating capsule for now) */}
           <mesh castShadow position-y={0.5}>
@@ -70,7 +73,12 @@ export default function Experience() {
              <meshStandardMaterial color="orange" />
            </mesh>
         </RigidBody>
-        <Laptop position={[3, 0, -3]} rotation-y={0.5} scale={0.08} />
+        <Desk scale={1.8} position={[5, -1, -5]} rotation-y={-Math.PI * 0.5} />
+
+        <Laptop 
+            scale={0.08} 
+            position={[5, 0.7, -5]}  
+        />
       </Physics>
     </>
   )
