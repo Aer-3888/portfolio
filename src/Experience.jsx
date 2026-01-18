@@ -82,14 +82,23 @@ export default function Experience() {
         />
         <Chair 
             scale={0.06} 
-            position={[4.5, -0.99, -2.5]} 
+            position={[4.5, 1.2, -2.5]} 
             rotation-y={-Math.PI * 1.1} 
         />
         <Project 
-            title="My Portfolio" 
-            description="A 3D interactive portfolio built with R3F and Blender."
-            position={[2, 0, -5]} 
-            rotation-y={Math.PI / 4} // Angled towards the center
+            title="Waiki" 
+            description="A Flutter-based Android application that integrates with a physical device to combat screen addiction."
+            url="https://waikiup.com/"
+            screenshots={[
+                '/images/waiki_android/waiki1.jpg',
+                '/images/waiki_android/waiki2.jpg',
+                '/images/waiki_android/waiki3.jpg',
+                '/images/waiki_android/waiki4.jpg',
+                '/images/waiki_android/waiki5.jpg'
+            ]}
+            scale={0.8}
+            position={[0, 0, -5]} 
+            rotation-y={-Math.PI * 1.8} 
         />
       </Physics>
     </>
