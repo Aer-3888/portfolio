@@ -11,8 +11,6 @@ import { RigidBody } from '@react-three/rapier'
 import useGame from '../stores/useGame'
 
 export default function Laptop(props) {
-  // IMPORTANT: Make sure this path matches where you put the file!
-  // If you put it in public/models/, use '/models/laptop.glb'
   const { nodes, materials } = useGLTF('/models/laptop.glb')
   
   const [hovered, setHover] = useState(false)
