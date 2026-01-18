@@ -1,5 +1,6 @@
 import { Physics, RigidBody, CuboidCollider } from '@react-three/rapier'
 import Ecctrl from 'ecctrl'
+import ComputerDesk from './components/ComputerDesk'
 
 export default function Experience() {
   return (
@@ -69,7 +70,7 @@ export default function Experience() {
              <meshStandardMaterial color="orange" />
            </mesh>
         </RigidBody>
-
+        <ComputerDesk />
       </Physics>
     </>
   )
