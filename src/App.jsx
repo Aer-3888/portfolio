@@ -1,6 +1,7 @@
 import { Canvas } from '@react-three/fiber'
 import { KeyboardControls } from '@react-three/drei'
 import Experience from './Experience'
+import Interface from './Interface'
 
 function App() {
   const keyboardMap = [
@@ -14,6 +15,10 @@ function App() {
 
   return (
     <KeyboardControls map={keyboardMap}>
+      {/* The 2D Overlay (Z-index high) */}
+      <Interface />
+      
+      {/* The 3D World (Z-index low) */}
       <Canvas
         shadows
         camera={{
