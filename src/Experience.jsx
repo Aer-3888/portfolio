@@ -3,6 +3,7 @@ import Ecctrl from 'ecctrl'
 import Laptop from './components/Laptop'
 import Desk from './components/Desk'
 import Chair from './components/Chair'
+import Project from './components/Project'
 
 export default function Experience() {
   return (
@@ -83,6 +84,12 @@ export default function Experience() {
             scale={0.06} 
             position={[4.5, -0.99, -2.5]} 
             rotation-y={-Math.PI * 1.1} 
+        />
+        <Project 
+            title="My Portfolio" 
+            description="A 3D interactive portfolio built with R3F and Blender."
+            position={[2, 0, -5]} 
+            rotation-y={Math.PI / 4} // Angled towards the center
         />
       </Physics>
     </>
