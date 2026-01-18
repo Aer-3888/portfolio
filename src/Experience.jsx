@@ -2,6 +2,7 @@ import { Physics, RigidBody, CuboidCollider } from '@react-three/rapier'
 import Ecctrl from 'ecctrl'
 import Laptop from './components/Laptop'
 import Desk from './components/Desk'
+import Chair from './components/Chair'
 
 export default function Experience() {
   return (
@@ -74,10 +75,14 @@ export default function Experience() {
            </mesh>
         </RigidBody>
         <Desk scale={1.8} position={[5, -1, -5]} rotation-y={-Math.PI * 0.5} />
-
         <Laptop 
             scale={0.08} 
             position={[5, 0.7, -5]}  
+        />
+        <Chair 
+            scale={0.06} 
+            position={[4.5, -0.99, -2.5]} 
+            rotation-y={-Math.PI * 1.1} 
         />
       </Physics>
     </>
