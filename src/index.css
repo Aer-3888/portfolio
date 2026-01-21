@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* Recommended Reset for Lenis */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Global Styles */
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --color-dark: #0a0a0a;
+}
+
+body {
+  background-color: var(--color-dark);
+  color: white;
+  font-family: var(--font-sans);
+}
