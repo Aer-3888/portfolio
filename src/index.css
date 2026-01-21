@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Recommended Reset for Lenis */
+/* --- 1. LENIS SMOOTH SCROLL SETUP --- */
 html.lenis, html.lenis body {
   height: auto;
 }
@@ -14,7 +14,7 @@ html.lenis, html.lenis body {
   overflow: hidden;
 }
 
-/* Global Styles */
+/* --- 2. GLOBAL THEME --- */
 @theme {
   --font-sans: "Inter", sans-serif;
   --color-dark: #0a0a0a;
@@ -24,4 +24,21 @@ body {
   background-color: var(--color-dark);
   color: white;
   font-family: var(--font-sans);
+}
+
+/* --- 3. CUSTOM UTILITIES --- */
+@utility transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+@utility transform-style-flat {
+  transform-style: flat;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar {
+  display: none;
 }
