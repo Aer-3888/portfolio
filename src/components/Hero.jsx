@@ -1,13 +1,15 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import {
   motion,
   useScroll,
   useTransform,
 } from "framer-motion";
 import InfiniteLoopText from "./InfiniteLoopText";
+import LiquidMenu from "./layout/LiquidMenu";
 
 export default function Hero() {
   const containerRef = useRef(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -22,22 +24,45 @@ export default function Hero() {
   const tickerOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
   const lockedOpacity = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
 
+  // Navigation Switch Logic
+  const navOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
+  const menuOpacity = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
+
+  // Pointer Events Logic
+  const navPointerEvents = useTransform(scrollYProgress, (v) => v > 0.05 ? "none" : "auto");
+  const menuPointerEvents = useTransform(scrollYProgress, (v) => v > 0.05 ? "auto" : "none");
+
   return (
     <div ref={containerRef} className="relative h-[125vh] w-full bg-neutral-900 overflow-x-hidden">
       
-      {/* Sticky Stage */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
-        
-        {/* Navigation */}
-        <nav className="absolute top-8 right-8 z-50 flex gap-8 text-white mix-blend-difference">
-           {['Projects', 'About', 'Contact'].map(link => (
-             <span key={link} className="cursor-pointer hover:opacity-50 transition-opacity uppercase text-xl font-medium tracking-widest">
-                {link}
-             </span>
-           ))}
-        </nav>
+      {/* 1. Text Navigation (Visible at Top) */}
+      <motion.nav 
+          style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
+          className="fixed top-8 right-10 z-[999] flex gap-8 text-white mix-blend-difference"
+      >
+          {['Projects', 'About', 'Contact'].map(link => (
+              <span key={link} className="cursor-pointer hover:opacity-50 transition-opacity uppercase text-xl font-medium tracking-widest">
+                  {link}
+              </span>
+          ))}
+      </motion.nav>
 
-        {/* LAYER 1: Text After Scroll Down */}
+      {/* 2. Liquid Menu (Visible on Scroll) */}
+      <motion.div 
+          style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
+          className="fixed top-8 right-10 z-[999]"
+      >
+          <LiquidMenu 
+              isOpen={isMenuOpen} 
+              toggle={() => setIsMenuOpen(!isMenuOpen)} 
+          />
+      </motion.div>
+
+
+      {/* Hero Stage */}
+      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
+
+        {/* Layer 1: Text After Scroll Down */}
         <motion.div 
             style={{ opacity: lockedOpacity, scale, y }}
             className="absolute z-10 w-full flex justify-center top-[65%] -translate-y-1/2"
@@ -47,7 +72,7 @@ export default function Hero() {
              </h1>
         </motion.div>
 
-        {/* LAYER 2: Main Component */}
+        {/* Layer 2: Main Component */}
         <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
           <img 
             src="/images/me.png" 
@@ -56,7 +81,7 @@ export default function Hero() {
           />
         </div>
            
-        {/* LAYER 3: Front Text*/}
+        {/* Layer 3: Front Text*/}
         <motion.div 
             style={{ opacity: tickerOpacity, scale, y }}
             className="absolute z-30 inset-x-0 top-[65%] -translate-y-1/2"
@@ -64,7 +89,7 @@ export default function Hero() {
              <InfiniteLoopText speed={0.2} />
         </motion.div>
 
-        {/* Background (maybe modify later to a more unique design) */}
+        {/* Background */}
         <div className="absolute inset-0 z-0 bg-neutral-900" />
 
       </div>

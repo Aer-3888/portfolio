@@ -12,6 +12,7 @@
   "dependencies": {
     "@motionone/utils": "^10.18.0",
     "clsx": "^2.1.0",
+    "flubber": "^0.4.2",
     "framer-motion": "^12.0.0",
     "lenis": "^1.1.18",
     "react": "^19.0.0",
