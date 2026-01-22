@@ -16,6 +16,11 @@ function App() {
 
         {/* Project List Section */}
         <ProjectList />
+
+        {/* Temporary Spacer to allow scrolling past the Project List */}
+        <section className="h-screen flex items-center justify-center bg-white text-black z-50 relative">
+          <h2 className="text-4xl font-bold tracking-tighter">Next Section Starts Here</h2>
+        </section>
       </main>
     </SmoothScroll>
   );
