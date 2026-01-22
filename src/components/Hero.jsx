@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import {
+  AnimatePresence,
   motion,
   useScroll,
   useTransform,
@@ -10,6 +11,7 @@ import LiquidMenu from "./layout/LiquidMenu";
 export default function Hero() {
   const containerRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuItems = ["Projects", "About", "Contact"];
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -32,8 +34,67 @@ export default function Hero() {
   const navPointerEvents = useTransform(scrollYProgress, (v) => v > 0.05 ? "none" : "auto");
   const menuPointerEvents = useTransform(scrollYProgress, (v) => v > 0.05 ? "auto" : "none");
 
+  const menuItemVariants = {
+    hidden: { opacity: 0, x: 20 },
+    show: (i) => ({ opacity: 1, x: 0, transition: { delay: i * 0.08, duration: 0.25 } }),
+    exit: { opacity: 0, x: 10, transition: { duration: 0.15 } },
+  };
+
   return (
     <div ref={containerRef} className="relative h-[125vh] w-full bg-neutral-900 overflow-x-hidden">
+
+      {/* Overlay Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <>
+            <motion.div
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1090]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              onClick={() => setIsMenuOpen(false)}
+            />
+
+            <motion.aside
+              className="fixed top-0 right-0 h-screen w-[320px] max-w-[85vw] bg-neutral-950/90 border-l border-white/10 shadow-2xl z-[1100] p-8 flex flex-col gap-8"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 260, damping: 28 }}
+            >
+              <div className="flex items-center justify-between">
+                <span className="text-sm uppercase tracking-[0.3em] text-white/60">Menu</span>
+                <button
+                  type="button"
+                  className="text-white/70 hover:text-white text-sm tracking-widest uppercase"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  Close
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-4">
+                {menuItems.map((item, index) => (
+                  <motion.button
+                    key={item}
+                    type="button"
+                    custom={index}
+                    variants={menuItemVariants}
+                    initial="hidden"
+                    animate="show"
+                    exit="exit"
+                    className="text-left text-2xl font-semibold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item}
+                  </motion.button>
+                ))}
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
       
       {/* 1. Text Navigation (Visible at Top) */}
       <motion.nav 
