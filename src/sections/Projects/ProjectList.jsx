@@ -36,7 +36,7 @@ function ScrollReveal({ children, className }) {
   });
 
   const opacity = useTransform(scrollYProgress, [0, 0.35, 0.85, 1], [0, 1, 1, 0]);
-  
+
   const y = useTransform(scrollYProgress, [0, 0.35, 0.85, 1], [100, 0, 0, -100]);
 
   return (
@@ -62,13 +62,13 @@ export default function ProjectList() {
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
     const { top, bottom } = containerRef.current.getBoundingClientRect();
-    
+
     // Store last mouse position
     lastMousePos.current = { x: e.clientX, y: e.clientY };
-    
+
     // Check if mouse is within container bounds
     const isInContainer = e.clientY >= top && e.clientY <= bottom;
-    
+
     if (isInContainer) {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -125,7 +125,7 @@ export default function ProjectList() {
             Highlight Projects (04)
           </h2>
         </ScrollReveal>
-        
+
         <ScrollReveal>
           <div className="w-full h-[1px] bg-neutral-800" />
         </ScrollReveal>
@@ -154,7 +154,12 @@ export default function ProjectList() {
               viewBox="0 0 24 24"
               stroke="currentColor"
             >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
         </ScrollReveal>

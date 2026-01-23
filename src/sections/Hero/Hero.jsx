@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
-import InfiniteLoopText from "./InfiniteLoopText";
-import LiquidMenu from "./layout/LiquidMenu";
+import InfiniteLoopText from "../../components/InfiniteLoopText";
+import LiquidMenu from "../../layout/LiquidMenu";
 
 // Color interpolation helper
 function interpolateColor(color1, color2, factor) {
@@ -28,11 +28,11 @@ export default function Hero() {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight;
       const windowHeight = window.innerHeight;
-      
+
       // Calculate how close we are to the bottom
       const maxScroll = docHeight - windowHeight;
       const triggerPoint = maxScroll - windowHeight * 1.5; // vh before footer
-      
+
       if (scrollTop >= triggerPoint) {
         // Progress from 0 to 1 as we approach footer
         const progress = Math.min((scrollTop - triggerPoint) / (windowHeight * 1.5), 1);
@@ -44,7 +44,7 @@ export default function Hero() {
 
     window.addEventListener("scroll", handleScroll);
     handleScroll();
-    
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 

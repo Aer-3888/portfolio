@@ -22,7 +22,7 @@ export default function ProjectItem({ title, year, services, index }) {
       initial="idle"
       whileHover="hover"
       variants={containerVariants}
-      transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }} // Elegant ease
+      transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
       className="relative w-full border-b border-neutral-800 flex flex-col justify-center group cursor-pointer overflow-hidden"
     >
       {/* Top Row : Project Name and Year */}
@@ -34,7 +34,9 @@ export default function ProjectItem({ title, year, services, index }) {
           </h3>
         </motion.div>
 
-        <span className="text-lg font-mono text-neutral-500 mix-blend-difference z-10">{year}</span>
+        <span className="text-lg font-mono text-neutral-500 mix-blend-difference z-10">
+          {year}
+        </span>
       </div>
 
       {/* Expanded Content: Services & Arrow */}
@@ -46,7 +48,9 @@ export default function ProjectItem({ title, year, services, index }) {
           hover: { opacity: 1, y: 0, transition: { delay: 0.1 } },
         }}
       >
-        <p className="text-neutral-400 font-light text-lg tracking-wide uppercase">{services}</p>
+        <p className="text-neutral-400 font-light text-lg tracking-wide uppercase">
+          {services}
+        </p>
 
         {/* Big Arrow Icon */}
         <motion.svg

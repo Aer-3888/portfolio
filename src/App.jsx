@@ -1,8 +1,8 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import Hero from "./components/Hero";
-import ProjectList from "./components/home/ProjectList";
-import Footer from "./components/layout/Footer";
-import SmoothScroll from "./components/layout/SmoothScroll"; 
+import Hero from "./sections/Hero/Hero";
+import ProjectList from "./sections/Projects/ProjectList";
+import Footer from "./sections/Footer/Footer";
+import SmoothScroll from "./layout/SmoothScroll"; 
 
 function App() {
   const { scrollYProgress } = useScroll();
