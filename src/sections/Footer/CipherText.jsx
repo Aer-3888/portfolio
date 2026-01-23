@@ -33,8 +33,8 @@ export default function CipherText() {
         clearInterval(intervalRef.current);
       }
 
-      iterations += 1 / 5;
-    }, 50);
+      iterations += 1 / 3;
+    }, 40);
   };
 
   // Cycle through phrases
@@ -45,7 +45,7 @@ export default function CipherText() {
         scramble(phrases[next]);
         return next;
       });
-    }, 5500); // Wait 5.5s
+    }, 4000); // Wait 4s
 
     return () => clearInterval(cycle);
   }, []);
