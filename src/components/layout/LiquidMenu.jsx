@@ -4,7 +4,7 @@ import useMagneticEffect from "../../hooks/useMagneticEffect";
 import BurgerLines from "../BurgerLines";
 import LiquidBackground from "../LiquidBackground";
 
-export default function LiquidMenu({ isOpen, toggle }) {
+export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineColor = "#000000" }) {
   const [isHovered, setIsHovered] = useState(false);
   const { sensorRef, xSpring, ySpring, handleMouseMove, handleMouseLeave } = useMagneticEffect();
 
@@ -26,8 +26,8 @@ export default function LiquidMenu({ isOpen, toggle }) {
 
       {/* 3. Visual Button */}
       <motion.div style={{ x: xSpring, y: ySpring }} className="relative z-10 pointer-events-none">
-        <LiquidBackground isHovered={isHovered} />
-        <BurgerLines isOpen={isOpen} />
+        <LiquidBackground isHovered={isHovered} blobColor={blobColor} />
+        <BurgerLines isOpen={isOpen} lineColor={lineColor} />
       </motion.div>
     </div>
   );

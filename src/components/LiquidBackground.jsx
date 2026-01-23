@@ -13,7 +13,11 @@ const blobShapes = [
 
 const circlePath = "M50,5 C75,5 95,25 95,50 C95,75 75,95 50,95 C25,95 5,75 5,50 C5,25 25,5 50,5 Z";
 
-export default function LiquidBackground({ isHovered, speed = 0.0007 }) {
+export default function LiquidBackground({
+  isHovered,
+  speed = 0.0007,
+  blobColor = "white",
+}) {
   // Build flubber interpolators for each adjacent pair, memoized
   const morphers = useMemo(() => {
     return blobShapes.map((shape, i) =>
@@ -23,7 +27,6 @@ export default function LiquidBackground({ isHovered, speed = 0.0007 }) {
     );
   }, []);
 
-  // Numeric progress across segments; use ref to avoid re-renders
   const progressRef = useRef(0);
   const [currentPath, setCurrentPath] = useState(blobShapes[0]);
 
@@ -35,7 +38,7 @@ export default function LiquidBackground({ isHovered, speed = 0.0007 }) {
     progressRef.current = wrapped;
 
     const index = Math.floor(wrapped);
-    const localT = wrapped - index; // 0..1 within current segment
+    const localT = wrapped - index;
     const path = morphers[index](localT);
     setCurrentPath(path);
   });
@@ -50,10 +53,9 @@ export default function LiquidBackground({ isHovered, speed = 0.0007 }) {
       >
         <motion.path
           d={isHovered ? circlePath : currentPath}
-          fill="white"
-          className="mix-blend-difference"
-          animate={{ scale: isHovered ? 0.9 : 1 }}
+          animate={{ scale: isHovered ? 0.9 : 1, fill: blobColor }}
           transition={{ duration: 0.3, ease: "easeOut" }}
+          className="mix-blend-difference"
         />
       </svg>
     </div>

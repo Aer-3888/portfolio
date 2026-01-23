@@ -15,26 +15,26 @@ const bottomLineVariants = {
   open: { rotate: -45, y: -10 },
 };
 
-export default function BurgerLines({ isOpen }) {
+export default function BurgerLines({ isOpen, lineColor = "#000000" }) {
   return (
-    <div className="relative z-20 flex flex-col gap-2 p-4 items-center justify-center mix-blend-difference">
+    <div className="relative z-20 flex flex-col gap-2 p-4 items-center justify-center">
       <motion.span
         variants={topLineVariants}
-        animate={isOpen ? "open" : "closed"}
+        animate={{ ...topLineVariants[isOpen ? "open" : "closed"], backgroundColor: lineColor }}
         initial="closed"
-        className="h-[2px] w-8 bg-white block origin-center"
+        className="h-[2px] w-8 block origin-center"
       />
       <motion.span
         variants={middleLineVariants}
-        animate={isOpen ? "open" : "closed"}
+        animate={{ ...middleLineVariants[isOpen ? "open" : "closed"], backgroundColor: lineColor }}
         initial="closed"
-        className="h-[2px] w-8 bg-white block"
+        className="h-[2px] w-8 block"
       />
       <motion.span
         variants={bottomLineVariants}
-        animate={isOpen ? "open" : "closed"}
+        animate={{ ...bottomLineVariants[isOpen ? "open" : "closed"], backgroundColor: lineColor }}
         initial="closed"
-        className="h-[2px] w-8 bg-white block origin-center"
+        className="h-[2px] w-8 block origin-center"
       />
     </div>
   );

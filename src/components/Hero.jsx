@@ -1,17 +1,56 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import InfiniteLoopText from "./InfiniteLoopText";
 import LiquidMenu from "./layout/LiquidMenu";
 
+// Color interpolation helper
+function interpolateColor(color1, color2, factor) {
+  const c1 = color1.match(/\w\w/g).map((c) => parseInt(c, 16));
+  const c2 = color2.match(/\w\w/g).map((c) => parseInt(c, 16));
+  const result = c1.map((c, i) => Math.round(c + factor * (c2[i] - c)));
+  return `#${result.map((c) => c.toString(16).padStart(2, "0")).join("")}`;
+}
+
 export default function Hero() {
   const containerRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
   const menuItems = ["Projects", "About", "Contact"];
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
+
+  // Track scroll progress for gradual color change
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight;
+      const windowHeight = window.innerHeight;
+      
+      // Calculate how close we are to the bottom
+      const maxScroll = docHeight - windowHeight;
+      const triggerPoint = maxScroll - windowHeight * 1.5; // vh before footer
+      
+      if (scrollTop >= triggerPoint) {
+        // Progress from 0 to 1 as we approach footer
+        const progress = Math.min((scrollTop - triggerPoint) / (windowHeight * 1.5), 1);
+        setScrollProgress(progress);
+      } else {
+        setScrollProgress(0);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Interpolate colors based on scroll progress
+  const blobColor = interpolateColor("#ffffff", "#ff8c00", scrollProgress);
+  const lineColor = interpolateColor("#000000", "#ffffff", scrollProgress);
 
   // ANIMATIONS
   const scale = useTransform(scrollYProgress, [0, 0.5], [1.2, 1]);
@@ -110,7 +149,12 @@ export default function Hero() {
         style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
         className="fixed top-8 right-10 z-[999]"
       >
-        <LiquidMenu isOpen={isMenuOpen} toggle={() => setIsMenuOpen(!isMenuOpen)} />
+        <LiquidMenu
+          isOpen={isMenuOpen}
+          toggle={() => setIsMenuOpen(!isMenuOpen)}
+          blobColor={blobColor}
+          lineColor={lineColor}
+        />
       </motion.div>
 
       {/* Hero Stage */}
