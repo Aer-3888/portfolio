@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useSpring, useMotionValue, useScroll, useTransform } from "framer-motion";
 import ProjectItem from "./ProjectItem";
 
@@ -18,7 +18,7 @@ function Cursor({ mouseX, mouseY, isHovered }) {
         opacity: isHovered ? 0.8 : 0,
         scale: isHovered ? 1 : 0.5,
       }}
-      className="fixed w-[250px] h-[250px] bg-white rounded-full mix-blend-difference pointer-events-none z-30 -translate-x-1/2 -translate-y-1/2"
+      className="fixed w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[230px] md:h-[230px] lg:w-[260px] lg:h-[260px] bg-white rounded-full mix-blend-difference pointer-events-none z-30 -translate-x-1/2 -translate-y-1/2"
     />
   );
 }
@@ -52,28 +52,79 @@ export default function ProjectList() {
   const containerRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [entryPoint, setEntryPoint] = useState(null);
+  const [activeProject, setActiveProject] = useState(null);
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse)");
+    const update = () => {
+      const wasCoarse = isCoarsePointer;
+      const isNowCoarse = mq.matches;
+      setIsCoarsePointer(isNowCoarse);
+      
+      // Clear active project when switching from touch to mouse
+      if (wasCoarse && !isNowCoarse) {
+        setActiveProject(null);
+      }
+    };
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, [isCoarsePointer]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Close all expanded projects when section leaves viewport
+        if (!entry.isIntersecting && activeProject !== null) {
+          setActiveProject(null);
+        }
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [activeProject]);
+
+  const handleProjectToggle = (index) => {
+    if (!isCoarsePointer) return; // clicks only matter on touch devices
+    setActiveProject((prev) => (prev === index ? null : index));
+  };
+
   const handleMouseMove = useCallback((e) => {
+    // Don't show spotlight on touch devices
+    if (isCoarsePointer) return;
+
     mouseX.set(e.clientX);
     mouseY.set(e.clientY);
-  }, [mouseX, mouseY]);
+
+    // Only show spotlight after the cursor actually moves inside
+    if (!isHovered) {
+      setEntryPoint({ x: e.clientX, y: e.clientY });
+      setIsHovered(true);
+    }
+  }, [mouseX, mouseY, isHovered, isCoarsePointer]);
+
+  const handleTouchStart = useCallback(() => {
+    // Hide spotlight on touch to prevent it showing during scroll
+    setIsHovered(false);
+  }, []);
 
   return (
     <section
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={(e) => {
-        mouseX.set(e.clientX);
-        mouseY.set(e.clientY);
-        setEntryPoint({ x: e.clientX, y: e.clientY });
-        setIsHovered(true);
-      }}
+      onMouseEnter={undefined}
       onMouseLeave={() => {
         setIsHovered(false);
       }}
+      onTouchStart={handleTouchStart}
       className="relative w-full min-h-screen bg-neutral-900 py-32 flex flex-col justify-center cursor-default overflow-hidden"
     >
     
@@ -104,7 +155,13 @@ export default function ProjectList() {
       <div className="container mx-auto px-0 z-10 relative">
         {projects.map((project, i) => (
           <ScrollReveal key={i} className="w-full">
-            <ProjectItem index={i} {...project} />
+            <ProjectItem
+              index={i}
+              isActive={activeProject === i}
+              isCoarsePointer={isCoarsePointer}
+              onToggle={() => handleProjectToggle(i)}
+              {...project}
+            />
           </ScrollReveal>
         ))}
       </div>
