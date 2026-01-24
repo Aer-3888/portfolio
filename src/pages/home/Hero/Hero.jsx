@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
-import InfiniteLoopText from "../../components/InfiniteLoopText";
-import LiquidMenu from "../../layout/LiquidMenu";
+import InfiniteLoopText from "../../../components/InfiniteLoopText";
+import LiquidMenu from "../../../layout/LiquidMenu";
 
 // Color interpolation helper
 function interpolateColor(color1, color2, factor) {
@@ -175,7 +175,7 @@ export default function Hero() {
               {/* Green Dot */}
               <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
               <h3 className="text-sm font-bold tracking-widest uppercase">
-                CS Student
+                CS Student @ INSA
               </h3>
             </div>
           </div>

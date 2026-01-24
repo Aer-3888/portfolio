@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function ProjectItem({ title, year, services, index }) {
+export default function ProjectItem({ title, year, services, index, isActive, onToggle }) {
   // Animation variants for the expansion
   const containerVariants = {
     idle: { height: 112 },
@@ -21,8 +21,10 @@ export default function ProjectItem({ title, year, services, index }) {
     <motion.div
       initial="idle"
       whileHover="hover"
+      animate={isActive ? "hover" : "idle"}
       variants={containerVariants}
       transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
+      onClick={onToggle}
       className="relative w-full border-b border-neutral-800 flex flex-col justify-center group cursor-pointer overflow-hidden"
     >
       {/* Top Row : Project Name and Year */}
