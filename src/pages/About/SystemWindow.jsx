@@ -1,7 +1,8 @@
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence, useDragControls, useAnimation } from "framer-motion";
-import LiquidMenu from "../../layout/LiquidMenu";
+import LiquidMenu from "../../components/layout/LiquidMenu";
+import NavButtons from "../../components/NavButtons";
 import GitGraph from "./GitGraph";
 import GalleryInspector from "./GalleryInspector";
 
@@ -10,6 +11,7 @@ export default function SystemWindow({
   navPointerEvents,
   menuOpacity,
   menuPointerEvents,
+  menuInteractive = true,
 }) {
   const [activeTab, setActiveTab] = useState("git");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -39,11 +41,7 @@ export default function SystemWindow({
   const navItems = [
     { label: "Home", onClick: () => navigate("/"), className: "md:hidden" },
     { label: "Projects", onClick: () => navigate("/", { state: { scrollTo: "projects" } }) },
-    { label: "About", onClick: () => window.scrollTo({ top: 0, behavior: "smooth" }) },
-    {
-      label: "Contact",
-      onClick: () => window.open("mailto:theo.phan.quoc.huy@gmail.com", "_self"),
-    },
+    { label: "Contact", onClick: () => navigate("/contact") },
   ];
 
   const handleGalleryFullscreenChange = useCallback((isFull) => {
@@ -59,7 +57,7 @@ export default function SystemWindow({
           <button
             type="button"
             onClick={() => navigate("/")}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono uppercase tracking-[0.2em] hover:bg-white/20 transition-colors mix-blend-difference"
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono uppercase tracking-[0.2em] hover:bg-white/20 transition-colors mix-blend-difference cursor-pointer"
           >
             <span className="text-lg">←</span>
             <span className="hidden sm:inline">Home</span>
@@ -68,36 +66,31 @@ export default function SystemWindow({
       )}
 
       {!isNavTemporarilyHidden && (
-        <motion.nav
-          style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
+        <NavButtons
+          items={navItems}
+          navOpacity={navOpacity}
+          navPointerEvents={navPointerEvents}
           className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
-        >
-          {navItems.map((item) => (
-            <button
-              key={item.label}
-              type="button"
-              onClick={item.onClick}
-              className={`cursor-pointer hover:opacity-50 transition-opacity uppercase text-xl font-medium tracking-widest ${item.className || ""}`}
-            >
-              {item.label}
-            </button>
-          ))}
-        </motion.nav>
+        />
       )}
 
-      {!isMenuTemporarilyHidden && (
-        <motion.div
-          style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
-          className="fixed top-8 right-10 z-[1200]"
-        >
+      <motion.div
+        style={{
+          opacity: menuOpacity,
+          pointerEvents: isMenuTemporarilyHidden || !menuInteractive ? "none" : menuPointerEvents,
+        }}
+        className="fixed top-8 right-10 z-[1200]"
+        aria-hidden={isMenuTemporarilyHidden || !menuInteractive}
+      >
+        {!isMenuTemporarilyHidden && menuInteractive && (
           <LiquidMenu
             isOpen={isMenuOpen}
             toggle={() => setIsMenuOpen((v) => !v)}
             blobColor="#ffffff"
             lineColor="#000000"
           />
-        </motion.div>
-      )}
+        )}
+      </motion.div>
 
       <AnimatePresence>
         {isMenuOpen && (

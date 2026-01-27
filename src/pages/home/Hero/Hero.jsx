@@ -2,7 +2,9 @@ import { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import InfiniteLoopText from "../../../components/InfiniteLoopText";
-import LiquidMenu from "../../../layout/LiquidMenu";
+import LiquidMenu from "../../../components/layout/LiquidMenu";
+import NavButtons from "../../../components/NavButtons";
+import { nav } from "framer-motion/client";
 
 // Color interpolation helper
 function interpolateColor(color1, color2, factor) {
@@ -15,6 +17,7 @@ function interpolateColor(color1, color2, factor) {
 export default function Hero() {
   const containerRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuInteractive, setIsMenuInteractive] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const navigate = useNavigate();
 
@@ -28,10 +31,7 @@ export default function Hero() {
   const navItems = [
     { label: "Projects", onClick: scrollToProjects },
     { label: "About", onClick: () => navigate("/about") },
-    {
-      label: "Contact",
-      onClick: () => window.open("mailto:theo.phan.quoc.huy@gmail.com", "_self"),
-    },
+    { label: "Contact", onClick: () => navigate("/contact") },
   ];
 
   const { scrollYProgress } = useScroll({
@@ -83,6 +83,16 @@ export default function Hero() {
   // Pointer Events Logic
   const navPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "none" : "auto"));
   const menuPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "auto" : "none"));
+
+  // Keep a React state copy of the MotionValue for pointer-events
+  useEffect(() => {
+    const unsub = menuPointerEvents.onChange((v) => {
+      setIsMenuInteractive(v === "auto");
+    });
+    // initialize
+    setIsMenuInteractive(menuPointerEvents.get() === "auto");
+    return unsub;
+  }, [menuPointerEvents]);
 
   const menuItemVariants = {
     hidden: { opacity: 0, x: 20 },
@@ -149,33 +159,22 @@ export default function Hero() {
       </AnimatePresence>
 
       {/* 1. Text Navigation (Visible at Top) */}
-      <motion.nav
-        style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
-        className="fixed top-8 right-10 z-[999] flex gap-8 text-white mix-blend-difference"
-      >
-        {navItems.map((item) => (
-          <button
-            key={item.label}
-            type="button"
-            onClick={item.onClick}
-            className="cursor-pointer hover:opacity-50 transition-opacity uppercase text-xl font-medium tracking-widest"
-          >
-            {item.label}
-          </button>
-        ))}
-      </motion.nav>
+      <NavButtons items={navItems} navOpacity={navOpacity} navPointerEvents={navPointerEvents} />
 
       {/* 2. Liquid Menu (Visible on Scroll) */}
       <motion.div
-        style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
-        className="fixed top-8 right-10 z-[999]"
+        style={{ opacity: menuOpacity, pointerEvents: isMenuInteractive ? "auto" : "none" }}
+        className={`fixed top-8 right-10 z-[999] ${isMenuInteractive ? "" : "pointer-events-none"}`}
+        aria-hidden={!isMenuInteractive}
       >
-        <LiquidMenu
-          isOpen={isMenuOpen}
-          toggle={() => setIsMenuOpen(!isMenuOpen)}
-          blobColor={blobColor}
-          lineColor={lineColor}
-        />
+        {isMenuInteractive && (
+          <LiquidMenu
+            isOpen={isMenuOpen}
+            toggle={() => setIsMenuOpen(!isMenuOpen)}
+            blobColor={blobColor}
+            lineColor={lineColor}
+          />
+        )}
       </motion.div>
 
       {/* Hero Stage */}

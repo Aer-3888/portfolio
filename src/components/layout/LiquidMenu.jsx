@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import useMagneticEffect from "../hooks/useMagneticEffect";
-import BurgerLines from "../components/BurgerLines";
-import LiquidBackground from "../components/LiquidBackground";
+import useMagneticEffect from "../../hooks/useMagneticEffect";
+import BurgerLines from "../BurgerLines";
+import LiquidBackground from "../LiquidBackground";
 
 export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineColor = "#000000" }) {
   const [isHovered, setIsHovered] = useState(false);

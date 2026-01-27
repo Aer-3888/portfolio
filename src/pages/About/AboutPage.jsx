@@ -1,9 +1,9 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useScroll, useTransform } from "framer-motion";
-import SmoothScroll from "../../layout/SmoothScroll";
+import SmoothScroll from "../../components/layout/SmoothScroll";
 import SystemWindow from "./SystemWindow";
 
-export default function About() {
+export default function AboutPage() {
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -14,6 +14,13 @@ export default function About() {
   const menuOpacity = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
   const navPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "none" : "auto"));
   const menuPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "auto" : "none"));
+  const [isMenuInteractive, setIsMenuInteractive] = useState(true);
+
+  useEffect(() => {
+    const unsub = menuPointerEvents.onChange((v) => setIsMenuInteractive(v === "auto"));
+    setIsMenuInteractive(menuPointerEvents.get() === "auto");
+    return unsub;
+  }, [menuPointerEvents]);
 
   return (
     <SmoothScroll>
@@ -49,6 +56,7 @@ export default function About() {
           navPointerEvents={navPointerEvents}
           menuOpacity={menuOpacity}
           menuPointerEvents={menuPointerEvents}
+          menuInteractive={isMenuInteractive}
         />
       </main>
     </SmoothScroll>

@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Hero from "./Hero/Hero";
 import ProjectList from "./Projects/ProjectList";
 import Footer from "./Footer/Footer";
-import SmoothScroll from "../../layout/SmoothScroll";
+import SmoothScroll from "../../components/layout/SmoothScroll";
 import HobbySection from "./Profile/HobbySection";
 
 export default function HomePage() {
