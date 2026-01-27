@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import InfiniteLoopText from "../../../components/InfiniteLoopText";
 import LiquidMenu from "../../../layout/LiquidMenu";
 
@@ -15,7 +16,23 @@ export default function Hero() {
   const containerRef = useRef(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const menuItems = ["Projects", "About", "Contact"];
+  const navigate = useNavigate();
+
+  const scrollToProjects = () => {
+    const section = document.getElementById("projects");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const navItems = [
+    { label: "Projects", onClick: scrollToProjects },
+    { label: "About", onClick: () => navigate("/about") },
+    {
+      label: "Contact",
+      onClick: () => window.open("mailto:theo.phan.quoc.huy@gmail.com", "_self"),
+    },
+  ];
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -31,10 +48,9 @@ export default function Hero() {
 
       // Calculate how close we are to the bottom
       const maxScroll = docHeight - windowHeight;
-      const triggerPoint = maxScroll - windowHeight * 1.5; // vh before footer
+      const triggerPoint = maxScroll - windowHeight * 1.5;
 
       if (scrollTop >= triggerPoint) {
-        // Progress from 0 to 1 as we approach footer
         const progress = Math.min((scrollTop - triggerPoint) / (windowHeight * 1.5), 1);
         setScrollProgress(progress);
       } else {
@@ -52,7 +68,7 @@ export default function Hero() {
   const blobColor = interpolateColor("#ffffff", "#ff8c00", scrollProgress);
   const lineColor = interpolateColor("#000000", "#ffffff", scrollProgress);
 
-  // ANIMATIONS
+  // Animation transforms
   const scale = useTransform(scrollYProgress, [0, 0.5], [1.2, 1]);
   const y = useTransform(scrollYProgress, [0, 0.5], ["10%", "0%"]);
 
@@ -75,7 +91,7 @@ export default function Hero() {
   };
 
   return (
-    <div ref={containerRef} className="relative h-[125vh] w-full bg-neutral-900 overflow-x-hidden">
+    <div ref={containerRef} className="relative h-[100vh] w-full bg-neutral-900 overflow-x-hidden">
       {/* Overlay Menu */}
       <AnimatePresence>
         {isMenuOpen && (
@@ -108,9 +124,9 @@ export default function Hero() {
               </div>
 
               <div className="flex flex-col gap-4">
-                {menuItems.map((item, index) => (
+                {navItems.map((item, index) => (
                   <motion.button
-                    key={item}
+                    key={item.label}
                     type="button"
                     custom={index}
                     variants={menuItemVariants}
@@ -118,9 +134,12 @@ export default function Hero() {
                     animate="show"
                     exit="exit"
                     className="text-left text-2xl font-semibold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors"
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => {
+                      item.onClick();
+                      setIsMenuOpen(false);
+                    }}
                   >
-                    {item}
+                    {item.label}
                   </motion.button>
                 ))}
               </div>
@@ -134,13 +153,15 @@ export default function Hero() {
         style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
         className="fixed top-8 right-10 z-[999] flex gap-8 text-white mix-blend-difference"
       >
-        {["Projects", "About", "Contact"].map((link) => (
-          <span
-            key={link}
+        {navItems.map((item) => (
+          <button
+            key={item.label}
+            type="button"
+            onClick={item.onClick}
             className="cursor-pointer hover:opacity-50 transition-opacity uppercase text-xl font-medium tracking-widest"
           >
-            {link}
-          </span>
+            {item.label}
+          </button>
         ))}
       </motion.nav>
 
@@ -159,24 +180,19 @@ export default function Hero() {
 
       {/* Hero Stage */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
-
         {/* Layer 0: Side Info */}
-        <motion.div 
-          style={{ opacity: navOpacity }} 
+        <motion.div
+          style={{ opacity: navOpacity }}
           className="absolute top-8 left-6 md:left-10 z-[40] hidden md:flex flex-col gap-6 mix-blend-difference text-white"
         >
-          
           {/* Line 1: Current Status */}
           <div className="group flex flex-col gap-1">
             <p className="font-mono text-[10px] text-white/60 tracking-[0.2em] uppercase">
               01 // Currently
             </p>
             <div className="flex items-center gap-2">
-              {/* Green Dot */}
               <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
-              <h3 className="text-sm font-bold tracking-widest uppercase">
-                CS Student @ INSA
-              </h3>
+              <h3 className="text-sm font-bold tracking-widest uppercase">CS Student @ INSA</h3>
             </div>
           </div>
 
@@ -186,22 +202,18 @@ export default function Hero() {
               02 // Focus
             </p>
             <div className="flex items-center gap-2">
-              {/* The Target */}
               <div className="w-1.5 h-1.5 border border-white/60 rounded-full" />
-              <h3 className="text-sm font-bold tracking-widest uppercase">
-                Aspiring AI Engineer
-              </h3>
+              <h3 className="text-sm font-bold tracking-widest uppercase">Aspiring AI Engineer</h3>
             </div>
           </div>
-
         </motion.div>
-        
+
         {/* Layer 1: Text After Scroll Down */}
         <motion.div
           style={{ opacity: lockedOpacity, scale, y }}
           className="absolute z-10 w-full flex justify-center top-[65%] -translate-y-1/2"
         >
-          <h1 className="text-[15vw] font-black text-white leading-none tracking-tighter whitespace-nowrap">
+          <h1 className="text-[15vw] font-black text-white leading-none tracking-tighter whitespace-nowrap drop-shadow-2xl">
             THEO PHAN
           </h1>
         </motion.div>
@@ -209,7 +221,7 @@ export default function Hero() {
         {/* Layer 2: Main Component */}
         <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
           <img
-            src="/images/me.png"
+            src="/images/me_.png"
             alt="Subject"
             className="h-[100dvh] w-auto max-w-full object-contain drop-shadow-2xl"
           />
@@ -224,7 +236,26 @@ export default function Hero() {
         </motion.div>
 
         {/* Background */}
-        <div className="absolute inset-0 z-0 bg-neutral-900" />
+        <div className="absolute inset-0 z-0 overflow-hidden bg-neutral-800">
+          {/* Dot Pattern */}
+          <div
+            className="absolute inset-0 opacity-[0.2]"
+            style={{
+              backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+              backgroundSize: "40px 40px",
+            }}
+          />
+
+          {/* Cool Light */}
+          <div className="absolute -top-[20%] -right-[10%] w-[70vw] h-[70vw] bg-neutral-600/30 rounded-full blur-[120px] mix-blend-screen" />
+
+          {/* Subtle Warmth/Accent */}
+          <div className="absolute -bottom-[20%] -left-[10%] w-[60vw] h-[60vw] bg-orange-900/20 rounded-full blur-[100px] mix-blend-screen" />
+
+          {/* Vignette */}
+          <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-neutral-900/80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-neutral-900/50 via-transparent to-neutral-900/50" />
+        </div>
       </div>
     </div>
   );

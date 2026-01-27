@@ -6,8 +6,8 @@ The goal of this project is to explore modern web development techniques, includ
 
 ## Tech Stack
 
-* **Core:** [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
-* **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
-* **Animation:** [Framer Motion](https://www.framer.com/motion/)
-* **Scroll Physics:** [Lenis](https://github.com/darkroomengineering/lenis)
-* **Linting:** ESLint + Prettier
+- **Core:** [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **Animation:** [Framer Motion](https://www.framer.com/motion/)
+- **Scroll Physics:** [Lenis](https://github.com/darkroomengineering/lenis)
+- **Linting:** ESLint + Prettier

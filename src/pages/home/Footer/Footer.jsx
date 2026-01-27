@@ -1,5 +1,4 @@
 import CipherText from "./CipherText";
-import Barcode from "./Barcode";
 import { motion } from "framer-motion";
 
 const socialUrls = {
@@ -14,42 +13,41 @@ function TechButton() {
       <motion.div
         className="relative w-full h-full bg-neutral-900 flex flex-col items-center justify-center overflow-hidden group"
         initial={{ clipPath: "polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%)" }}
-        whileTap={{ 
-            clipPath: "polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%)",
-            scale: 0.98
+        whileTap={{
+          clipPath: "polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%)",
+          scale: 0.98,
         }}
-        transition={{ duration: 0.1 }} 
+        transition={{ duration: 0.1 }}
       >
         {/* Background Noise Texture */}
         <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
 
         {/* Central Icon */}
         <span className="text-8xl text-white mb-2 relative z-10 group-active:scale-110 transition-transform duration-200">
-            ✉
+          ✉
         </span>
 
         {/* Infinite Marquee Text */}
         <div className="w-full overflow-hidden relative z-10 border-y border-white/20 py-5 bg-white/5 backdrop-blur-sm mt-18">
-            <motion.div 
-                className="whitespace-nowrap flex gap-8"
-                animate={{ x: ["0%", "-50%"] }} 
-                transition={{ repeat: Infinity, ease: "linear", duration: 10 }}
-            >
-                {/* Duplicated text for seamless loop */}
-                <span className="text-xl font-mono font-bold text-[#FFE400] tracking-[0.2em] uppercase">
-                     Start New Quest /// Send Mail /// Start New Quest /// Send Mail /// 
-                </span>
-                <span className="text-xl font-mono font-bold text-[#FFE400] tracking-[0.2em] uppercase">
-                     Start New Quest /// Send Mail /// Start New Quest /// Send Mail /// 
-                </span>
-            </motion.div>
+          <motion.div
+            className="whitespace-nowrap flex gap-8"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ repeat: Infinity, ease: "linear", duration: 10 }}
+          >
+            {/* Duplicated text for seamless loop */}
+            <span className="text-xl font-mono font-bold text-[#FFE400] tracking-[0.2em] uppercase">
+              Start New Quest /// Send Mail /// Start New Quest /// Send Mail ///
+            </span>
+            <span className="text-xl font-mono font-bold text-[#FFE400] tracking-[0.2em] uppercase">
+              Start New Quest /// Send Mail /// Start New Quest /// Send Mail ///
+            </span>
+          </motion.div>
         </div>
 
         {/* Static Bottom Label */}
         <span className="absolute bottom-12 font-mono text-[10px] text-neutral-500 uppercase tracking-widest z-10">
-            Click to Contact Me
+          Click to Contact Me
         </span>
-
       </motion.div>
     </a>
   );
@@ -58,18 +56,16 @@ function TechButton() {
 export default function Footer() {
   return (
     <footer className="fixed bottom-0 left-0 w-full h-[100vh] bg-white z-0 flex flex-col justify-between">
-      
       {/* Mobile View*/}
       <div className="flex md:hidden w-full h-full flex-col bg-white overflow-hidden justify-between">
-        
         {/* 1. Top Section: Headline */}
         <div className="w-full p-8 pt-28 flex flex-col items-center justify-center text-center">
-            <h3 className="text-2xl font-black text-neutral-900 tracking-tight uppercase mb-2">
-                PORTFOLIO VERSION
-            </h3>
-            <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
-                V. 2026 © EDITION
-            </span>
+          <h3 className="text-2xl font-black text-neutral-900 tracking-tight uppercase mb-2">
+            PORTFOLIO VERSION
+          </h3>
+          <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
+            V. 2026 © EDITION
+          </span>
         </div>
 
         {/* 2. Middle Section */}
@@ -79,25 +75,40 @@ export default function Footer() {
 
         {/* 3. Bottom Section: Socials and Barcode */}
         <div className="w-full border-t border-neutral-100 bg-neutral-50/50">
-            {/* Social Grid */}
-            <div className="grid grid-cols-3 divide-x divide-neutral-100 border-b border-neutral-100">
-                {Object.keys(socialUrls).map((platform) => (
-                    <a key={platform} href={socialUrls[platform]} className="py-6 flex items-center justify-center hover:bg-neutral-100 transition-colors">
-                        <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-800">
-                            {platform}
-                        </span>
-                    </a>
-                ))}
-            </div>
-            
-            {/* Barcode Footer */}
-            <div className="w-full py-6 flex flex-col items-center justify-center gap-2 opacity-30">
-                <Barcode className="h-8" />
-                <span className="font-mono text-[8px] text-neutral-400">ID: Aer-3888</span>
-            </div>
+          {/* Social Grid */}
+          <div className="grid grid-cols-3 divide-x divide-neutral-100 border-b border-neutral-100">
+            {Object.keys(socialUrls).map((platform) => (
+              <a
+                key={platform}
+                href={socialUrls[platform]}
+                className="py-6 flex items-center justify-center hover:bg-neutral-100 transition-colors"
+              >
+                <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-800">
+                  {platform}
+                </span>
+              </a>
+            ))}
+          </div>
+
+          {/* Barcode Footer */}
+          <a
+            href="https://github.com/Aer-3888"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-6 flex flex-col items-center justify-center gap-2 opacity-30 hover:opacity-60 transition-opacity cursor-pointer group"
+          >
+            <img
+              src="https://barcode.tec-it.com/barcode.ashx?data=https://github.com/Aer-3888&code=Code128&translate-esc=on"
+              alt="Scan barcode to visit GitHub"
+              className="h-16 group-hover:scale-105 transition-transform"
+            />
+            <span className="font-mono text-[8px] text-neutral-400">
+              SCAN OR CLICK - ID: Aer-3888
+            </span>
+          </a>
         </div>
       </div>
-      
+
       {/* Desktop View */}
       <div className="hidden md:flex w-full h-full flex-col justify-between px-6 md:px-12 py-12">
         <div className="w-full flex items-start border-b border-neutral-200 pb-6">
@@ -126,17 +137,23 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-col items-end gap-6">
-            <div className="hidden md:block">
-              <Barcode />
-            </div>
+            <a
+              href="https://github.com/Aer-3888"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden md:block opacity-50 hover:opacity-100 transition-opacity cursor-pointer group"
+              title="Scan or click to visit GitHub"
+            >
+              <img
+                src="https://barcode.tec-it.com/barcode.ashx?data=https://github.com/Aer-3888&code=Code128&translate-esc=on"
+                alt="Scan barcode to visit GitHub"
+                className="h-12 group-hover:scale-105 transition-transform"
+              />
+            </a>
 
             <div className="flex gap-6">
               {Object.keys(socialUrls).map((link) => (
-                <a
-                  key={link}
-                  href={socialUrls[link]}
-                  className="relative group overflow-hidden"
-                >
+                <a key={link} href={socialUrls[link]} className="relative group overflow-hidden">
                   <span className="block font-mono text-sm text-neutral-900 group-hover:-translate-y-full transition-transform duration-300">
                     {link}
                   </span>

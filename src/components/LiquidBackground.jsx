@@ -13,11 +13,7 @@ const blobShapes = [
 
 const circlePath = "M50,5 C75,5 95,25 95,50 C95,75 75,95 50,95 C25,95 5,75 5,50 C5,25 25,5 50,5 Z";
 
-export default function LiquidBackground({
-  isHovered,
-  speed = 0.0007,
-  blobColor = "white",
-}) {
+export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor = "white" }) {
   // Build flubber interpolators for each adjacent pair, memoized
   const morphers = useMemo(() => {
     return blobShapes.map((shape, i) =>

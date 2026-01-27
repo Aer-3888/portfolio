@@ -31,11 +31,11 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
             aria-label="Toggle menu"
           >
             <div className="absolute inset-0 pointer-events-none">
-               <LiquidBackground isHovered={isHovered} blobColor={blobColor} />
+              <LiquidBackground isHovered={isHovered} blobColor={blobColor} />
             </div>
-            
+
             <div className="relative z-10 pointer-events-none">
-               <BurgerLines isOpen={isOpen} lineColor={lineColor} />
+              <BurgerLines isOpen={isOpen} lineColor={lineColor} />
             </div>
           </button>
         </motion.div>

@@ -3,24 +3,33 @@ import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 export const hobbies = [
   {
     id: "climb",
-    index: 0, 
+    index: 0,
     label: "BOULDERING",
-    description: "Solving gravity puzzles.",
-    image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=800&auto=format&fit=crop",
+    title: "BOULDERING",
+    description:
+      "Physical algorithm design. Debugging movement patterns and refining execution until the route is solved.",
+    image:
+      "https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=800&auto=format&fit=crop",
   },
   {
     id: "photo",
     index: 1,
     label: "PHOTOGRAPHY",
-    description: "Capturing light & shapes.",
-    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=800&auto=format&fit=crop",
+    title: "PHOTOGRAPHY",
+    description:
+      "Freezing reality. A study of light physics, urban geometry, and shifting perspectives.",
+    image:
+      "/images/Gallery/IMG_6732.jpg",
   },
   {
     id: "escape",
     index: 2,
-    label: "ESCAPE GAMES", 
-    description: "Pattern recognition & logic under pressure.",
-    image: "https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?q=80&w=800&auto=format&fit=crop", 
+    label: "ESCAPE GAMES",
+    title: "ESCAPE GAMES",
+    description:
+      "Logic under pressure. Decrypting patterns and breaking complex systems before the timer hits zero.",
+    image:
+      "https://images.unsplash.com/photo-1519074069444-1ba4fff66d16?q=80&w=800&auto=format&fit=crop",
   },
 ];
 

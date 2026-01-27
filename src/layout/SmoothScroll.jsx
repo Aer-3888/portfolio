@@ -10,7 +10,6 @@ export default function SmoothScroll({ children }) {
       smoothWheel: true,
     });
 
-    // Sync Lenis with the browser's Request Animation Frame
     function raf(time) {
       lenis.raf(time);
       requestAnimationFrame(raf);

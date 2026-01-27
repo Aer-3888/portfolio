@@ -1,6 +1,14 @@
 import { motion } from "framer-motion";
 
-export default function ProjectItem({ title, year, services, index, isActive, isCoarsePointer, onToggle }) {
+export default function ProjectItem({
+  title,
+  year,
+  services,
+  index,
+  isActive,
+  isCoarsePointer,
+  onToggle,
+}) {
   // Animation variants for the expansion
   const containerVariants = {
     idle: { height: 112 },
@@ -36,9 +44,7 @@ export default function ProjectItem({ title, year, services, index, isActive, is
           </h3>
         </motion.div>
 
-        <span className="text-lg font-mono text-neutral-500 mix-blend-difference z-10">
-          {year}
-        </span>
+        <span className="text-lg font-mono text-neutral-500 mix-blend-difference z-10">{year}</span>
       </div>
 
       {/* Expanded Content: Services & Arrow */}
@@ -50,9 +56,7 @@ export default function ProjectItem({ title, year, services, index, isActive, is
           hover: { opacity: 1, y: 0, transition: { delay: 0.1 } },
         }}
       >
-        <p className="text-neutral-400 font-light text-lg tracking-wide uppercase">
-          {services}
-        </p>
+        <p className="text-neutral-400 font-light text-lg tracking-wide uppercase">{services}</p>
 
         {/* Big Arrow Icon */}
         <motion.svg

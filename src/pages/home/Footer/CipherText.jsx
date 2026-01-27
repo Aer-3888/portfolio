@@ -1,58 +1,79 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const phrases = ["READY TO\nDISRUPT?", "HELLO \n WORLD.", "STUDENT \n HERE!"];
-
-const GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+={}|[]:;<>?,./";
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";
+const PHRASES = ["READY TO\nDISRUPT?", "HELLO \n WORLD.", "STUDENT \n HERE!"];
 
 export default function CipherText() {
-  const [text, setText] = useState(phrases[0]);
-  const [index, setIndex] = useState(0);
-  const intervalRef = useRef(null);
+  const [display, setDisplay] = useState("");
+  const [phraseIndex, setPhraseIndex] = useState(0); 
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
 
-  // The Decryption Effect
-  const scramble = (targetPhrase) => {
-    let iterations = 0;
+  useEffect(() => {
+    if (!isInView) return;
 
-    clearInterval(intervalRef.current);
+    const currentPhrase = PHRASES[phraseIndex];
+    let currentIndex = 0;   
+    let scrambleTicks = 0;  
+    const maxScrambleTicks = 3; 
+    let isPaused = false;       
 
-    intervalRef.current = setInterval(() => {
-      // Generate the scrambled text
-      const scrambled = targetPhrase
-        .split("")
-        .map((char, i) => {
-          if (char === "\n") return "\n";
-          if (i < iterations) return char;
-          return GLYPHS[Math.floor(Math.random() * GLYPHS.length)]; // Show random glyph
-        })
-        .join("");
+    const interval = setInterval(() => {
+      if (isPaused) return;
 
-      setText(scrambled);
+      if (currentIndex >= currentPhrase.length) {
+        setDisplay(currentPhrase); 
+        isPaused = true;           
 
-      // Speed of decryption
-      if (iterations >= targetPhrase.length) {
-        clearInterval(intervalRef.current);
+        setTimeout(() => {
+          setPhraseIndex((prev) => (prev + 1) % PHRASES.length); 
+        }, 2000);
+        
+        return;
       }
 
-      iterations += 1 / 3;
-    }, 40);
-  };
+      const solvedPart = currentPhrase.substring(0, currentIndex);
+      let currentPart = "";
+      const char = currentPhrase[currentIndex];
 
-  // Cycle through phrases
-  useEffect(() => {
-    const cycle = setInterval(() => {
-      setIndex((prev) => {
-        const next = (prev + 1) % phrases.length;
-        scramble(phrases[next]);
-        return next;
-      });
-    }, 4000); // Wait 4s
+      if (char === " " || char === "\n") {
+        currentPart = char;
+      } else {
+        currentPart = CHARS[Math.floor(Math.random() * CHARS.length)];
+      }
 
-    return () => clearInterval(cycle);
-  }, []);
+      setDisplay(solvedPart + currentPart);
+
+      scrambleTicks++;
+      
+      if (char === " " || char === "\n") {
+         currentIndex++;
+         scrambleTicks = 0;
+      } 
+      else if (scrambleTicks > maxScrambleTicks) {
+        scrambleTicks = 0;
+        currentIndex++;
+      }
+      
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [isInView, phraseIndex]);
 
   return (
-    <h2 className="text-[12vw] leading-[0.8] font-black text-neutral-900 tracking-tighter uppercase text-left whitespace-pre-line font-mono">
-      {text}
-    </h2>
+    <span 
+      ref={ref} 
+      className="block text-[9vw] leading-[0.9] font-black text-neutral-900 tracking-tighter whitespace-pre-line min-h-[1em]"
+    >
+      {display}
+      <motion.span 
+        animate={{ opacity: [0, 1, 0] }} 
+        transition={{ repeat: Infinity, duration: 0.8 }}
+        className="text-orange-500 inline-block ml-1 align-baseline"
+      >
+        _
+      </motion.span>
+    </span>
   );
 }
