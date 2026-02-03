@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { NAV_ITEMS, SOCIALS } from "../../config/siteData";
 import NavButtons from "../../components/NavButtons";
 import ContactTerminal from "./ContactTerminal"; 
-
-const SOCIALS = [
-  { label: "GitHub", url: "https://github.com/Aer-3888", id: "GH-REP" },
-  { label: "LinkedIn", url: "https://www.linkedin.com/in/theophanquochuy/", id: "LN-PRO" },
-  { label: "Instagram", url: "https://www.instagram.com/phan.theo.huy/", id: "IG-VIS" },
-];
+import HomeButton from "../../components/HomeButton";
 
 export default function ContactPage() {
   const navigate = useNavigate();
@@ -25,11 +21,11 @@ export default function ContactPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const navItems = [
-    { label: "Home", onClick: () => navigate("/") },
-    { label: "Projects", onClick: () => navigate("/", { state: { scrollTo: "projects" } }) },
-    { label: "About", onClick: () => navigate("/about") },
-  ];
+  const navItems = NAV_ITEMS.map((item) => ({
+    label: item.label,
+    path: item.path,
+    onClick: () => navigate(item.path),
+  }));
 
   const handleCopyEmail = () => {
     try {
@@ -63,18 +59,12 @@ export default function ContactPage() {
       </div>
 
       {/* Home Button */}
-      <div className="fixed top-8 left-6 md:left-10 z-[1200]">
-          <button
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md text-white/80 text-xs font-mono uppercase tracking-[0.2em] hover:bg-white/10 hover:text-white transition-colors cursor-pointer mix-blend-difference"
-          >
-            <span className="text-lg">←</span>
-            <span className="hidden sm:inline ">Home</span>
-          </button>
-      </div>
+        <div className="fixed top-8 left-6 md:left-10 z-[1200]">
+          <HomeButton />
+        </div>
 
       {/* Other Navigation Buttons */}
-      <NavButtons items={navItems} className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference" />
+      <NavButtons items={navItems} currentPath="/contact" className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference" />
 
       <div className="relative z-10 min-h-screen flex items-center justify-center p-4 pt-24 md:p-8 md:pt-20">
         

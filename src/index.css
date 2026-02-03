@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* --- 1. LENIS SMOOTH SCROLL SETUP --- */
+/* Lenis smooth scrolling styles */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -15,7 +15,7 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* --- 2. GLOBAL THEME --- */
+/* Global styles and custom utilities */
 @theme {
   --font-sans: "Inter", sans-serif;
   --color-dark: #0a0a0a;
@@ -27,7 +27,6 @@ body {
   font-family: var(--font-sans);
 }
 
-/* --- 3. CUSTOM UTILITIES --- */
 @utility transform-style-3d {
   transform-style: preserve-3d;
 }
@@ -40,6 +39,18 @@ html {
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
+
 html::-webkit-scrollbar {
   display: none;
+}
+
+/* Global election color*/
+::selection {
+  background-color: rgba(249,115,22,0.35); /* orange-500 ~ 35% */
+  color: white;
+}
+
+::-moz-selection {
+  background-color: rgba(249,115,22,0.35);
+  color: white;
 }

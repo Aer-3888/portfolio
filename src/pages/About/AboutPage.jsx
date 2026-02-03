@@ -1,5 +1,11 @@
-import { useRef, useState, useEffect } from "react";
-import { useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react"; // Removed useEffect
+import { useScroll, useTransform, motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { NAV_ITEMS } from "../../config/siteData";
+import HomeButton from "../../components/HomeButton";
+import NavButtons from "../../components/NavButtons";
+import LiquidMenu from "../../components/layout/LiquidMenu";
+import MenuPanel from "../../components/MenuPanel";
 import SmoothScroll from "../../components/layout/SmoothScroll";
 import SystemWindow from "./SystemWindow";
 
@@ -14,13 +20,24 @@ export default function AboutPage() {
   const menuOpacity = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
   const navPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "none" : "auto"));
   const menuPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "auto" : "none"));
-  const [isMenuInteractive, setIsMenuInteractive] = useState(true);
 
-  useEffect(() => {
-    const unsub = menuPointerEvents.onChange((v) => setIsMenuInteractive(v === "auto"));
-    setIsMenuInteractive(menuPointerEvents.get() === "auto");
-    return unsub;
-  }, [menuPointerEvents]);
+  const navigate = useNavigate();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuTemporarilyHidden, setIsMenuTemporarilyHidden] = useState(false);
+  const [isNavTemporarilyHidden, setIsNavTemporarilyHidden] = useState(false);
+
+  const navItems = NAV_ITEMS.map((item) => ({
+    label: item.label,
+    path: item.path,
+    className: item.className,
+    onClick: item.path ? () => navigate(item.path) : item.onClick,
+  }));
+
+  const handleGalleryFullscreenChange = (isFull) => {
+    if (isFull) setIsMenuOpen(false);
+    setIsMenuTemporarilyHidden(isFull);
+    setIsNavTemporarilyHidden(isFull);
+  };
 
   return (
     <SmoothScroll>
@@ -50,13 +67,52 @@ export default function AboutPage() {
           </p>
         </div>
 
-        {/* 2. The System Window */}
+        {/* Nav */}
+        {!isNavTemporarilyHidden && (
+          <div className="hidden md:block fixed top-8 left-6 md:left-10 z-[1200]">
+            <HomeButton />
+          </div>
+        )}
+
+        {!isNavTemporarilyHidden && (
+          <NavButtons
+            items={navItems}
+            currentPath="/about"
+            navOpacity={navOpacity}
+            navPointerEvents={navPointerEvents}
+            className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
+          />
+        )}
+
+        <motion.div
+          style={{
+            opacity: isMenuTemporarilyHidden ? 0 : menuOpacity,
+            pointerEvents: isMenuTemporarilyHidden ? "none" : menuPointerEvents,
+          }}
+          className="fixed top-8 right-10 z-[1200]"
+          aria-hidden={isMenuTemporarilyHidden}
+        >
+          {!isMenuTemporarilyHidden && (
+            <LiquidMenu
+              isOpen={isMenuOpen}
+              toggle={() => setIsMenuOpen((v) => !v)}
+              blobColor="#ffffff"
+              lineColor="#000000"
+            />
+          )}
+        </motion.div>
+
+        {/* Menu panel */}
+        <MenuPanel isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} navItems={navItems} />
+
+        {/* System Window */}
         <SystemWindow
           navOpacity={navOpacity}
           navPointerEvents={navPointerEvents}
           menuOpacity={menuOpacity}
           menuPointerEvents={menuPointerEvents}
-          menuInteractive={isMenuInteractive}
+          menuInteractive={true} 
+          onFullscreenChange={handleGalleryFullscreenChange}
         />
       </main>
     </SmoothScroll>

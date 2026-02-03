@@ -1,35 +1,16 @@
 import { useRef, useState, useEffect } from "react";
-import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import InfiniteLoopText from "../../../components/InfiniteLoopText";
-import LiquidMenu from "../../../components/layout/LiquidMenu";
 import NavButtons from "../../../components/NavButtons";
-import { nav } from "framer-motion/client";
-
-// Color interpolation helper
-function interpolateColor(color1, color2, factor) {
-  const c1 = color1.match(/\w\w/g).map((c) => parseInt(c, 16));
-  const c2 = color2.match(/\w\w/g).map((c) => parseInt(c, 16));
-  const result = c1.map((c, i) => Math.round(c + factor * (c2[i] - c)));
-  return `#${result.map((c) => c.toString(16).padStart(2, "0")).join("")}`;
-}
 
 export default function Hero() {
   const containerRef = useRef(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMenuInteractive, setIsMenuInteractive] = useState(true);
   const [scrollProgress, setScrollProgress] = useState(0);
   const navigate = useNavigate();
 
-  const scrollToProjects = () => {
-    const section = document.getElementById("projects");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
   const navItems = [
-    { label: "Projects", onClick: scrollToProjects },
+    { label: "Projects", onClick: ()=> navigate("/projects") },
     { label: "About", onClick: () => navigate("/about") },
     { label: "Contact", onClick: () => navigate("/contact") },
   ];
@@ -64,10 +45,6 @@ export default function Hero() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Interpolate colors based on scroll progress
-  const blobColor = interpolateColor("#ffffff", "#ff8c00", scrollProgress);
-  const lineColor = interpolateColor("#000000", "#ffffff", scrollProgress);
-
   // Animation transforms
   const scale = useTransform(scrollYProgress, [0, 0.5], [1.2, 1]);
   const y = useTransform(scrollYProgress, [0, 0.5], ["10%", "0%"]);
@@ -78,104 +55,16 @@ export default function Hero() {
 
   // Navigation Switch Logic
   const navOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-  const menuOpacity = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
 
-  // Pointer Events Logic
-  const navPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "none" : "auto"));
-  const menuPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "auto" : "none"));
-
-  // Keep a React state copy of the MotionValue for pointer-events
   useEffect(() => {
-    const unsub = menuPointerEvents.onChange((v) => {
-      setIsMenuInteractive(v === "auto");
-    });
-    // initialize
-    setIsMenuInteractive(menuPointerEvents.get() === "auto");
+    const unsub = navOpacity.on("change", () => {});
     return unsub;
-  }, [menuPointerEvents]);
-
-  const menuItemVariants = {
-    hidden: { opacity: 0, x: 20 },
-    show: (i) => ({ opacity: 1, x: 0, transition: { delay: i * 0.08, duration: 0.25 } }),
-    exit: { opacity: 0, x: 10, transition: { duration: 0.15 } },
-  };
+  }, [navOpacity]);
 
   return (
     <div ref={containerRef} className="relative h-[100vh] w-full bg-neutral-900 overflow-x-hidden">
-      {/* Overlay Menu */}
-      <AnimatePresence>
-        {isMenuOpen && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1090]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => setIsMenuOpen(false)}
-            />
-
-            <motion.aside
-              className="fixed top-0 right-0 h-screen w-[320px] max-w-[85vw] bg-neutral-950/90 border-l border-white/10 shadow-2xl z-[1100] p-8 flex flex-col gap-8"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 260, damping: 28 }}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm uppercase tracking-[0.3em] text-white/60">Menu</span>
-                <button
-                  type="button"
-                  className="text-white/70 hover:text-white text-sm tracking-widest uppercase"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Close
-                </button>
-              </div>
-
-              <div className="flex flex-col gap-4">
-                {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.label}
-                    type="button"
-                    custom={index}
-                    variants={menuItemVariants}
-                    initial="hidden"
-                    animate="show"
-                    exit="exit"
-                    className="text-left text-2xl font-semibold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors"
-                    onClick={() => {
-                      item.onClick();
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
-              </div>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
-
       {/* 1. Text Navigation (Visible at Top) */}
-      <NavButtons items={navItems} navOpacity={navOpacity} navPointerEvents={navPointerEvents} />
-
-      {/* 2. Liquid Menu (Visible on Scroll) */}
-      <motion.div
-        style={{ opacity: menuOpacity, pointerEvents: isMenuInteractive ? "auto" : "none" }}
-        className={`fixed top-8 right-10 z-[999] ${isMenuInteractive ? "" : "pointer-events-none"}`}
-        aria-hidden={!isMenuInteractive}
-      >
-        {isMenuInteractive && (
-          <LiquidMenu
-            isOpen={isMenuOpen}
-            toggle={() => setIsMenuOpen(!isMenuOpen)}
-            blobColor={blobColor}
-            lineColor={lineColor}
-          />
-        )}
-      </motion.div>
+      <NavButtons items={navItems} navOpacity={navOpacity} />
 
       {/* Hero Stage */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">

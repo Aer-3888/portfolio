@@ -22,7 +22,7 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
       >
         <motion.div
           style={{ x: xSpring, y: ySpring }}
-          className="relative pointer-events-auto cursor-pointer"
+          className="relative cursor-pointer"
         >
           <button
             onClick={toggle}

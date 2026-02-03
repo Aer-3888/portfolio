@@ -1,6 +1,8 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useSpring, useMotionValue, useScroll, useTransform } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import ProjectItem from "./ProjectItem";
+import { PROJECTS } from "../../../config/siteData";
 
 function Cursor({ mouseX, mouseY, isHovered }) {
   const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
@@ -23,13 +25,7 @@ function Cursor({ mouseX, mouseY, isHovered }) {
   );
 }
 
-// Project Data
-const projects = [
-  { title: "Waiki", year: "2025", services: "Flutter -  Mobile Development" },
-  { title: "Portfolio", year: "2026", services: "Front End - Animation - React" },
-  { title: "Morph", year: "2023", services: "Concept - WebGL" },
-  { title: "Helios", year: "2023", services: "Branding - React Native" },
-];
+// Project Data moved to src/config/siteData.js as PROJECTS
 
 // Scroll Reveal Component
 function ScrollReveal({ children, className }) {
@@ -50,6 +46,7 @@ function ScrollReveal({ children, className }) {
 
 export default function ProjectList() {
   const containerRef = useRef(null);
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [entryPoint, setEntryPoint] = useState(null);
   const [activeProject, setActiveProject] = useState(null);
@@ -150,7 +147,7 @@ export default function ProjectList() {
           <div className="flex items-center gap-4 mb-4">
             <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
             <h2 className="text-white/50 font-mono text-sm tracking-widest uppercase">
-              Highlight Projects (04)
+              {`Highlight Projects (${String(Math.min(4, PROJECTS.length)).padStart(2, "0")})`}
             </h2>
           </div>
         </ScrollReveal>
@@ -161,14 +158,16 @@ export default function ProjectList() {
 
       {/* List */}
       <div className="container mx-auto px-0 z-10 relative">
-        {projects.map((project, i) => (
-          <ScrollReveal key={i} className="w-full">
+        {PROJECTS.slice(0, 4).map((project, i) => (
+          <ScrollReveal key={project.id || i} className="w-full">
             <ProjectItem
               index={i}
               isActive={activeProject === i}
               isCoarsePointer={isCoarsePointer}
               onToggle={() => handleProjectToggle(i)}
-              {...project}
+              title={project.title}
+              year={project.year}
+              services={project.services}
             />
           </ScrollReveal>
         ))}
@@ -180,7 +179,7 @@ export default function ProjectList() {
             whileHover="hover"
             initial="initial"
             className="group relative px-10 py-5 border border-white/20 overflow-hidden bg-transparent cursor-pointer flex items-center gap-4"
-            onClick={() => console.log("Navigate to all projects")}
+            onClick={() => navigate("/projects")}
           >
             {/* 1. Fill Animation: Slides up from bottom */}
             <motion.div

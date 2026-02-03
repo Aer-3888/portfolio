@@ -1,23 +1,10 @@
 import { useState, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence, useDragControls, useAnimation } from "framer-motion";
-import LiquidMenu from "../../components/layout/LiquidMenu";
-import NavButtons from "../../components/NavButtons";
+import { motion, useDragControls, useAnimation } from "framer-motion";
 import GitGraph from "./GitGraph";
 import GalleryInspector from "./GalleryInspector";
 
-export default function SystemWindow({
-  navOpacity,
-  navPointerEvents,
-  menuOpacity,
-  menuPointerEvents,
-  menuInteractive = true,
-}) {
+export default function SystemWindow({ onFullscreenChange }) {
   const [activeTab, setActiveTab] = useState("git");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMenuTemporarilyHidden, setIsMenuTemporarilyHidden] = useState(false);
-  const [isNavTemporarilyHidden, setIsNavTemporarilyHidden] = useState(false);
-  const navigate = useNavigate();
 
   // Drag Controls and Animation Controls
   const dragControls = useDragControls();
@@ -38,116 +25,15 @@ export default function SystemWindow({
     }
   };
 
-  const navItems = [
-    { label: "Home", onClick: () => navigate("/"), className: "md:hidden" },
-    { label: "Projects", onClick: () => navigate("/", { state: { scrollTo: "projects" } }) },
-    { label: "Contact", onClick: () => navigate("/contact") },
-  ];
-
-  const handleGalleryFullscreenChange = useCallback((isFull) => {
-    if (isFull) setIsMenuOpen(false);
-    setIsMenuTemporarilyHidden(isFull);
-    setIsNavTemporarilyHidden(isFull);
-  }, []);
+  const handleGalleryFullscreenChange = useCallback(
+    (isFull) => {
+      if (typeof onFullscreenChange === "function") onFullscreenChange(isFull);
+    },
+    [onFullscreenChange]
+  );
 
   return (
     <>
-      {!isNavTemporarilyHidden && (
-        <div className="hidden md:block fixed top-8 left-6 md:left-10 z-[1200]">
-          <button
-            type="button"
-            onClick={() => navigate("/")}
-            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-xs font-mono uppercase tracking-[0.2em] hover:bg-white/20 transition-colors mix-blend-difference cursor-pointer"
-          >
-            <span className="text-lg">←</span>
-            <span className="hidden sm:inline">Home</span>
-          </button>
-        </div>
-      )}
-
-      {!isNavTemporarilyHidden && (
-        <NavButtons
-          items={navItems}
-          navOpacity={navOpacity}
-          navPointerEvents={navPointerEvents}
-          className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
-        />
-      )}
-
-      <motion.div
-        style={{
-          opacity: menuOpacity,
-          pointerEvents: isMenuTemporarilyHidden || !menuInteractive ? "none" : menuPointerEvents,
-        }}
-        className="fixed top-8 right-10 z-[1200]"
-        aria-hidden={isMenuTemporarilyHidden || !menuInteractive}
-      >
-        {!isMenuTemporarilyHidden && menuInteractive && (
-          <LiquidMenu
-            isOpen={isMenuOpen}
-            toggle={() => setIsMenuOpen((v) => !v)}
-            blobColor="#ffffff"
-            lineColor="#000000"
-          />
-        )}
-      </motion.div>
-
-      <AnimatePresence>
-        {isMenuOpen && (
-          <>
-            <motion.div
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1190]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              onClick={() => setIsMenuOpen(false)}
-            />
-            <motion.aside
-              className="fixed top-0 right-0 h-screen w-[320px] max-w-[85vw] bg-neutral-950/95 border-l border-white/10 shadow-2xl z-[1200] p-8 flex flex-col gap-8"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", stiffness: 260, damping: 28 }}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-sm uppercase tracking-[0.3em] text-white/60">Menu</span>
-                <button
-                  type="button"
-                  className="text-white/70 hover:text-white text-sm tracking-widest uppercase"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Close
-                </button>
-              </div>
-              <div className="flex flex-col gap-4">
-                {navItems.map((item, index) => (
-                  <motion.button
-                    key={item.label}
-                    type="button"
-                    custom={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{
-                      opacity: 1,
-                      x: 0,
-                      transition: { delay: index * 0.05, duration: 0.25 },
-                    }}
-                    exit={{ opacity: 0, x: 10, transition: { duration: 0.15 } }}
-                    className="text-left text-2xl font-semibold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors"
-                    onClick={() => {
-                      item.onClick();
-                      setIsMenuOpen(false);
-                    }}
-                  >
-                    {item.label}
-                  </motion.button>
-                ))}
-              </div>
-            </motion.aside>
-          </>
-        )}
-      </AnimatePresence>
-
       {/* Animated wrapper for the draggable window only */}
       <motion.div
         initial={{ y: 50, opacity: 0 }}
@@ -189,7 +75,7 @@ export default function SystemWindow({
                   }
                 `}
               >
-                <span className={activeTab === "git" ? "text-orange-500" : "opacity-50"}>
+                <span className={'cursor-pointer ' + (activeTab === "git" ? "text-orange-500" : "opacity-50")}>
                   ./git_log
                 </span>
               </button>
@@ -206,7 +92,7 @@ export default function SystemWindow({
                   }
                 `}
               >
-                <span className={activeTab === "gallery" ? "text-blue-500" : "opacity-50"}>
+                <span className={'cursor-pointer ' + (activeTab === "gallery" ? "text-blue-500" : "opacity-50")}>
                   ./gallery
                 </span>
               </button>
