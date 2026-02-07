@@ -1,45 +1,74 @@
-import { useRef, useEffect, useState } from "react";
-import { 
-  motion, 
-  useScroll, 
-  useTransform,
-  useMotionValue,
-  useSpring,
-} from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useSpring, useAnimation } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import NavButtons from "../../components/NavButtons"; 
+import NavButtons from "../../components/NavButtons";
 import HomeButton from "../../components/HomeButton";
 import FloatingCard from "./FloatingCard";
-import ScrollVideo from "./ScrollVideo";
 import { NAV_ITEMS, PROJECTS } from "../../config/siteData";
+import SmoothScroll from "../../components/layout/SmoothScroll";
+import { BackgrounGrid } from "./BackgroundGrid";
 
 export default function ProjectsPage() {
   const navigate = useNavigate();
   const containerRef = useRef(null);
-  
-  // Track scroll velocity for momentum effects
-  const scrollVelocity = useMotionValue(0);
-  
-  // Refs for custom scroll physics
-  let velocityTimeout = useRef(null);
-  let lastScrollTime = useRef(Date.now());
 
-  // Reset scroll position on component mount for consistent entry
+  const [hasEntered, setHasEntered] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
+
+  const introControls = useAnimation();
+  const flashControls = useAnimation();
+  const tunnelControls = useAnimation();
+  const entryControls = useAnimation();
+
+  // Lock scroll on mount
   useEffect(() => {
-    const resetScroll = () => {
-      window.scrollTo(0, 0);
+    document.body.style.overflow = "hidden";
+    window.scrollTo(0, 0);
+    return () => {
+      document.body.style.overflow = "";
     };
-    
-    resetScroll();
-    requestAnimationFrame(resetScroll);
-    
-    return () => clearTimeout(velocityTimeout.current);
   }, []);
+
+  // Warp Sequence
+  const handleWarp = async () => {
+    setHasEntered(true);
+
+    const zoomDone = introControls.start({
+      scale: 15,
+      opacity: 0,
+      filter: "blur(8px)",
+      transition: { duration: 1.2, ease: [0.7, 0, 0.3, 1] },
+    });
+
+    const flashDone = flashControls.start({
+      opacity: [0, 1, 1, 0],
+      transition: { duration: 1.0, times: [0, 0.3, 0.6, 1], delay: 0.5 },
+    });
+
+    await Promise.all([zoomDone, flashDone]);
+
+    setShowIntro(false);
+    window.scrollTo(0, 0);
+
+    await new Promise((r) => requestAnimationFrame(r));
+
+    tunnelControls.start({
+      opacity: 1,
+      transition: { duration: 0.4, ease: "easeOut" },
+    });
+
+    await entryControls.start({
+      x: 0,
+      transition: { duration: 2.4, ease: [0.16, 1, 0.3, 1] },
+    });
+
+    document.body.style.overflow = "";
+  };
 
   // Scroll Progress Tracking
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end end"],
   });
 
   // Apply spring physics to scroll
@@ -49,224 +78,182 @@ export default function ProjectsPage() {
     stiffness: 100,
   });
 
-  // Horizontal Scroll 
-  useEffect(() => {
-    let touchStartX = null;
-    let touchStartY = null;
-    let touchStartTime = null;
-    let isHorizontalScroll = false;
-
-    // Handle Mouse Wheel events
-    const handleWheel = (e) => {
-      // user scroll horizontally ?
-      const isHorizontal = Math.abs(e.deltaX) > Math.abs(e.deltaY) * 0.7;
-      
-      if (isHorizontal && e.deltaX !== 0) {
-        // Prevent default browser history navigation
-        e.preventDefault();
-        
-        const now = Date.now();
-        const deltaTime = now - lastScrollTime.current;
-        const velocity = e.deltaX / Math.max(deltaTime, 16);
-        
-        scrollVelocity.set(velocity);
-        lastScrollTime.current = now;
-
-        // Apply eased scroll
-        const easeMultiplier = 0.95 + Math.min(Math.abs(velocity) * 0.002, 0.05);
-        window.scrollBy({
-          top: e.deltaX * easeMultiplier,
-          behavior: "smooth"
-        });
-        
-        clearTimeout(velocityTimeout.current);
-        velocityTimeout.current = setTimeout(() => {
-          scrollVelocity.set(0);
-        }, 150);
-      }
-    };
-
-    // Touch Event Handlers for Mobile
-    const handleTouchStart = (e) => {
-      touchStartX = e.touches[0].clientX;
-      touchStartY = e.touches[0].clientY;
-      touchStartTime = Date.now();
-      isHorizontalScroll = false;
-    };
-
-    const handleTouchMove = (e) => {
-      if (touchStartX === null || touchStartY === null) return;
-
-      const touchCurrentX = e.touches[0].clientX;
-      const touchCurrentY = e.touches[0].clientY;
-
-      const diffX = touchStartX - touchCurrentX;
-      const diffY = touchStartY - touchCurrentY;
-
-      // Detect if the swipe is horizontal
-      if (!isHorizontalScroll && Math.abs(diffX) > Math.abs(diffY) * 1.5 && Math.abs(diffX) > 10) {
-        isHorizontalScroll = true;
-      }
-
-      // Horizontal scrolling
-      if (isHorizontalScroll && e.cancelable) {
-        e.preventDefault();
-        
-        window.scrollBy({
-          top: diffX * 0.8,
-          left: 0,
-          behavior: "auto"
-        });
-
-        const now = Date.now();
-        const velocity = diffX / Math.max(now - touchStartTime, 16);
-        scrollVelocity.set(velocity);
-      }
-    };
-
-    const handleTouchEnd = () => {
-      if (isHorizontalScroll) {
-        // Clear velocity after touch release
-        velocityTimeout.current = setTimeout(() => {
-          scrollVelocity.set(0);
-        }, 300);
-      }
-      touchStartX = null;
-      touchStartY = null;
-      touchStartTime = null;
-      isHorizontalScroll = false;
-    };
-
-    // Passive: false is required to preventDefault
-    window.addEventListener("wheel", handleWheel, { passive: false });
-    window.addEventListener("touchstart", handleTouchStart, { passive: false });
-    window.addEventListener("touchmove", handleTouchMove, { passive: false });
-    window.addEventListener("touchend", handleTouchEnd);
-    
-    return () => {
-      window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchstart", handleTouchStart);
-      window.removeEventListener("touchmove", handleTouchMove);
-      window.removeEventListener("touchend", handleTouchEnd);
-      clearTimeout(velocityTimeout.current);
-    };
-  }, []);
-
-  // Scroll-Based Animations
-  const introOpacity = useTransform(smoothScroll, [0, 0.1], [1, 0]);
-  const introScale = useTransform(smoothScroll, [0, 0.1], [1, 0.92]);
-  const introY = useTransform(smoothScroll, [0, 0.1], ["0%", "-20%"]);
-  const overlayOpacity = useTransform(smoothScroll, [0, 0.1], [0.5, 0]);
-
-  // Video Background Animations
-  const videoOpacity = useTransform(smoothScroll, [0.38, 0.52], [1, 0]);
-  const videoScale = useTransform(smoothScroll, [0.38, 0.52], [1, 1.05]);
-
-  // Tunnel Animations
-  const tunnelX = useTransform(smoothScroll, [0.48, 0.92], ["12%", "-68%"]);
-  const tunnelOpacity = useTransform(smoothScroll, [0.43, 0.58], [0, 1]);
-  const tunnelY = useTransform(smoothScroll, [0.48, 0.65], ["30px", "0px"]);
+  // Map Vertical Scroll to Horizontal Move
+  const tunnelX = useTransform(smoothScroll, [0, 1], ["0%", "-70%"]);
+  const tunnelTextX = useTransform(smoothScroll, [0, 1], ["0%", "30%"]);
 
   return (
-    <div className="bg-neutral-950 text-white font-sans selection:bg-orange-500/30">
-        
-      {/* Navigation */}
-      <div className="fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference">
+    <SmoothScroll>
+      <div className="bg-neutral-950 text-white font-sans selection:bg-orange-500/30 overflow-x-hidden">
+        {/* Navigation */}
+        <div className="fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference">
           <HomeButton />
-      </div>
-      <NavButtons 
-        items={NAV_ITEMS.map(item => ({ ...item, onClick: () => navigate(item.path) }))}
-        currentPath="/projects"
-        className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
-      />
+        </div>
+        <NavButtons
+          items={NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) }))}
+          currentPath="/projects"
+          className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
+        />
 
-      {/* Scroll Container */}
-      <div ref={containerRef} className="relative h-[500vh]">
-        
-        {/* Sticky Viewport */}
-        <div className="sticky top-0 h-screen w-full overflow-hidden bg-black">
+        {/* Scroll Container */}
+        <div
+          ref={containerRef}
+          className="absolute top-0 left-0 w-full h-[500vh] pointer-events-none"
+        />
 
-            {/* Video Background */}
-            <motion.div style={{ opacity: videoOpacity, scale: videoScale }} className="absolute inset-0 z-0">
-                <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="w-full h-full"
-                >
-                    <ScrollVideo scrollProgress={scrollYProgress} />
-                </motion.div>
-            </motion.div>
-
-            {/* Dark Overlay */}
-            <motion.div 
-                style={{ opacity: overlayOpacity }}
-                className="absolute inset-0 z-5 bg-black pointer-events-none"
-            />
-
-            {/* Intro Text */}
-            <motion.div 
-                style={{ opacity: introOpacity, scale: introScale, y: introY }}
-                className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none"
+        <div className="fixed inset-0 w-full h-full overflow-hidden bg-black flex items-center justify-center perspective-[1000px]">
+          {showIntro && (
+            <motion.div
+              animate={introControls}
+              className="absolute inset-0 z-30 flex flex-col items-center justify-center origin-center overflow-hidden"
+              style={{ willChange: "transform, opacity, filter" }}
             >
-                <motion.h1 
-                    initial={{ opacity: 0, scale: 0.8, filter: "blur(10px)" }}
-                    animate={{ opacity: 0.8, scale: 1, filter: "blur(0px)" }}
-                    transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="text-[12vw] font-black uppercase tracking-tighter leading-[0.8] text-center mix-blend-overlay"
-                >
-                    My<br/>Creations
-                </motion.h1>
-                <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.8, duration: 0.8 }}
-                    className="mt-12 flex flex-col items-center gap-2 animate-bounce"
-                >
-                    <span className="font-mono text-xs uppercase tracking-widest text-orange-500">
-                        Scroll to Enter
-                    </span>
-                    <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                    </svg>
-                </motion.div>
-            </motion.div>
+              {/* Grid */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 2 }}
+                className="absolute inset-0 z-0"
+              >
+                <BackgrounGrid />
+              </motion.div>
 
-            {/* Projects Tunnel */}
-            <motion.div 
-                style={{ x: tunnelX, opacity: tunnelOpacity, y: tunnelY }}
-                className="absolute inset-0 z-20 flex items-center pl-[20vw] gap-[10vw] w-max will-change-transform"
+              {/* Pulse animation */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{
+                  opacity: [0, 0.2, 0.5, 0.2],
+                  scale: [0.5, 0.8, 1.2, 0.8],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  times: [0, 0.2, 0.5, 1],
+                }}
+                className="absolute z-0 w-[40vw] h-[40vw] rounded-full bg-orange-500/20 blur-[120px] pointer-events-none mix-blend-screen"
+              />
+
+              {/* Intro Text */}
+              <motion.div
+                initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
+                className="relative z-10 flex flex-col items-center"
+              >
+                <h1 className="text-[12vw] font-black uppercase tracking-tighter leading-[0.8] text-center mix-blend-overlay opacity-90 pointer-events-none drop-shadow-2xl">
+                  My
+                  <br />
+                  Projects
+                </h1>
+              </motion.div>
+
+              {/* Warp Button */}
+              {!hasEntered && (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, ease: "backOut", delay: 0.8 }}
+                  className="relative z-20 mt-12"
+                >
+                  <motion.button
+                    onClick={handleWarp}
+                    animate={{
+                      boxShadow: [
+                        "0px 0px 0px rgba(249, 115, 22, 0)",
+                        "0px 0px 30px rgba(249, 115, 22, 0.3)",
+                        "0px 0px 0px rgba(249, 115, 22, 0)",
+                      ],
+                      borderColor: [
+                        "rgba(249, 115, 22, 0.5)",
+                        "rgba(249, 115, 22, 1)",
+                        "rgba(249, 115, 22, 0.5)",
+                      ],
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+                    whileHover={{
+                      scale: 1.05,
+                      backgroundColor: "rgba(249, 115, 22, 0.15)",
+                      borderColor: "rgba(249, 115, 22, 1)",
+                    }}
+                    whileTap={{ scale: 0.95 }}
+                    className="font-mono text-xs md:text-sm uppercase tracking-[0.3em] text-orange-500 border border-orange-500/50 bg-black/80 px-10 py-5 backdrop-blur-md hover:text-white transition-all cursor-pointer group overflow-hidden"
+                  >
+                    <span className="relative z-10">[ Let's Go ]</span>
+                    {/* Scanline */}
+                    <div className="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover:animate-[shimmer_1s_infinite]" />
+                  </motion.button>
+                </motion.div>
+              )}
+            </motion.div>
+          )}
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={flashControls}
+            className="absolute inset-0 z-50 bg-white pointer-events-none"
+          />
+
+          {/* Projects Tunnel */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={tunnelControls}
+            className="absolute inset-0 z-10 w-full h-full"
+          >
+            <motion.div
+              initial={{ x: "60vw" }}
+              animate={entryControls}
+              className="h-full"
+              style={{ willChange: "transform" }}
             >
-                <div className="w-[30vw] shrink-0 text-left">
+              <motion.div
+                style={{ x: tunnelX }}
+                className="flex items-center pl-[35vw] gap-[10vw] w-max h-full will-change-transform"
+              >
+                {/* Tunnel Text */}
+                <div className="w-[30vw] shrink-0 text-left pl-12 relative mr-[-10vw]">
+                  <motion.div style={{ x: tunnelTextX }} className="relative z-10">
                     <div className="w-16 h-1 bg-orange-500 mb-6" />
                     <h2 className="text-6xl font-black uppercase tracking-tighter mb-4">
-                        Welcome<br/>to My<br/>Projects
+                      Welcome <br /> to my <br /> archive
                     </h2>
-                    <p className="font-mono text-neutral-400 text-sm max-w-sm">
-                        /MNT/ASSETS/PROJECTS
+                    <p className="font-mono text-neutral-400 text-sm max-w-sm leading-relaxed">
+                      /MTN/ASSETS/PROJECTS
+                      <br />
                     </p>
+                  </motion.div>
                 </div>
 
+                {/* Project Cards */}
                 {PROJECTS.map((project) => (
-                    <FloatingCard key={project.id} project={project} x={tunnelX} />
+                  <FloatingCard key={project.id} project={project} x={tunnelX} />
                 ))}
 
-                <div className="w-[30vw] h-full flex items-center justify-center shrink-0">
-                    <button onClick={() => navigate("/contact")} className="group flex flex-col items-center gap-4">
-                        <div className="w-24 h-24 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-orange-500 group-hover:border-orange-500 transition-all cursor-pointer">
-                            <span className="text-2xl">→</span>
-                        </div>
-                        <span className="font-mono text-xs uppercase tracking-widest">Start New Quest</span>
-                    </button>
+                {/* Contact Link */}
+                <div className="w-[40vw] h-full flex items-center justify-center shrink-0 -m-[10vw]">
+                  <button
+                    onClick={() => navigate("/contact")}
+                    className="group flex flex-col items-center gap-4 relative cursor-pointer"
+                  >
+                    <div className="w-24 h-24 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-orange-500 group-hover:border-orange-500 transition-all z-10 duration-300">
+                      <span className="text-2xl group-hover:translate-x-1 transition-transform">
+                        →
+                      </span>
+                    </div>
+                    <span className="font-mono text-xs uppercase tracking-widest z-10 text-neutral-500 group-hover:text-white transition-colors">
+                      Let's build <br /> something together
+                    </span>
+                  </button>
                 </div>
+              </motion.div>
             </motion.div>
+          </motion.div>
 
-            {/* Grain & Gradient Overlays */}
-            <div className="absolute inset-0 z-30 pointer-events-none opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-            <div className="absolute inset-0 z-30 pointer-events-none bg-radial-gradient from-transparent via-transparent to-black/80" />
-            
+          {/* Grain & Gradient Overlays */}
+          <div className="absolute inset-0 z-30 pointer-events-none opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          <div className="absolute inset-0 z-30 pointer-events-none bg-radial-gradient from-transparent via-transparent to-black/80" />
         </div>
       </div>
-    </div>
+    </SmoothScroll>
   );
 }
