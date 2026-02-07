@@ -20,10 +20,7 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
         onMouseEnter={() => setIsHovered(true)}
         className="absolute w-[300px] h-[300px] flex items-center justify-center outline-none tap-highlight-transparent cursor-default"
       >
-        <motion.div
-          style={{ x: xSpring, y: ySpring }}
-          className="relative cursor-pointer"
-        >
+        <motion.div style={{ x: xSpring, y: ySpring }} className="relative cursor-pointer">
           <button
             onClick={toggle}
             type="button"

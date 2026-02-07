@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import InfiniteLoopText from "../../../components/InfiniteLoopText";
@@ -6,11 +6,10 @@ import NavButtons from "../../../components/NavButtons";
 
 export default function Hero() {
   const containerRef = useRef(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const navigate = useNavigate();
 
   const navItems = [
-    { label: "Projects", onClick: ()=> navigate("/projects") },
+    { label: "Projects", onClick: () => navigate("/projects") },
     { label: "About", onClick: () => navigate("/about") },
     { label: "Contact", onClick: () => navigate("/contact") },
   ];
@@ -20,30 +19,7 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
 
-  // Track scroll progress for gradual color change
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight;
-      const windowHeight = window.innerHeight;
-
-      // Calculate how close we are to the bottom
-      const maxScroll = docHeight - windowHeight;
-      const triggerPoint = maxScroll - windowHeight * 1.5;
-
-      if (scrollTop >= triggerPoint) {
-        const progress = Math.min((scrollTop - triggerPoint) / (windowHeight * 1.5), 1);
-        setScrollProgress(progress);
-      } else {
-        setScrollProgress(0);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  // Track scroll progress for gradual color change (removed unused state)
 
   // Animation transforms
   const scale = useTransform(scrollYProgress, [0, 0.5], [1.2, 1]);

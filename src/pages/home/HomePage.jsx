@@ -18,11 +18,10 @@ export default function HomePage() {
   const { scrollYProgress } = useScroll();
 
   const menuOpacity = useTransform(scrollYProgress, [0.05, 0.1], [0, 1]);
-  
-  const menuPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "auto" : "none"));  
-  
+
+  const menuPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "auto" : "none"));
+
   const curve = useTransform(scrollYProgress, [0.85, 1], ["50% 50px", "0% 0px"]);
-  
 
   useEffect(() => {
     if (location.state?.scrollTo === "projects") {
@@ -54,9 +53,9 @@ export default function HomePage() {
 
       {/* Menu */}
       <motion.div
-        style={{ 
-            opacity: menuOpacity, 
-            pointerEvents: menuPointerEvents 
+        style={{
+          opacity: menuOpacity,
+          pointerEvents: menuPointerEvents,
         }}
         className="fixed top-8 right-10 z-[1200]"
       >

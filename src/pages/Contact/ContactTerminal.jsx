@@ -41,11 +41,10 @@ export default function ContactTerminal() {
       setErrorMsg(msg);
       setStatus("error");
     }
-  };
+  }
 
   return (
     <div className="w-full h-full bg-neutral-900/50 p-6 md:p-12 flex flex-col font-mono text-sm relative overflow-hidden text-neutral-200">
-      
       {/* Corner graphic */}
       <div className="absolute top-0 right-0 p-4 opacity-20 pointer-events-none">
         <div className="w-32 h-32 border-r-2 border-t-2 border-white/20 rounded-tr-3xl" />
@@ -69,7 +68,6 @@ export default function ContactTerminal() {
 
       {/* Contact Form */}
       <form onSubmit={handleSubmit} className="flex-1 flex flex-col gap-6 relative z-10">
-        
         {/* Row 1: Name & Email */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Name Input */}
@@ -102,7 +100,7 @@ export default function ContactTerminal() {
               placeholder="ENTER EMAIL ADDRESS..."
               className="w-full bg-black/40 border border-white/10 p-4 text-white focus:outline-none focus:border-orange-500 transition-colors rounded-sm placeholder:text-neutral-700"
             />
-             <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/20 group-focus-within:border-orange-500 transition-colors pointer-events-none" />
+            <div className="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-white/20 group-focus-within:border-orange-500 transition-colors pointer-events-none" />
           </div>
         </div>
 
@@ -114,7 +112,11 @@ export default function ContactTerminal() {
           <div className="flex-1 relative">
             {/* Decoration: Line Numbers */}
             <div className="absolute left-0 top-0 bottom-0 w-8 border-r border-white/5 flex flex-col items-center py-4 text-[10px] text-neutral-800 font-mono select-none">
-              <span>01</span><span>02</span><span>03</span><span>04</span><span>05</span>
+              <span>01</span>
+              <span>02</span>
+              <span>03</span>
+              <span>04</span>
+              <span>05</span>
             </div>
             <textarea
               required
@@ -134,19 +136,23 @@ export default function ContactTerminal() {
             className="relative px-8 py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-orange-500 hover:text-white transition-all disabled:opacity-50 disabled:cursor-not-allowed overflow-hidden clip-path-slant cursor-pointer"
           >
             <span className="relative z-10 flex items-center gap-2">
-              {status === "idle" && <>Transmit Data <span className="text-lg">→</span></>}
+              {status === "idle" && (
+                <>
+                  Transmit Data <span className="text-lg">→</span>
+                </>
+              )}
               {status === "sending" && "Uploading..."}
               {status === "success" && "Sent!"}
             </span>
-            
+
             {/* Loading Bar Animation */}
             {status === "sending" && (
-                <motion.div 
-                    initial={{ width: "0%" }}
-                    animate={{ width: "100%" }}
-                    transition={{ duration: 2, ease: "linear" }}
-                    className="absolute inset-0 bg-neutral-300 z-0 opacity-50"
-                />
+              <motion.div
+                initial={{ width: "0%" }}
+                animate={{ width: "100%" }}
+                transition={{ duration: 2, ease: "linear" }}
+                className="absolute inset-0 bg-neutral-300 z-0 opacity-50"
+              />
             )}
           </button>
         </div>
@@ -155,26 +161,26 @@ export default function ContactTerminal() {
       {/* Sent Confirmation Stamp */}
       <AnimatePresence>
         {status === "success" && (
-            <motion.div 
-                initial={{ opacity: 0, scale: 1.1 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                className="absolute inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center"
+          <motion.div
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center"
+          >
+            <motion.div
+              initial={{ rotate: -10, opacity: 0, scale: 2 }}
+              animate={{ rotate: -5, opacity: 1, scale: 1 }}
+              transition={{ type: "spring", stiffness: 200, damping: 10 }}
+              className="border-4 border-green-500 p-8 text-center"
             >
-                <motion.div 
-                  initial={{ rotate: -10, opacity: 0, scale: 2 }}
-                  animate={{ rotate: -5, opacity: 1, scale: 1 }}
-                  transition={{ type: "spring", stiffness: 200, damping: 10 }}
-                  className="border-4 border-green-500 p-8 text-center"
-                >
-                    <div className="text-5xl font-black text-green-500 uppercase tracking-tighter">
-                        SENT
-                    </div>
-                    <div className="text-xs text-green-500 uppercase tracking-widest mt-2">
-                        Ticket #{ticketID} Filed
-                    </div>
-                </motion.div>
+              <div className="text-5xl font-black text-green-500 uppercase tracking-tighter">
+                SENT
+              </div>
+              <div className="text-xs text-green-500 uppercase tracking-widest mt-2">
+                Ticket #{ticketID} Filed
+              </div>
             </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
       {/* Error Overlay */}
@@ -188,7 +194,9 @@ export default function ContactTerminal() {
           >
             <div className="bg-red-900/90 border border-red-500 p-6 rounded-md max-w-xl text-center">
               <div className="text-2xl font-bold text-red-400 mb-2">Service Unavailable</div>
-              <div className="text-sm text-red-200 mb-4">{errorMsg || "The email service is currently unavailable. Please try again later."}</div>
+              <div className="text-sm text-red-200 mb-4">
+                {errorMsg || "The email service is currently unavailable. Please try again later."}
+              </div>
               <div className="flex justify-center gap-4">
                 <button
                   onClick={() => {

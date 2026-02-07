@@ -37,12 +37,12 @@ export default function NavButtons({
                 className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-orange-500 rounded-full"
                 layoutId="navUnderline"
                 initial={false}
-                transition={{ 
-                  duration: 0.4, 
-                  type: "spring", 
-                  stiffness: 400, 
+                transition={{
+                  duration: 0.4,
+                  type: "spring",
+                  stiffness: 400,
                   damping: 40,
-                  mass: 0.8
+                  mass: 0.8,
                 }}
               />
             )}

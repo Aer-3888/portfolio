@@ -24,36 +24,11 @@ export const galleryFiles = [
     meta: { iso: "100", shutter: "1/200", aperture: "f/9", loc: "Warsaw" },
   },
   {
-    name: "IMG_3438.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_3438.jpg",
-    meta: { iso: "320", shutter: "1/80", aperture: "f/4.5", loc: "Studio" },
-  },
-  {
     name: "IMG_3439.JPG",
     type: "raw",
     url: "/images/Gallery/IMG_3439.jpg",
     meta: { iso: "100", shutter: "1/125", aperture: "f/8", loc: "Warsaw" },
   },
-  {
-    name: "IMG_3523.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_3523.jpg",
-    meta: { iso: "100", shutter: "1/500", aperture: "f/5.6", loc: "Warsaw" },
-  },
-  {
-    name: "IMG_3662.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_3662.jpg",
-    meta: { iso: "400", shutter: "1/500", aperture: "f/8.0", loc: "Kraków" },
-  },
-  {
-    name: "IMG_3846.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_3846.jpg",
-    meta: { iso: "160", shutter: "1/80", aperture: "f/5.6", loc: "Landscape" },
-  },
-  // Fixed the data up till this point 
   {
     name: "IMG_5775.JPG",
     type: "raw",
@@ -67,28 +42,10 @@ export const galleryFiles = [
     meta: { iso: "100", shutter: "1/100", aperture: "f/11", loc: "Macro" },
   },
   {
-    name: "IMG_5884.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_5884.jpg",
-    meta: { iso: "400", shutter: "1/320", aperture: "f/2.0", loc: "Street" },
-  },
-  {
-    name: "IMG_6100.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_6100.jpg",
-    meta: { iso: "1250", shutter: "1/60", aperture: "f/1.8", loc: "Interior" },
-  },
-  {
     name: "IMG_6157.JPG",
     type: "raw",
     url: "/images/Gallery/IMG_6157.jpg",
     meta: { iso: "200", shutter: "1/400", aperture: "f/5.6", loc: "Nature" },
-  },
-  {
-    name: "IMG_6200.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_6200.jpg",
-    meta: { iso: "100", shutter: "1/2000", aperture: "f/2.8", loc: "Bright" },
   },
   {
     name: "IMG_6260.JPG",
@@ -107,18 +64,6 @@ export const galleryFiles = [
     type: "raw",
     url: "/images/Gallery/IMG_6282.jpg",
     meta: { iso: "100", shutter: "1/250", aperture: "f/8.0", loc: "Arch" },
-  },
-  {
-    name: "IMG_6363.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_6363.jpg",
-    meta: { iso: "400", shutter: "1/500", aperture: "f/4.0", loc: "Sport" },
-  },
-  {
-    name: "IMG_6431.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_6431.jpg",
-    meta: { iso: "200", shutter: "1/160", aperture: "f/1.8", loc: "Candid" },
   },
   {
     name: "IMG_6470.JPG",
@@ -157,39 +102,15 @@ export const galleryFiles = [
     meta: { iso: "200", shutter: "1/200", aperture: "f/8.0", loc: "Flash" },
   },
   {
-    name: "IMG_6661.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_6661.jpg",
-    meta: { iso: "400", shutter: "1/100", aperture: "f/4.0", loc: "Detail" },
-  },
-  {
-    name: "IMG_6680.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_6680.jpg",
-    meta: { iso: "100", shutter: "1/640", aperture: "f/2.8", loc: "Outside" },
-  },
-  {
     name: "IMG_6701.JPG",
     type: "raw",
     url: "/images/Gallery/IMG_6701.jpg",
     meta: { iso: "800", shutter: "1/2000", aperture: "f/4.0", loc: "Motion" },
   },
   {
-    name: "IMG_6725.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_6725.jpg",
-    meta: { iso: "100", shutter: "1/125", aperture: "f/11", loc: "Scenery" },
-  },
-  {
     name: "IMG_6729.JPG",
     type: "raw",
     url: "/images/Gallery/IMG_6729.jpg",
-    meta: { iso: "100", shutter: "1/125", aperture: "f/11", loc: "Scenery" },
-  },
-  {
-    name: "IMG_6732.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_6732.jpg",
     meta: { iso: "100", shutter: "1/125", aperture: "f/11", loc: "Scenery" },
   },
   {
@@ -227,17 +148,5 @@ export const galleryFiles = [
     type: "raw",
     url: "/images/Gallery/IMG_7048.jpg",
     meta: { iso: "100", shutter: "1/1000", aperture: "f/1.8", loc: "Shade" },
-  },
-  {
-    name: "IMG_7114.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_7114.jpg",
-    meta: { iso: "800", shutter: "1/60", aperture: "f/4.0", loc: "Dusk" },
-  },
-  {
-    name: "IMG_7141.JPG",
-    type: "raw",
-    url: "/images/Gallery/IMG_7141.jpg",
-    meta: { iso: "1250", shutter: "1/30", aperture: "f/2.0", loc: "Night" },
   },
 ];

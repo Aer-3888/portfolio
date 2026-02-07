@@ -111,7 +111,7 @@ export default function AboutPage() {
           navPointerEvents={navPointerEvents}
           menuOpacity={menuOpacity}
           menuPointerEvents={menuPointerEvents}
-          menuInteractive={true} 
+          menuInteractive={true}
           onFullscreenChange={handleGalleryFullscreenChange}
         />
       </main>

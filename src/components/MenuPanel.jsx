@@ -41,7 +41,11 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
                   type="button"
                   custom={index}
                   initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0, transition: { delay: index * 0.05, duration: 0.25 } }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    transition: { delay: index * 0.05, duration: 0.25 },
+                  }}
                   exit={{ opacity: 0, x: 10, transition: { duration: 0.15 } }}
                   className="text-left text-2xl font-semibold uppercase tracking-[0.2em] text-white/90 hover:text-white transition-colors cursor-pointer"
                   onClick={() => {

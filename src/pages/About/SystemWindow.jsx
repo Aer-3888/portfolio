@@ -75,7 +75,11 @@ export default function SystemWindow({ onFullscreenChange }) {
                   }
                 `}
               >
-                <span className={'cursor-pointer ' + (activeTab === "git" ? "text-orange-500" : "opacity-50")}>
+                <span
+                  className={
+                    "cursor-pointer " + (activeTab === "git" ? "text-orange-500" : "opacity-50")
+                  }
+                >
                   ./git_log
                 </span>
               </button>
@@ -92,7 +96,11 @@ export default function SystemWindow({ onFullscreenChange }) {
                   }
                 `}
               >
-                <span className={'cursor-pointer ' + (activeTab === "gallery" ? "text-blue-500" : "opacity-50")}>
+                <span
+                  className={
+                    "cursor-pointer " + (activeTab === "gallery" ? "text-blue-500" : "opacity-50")
+                  }
+                >
                   ./gallery
                 </span>
               </button>
