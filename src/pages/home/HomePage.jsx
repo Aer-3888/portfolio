@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Hero from "./Hero/Hero";
 import ProjectList from "./Projects/ProjectList";
 import Footer from "./Footer/Footer";
-import SmoothScroll from "../../components/layout/SmoothScroll";
 import HobbySection from "./Profile/HobbySection";
 import { NAV_ITEMS } from "../../config/siteData";
 import LiquidMenu from "../../components/layout/LiquidMenu";
@@ -34,7 +33,6 @@ export default function HomePage() {
 
   return (
     <div className="relative bg-neutral-900">
-      <SmoothScroll>
         <motion.main
           style={{
             borderBottomLeftRadius: curve,
@@ -47,8 +45,6 @@ export default function HomePage() {
           <ProjectList />
           <div className="w-full h-[20vh] bg-neutral-900 border-t border-neutral-800" />
         </motion.main>
-      </SmoothScroll>
-
       <Footer />
 
       {/* Menu */}

@@ -5,7 +5,6 @@ import NavButtons from "../../components/NavButtons";
 import HomeButton from "../../components/HomeButton";
 import FloatingCard from "./FloatingCard";
 import { NAV_ITEMS, PROJECTS } from "../../config/siteData";
-import SmoothScroll from "../../components/layout/SmoothScroll";
 import { BackgrounGrid } from "./BackgroundGrid";
 
 export default function ProjectsPage() {
@@ -83,7 +82,6 @@ export default function ProjectsPage() {
   const tunnelTextX = useTransform(smoothScroll, [0, 1], ["0%", "30%"]);
 
   return (
-    <SmoothScroll>
       <div className="bg-neutral-950 text-white font-sans selection:bg-orange-500/30 overflow-x-hidden">
         {/* Navigation */}
         <div className="fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference">
@@ -254,6 +252,5 @@ export default function ProjectsPage() {
           <div className="absolute inset-0 z-30 pointer-events-none bg-radial-gradient from-transparent via-transparent to-black/80" />
         </div>
       </div>
-    </SmoothScroll>
   );
 }

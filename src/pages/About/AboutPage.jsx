@@ -6,7 +6,6 @@ import HomeButton from "../../components/HomeButton";
 import NavButtons from "../../components/NavButtons";
 import LiquidMenu from "../../components/layout/LiquidMenu";
 import MenuPanel from "../../components/MenuPanel";
-import SmoothScroll from "../../components/layout/SmoothScroll";
 import SystemWindow from "./SystemWindow";
 
 export default function AboutPage() {
@@ -40,7 +39,6 @@ export default function AboutPage() {
   };
 
   return (
-    <SmoothScroll>
       <main
         ref={containerRef}
         className="relative min-h-screen bg-neutral-100 dark:bg-neutral-950 text-neutral-900 dark:text-white pt-32 pb-24 px-6 md:px-12 flex flex-col items-center"
@@ -115,6 +113,5 @@ export default function AboutPage() {
           onFullscreenChange={handleGalleryFullscreenChange}
         />
       </main>
-    </SmoothScroll>
   );
 }
