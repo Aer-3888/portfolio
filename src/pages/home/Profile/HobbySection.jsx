@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { HobbyList, hobbies } from "./HobbyList";
+import { HobbyList } from "./HobbyList";
+import { hobbies } from "./hobbiesData";
 import VerticalFilmStrip from "./VerticalFilmStrip";
 import { motion } from "framer-motion";
 
