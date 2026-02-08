@@ -85,7 +85,7 @@ export default function Hero() {
         {/* Layer 2: Main Component */}
         <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
           <img
-            src="/images/me_.png"
+            src={`${import.meta.env.BASE_URL}images/me_.png`}
             alt="Subject"
             className="h-[100dvh] w-auto max-w-full object-contain drop-shadow-2xl"
           />

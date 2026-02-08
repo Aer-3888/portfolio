@@ -16,7 +16,7 @@ export const hobbies = [
     title: "PHOTOGRAPHY",
     description:
       "Freezing reality. A study of light physics, urban geometry, and shifting perspectives.",
-    image: "/images/Gallery/IMG_6732.jpg",
+    image: `${import.meta.env.BASE_URL}images/Gallery/IMG_6732.jpg`,
   },
   {
     id: "escape",
