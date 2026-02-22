@@ -17,7 +17,7 @@ export const PROJECTS = [
     year: "2025",
     type: "Mobile App",
     services: "Flutter - Mobile Development",
-    img: "/images/waiki.jpg",
+    img: `${import.meta.env.BASE_URL}images/waiki.jpg`,
     offset: 0,
   },
   {
@@ -26,7 +26,7 @@ export const PROJECTS = [
     year: "2026",
     type: "Web Development",
     services: "Front End - Animation - React",
-    img: "/images/portfolio.png",
+    img: `${import.meta.env.BASE_URL}images/portfolio.png`,
     offset: 120,
   },
   {
@@ -35,7 +35,7 @@ export const PROJECTS = [
     year: "2025",
     type: "Computer Vision",
     services: "Computer Vision - Python",
-    img: "/images/plant_detection.png",
+    img: `${import.meta.env.BASE_URL}images/plant_detection.png`,
     offset: -50,
   },
   {
