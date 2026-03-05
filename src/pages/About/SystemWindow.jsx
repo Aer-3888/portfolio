@@ -1,10 +1,15 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { motion, useDragControls, useAnimation } from "framer-motion";
 import GitGraph from "./GitGraph";
 import GalleryInspector from "./GalleryInspector";
 
-export default function SystemWindow({ onFullscreenChange }) {
-  const [activeTab, setActiveTab] = useState("git");
+export default function SystemWindow({ onFullscreenChange, defaultTab = "git" }) {
+  const [activeTab, setActiveTab] = useState(defaultTab);
+
+  // Sync tab if defaultTab changes (e.g., on navigation)
+  useEffect(() => {
+    setActiveTab(defaultTab);
+  }, [defaultTab]);
 
   // Drag Controls and Animation Controls
   const dragControls = useDragControls();

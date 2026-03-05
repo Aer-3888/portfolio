@@ -1,6 +1,6 @@
-import { useRef, useState } from "react"; // Removed useEffect
+import { useRef, useState, useEffect } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { NAV_ITEMS } from "../../config/siteData";
 import HomeButton from "../../components/HomeButton";
 import NavButtons from "../../components/NavButtons";
@@ -10,6 +10,8 @@ import SystemWindow from "./SystemWindow";
 
 export default function AboutPage() {
   const containerRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
@@ -20,10 +22,12 @@ export default function AboutPage() {
   const navPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "none" : "auto"));
   const menuPointerEvents = useTransform(scrollYProgress, (v) => (v > 0.05 ? "auto" : "none"));
 
-  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuTemporarilyHidden, setIsMenuTemporarilyHidden] = useState(false);
   const [isNavTemporarilyHidden, setIsNavTemporarilyHidden] = useState(false);
+
+  // Auto-open gallery if requested via navigation state
+  const initialTab = location.state?.openGallery ? "gallery" : "git";
 
   const navItems = NAV_ITEMS.map((item) => ({
     label: item.label,
@@ -105,6 +109,7 @@ export default function AboutPage() {
 
         {/* System Window */}
         <SystemWindow
+          defaultTab={initialTab}
           navOpacity={navOpacity}
           navPointerEvents={navPointerEvents}
           menuOpacity={menuOpacity}

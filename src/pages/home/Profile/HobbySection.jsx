@@ -20,19 +20,13 @@ export default function HobbySection() {
   };
 
   return (
-    <section className="relative w-full bg-neutral-900 py-12 min-[1400px]:py-24 z-10 overflow-hidden">
-      {/* 1. Mobile and Tablet View (< 1400px) */}
-      <div className="min-[1400px]:hidden w-full flex flex-col gap-8">
+    <section className="relative w-full bg-neutral-900 py-12 min-[1025px]:py-32 z-10 overflow-hidden">
+      {/* 1. Mobile and Tablet View (<= 1024px) */}
+      <div className="min-[1025px]:hidden w-full flex flex-col gap-8">
         <div className="px-6 mb-4">
-          <h2 className="text-xs font-mono text-orange-500 tracking-widest uppercase mb-2">
-            Personal Modules // 02
-          </h2>
-          <h3 className="text-3xl font-bold text-white tracking-tighter uppercase leading-none">
-            Active Pursuits
+          <h3 className="text-4xl font-bold text-white tracking-tighter uppercase leading-none">
+            Personal <span className="text-neutral-600">Interests.</span>
           </h3>
-          <p className="text-[10px] text-neutral-400 font-mono mt-2">
-            // Activities outside the digital workspace.
-          </p>
         </div>
 
         {/* Scroll Container */}
@@ -100,20 +94,15 @@ export default function HobbySection() {
         </div>
       </div>
 
-      {/* 2. Large Desktop View (>= 1400px) */}
-      <div className="hidden min-[1400px]:flex w-full max-w-[90vw] mx-auto px-4 md:px-8 items-start justify-between gap-24 min-h-[90vh]">
+      {/* 2. Desktop View (>= 1025px) */}
+      <div className="hidden min-[1025px]:flex w-full max-w-[1400px] mx-auto px-12 items-start justify-between gap-24 min-h-[80vh]">
         {/* Left: List */}
         <div className="w-[50%] flex flex-col items-start z-10 sticky top-24 max-w-full">
           <div className="mb-16 pl-1 w-full">
-            <h2 className="text-xs font-mono text-orange-500 tracking-widest uppercase mb-4">
-              Personal Modules // 02
-            </h2>
-            <h3 className="text-6xl font-bold text-white tracking-tighter uppercase leading-[0.9]">
-              Executing Life
+            <h3 className="text-7xl font-bold text-white tracking-tighter uppercase leading-[0.9]">
+              Personal
               <br />
-              Protocols <span className="text-neutral-600">//</span>
-              <br />
-              <span className="text-neutral-500">Beyond the Terminal.</span>
+              <span className="text-neutral-500">Interests.</span>
             </h3>
           </div>
 
@@ -126,9 +115,9 @@ export default function HobbySection() {
             whileHover="hover"
             initial="initial"
             onClick={() => navigate("/about")}
-            className="group relative mt-8 ml-1 px-10 py-5 border border-white/20 overflow-hidden bg-transparent cursor-pointer"
+            className="group relative mt-8 ml-1 px-10 py-5 border border-white/20 overflow-hidden bg-transparent cursor-pointer flex items-center gap-4"
           >
-            {/* 1. Fill Animation: Slides up from bottom */}
+            {/* 1. Fill Animation */}
             <motion.div
               variants={{
                 initial: { y: "100%" },
@@ -138,11 +127,21 @@ export default function HobbySection() {
               className="absolute inset-0 bg-white"
             />
 
-            {/* 2. Text Content (Mix Blend Mode for color inversion) */}
+            {/* 2. Text Content */}
             <div className="relative z-10 flex items-center gap-4 mix-blend-difference">
               <span className="text-white font-mono text-sm font-bold uppercase tracking-[0.2em]">
                 More About Me
               </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2.5}
+                stroke="currentColor"
+                className="w-4 h-4 text-white"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
             </div>
           </motion.button>
         </div>
@@ -152,7 +151,7 @@ export default function HobbySection() {
           <VerticalFilmStrip
             activeHobby={activeHobby}
             direction={tuple[1]}
-            onClick={() => console.log("Open Modal")}
+            onClick={() => navigate("/about", { state: { openGallery: true } })}
           />
         </div>
       </div>

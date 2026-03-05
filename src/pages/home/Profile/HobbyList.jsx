@@ -26,11 +26,11 @@ export function HobbyList({ activeId, onHover }) {
               <motion.h3
                 layout
                 animate={{
-                  x: isActive ? 60 : 0,
-                  color: isActive ? "#ffffff" : "#333333",
+                  x: isActive ? 20 : 0,
+                  color: isActive ? "#ffffff" : "#404040",
                 }}
-                transition={{ duration: 0.8, ease: "circOut" }}
-                className="text-6xl md:text-8xl font-black uppercase tracking-tighter"
+                transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className="text-5xl md:text-7xl font-black uppercase tracking-tighter"
               >
                 {hobby.label}
               </motion.h3>
@@ -43,17 +43,17 @@ export function HobbyList({ activeId, onHover }) {
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{
-                      opacity: { duration: 0.5, delay: 0.2 },
+                      opacity: { duration: 0.4, delay: 0.1 },
                       height: {
-                        duration: 1.0,
+                        duration: 0.8,
                         type: "spring",
-                        stiffness: 60,
-                        damping: 15,
+                        stiffness: 70,
+                        damping: 18,
                       },
                     }}
                     className="overflow-hidden"
                   >
-                    <p className="text-neutral-400 font-mono text-base mt-6 ml-16 mb-8 max-w-lg leading-relaxed border-l-2 border-orange-500 pl-6">
+                    <p className="text-neutral-400 font-mono text-sm md:text-base mt-4 ml-6 mb-8 max-w-lg leading-relaxed border-l border-orange-500/50 pl-6">
                       {hobby.description}
                     </p>
                   </motion.div>

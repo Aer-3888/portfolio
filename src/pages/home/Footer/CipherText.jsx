@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";
-const PHRASES = ["READY TO\nDISRUPT?", "HELLO \n WORLD.", "STUDENT \n HERE!"];
+const PHRASES = ["LET'S HAVE \n FUN", "HELLO \n WORLD.", "STUDENT \n HERE!"];
 
 export default function CipherText() {
   const [display, setDisplay] = useState("");
