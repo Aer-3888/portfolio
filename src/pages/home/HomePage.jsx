@@ -38,11 +38,11 @@ export default function HomePage() {
             borderBottomLeftRadius: curve,
             borderBottomRightRadius: curve,
           }}
-          className="relative z-10 bg-neutral-900 shadow-2xl mb-[100vh] overflow-hidden"
+          className="relative z-10 bg-neutral-900 shadow-2xl mb-[50vh] overflow-hidden"
         >
           <Hero />
-          <HobbySection />
           <ProjectList />
+          <HobbySection />
           <div className="w-full h-[20vh] bg-neutral-900 border-t border-neutral-800" />
         </motion.main>
       <Footer />

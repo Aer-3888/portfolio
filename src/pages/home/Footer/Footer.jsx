@@ -55,21 +55,21 @@ function TechButton() {
 
 export default function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 w-full h-[100vh] bg-white z-0 flex flex-col justify-between">
+    <footer className="fixed bottom-0 left-0 w-full h-[50vh] bg-white z-0 flex flex-col justify-between">
       {/* Mobile View*/}
       <div className="flex md:hidden w-full h-full flex-col bg-white overflow-hidden justify-between">
         {/* 1. Top Section: Headline */}
-        <div className="w-full p-8 pt-28 flex flex-col items-center justify-center text-center">
-          <h3 className="text-2xl font-black text-neutral-900 tracking-tight uppercase mb-2">
+        <div className="w-full p-6 pt-12 flex flex-col items-center justify-center text-center">
+          <h3 className="text-xl font-black text-neutral-900 tracking-tight uppercase mb-1">
             PORTFOLIO VERSION
           </h3>
-          <span className="font-mono text-xs text-neutral-400 uppercase tracking-widest">
+          <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">
             V. 2026 © EDITION
           </span>
         </div>
 
         {/* 2. Middle Section */}
-        <div className="flex-1 w-full flex flex-col justify-center px-4 pb-8">
+        <div className="flex-1 w-full flex flex-col justify-center px-4 pb-6">
           <TechButton />
         </div>
 
@@ -81,7 +81,7 @@ export default function Footer() {
               <a
                 key={platform}
                 href={socialUrls[platform]}
-                className="py-6 flex items-center justify-center hover:bg-neutral-100 transition-colors"
+                className="py-4 flex items-center justify-center hover:bg-neutral-100 transition-colors"
               >
                 <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-800">
                   {platform}
@@ -95,12 +95,12 @@ export default function Footer() {
             href="https://github.com/Aer-3888"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-6 flex flex-col items-center justify-center gap-2 opacity-30 hover:opacity-60 transition-opacity cursor-pointer group"
+            className="w-full py-4 flex flex-col items-center justify-center gap-1 opacity-30 hover:opacity-60 transition-opacity cursor-pointer group"
           >
             <img
               src="https://barcode.tec-it.com/barcode.ashx?data=https://github.com/Aer-3888&code=Code128&translate-esc=on"
               alt="Scan barcode to visit GitHub"
-              className="h-16 group-hover:scale-105 transition-transform"
+              className="h-10 group-hover:scale-105 transition-transform"
             />
             <span className="font-mono text-[8px] text-neutral-400">
               SCAN OR CLICK - ID: Aer-3888
@@ -110,33 +110,33 @@ export default function Footer() {
       </div>
 
       {/* Desktop View */}
-      <div className="hidden md:flex w-full h-full flex-col justify-between px-6 md:px-12 py-12">
-        <div className="w-full flex items-start border-b border-neutral-200 pb-6">
+      <div className="hidden md:flex w-full h-full flex-col justify-between px-6 md:px-12 py-8">
+        <div className="w-full flex items-start border-b border-neutral-200 pb-4">
           <span className="font-mono text-sm text-neutral-400 tracking-widest uppercase">
             Version 2026 © Edition
           </span>
         </div>
 
-        <div className="flex-1 flex items-center w-full overflow-hidden">
+        <div className="flex-1 flex items-center w-full overflow-hidden py-4">
           <div className="w-full z-10 mix-blend-hard-light">
             <CipherText />
           </div>
         </div>
 
-        <div className="w-full flex flex-col md:flex-row justify-between items-end pt-8 z-10 bg-white">
-          <div className="flex flex-col gap-2">
-            <span className="text-neutral-400 font-mono text-xs uppercase tracking-widest">
+        <div className="w-full flex flex-col md:flex-row justify-between items-end pt-4 z-10 bg-white">
+          <div className="flex flex-col gap-1">
+            <span className="text-neutral-400 font-mono text-[10px] uppercase tracking-widest">
               Get in Touch @
             </span>
             <a
               href="mailto:theo.phan.quoc.huy@gmail.com"
-              className="text-2xl lg:text-4xl font-bold text-neutral-900 hover:text-orange-600 transition-colors tracking-tight"
+              className="text-xl lg:text-3xl font-bold text-neutral-900 hover:text-orange-600 transition-colors tracking-tight"
             >
               theo.phan.quoc.huy@gmail.com
             </a>
           </div>
 
-          <div className="flex flex-col items-end gap-6">
+          <div className="flex flex-col items-end gap-4">
             <a
               href="https://github.com/Aer-3888"
               target="_blank"
@@ -147,17 +147,17 @@ export default function Footer() {
               <img
                 src="https://barcode.tec-it.com/barcode.ashx?data=https://github.com/Aer-3888&code=Code128&translate-esc=on"
                 alt="Scan barcode to visit GitHub"
-                className="h-12 group-hover:scale-105 transition-transform"
+                className="h-10 group-hover:scale-105 transition-transform"
               />
             </a>
 
             <div className="flex gap-6">
               {Object.keys(socialUrls).map((link) => (
                 <a key={link} href={socialUrls[link]} className="relative group overflow-hidden">
-                  <span className="block font-mono text-sm text-neutral-900 group-hover:-translate-y-full transition-transform duration-300">
+                  <span className="block font-mono text-xs text-neutral-900 group-hover:-translate-y-full transition-transform duration-300">
                     {link}
                   </span>
-                  <span className="absolute top-0 left-0 block font-mono text-sm text-orange-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+                  <span className="absolute top-0 left-0 block font-mono text-xs text-orange-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
                     {link}
                   </span>
                 </a>
