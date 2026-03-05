@@ -44,34 +44,6 @@ export default function Hero() {
 
       {/* Hero Stage */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
-        {/* Layer 0: Side Info */}
-        <motion.div
-          style={{ opacity: navOpacity }}
-          className="absolute top-8 left-6 md:left-10 z-[40] hidden md:flex flex-col gap-6 mix-blend-difference text-white"
-        >
-          {/* Line 1: Current Status */}
-          <div className="group flex flex-col gap-1">
-            <p className="font-mono text-[10px] text-white/60 tracking-[0.2em] uppercase">
-              01 // Currently
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
-              <h3 className="text-sm font-bold tracking-widest uppercase">CS Student @ INSA</h3>
-            </div>
-          </div>
-
-          {/* Line 2: Target */}
-          <div className="group flex flex-col gap-1">
-            <p className="font-mono text-[10px] text-white/60 tracking-[0.2em] uppercase">
-              02 // Focus
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 border border-white/60 rounded-full" />
-              <h3 className="text-sm font-bold tracking-widest uppercase">Aspiring AI Engineer</h3>
-            </div>
-          </div>
-        </motion.div>
-
         {/* Layer 1: Text After Scroll Down */}
         <motion.div
           style={{ opacity: lockedOpacity, scale, y }}

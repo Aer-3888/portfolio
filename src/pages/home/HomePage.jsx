@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Hero from "./Hero/Hero";
+import StatusSection from "./Profile/StatusSection";
 import ProjectList from "./Projects/ProjectList";
 import Footer from "./Footer/Footer";
 import HobbySection from "./Profile/HobbySection";
@@ -41,6 +42,7 @@ export default function HomePage() {
           className="relative z-10 bg-neutral-900 shadow-2xl mb-[50vh] overflow-hidden"
         >
           <Hero />
+          <StatusSection />
           <ProjectList />
           <HobbySection />
           <div className="w-full h-[20vh] bg-neutral-900 border-t border-neutral-800" />

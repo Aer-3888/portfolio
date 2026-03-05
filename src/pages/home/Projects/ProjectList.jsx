@@ -141,18 +141,20 @@ export default function ProjectList() {
         style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}
       />
 
+      {/* Background Glows for Transition */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[40vh] bg-orange-600/10 blur-[120px] pointer-events-none" />
+
       {/* Header */}
-      <div className="container mx-auto px-6 md:px-12 mb-16 z-10 relative">
+      <div className="container mx-auto px-6 md:px-12 mb-24 z-10 relative">
         <ScrollReveal>
-          <div className="flex items-center gap-4 mb-4">
-            <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse" />
-            <h2 className="text-white/50 font-mono text-sm tracking-widest uppercase">
-              {`Highlight Projects (${String(Math.min(4, PROJECTS.length)).padStart(2, "0")})`}
+          <div className="flex flex-col gap-4 mb-8">
+            <h2 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
+              Selected <span className="text-neutral-600">Works.</span>
             </h2>
           </div>
         </ScrollReveal>
         <ScrollReveal>
-          <div className="w-full h-[1px] bg-neutral-800" />
+          <div className="w-full h-[1px] bg-neutral-800/50" />
         </ScrollReveal>
       </div>
 
