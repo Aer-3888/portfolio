@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { NAV_ITEMS, SOCIALS } from "../../config/siteData";
 import NavButtons from "../../components/NavButtons";
-import ContactTerminal from "./ContactTerminal";
+import ArcadeMachine from "./ArcadeMachine";
 import HomeButton from "../../components/HomeButton";
 
 export default function ContactPage() {
@@ -14,17 +14,10 @@ export default function ContactPage() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setTime(
-        now.toLocaleTimeString("en-US", {
-          hour12: false,
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
-        })
-      );
+      setTime(now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }));
     };
     updateTime();
-    const interval = setInterval(updateTime, 1000);
+    const interval = setInterval(updateTime, 1000 * 60);
     return () => clearInterval(interval);
   }, []);
 
@@ -39,137 +32,106 @@ export default function ContactPage() {
       navigator.clipboard.writeText("theo.phan.quoc.huy@gmail.com");
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (_e) {
-      // Ignore clipboard failures silently
-    }
+    } catch (_e) {}
   };
 
   return (
-    <div className="min-h-screen w-full bg-neutral-950 relative overflow-y-auto overflow-x-hidden font-sans selection:bg-orange-500/30 text-white">
-      {/* Background (With Grid) */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        {/* Noise */}
-        <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
-        {/* Grid Pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)`,
-            backgroundSize: "40px 40px",
-          }}
-        />
-
-        {/* Vignette */}
-        <div className="absolute inset-0 bg-radial-gradient from-transparent via-neutral-950/50 to-neutral-950" />
-      </div>
-
+    <div className="min-h-screen w-full bg-neutral-950 relative overflow-hidden font-sans text-white flex flex-col items-center justify-center p-6 md:p-12">
       {/* Home Button */}
       <div className="fixed top-8 left-6 md:left-10 z-[1200]">
         <HomeButton />
       </div>
 
-      {/* Other Navigation Buttons */}
+      {/* Navigation */}
       <NavButtons
         items={navItems}
         currentPath="/contact"
         className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
       />
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-4 pt-24 md:p-8 md:pt-20">
-        {/* System Grid Container */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="w-full max-w-6xl bg-black/40 backdrop-blur-sm shadow-2xl rounded-xl overflow-hidden border border-white/10 grid grid-cols-1 md:grid-cols-12 min-h-[700px]"
-        >
-          {/* Left Panel */}
-          <div className="md:col-span-4 bg-black/20 border-b md:border-b-0 md:border-r border-white/10 p-8 flex flex-col justify-between relative">
-            {/* Decoration Lines */}
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-orange-500 to-transparent opacity-50" />
-
-            {/* Top Section */}
-            <div className="space-y-8">
-              <div>
-                <h1 className="text-3xl font-black text-white tracking-tighter uppercase mb-2">
-                  My
-                  <br />
-                  Details
-                </h1>
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                  <span className="font-mono text-[10px] text-green-500 tracking-widest uppercase">
-                    Studying // Looking for internships
-                  </span>
-                </div>
-              </div>
-
-              {/* Email Block */}
-              <div className="group cursor-pointer relative" onClick={handleCopyEmail}>
-                <div className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-1 flex justify-between">
-                  <span>01 // Direct_Line</span>
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity text-orange-500">
-                    COPY
-                  </span>
-                </div>
-                {copied && (
-                  <div className="absolute top-0 right-0 -translate-y-6 bg-white/10 text-white text-xs px-3 py-1 rounded-md shadow-md backdrop-blur-sm">
-                    Copied!
-                  </div>
-                )}
-                <div className="text-white text-sm md:text-base font-bold break-all border-l-2 border-white/20 pl-3 group-hover:border-orange-500 group-hover:bg-white/5 transition-all py-2">
-                  theo.phan.quoc.huy
-                  <br />
-                  @gmail.com
-                </div>
-              </div>
-
-              {/* Location Block */}
-              <div>
-                <div className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-1">
-                  02 // Coordinates
-                </div>
-                <div className="text-white text-sm font-medium border-l-2 border-white/20 pl-3 py-1">
-                  Brittany, France
-                  <br />
-                  <span className="text-neutral-400 font-mono text-xs">{time} (CET)</span>
-                </div>
-              </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        className="w-full max-w-7xl h-[85vh] md:h-[75vh] grid grid-cols-1 lg:grid-cols-12 bg-neutral-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] overflow-hidden rounded-sm border border-white/5"
+      >
+        {/* Left: Communication & Details */}
+        <div className="lg:col-span-5 flex flex-col justify-between p-10 md:p-16 border-b lg:border-b-0 lg:border-r border-white/5 bg-neutral-900">
+          <div className="space-y-16">
+            <div className="space-y-4">
+              <span className="text-orange-500 font-mono text-[10px] uppercase tracking-[0.4em] block font-bold">
+                Inquiries
+              </span>
+              <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.8]">
+                Get In
+                <br />
+                <span className="text-neutral-600">Touch.</span>
+              </h1>
             </div>
 
-            {/* Bottom Section: Socials */}
-            <div className="mt-12 md:mt-0">
-              <div className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-4">
-                03 // Ext_Uplinks
+            <div className="space-y-10">
+              {/* Email Link */}
+              <div 
+                className="group cursor-pointer block"
+                onClick={handleCopyEmail}
+              >
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">Email</span>
+                  <span className={`text-[9px] font-bold text-orange-500 transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                    {copied ? 'Copied' : 'Copy'}
+                  </span>
+                </div>
+                <div className="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-orange-500 transition-colors">
+                  theo.phan.quoc.huy@gmail.com
+                </div>
               </div>
-              <div className="grid grid-cols-1 gap-2">
-                {SOCIALS.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center justify-between p-3 bg-white/5 border border-white/10 hover:bg-white hover:text-black transition-all"
-                  >
-                    <span className="font-bold text-sm uppercase tracking-wider">
-                      {social.label}
-                    </span>
-                    <span className="font-mono text-[9px] opacity-50 group-hover:opacity-100">
-                      {social.id} ↗
-                    </span>
-                  </a>
-                ))}
+
+              {/* Location & Time */}
+              <div className="grid grid-cols-2 gap-12 pt-4">
+                <div className="space-y-2">
+                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">Location</span>
+                  <div className="text-sm font-bold uppercase tracking-wide">Rennes, France</div>
+                </div>
+                <div className="space-y-2">
+                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">Local Time</span>
+                  <div className="text-sm font-bold font-mono tracking-tight text-orange-500">{time}</div>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Right Panel */}
-          <div className="md:col-span-8 bg-transparent relative">
-            <ContactTerminal />
+          {/* Socials */}
+          <div className="pt-12">
+            <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest block font-bold mb-4">Social Channels</span>
+            <div className="flex flex-wrap gap-x-8 gap-y-4">
+            {SOCIALS.map((social) => (
+              <a
+                key={social.label}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 hover:text-orange-500 transition-colors"
+              >
+                {social.label}
+              </a>
+            ))}
+            </div>
           </div>
-        </motion.div>
-      </div>
+        </div>
+
+        {/* Right: Arcade Game */}
+        <div className="lg:col-span-7 bg-neutral-950 flex flex-col">
+          <div className="flex-1">
+            <ArcadeMachine />
+          </div>
+          
+          <div className="p-10 border-t border-white/5 bg-neutral-900/50">
+            <p className="text-neutral-500 text-[10px] md:text-xs leading-relaxed font-mono uppercase tracking-[0.3em]">
+              Efficiency is priority. The transmission form has been replaced with a high-speed perception test.
+            </p>
+          </div>
+        </div>
+      </motion.div>
     </div>
   );
 }
