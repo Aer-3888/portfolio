@@ -45,28 +45,29 @@ export default function AboutPage() {
   return (
       <main
         ref={containerRef}
-        className="relative min-h-screen bg-neutral-100 dark:bg-neutral-950 text-neutral-900 dark:text-white pt-32 pb-24 px-6 md:px-12 flex flex-col items-center"
+        className="relative min-h-screen bg-neutral-950 text-white pt-32 pb-24 px-6 md:px-12 flex flex-col items-center overflow-hidden"
       >
         {/* 1. Top Section */}
-        <div className="w-full max-w-5xl flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12">
-          <div>
-            <span className="text-orange-600 font-mono text-xs uppercase tracking-widest mb-4 block">
-              01 // Identity
+        <div className="w-full max-w-5xl flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mb-20 relative z-10">
+          <div className="flex flex-col gap-4">
+            <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.4em] block mb-2">
+              01 // Profile
             </span>
-            <h1 className="text-5xl md:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
-              About
+            <h1 className="text-6xl md:text-9xl font-black tracking-tighter uppercase leading-[0.8]">
+              Théo
               <br />
-              The
-              <br />
-              Human.
+              <span className="text-neutral-600">Phan.</span>
             </h1>
           </div>
 
-          <p className="w-full md:w-auto max-w-md text-neutral-500 text-sm md:text-base leading-relaxed font-mono">
-            I am Théo. Currently mastering Computer Science at INSA Rennes, but always exploring.
-            Whether I’m training a neural network or framing a photograph, I am obsessed with how
-            complex systems, wheter digital or physical, fit together.
-          </p>
+          <div className="flex flex-col gap-6 max-w-lg">
+            <p className="text-neutral-300 text-xl md:text-2xl font-bold tracking-tight leading-tight">
+              Engineering systems where technical precision meets creative exploration.
+            </p>
+            <p className="text-neutral-500 text-sm md:text-base leading-relaxed font-mono">
+              Currently studying Computer Science at INSA Rennes, specializing in AI Engineering and Full-Stack development.
+            </p>
+          </div>
         </div>
 
         {/* Nav */}

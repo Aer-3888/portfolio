@@ -32,10 +32,10 @@ function ScrollReveal({ children, className }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 100%", "end 0%"],
+    offset: ["start 95%", "end 5%"], // Earlier trigger
   });
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [0, 1, 1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.2, 0.9, 1], [50, 0, 0, -50]);
+  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [30, 0, 0, -30]); // Smaller shift
 
   return (
     <motion.div ref={ref} style={{ opacity, y }} className={className}>

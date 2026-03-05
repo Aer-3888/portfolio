@@ -51,74 +51,66 @@ export default function SystemWindow({ onFullscreenChange, defaultTab = "git" })
           dragListener={false}
           dragControls={dragControls}
           dragMomentum={false}
-          dragConstraints={{ left: -500, right: 500, top: -100, bottom: 500 }} // Safety bounds
+          dragConstraints={{ left: -500, right: 500, top: -100, bottom: 500 }}
           animate={windowControls}
           onDragEnd={handleDragEnd}
-          whileDrag={{ scale: 1.01, boxShadow: "0px 20px 50px rgba(0,0,0,0.5)" }}
-          className="w-full h-auto bg-neutral-900 border border-neutral-800 rounded-xl shadow-2xl flex flex-col relative"
+          whileDrag={{ scale: 1.005, boxShadow: "0px 30px 60px rgba(0,0,0,0.6)" }}
+          className="w-full h-auto bg-neutral-900 border border-white/5 rounded-2xl shadow-[0_40px_80px_-20px_rgba(0,0,0,0.7)] flex flex-col relative overflow-hidden"
         >
+          {/* Title Bar */}
           <div
             onPointerDown={(e) => dragControls.start(e)}
-            className="h-10 bg-black border-b border-neutral-800 flex items-end px-3 gap-2 rounded-t-xl shrink-0 cursor-grab active:cursor-grabbing touch-none"
+            className="h-12 bg-neutral-950/80 backdrop-blur-md border-b border-white/5 flex items-center px-4 gap-6 rounded-t-2xl shrink-0 cursor-grab active:cursor-grabbing touch-none"
           >
-            <div className="flex gap-2 self-center mr-4">
-              <div className="w-3 h-3 rounded-full bg-red-500/20 border border-red-500/50" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/20 border border-yellow-500/50" />
-              <div className="w-3 h-3 rounded-full bg-green-500/20 border border-green-500/50" />
+            {/* Window Controls */}
+            <div className="flex gap-2">
+              <div className="w-2.5 h-2.5 rounded-full bg-neutral-800" />
+              <div className="w-2.5 h-2.5 rounded-full bg-neutral-800" />
+              <div className="w-2.5 h-2.5 rounded-full bg-neutral-800" />
             </div>
 
-            <div className="flex h-8">
+            {/* Tab Navigation */}
+            <div className="flex gap-1 bg-black/40 p-1 rounded-lg">
               <button
                 onPointerDown={(e) => e.stopPropagation()}
                 onClick={() => setActiveTab("git")}
                 className={`
-                  relative px-6 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest rounded-t-md transition-all
+                  px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider transition-all
                   ${
                     activeTab === "git"
-                      ? "bg-neutral-900 text-white border-t-2 border-orange-500 z-10"
-                      : "bg-neutral-950 text-neutral-500 border-t-2 border-transparent hover:bg-neutral-900/50 hover:text-neutral-300"
+                      ? "bg-neutral-800 text-white shadow-sm"
+                      : "text-neutral-500 hover:text-neutral-300"
                   }
                 `}
               >
-                <span
-                  className={
-                    "cursor-pointer " + (activeTab === "git" ? "text-orange-500" : "opacity-50")
-                  }
-                >
-                  ./git_log
-                </span>
+                git.log
               </button>
 
               <button
                 onPointerDown={(e) => e.stopPropagation()}
                 onClick={() => setActiveTab("gallery")}
                 className={`
-                  relative px-6 flex items-center gap-2 text-[10px] font-mono uppercase tracking-widest rounded-t-md transition-all ml-1
+                  px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider transition-all
                   ${
                     activeTab === "gallery"
-                      ? "bg-neutral-900 text-white border-t-2 border-blue-500 z-10"
-                      : "bg-neutral-950 text-neutral-500 border-t-2 border-transparent hover:bg-neutral-900/50 hover:text-neutral-300"
+                      ? "bg-neutral-800 text-white shadow-sm"
+                      : "text-neutral-500 hover:text-neutral-300"
                   }
                 `}
               >
-                <span
-                  className={
-                    "cursor-pointer " + (activeTab === "gallery" ? "text-blue-500" : "opacity-50")
-                  }
-                >
-                  ./gallery
-                </span>
+                assets.view
               </button>
             </div>
 
-            <div className="hidden md:flex flex-1 h-8 border-b border-neutral-800 items-center justify-end px-4 select-none">
-              <span className="font-mono text-[10px] text-neutral-600">
-                root@system:~/{activeTab === "git" ? "career/history" : "assets/photos"}
+            {/* Path Breadcrumb */}
+            <div className="hidden md:flex flex-1 items-center justify-end select-none">
+              <span className="font-mono text-[9px] text-neutral-600 tracking-widest uppercase">
+                session:{" "}{activeTab === "git" ? "active_history" : "media_gallery"}
               </span>
             </div>
           </div>
 
-          <div className="bg-neutral-900 rounded-b-xl min-h-[500px]">
+          <div className="bg-neutral-900 min-h-[500px] relative">
             {activeTab === "git" ? (
               <GitGraph />
             ) : (

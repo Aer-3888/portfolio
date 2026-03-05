@@ -5,8 +5,28 @@ import { galleryFiles } from "./galleryData";
 export default function GalleryInspector({ onFullscreenChange }) {
   const [activeFile, setActiveFile] = useState(galleryFiles[0]);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(true);
   const listRef = useRef(null);
   const wheelStateRef = useRef({ acc: 0, lastTs: 0 });
+
+  // Preload adjacent images
+  useEffect(() => {
+    const currentIndex = galleryFiles.findIndex((f) => f.name === activeFile.name);
+    const nextIndex = (currentIndex + 1) % galleryFiles.length;
+    const prevIndex = (currentIndex - 1 + galleryFiles.length) % galleryFiles.length;
+
+    [galleryFiles[nextIndex], galleryFiles[prevIndex]].forEach((file) => {
+      const img = new Image();
+      img.src = file.url;
+    });
+  }, [activeFile]);
+
+  // Handle active file change
+  const handleSetFile = (file) => {
+    if (file.name === activeFile.name) return;
+    setIsImageLoading(true);
+    setActiveFile(file);
+  };
 
   useEffect(() => {
     if (onFullscreenChange) onFullscreenChange(isFullscreen);
@@ -21,7 +41,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
       if (e) e.stopPropagation();
       const currentIndex = galleryFiles.findIndex((f) => f.name === activeFile.name);
       const nextIndex = (currentIndex + 1) % galleryFiles.length;
-      setActiveFile(galleryFiles[nextIndex]);
+      handleSetFile(galleryFiles[nextIndex]);
     },
     [activeFile]
   );
@@ -31,7 +51,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
       if (e) e.stopPropagation();
       const currentIndex = galleryFiles.findIndex((f) => f.name === activeFile.name);
       const prevIndex = (currentIndex - 1 + galleryFiles.length) % galleryFiles.length;
-      setActiveFile(galleryFiles[prevIndex]);
+      handleSetFile(galleryFiles[prevIndex]);
     },
     [activeFile]
   );
@@ -41,15 +61,14 @@ export default function GalleryInspector({ onFullscreenChange }) {
     const inFullscreen = isFullscreen;
     if (!inFullscreen && !allowWhenNotFullscreen) return;
 
-    // Block scrolling when in fullscreen
     if (inFullscreen) {
       e.preventDefault();
       e.stopPropagation();
     }
 
     const now = performance.now();
-    const threshold = 120;
-    const minInterval = 160;
+    const threshold = 60;
+    const minInterval = 100;
     const nextAcc = wheelStateRef.current.acc + e.deltaY;
 
     if (Math.abs(nextAcc) < threshold || now - wheelStateRef.current.lastTs < minInterval) {
@@ -141,7 +160,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
               <button
                 key={file.name}
                 id={`file-${file.name}`}
-                onClick={() => setActiveFile(file)}
+                onClick={() => handleSetFile(file)}
                 className={`w-full text-left px-3 py-2 text-xs font-mono truncate transition-all duration-200 rounded-sm shrink-0
                               ${
                                 activeFile.name === file.name
@@ -232,17 +251,40 @@ export default function GalleryInspector({ onFullscreenChange }) {
           <AnimatePresence mode="wait">
             <motion.div
               key={activeFile.name}
-              initial={{ opacity: 0, scale: 0.98, filter: "blur(5px)" }}
+              initial={{ opacity: 0, scale: 0.98, filter: "blur(10px)" }}
               animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="relative w-full h-full flex items-center justify-center p-2"
             >
-              <div className="relative inline-block max-w-full max-h-full">
+              <div 
+                className="relative inline-block max-w-full max-h-full cursor-zoom-in group/img"
+                onClick={() => setIsFullscreen(true)}
+              >
+                {/* Loading State Indicator */}
+                <AnimatePresence>
+                  {isImageLoading && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="absolute inset-0 flex flex-col items-center justify-center bg-black/40 backdrop-blur-md z-10"
+                    >
+                      <div className="w-8 h-8 border-2 border-orange-500/20 border-t-orange-500 rounded-full animate-spin" />
+                      <span className="text-[8px] font-mono text-white/40 mt-3 uppercase tracking-widest">
+                        Decrypting Image...
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 <img
                   src={activeFile.url}
                   alt={activeFile.name}
-                  className="max-h-[70vh] md:max-h-[500px] max-w-full w-auto h-auto object-contain shadow-2xl border border-neutral-800 bg-black block"
+                  onLoad={() => setIsImageLoading(false)}
+                  className={`max-h-[70vh] md:max-h-[500px] max-w-full w-auto h-auto object-contain shadow-2xl border border-neutral-800 bg-black block transition-all duration-500 ${
+                    isImageLoading ? "opacity-0" : "opacity-100 group-hover/img:border-orange-500/50"
+                  }`}
                 />
 
                 {/* Tag */}
