@@ -126,7 +126,7 @@ export default function ProjectList() {
         setIsHovered(false);
       }}
       onTouchStart={handleTouchStart}
-      className="relative w-full min-h-screen bg-neutral-900 py-32 flex flex-col justify-center cursor-default overflow-hidden"
+      className="relative w-full min-h-screen bg-neutral-900 py-20 md:py-32 flex flex-col justify-center cursor-default overflow-hidden"
     >
       <Cursor
         key={`${entryPoint?.x}-${entryPoint?.y}`}
@@ -145,10 +145,10 @@ export default function ProjectList() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[40vh] bg-orange-600/10 blur-[120px] pointer-events-none" />
 
       {/* Header */}
-      <div className="container mx-auto px-6 md:px-12 mb-24 z-10 relative">
+      <div className="container mx-auto px-6 md:px-12 mb-12 md:mb-24 z-10 relative">
         <ScrollReveal>
-          <div className="flex flex-col gap-4 mb-8">
-            <h2 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
+          <div className="flex flex-col gap-4 mb-6 md:mb-8">
+            <h2 className="text-4xl sm:text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
               Selected <span className="text-neutral-600">Works.</span>
             </h2>
           </div>
