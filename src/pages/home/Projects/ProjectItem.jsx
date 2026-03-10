@@ -4,6 +4,7 @@ export default function ProjectItem({
   title,
   year,
   services,
+  category,
   index,
   isActive,
   isCoarsePointer,
@@ -38,7 +39,9 @@ export default function ProjectItem({
       {/* Top Row : Project Name and Year */}
       <div className="flex flex-col md:flex-row md:items-center justify-between px-6 md:px-12 z-10 gap-2 md:gap-0">
         <motion.div variants={textVariants} className="flex items-baseline gap-4">
-          <span className="text-xs md:text-sm font-mono text-neutral-500">0{index + 1} /</span>
+          <span className="text-xs md:text-sm font-mono text-neutral-500">
+            0{index + 1} / {category} /
+          </span>
           <h3 className="text-3xl sm:text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mix-blend-difference leading-[0.9]">
             {title}
           </h3>

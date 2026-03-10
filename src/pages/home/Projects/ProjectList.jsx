@@ -160,7 +160,7 @@ export default function ProjectList() {
 
       {/* List */}
       <div className="container mx-auto px-0 z-10 relative">
-        {PROJECTS.slice(0, 4).map((project, i) => (
+        {PROJECTS.slice(0, 5).map((project, i) => (
           <ScrollReveal key={project.id || i} className="w-full">
             <ProjectItem
               index={i}
@@ -170,6 +170,7 @@ export default function ProjectList() {
               title={project.title}
               year={project.year}
               services={project.services}
+              category={project.category}
             />
           </ScrollReveal>
         ))}

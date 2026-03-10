@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import NavButtons from "../../components/NavButtons";
 import HomeButton from "../../components/HomeButton";
 import FloatingCard from "./FloatingCard";
+import ProjectDetails from "./ProjectDetails";
 import { NAV_ITEMS, PROJECTS } from "../../config/siteData";
 import { BackgrounGrid } from "./BackgroundGrid";
 
@@ -13,6 +14,7 @@ export default function ProjectsPage() {
 
   const [hasEntered, setHasEntered] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
+  const [selectedProject, setSelectedProject] = useState(null);
 
   const introControls = useAnimation();
   const flashControls = useAnimation();
@@ -21,11 +23,21 @@ export default function ProjectsPage() {
 
   // Lock scroll on mount
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-    window.scrollTo(0, 0);
+    if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else if (!showIntro) {
+      document.body.style.overflow = "";
+    } else {
+      document.body.style.overflow = "hidden";
+    }
+    
     return () => {
       document.body.style.overflow = "";
     };
+  }, [showIntro, selectedProject]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, []);
 
   // Warp Sequence
@@ -36,12 +48,12 @@ export default function ProjectsPage() {
       scale: 15,
       opacity: 0,
       filter: "blur(8px)",
-      transition: { duration: 1.2, ease: [0.7, 0, 0.3, 1] },
+      transition: { duration: 0.8, ease: [0.7, 0, 0.3, 1] },
     });
 
     const flashDone = flashControls.start({
       opacity: [0, 1, 1, 0],
-      transition: { duration: 1.0, times: [0, 0.3, 0.6, 1], delay: 0.5 },
+      transition: { duration: 0.6, times: [0, 0.3, 0.6, 1], delay: 0.3 },
     });
 
     await Promise.all([zoomDone, flashDone]);
@@ -58,7 +70,7 @@ export default function ProjectsPage() {
 
     await entryControls.start({
       x: 0,
-      transition: { duration: 2.4, ease: [0.16, 1, 0.3, 1] },
+      transition: { duration: 1.8, ease: [0.16, 1, 0.3, 1] },
     });
 
     document.body.style.overflow = "";
@@ -78,8 +90,71 @@ export default function ProjectsPage() {
   });
 
   // Map Vertical Scroll to Horizontal Move
-  const tunnelX = useTransform(smoothScroll, [0, 1], ["0%", "-70%"]);
+  const tunnelX = useTransform(smoothScroll, [0, 1], ["0%", "-80%"]);
   const tunnelTextX = useTransform(smoothScroll, [0, 1], ["0%", "30%"]);
+  const totalScrollHeight = (PROJECTS.length + 2) * 100;
+
+  // Deep Linking Support
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (hash) {
+        const project = PROJECTS.find((p) => p.id === hash);
+        if (project) setSelectedProject(project);
+      } else {
+        setSelectedProject(null);
+      }
+    };
+
+    // Check on mount
+    handleHashChange();
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  // Update hash when project selected
+  useEffect(() => {
+    if (selectedProject) {
+      window.history.replaceState(null, "", `#${selectedProject.id}`);
+    } else {
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+  }, [selectedProject]);
+
+  // Keyboard Navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (selectedProject || showIntro) return;
+
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+        window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+      } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+        window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedProject, showIntro]);
+
+  // Touch Drag Support
+  const touchStart = useRef(0);
+  const handleTouchStart = (e) => {
+    touchStart.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    if (showIntro || selectedProject) return;
+    const touchEnd = e.touches[0].clientX;
+    const deltaX = touchStart.current - touchEnd;
+    
+    // Map horizontal swipe to vertical scroll
+    if (Math.abs(deltaX) > 10) {
+      window.scrollBy({ top: deltaX * 1.5, behavior: "auto" });
+      touchStart.current = touchEnd;
+    }
+  };
 
   return (
       <div className="bg-neutral-950 text-white font-sans selection:bg-orange-500/30 overflow-x-hidden">
@@ -96,10 +171,15 @@ export default function ProjectsPage() {
         {/* Scroll Container */}
         <div
           ref={containerRef}
-          className="absolute top-0 left-0 w-full h-[500vh] pointer-events-none"
+          style={{ height: `${totalScrollHeight}vh` }}
+          className="absolute top-0 left-0 w-full pointer-events-none"
         />
 
-        <div className="fixed inset-0 w-full h-full overflow-hidden bg-black flex items-center justify-center perspective-[1000px]">
+        <div 
+          className="fixed inset-0 w-full h-full overflow-hidden bg-black flex items-center justify-center perspective-[1000px]"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+        >
           {showIntro && (
             <motion.div
               animate={introControls}
@@ -212,19 +292,24 @@ export default function ProjectsPage() {
                 <div className="w-[30vw] shrink-0 text-left pl-12 relative mr-[-10vw]">
                   <motion.div style={{ x: tunnelTextX }} className="relative z-10">
                     <div className="w-16 h-1 bg-orange-500 mb-6" />
-                    <h2 className="text-6xl font-black uppercase tracking-tighter mb-4">
-                      Welcome <br /> to my <br /> archive
+                    <h2 className="text-7xl font-black uppercase tracking-tighter mb-2 leading-[0.85]">
+                      Selected <br /> Projects
                     </h2>
-                    <p className="font-mono text-neutral-400 text-sm max-w-sm leading-relaxed">
-                      /MTN/ASSETS/PROJECTS
-                      <br />
+                    
+                    <p className="font-mono text-[10px] text-neutral-500 uppercase tracking-[0.2em] mt-4">
+                      [ INDEX.2024_2026 ]
                     </p>
                   </motion.div>
                 </div>
 
                 {/* Project Cards */}
                 {PROJECTS.map((project) => (
-                  <FloatingCard key={project.id} project={project} x={tunnelX} />
+                  <FloatingCard
+                    key={project.id}
+                    project={project}
+                    x={tunnelX}
+                    onClick={() => setSelectedProject(project)}
+                  />
                 ))}
 
                 {/* Contact Link */}
@@ -246,6 +331,23 @@ export default function ProjectsPage() {
               </motion.div>
             </motion.div>
           </motion.div>
+
+          {/* Project Details Modal */}
+          <ProjectDetails
+            project={selectedProject}
+            isOpen={!!selectedProject}
+            onClose={() => setSelectedProject(null)}
+          />
+
+          {/* Progress Bar */}
+          {!showIntro && (
+            <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-[30vw] h-[2px] bg-white/10 z-[1200] overflow-hidden">
+              <motion.div
+                style={{ scaleX: smoothScroll, transformOrigin: "left" }}
+                className="w-full h-full bg-orange-500"
+              />
+            </div>
+          )}
 
           {/* Grain & Gradient Overlays */}
           <div className="absolute inset-0 z-30 pointer-events-none opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
