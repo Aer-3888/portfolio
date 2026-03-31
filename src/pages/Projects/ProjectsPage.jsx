@@ -1,5 +1,12 @@
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useSpring, useAnimation } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useAnimation,
+  useReducedMotion,
+} from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import NavButtons from "../../components/NavButtons";
 import HomeButton from "../../components/HomeButton";
@@ -20,6 +27,8 @@ export default function ProjectsPage() {
   const flashControls = useAnimation();
   const tunnelControls = useAnimation();
   const entryControls = useAnimation();
+
+  const prefersReduced = useReducedMotion();
 
   // Lock scroll on mount
   useEffect(() => {
@@ -52,6 +61,12 @@ export default function ProjectsPage() {
   const handleWarp = async () => {
     setHasEntered(true);
     localStorage.setItem("hasVisitedProjects", "1");
+
+    if (prefersReduced) {
+      setShowIntro(false);
+      document.body.style.overflow = "";
+      return;
+    }
 
     const zoomDone = introControls.start({
       scale: 15,
