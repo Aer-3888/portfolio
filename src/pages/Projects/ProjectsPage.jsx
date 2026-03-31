@@ -1,23 +1,18 @@
 import { useRef, useState, useEffect } from "react";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useSpring,
-  useAnimation,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import NavButtons from "../../components/NavButtons";
 import HomeButton from "../../components/HomeButton";
-import FloatingCard from "./FloatingCard";
 import ProjectDetails from "./ProjectDetails";
+import TunnelView from "./TunnelView";
 import { NAV_ITEMS, PROJECTS } from "../../config/siteData";
 import { BackgrounGrid } from "./BackgroundGrid";
 
 export default function ProjectsPage() {
   const navigate = useNavigate();
-  const containerRef = useRef(null);
+  const tunnelRef = useRef(null);
+  const scrollContainerRef = useRef(null);
+  const totalScrollHeight = (PROJECTS.length + 2) * 100;
 
   const [hasEntered, setHasEntered] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
@@ -25,8 +20,6 @@ export default function ProjectsPage() {
 
   const introControls = useAnimation();
   const flashControls = useAnimation();
-  const tunnelControls = useAnimation();
-  const entryControls = useAnimation();
 
   const prefersReduced = useReducedMotion();
 
@@ -85,38 +78,12 @@ export default function ProjectsPage() {
     setShowIntro(false);
     window.scrollTo(0, 0);
 
-    await new Promise((r) => requestAnimationFrame(r));
-
-    tunnelControls.start({
-      opacity: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
-    });
-
-    await entryControls.start({
-      x: 0,
-      transition: { duration: 1.8, ease: [0.16, 1, 0.3, 1] },
-    });
-
-    document.body.style.overflow = "";
+    if (tunnelRef.current) {
+      await tunnelRef.current.playEntry();
+    } else {
+      document.body.style.overflow = "";
+    }
   };
-
-  // Scroll Progress Tracking
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Apply spring physics to scroll
-  const smoothScroll = useSpring(scrollYProgress, {
-    damping: 35,
-    mass: 0.5,
-    stiffness: 100,
-  });
-
-  // Map Vertical Scroll to Horizontal Move
-  const tunnelX = useTransform(smoothScroll, [0, 1], ["0%", "-80%"]);
-  const tunnelTextX = useTransform(smoothScroll, [0, 1], ["0%", "30%"]);
-  const totalScrollHeight = (PROJECTS.length + 2) * 100;
 
   // Deep Linking Support
   useEffect(() => {
@@ -182,6 +149,13 @@ export default function ProjectsPage() {
 
   return (
     <div className="bg-neutral-950 text-white font-sans selection:bg-orange-500/30 overflow-x-hidden">
+      {/* Scroll driver — must live outside fixed wrapper to create document scroll height */}
+      <div
+        ref={scrollContainerRef}
+        style={{ height: `${totalScrollHeight}vh` }}
+        className="absolute top-0 left-0 w-full pointer-events-none"
+      />
+
       {/* Navigation */}
       <div className="fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference">
         <HomeButton />
@@ -190,13 +164,6 @@ export default function ProjectsPage() {
         items={NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) }))}
         currentPath="/projects"
         className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
-      />
-
-      {/* Scroll Container */}
-      <div
-        ref={containerRef}
-        style={{ height: `${totalScrollHeight}vh` }}
-        className="absolute top-0 left-0 w-full pointer-events-none"
       />
 
       <div
@@ -296,65 +263,12 @@ export default function ProjectsPage() {
           className="absolute inset-0 z-50 bg-white pointer-events-none"
         />
 
-        {/* Projects Tunnel */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={showIntro ? tunnelControls : { opacity: 1 }}
-          className="absolute inset-0 z-10 w-full h-full"
-        >
-          <motion.div
-            initial={{ x: showIntro ? "60vw" : "0vw" }}
-            animate={showIntro ? entryControls : { x: 0 }}
-            className="h-full"
-            style={{ willChange: "transform" }}
-          >
-            <motion.div
-              style={{ x: tunnelX }}
-              className="flex items-center pl-[35vw] gap-[10vw] w-max h-full will-change-transform"
-            >
-              {/* Tunnel Text */}
-              <div className="w-[30vw] shrink-0 text-left pl-12 relative mr-[-10vw]">
-                <motion.div style={{ x: tunnelTextX }} className="relative z-10">
-                  <div className="w-16 h-1 bg-orange-500 mb-6" />
-                  <h2 className="text-7xl font-black uppercase tracking-tighter mb-2 leading-[0.85]">
-                    Selected <br /> Projects
-                  </h2>
-
-                  <p className="font-mono text-[10px] text-neutral-500 uppercase tracking-[0.2em] mt-4">
-                    [ INDEX.2024_2026 ]
-                  </p>
-                </motion.div>
-              </div>
-
-              {/* Project Cards */}
-              {PROJECTS.map((project) => (
-                <FloatingCard
-                  key={project.id}
-                  project={project}
-                  x={tunnelX}
-                  onClick={() => setSelectedProject(project)}
-                />
-              ))}
-
-              {/* Contact Link */}
-              <div className="w-[40vw] h-full flex items-center justify-center shrink-0 -m-[10vw]">
-                <button
-                  onClick={() => navigate("/contact")}
-                  className="group flex flex-col items-center gap-4 relative cursor-pointer"
-                >
-                  <div className="w-24 h-24 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-orange-500 group-hover:border-orange-500 transition-all z-10 duration-300">
-                    <span className="text-2xl group-hover:translate-x-1 transition-transform">
-                      →
-                    </span>
-                  </div>
-                  <span className="font-mono text-xs uppercase tracking-widest z-10 text-neutral-500 group-hover:text-white transition-colors">
-                    Let's build <br /> something together
-                  </span>
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        </motion.div>
+        <TunnelView
+          ref={tunnelRef}
+          containerRef={scrollContainerRef}
+          setSelectedProject={setSelectedProject}
+          showIntro={showIntro}
+        />
 
         {/* Project Details Modal */}
         <ProjectDetails
@@ -362,16 +276,6 @@ export default function ProjectsPage() {
           isOpen={!!selectedProject}
           onClose={() => setSelectedProject(null)}
         />
-
-        {/* Progress Bar */}
-        {!showIntro && (
-          <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-[30vw] h-[2px] bg-white/10 z-[1200] overflow-hidden">
-            <motion.div
-              style={{ scaleX: smoothScroll, transformOrigin: "left" }}
-              className="w-full h-full bg-orange-500"
-            />
-          </div>
-        )}
 
         {/* Grain & Gradient Overlays */}
         <div
