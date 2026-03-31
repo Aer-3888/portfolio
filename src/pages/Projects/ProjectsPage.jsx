@@ -5,8 +5,22 @@ import NavButtons from "../../components/NavButtons";
 import HomeButton from "../../components/HomeButton";
 import ProjectDetails from "./ProjectDetails";
 import TunnelView from "./TunnelView";
+import MobileProjectList from "./MobileProjectList";
+import LiquidMenu from "../../components/layout/LiquidMenu";
+import MenuPanel from "../../components/MenuPanel";
 import { NAV_ITEMS, PROJECTS } from "../../config/siteData";
 import { BackgrounGrid } from "./BackgroundGrid";
+
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const handler = (e) => setMatches(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, [query]);
+  return matches;
+}
 
 export default function ProjectsPage() {
   const navigate = useNavigate();
@@ -17,15 +31,20 @@ export default function ProjectsPage() {
   const [hasEntered, setHasEntered] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const introControls = useAnimation();
   const flashControls = useAnimation();
 
   const prefersReduced = useReducedMotion();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   // Lock scroll on mount
   useEffect(() => {
     if (selectedProject) {
+      document.body.style.overflow = "hidden";
+    } else if (!showIntro && !isDesktop) {
+      // Mobile: body scroll stays hidden (list scrolls internally)
       document.body.style.overflow = "hidden";
     } else if (!showIntro) {
       document.body.style.overflow = "";
@@ -36,7 +55,7 @@ export default function ProjectsPage() {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [showIntro, selectedProject]);
+  }, [showIntro, selectedProject, isDesktop]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -150,26 +169,49 @@ export default function ProjectsPage() {
   return (
     <div className="bg-neutral-950 text-white font-sans selection:bg-orange-500/30 overflow-x-hidden">
       {/* Scroll driver — must live outside fixed wrapper to create document scroll height */}
-      <div
-        ref={scrollContainerRef}
-        style={{ height: `${totalScrollHeight}vh` }}
-        className="absolute top-0 left-0 w-full pointer-events-none"
-      />
+      {isDesktop && (
+        <div
+          ref={scrollContainerRef}
+          style={{ height: `${totalScrollHeight}vh` }}
+          className="absolute top-0 left-0 w-full pointer-events-none"
+        />
+      )}
 
-      {/* Navigation */}
-      <div className="fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference">
-        <HomeButton />
-      </div>
-      <NavButtons
-        items={NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) }))}
-        currentPath="/projects"
-        className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
+      {/* Navigation — hidden on mobile when a project detail is open */}
+      {(!selectedProject || isDesktop) && (
+        <div className="fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference">
+          <HomeButton />
+        </div>
+      )}
+      {isDesktop ? (
+        <NavButtons
+          items={NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) }))}
+          currentPath="/projects"
+          className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
+        />
+      ) : (
+        !selectedProject && (
+          <div className="fixed top-4 right-4 z-[1200]">
+            <LiquidMenu
+              isOpen={isMenuOpen}
+              toggle={() => setIsMenuOpen((v) => !v)}
+              blobColor="#ffffff"
+              lineColor="#000000"
+            />
+          </div>
+        )
+      )}
+
+      <MenuPanel
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        navItems={NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) }))}
       />
 
       <div
         className="fixed inset-0 w-full h-full overflow-hidden bg-black flex items-center justify-center perspective-[1000px]"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
+        onTouchStart={isDesktop ? handleTouchStart : undefined}
+        onTouchMove={isDesktop ? handleTouchMove : undefined}
       >
         {showIntro && (
           <motion.div
@@ -263,12 +305,16 @@ export default function ProjectsPage() {
           className="absolute inset-0 z-50 bg-white pointer-events-none"
         />
 
-        <TunnelView
-          ref={tunnelRef}
-          containerRef={scrollContainerRef}
-          setSelectedProject={setSelectedProject}
-          showIntro={showIntro}
-        />
+        {isDesktop ? (
+          <TunnelView
+            ref={tunnelRef}
+            containerRef={scrollContainerRef}
+            setSelectedProject={setSelectedProject}
+            showIntro={showIntro}
+          />
+        ) : (
+          !showIntro && <MobileProjectList onProjectSelect={setSelectedProject} />
+        )}
 
         {/* Project Details Modal */}
         <ProjectDetails

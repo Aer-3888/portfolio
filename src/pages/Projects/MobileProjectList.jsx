@@ -8,7 +8,10 @@ export default function MobileProjectList({ onProjectSelect }) {
   const navigate = useNavigate();
 
   return (
-    <div className="absolute inset-0 overflow-y-auto overscroll-none">
+    <div
+      className="absolute inset-0 overflow-y-scroll"
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
       <div className="px-5 pt-24 pb-20 flex flex-col gap-3 min-h-full">
         {/* Header */}
         <div className="mb-6">
@@ -32,10 +35,7 @@ export default function MobileProjectList({ onProjectSelect }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: i * 0.06, ease: "easeOut" }}
             >
-              <MobileProjectCard
-                project={project}
-                onClick={() => onProjectSelect(project)}
-              />
+              <MobileProjectCard project={project} onClick={() => onProjectSelect(project)} />
             </motion.div>
           ))}
         </div>
@@ -52,9 +52,7 @@ export default function MobileProjectList({ onProjectSelect }) {
             className="group flex items-center gap-4 cursor-pointer"
           >
             <div className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-orange-500 group-hover:border-orange-500 transition-all duration-300">
-              <span className="text-base group-hover:translate-x-0.5 transition-transform">
-                →
-              </span>
+              <span className="text-base group-hover:translate-x-0.5 transition-transform">→</span>
             </div>
             <span className="font-mono text-[9px] uppercase tracking-widest text-neutral-500 group-hover:text-white transition-colors">
               Let's build something together

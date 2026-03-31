@@ -6,7 +6,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4 md:p-12 overflow-hidden">
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-0 md:p-12 overflow-hidden">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -22,7 +22,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="relative w-full max-w-[1300px] max-h-[85vh] bg-neutral-900 border border-white/10 overflow-hidden flex flex-col md:flex-row shadow-[0_0_80px_rgba(0,0,0,0.7)]"
+            className="relative w-full h-full md:max-w-[1300px] md:max-h-[85vh] md:h-auto bg-neutral-900 border-0 md:border md:border-white/10 overflow-hidden flex flex-col md:flex-row shadow-[0_0_80px_rgba(0,0,0,0.7)]"
           >
             {/* Close Button */}
             <button
