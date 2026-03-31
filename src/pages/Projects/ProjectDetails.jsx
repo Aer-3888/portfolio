@@ -29,7 +29,9 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               onClick={onClose}
               className="absolute top-6 right-6 z-50 w-11 h-11 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all group cursor-pointer"
             >
-              <span className="text-xl text-white group-hover:rotate-90 transition-transform duration-300">✕</span>
+              <span className="text-xl text-white group-hover:rotate-90 transition-transform duration-300">
+                ✕
+              </span>
             </button>
 
             {/* Left side: Image/Media */}
@@ -46,37 +48,35 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
             <div className="w-full md:w-[40%] p-8 md:p-12 overflow-y-auto custom-scrollbar flex flex-col gap-8">
               <div>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] px-2 py-0.5 border border-orange-500/40 bg-orange-500/10 text-orange-400">
+                  <span className="font-mono text-xs uppercase tracking-[0.2em] px-2.5 py-1 border border-orange-500/40 bg-orange-500/10 text-orange-400">
                     {project.type}
                   </span>
                   <span className="w-1 h-1 rounded-full bg-white/20" />
-                  <span className="font-mono text-xs text-neutral-500 uppercase tracking-[0.3em]">
+                  <span className="font-mono text-xs text-neutral-400 uppercase tracking-[0.3em]">
                     {project.category} / {project.year}
                   </span>
                 </div>
                 <h2 className="text-5xl font-black uppercase tracking-tighter text-white mb-4">
                   {project.title}
                 </h2>
-                <p className="text-neutral-400 leading-relaxed text-lg">
-                  {project.description}
-                </p>
+                <p className="text-neutral-300 leading-relaxed text-lg">{project.description}</p>
               </div>
 
               {/* Technical Profile Section */}
               <div className="flex flex-col gap-6 bg-white/[0.02] border-l-2 border-orange-500/50 p-6">
                 <div>
-                  <h4 className="font-mono text-[9px] text-orange-500 uppercase tracking-[0.3em] mb-2">
+                  <h4 className="font-mono text-[10px] text-orange-500 uppercase tracking-[0.25em] mb-2">
                     Core Insight
                   </h4>
-                  <p className="text-sm text-neutral-200 leading-relaxed font-medium">
+                  <p className="text-[14px] text-neutral-100 leading-relaxed font-medium">
                     {project.insight}
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-mono text-[9px] text-orange-500 uppercase tracking-[0.3em] mb-2">
+                  <h4 className="font-mono text-[10px] text-orange-500 uppercase tracking-[0.25em] mb-2">
                     Main Challenge
                   </h4>
-                  <p className="text-sm text-neutral-400 leading-relaxed italic">
+                  <p className="text-[14px] text-neutral-400 leading-relaxed italic">
                     "{project.challenge}"
                   </p>
                 </div>
@@ -85,14 +85,14 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               {/* Tags Section */}
               <div className="grid grid-cols-1 gap-8">
                 <div>
-                  <h4 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">
+                  <h4 className="font-mono text-[11px] text-neutral-400 uppercase tracking-wider mb-4 border-b border-white/5 pb-2">
                     Technologies
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {project.tags?.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 bg-white/5 border border-white/10 rounded-sm text-[10px] font-mono text-white/70 uppercase"
+                        className="px-3 py-1.5 bg-white/5 border border-white/[0.15] rounded-sm text-[11px] font-mono text-white/80 uppercase"
                       >
                         {tag}
                       </span>
@@ -102,24 +102,24 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
                 <div className="grid grid-cols-2 gap-8">
                   <div>
-                    <h4 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">
+                    <h4 className="font-mono text-[11px] text-neutral-400 uppercase tracking-wider mb-4 border-b border-white/5 pb-2">
                       Tools
                     </h4>
                     <div className="flex flex-col gap-1">
                       {project.tools?.map((tool) => (
-                        <span key={tool} className="text-xs font-mono text-neutral-300">
+                        <span key={tool} className="text-sm font-mono text-neutral-200">
                           {tool}
                         </span>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest mb-4 border-b border-white/5 pb-2">
+                    <h4 className="font-mono text-[11px] text-neutral-400 uppercase tracking-wider mb-4 border-b border-white/5 pb-2">
                       Architecture
                     </h4>
                     <div className="flex flex-col gap-1">
                       {project.architecture?.map((arch) => (
-                        <span key={arch} className="text-xs font-mono text-neutral-300">
+                        <span key={arch} className="text-sm font-mono text-neutral-200">
                           {arch}
                         </span>
                       ))}
@@ -146,7 +146,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                     {project.linkText || "View Project Website"}
                   </a>
                 )}
-                
+
                 {!project.isClosedSource && (
                   <a
                     href={project.url}
