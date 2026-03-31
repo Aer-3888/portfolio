@@ -1,6 +1,22 @@
+import { useMemo } from "react";
 import { motion } from "framer-motion";
 
+const PARTICLE_COUNT = 20;
+
 export const BackgrounGrid = () => {
+  const particles = useMemo(
+    () =>
+      Array.from({ length: PARTICLE_COUNT }, () => ({
+        width: Math.random() * 4 + 1,
+        height: Math.random() * 4 + 1,
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        duration: Math.random() * 5 + 5,
+        delay: Math.random() * 5,
+      })),
+    []
+  );
+
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
       <div className="absolute inset-0 flex items-center justify-center [perspective:1000px]">
@@ -23,26 +39,13 @@ export const BackgrounGrid = () => {
         </motion.div>
       </div>
 
-      {[...Array(20)].map((_, i) => (
+      {particles.map((p, i) => (
         <motion.div
           key={i}
           className="absolute bg-orange-500 rounded-full opacity-20"
-          style={{
-            width: Math.random() * 4 + 1,
-            height: Math.random() * 4 + 1,
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -100],
-            opacity: [0, 0.5, 0],
-          }}
-          transition={{
-            duration: Math.random() * 5 + 5,
-            repeat: Infinity,
-            delay: Math.random() * 5,
-            ease: "linear",
-          }}
+          style={{ width: p.width, height: p.height, left: p.left, top: p.top }}
+          animate={{ y: [0, -100], opacity: [0, 0.5, 0] }}
+          transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "linear" }}
         />
       ))}
     </div>
