@@ -40,9 +40,18 @@ export default function ProjectsPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  // Skip intro for return visitors
+  useEffect(() => {
+    if (localStorage.getItem("hasVisitedProjects")) {
+      setShowIntro(false);
+      setHasEntered(true);
+    }
+  }, []);
+
   // Warp Sequence
   const handleWarp = async () => {
     setHasEntered(true);
+    localStorage.setItem("hasVisitedProjects", "1");
 
     const zoomDone = introControls.start({
       scale: 15,
@@ -275,12 +284,12 @@ export default function ProjectsPage() {
         {/* Projects Tunnel */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={tunnelControls}
+          animate={showIntro ? tunnelControls : { opacity: 1 }}
           className="absolute inset-0 z-10 w-full h-full"
         >
           <motion.div
-            initial={{ x: "60vw" }}
-            animate={entryControls}
+            initial={{ x: showIntro ? "60vw" : "0vw" }}
+            animate={showIntro ? entryControls : { x: 0 }}
             className="h-full"
             style={{ willChange: "transform" }}
           >
