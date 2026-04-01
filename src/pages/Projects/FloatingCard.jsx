@@ -54,7 +54,7 @@ export default function FloatingCard({ project, x, onClick }) {
 
         <div className="absolute bottom-0 left-0 p-8 w-full z-10">
           <motion.div
-            initial={{ opacity: 0, x: -10 }}
+            initial={prefersReduced ? { opacity: 1, x: 0 } : { opacity: 0, x: -10 }}
             whileInView={prefersReduced ? {} : { opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.2 }}
@@ -66,7 +66,7 @@ export default function FloatingCard({ project, x, onClick }) {
           </motion.div>
           <motion.div
             className="flex justify-between items-end border-b border-white/20 pb-4 mb-4"
-            initial={{ opacity: 0, y: 10 }}
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             whileInView={prefersReduced ? {} : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.1 }}
