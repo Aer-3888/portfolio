@@ -1,11 +1,19 @@
 import { forwardRef, useImperativeHandle } from "react";
-import { motion, useScroll, useTransform, useSpring, useAnimation } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useSpring,
+  useAnimation,
+  useMotionValue,
+  useMotionValueEvent,
+} from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import FloatingCard from "./FloatingCard";
 import { PROJECTS } from "../../config/siteData";
 
 const TunnelView = forwardRef(function TunnelView(
-  { setSelectedProject, showIntro, containerRef },
+  { setSelectedProject, showIntro, containerRef, isModalOpen },
   ref
 ) {
   const navigate = useNavigate();
@@ -28,12 +36,19 @@ const TunnelView = forwardRef(function TunnelView(
     },
   }));
 
-  const { scrollYProgress } = useScroll({
+  const { scrollYProgress: rawScrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  const smoothScroll = useSpring(scrollYProgress, {
+  // Freeze scroll progress when a project modal is open so the tunnel
+  // never moves regardless of wheel events or overflow-lock timing gaps.
+  const frozenProgress = useMotionValue(rawScrollYProgress.get());
+  useMotionValueEvent(rawScrollYProgress, "change", (v) => {
+    if (!isModalOpen) frozenProgress.set(v);
+  });
+
+  const smoothScroll = useSpring(frozenProgress, {
     damping: 35,
     mass: 0.5,
     stiffness: 100,

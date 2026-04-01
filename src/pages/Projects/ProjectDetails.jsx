@@ -4,6 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 export default function ProjectDetails({ project, isOpen, onClose }) {
   const scrollRef = useRef(null);
 
+  // Reset panel scroll position each time the modal opens
+  useEffect(() => {
+    if (isOpen && scrollRef.current) {
+      scrollRef.current.scrollTop = 0;
+    }
+  }, [isOpen]);
+
   // iOS scroll lock: block touchmove on everything except the scrollable content panel
   useEffect(() => {
     if (!isOpen) return;
@@ -19,6 +26,8 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
   // Desktop scroll lock: always block document wheel scroll when modal is open,
   // and manually forward the delta to the scrollable panel so it still scrolls.
+  // On close, keep the listener active briefly so trackpad inertia dissipates
+  // before the tunnel is free to scroll again.
   useEffect(() => {
     if (!isOpen) return;
 
@@ -30,7 +39,11 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
     };
 
     document.addEventListener("wheel", prevent, { passive: false, capture: true });
-    return () => document.removeEventListener("wheel", prevent, { capture: true });
+    return () => {
+      setTimeout(() => {
+        document.removeEventListener("wheel", prevent, { capture: true });
+      }, 300);
+    };
   }, [isOpen]);
 
   if (!project) return null;

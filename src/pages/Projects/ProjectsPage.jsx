@@ -318,6 +318,7 @@ export default function ProjectsPage() {
             containerRef={scrollContainerRef}
             setSelectedProject={setSelectedProject}
             showIntro={showIntro}
+            isModalOpen={!!selectedProject}
           />
         ) : (
           !showIntro && <MobileProjectList onProjectSelect={setSelectedProject} />
