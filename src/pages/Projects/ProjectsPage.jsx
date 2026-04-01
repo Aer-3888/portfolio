@@ -185,17 +185,21 @@ export default function ProjectsPage() {
       )}
 
       {/* Navigation */}
-      <div className="fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference">
+      <div
+        className={`fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference transition-opacity duration-300 ${selectedProject ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+      >
         <HomeButton />
       </div>
       {isDesktop ? (
         <NavButtons
           items={NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) }))}
           currentPath="/projects"
-          className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
+          className={`fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference transition-opacity duration-300 ${selectedProject ? "opacity-0 pointer-events-none" : "opacity-100"}`}
         />
       ) : (
-        <div className="fixed top-4 right-4 z-[1200]">
+        <div
+          className={`fixed top-4 right-4 z-[1200] transition-opacity duration-300 ${selectedProject ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+        >
           <LiquidMenu
             isOpen={isMenuOpen}
             toggle={() => setIsMenuOpen((v) => !v)}
