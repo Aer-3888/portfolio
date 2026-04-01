@@ -41,20 +41,27 @@ export default function ProjectsPage() {
 
   // Lock scroll on mount
   useEffect(() => {
-    if (selectedProject) {
+    const lockScroll = () => {
       document.body.style.overflow = "hidden";
+      document.documentElement.style.overflow = "hidden";
+    };
+    const unlockScroll = () => {
+      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
+    };
+
+    if (selectedProject) {
+      lockScroll();
     } else if (!showIntro && !isDesktop) {
       // Mobile: body scroll stays hidden (list scrolls internally)
-      document.body.style.overflow = "hidden";
+      lockScroll();
     } else if (!showIntro) {
-      document.body.style.overflow = "";
+      unlockScroll();
     } else {
-      document.body.style.overflow = "hidden";
+      lockScroll();
     }
 
-    return () => {
-      document.body.style.overflow = "";
-    };
+    return () => unlockScroll();
   }, [showIntro, selectedProject, isDesktop]);
 
   useEffect(() => {
@@ -177,12 +184,10 @@ export default function ProjectsPage() {
         />
       )}
 
-      {/* Navigation — hidden on mobile when a project detail is open */}
-      {(!selectedProject || isDesktop) && (
-        <div className="fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference">
-          <HomeButton />
-        </div>
-      )}
+      {/* Navigation */}
+      <div className="fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference">
+        <HomeButton />
+      </div>
       {isDesktop ? (
         <NavButtons
           items={NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) }))}
@@ -190,16 +195,14 @@ export default function ProjectsPage() {
           className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
         />
       ) : (
-        !selectedProject && (
-          <div className="fixed top-4 right-4 z-[1200]">
-            <LiquidMenu
-              isOpen={isMenuOpen}
-              toggle={() => setIsMenuOpen((v) => !v)}
-              blobColor="#ffffff"
-              lineColor="#000000"
-            />
-          </div>
-        )
+        <div className="fixed top-4 right-4 z-[1200]">
+          <LiquidMenu
+            isOpen={isMenuOpen}
+            toggle={() => setIsMenuOpen((v) => !v)}
+            blobColor="#ffffff"
+            lineColor="#000000"
+          />
+        </div>
       )}
 
       <MenuPanel

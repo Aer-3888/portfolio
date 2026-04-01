@@ -42,4 +42,29 @@ describe("ProjectDetails", () => {
     );
     expect(container.firstChild).toBeNull();
   });
+
+  it("blocks wheel scroll on document when modal is open and target is outside panel", () => {
+    render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
+    const wheelEvent = new WheelEvent("wheel", { bubbles: true, cancelable: true, deltaY: 100 });
+    const preventDefaultSpy = vi.spyOn(wheelEvent, "preventDefault");
+    document.dispatchEvent(wheelEvent);
+    expect(preventDefaultSpy).toHaveBeenCalled();
+  });
+
+  it("does not block wheel scroll when modal is closed", () => {
+    render(<ProjectDetails project={mockProject} isOpen={false} onClose={vi.fn()} />);
+    const wheelEvent = new WheelEvent("wheel", { bubbles: true, cancelable: true, deltaY: 100 });
+    const preventDefaultSpy = vi.spyOn(wheelEvent, "preventDefault");
+    document.dispatchEvent(wheelEvent);
+    expect(preventDefaultSpy).not.toHaveBeenCalled();
+  });
+
+  it("does not block wheel scroll when target is inside the scroll panel", () => {
+    render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
+    const titleEl = screen.getByText("Waiki");
+    const wheelEvent = new WheelEvent("wheel", { bubbles: true, cancelable: true, deltaY: 100 });
+    const preventDefaultSpy = vi.spyOn(wheelEvent, "preventDefault");
+    titleEl.dispatchEvent(wheelEvent);
+    expect(preventDefaultSpy).not.toHaveBeenCalled();
+  });
 });

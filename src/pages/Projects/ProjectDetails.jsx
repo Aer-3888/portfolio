@@ -1,12 +1,44 @@
+import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ProjectDetails({ project, isOpen, onClose }) {
+  const scrollRef = useRef(null);
+
+  // iOS scroll lock: block touchmove on everything except the scrollable content panel
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const prevent = (e) => {
+      if (scrollRef.current?.contains(e.target)) return;
+      e.preventDefault();
+    };
+
+    document.addEventListener("touchmove", prevent, { passive: false });
+    return () => document.removeEventListener("touchmove", prevent);
+  }, [isOpen]);
+
+  // Desktop scroll lock: always block document wheel scroll when modal is open,
+  // and manually forward the delta to the scrollable panel so it still scrolls.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const prevent = (e) => {
+      e.preventDefault();
+      if (scrollRef.current?.contains(e.target)) {
+        scrollRef.current.scrollTop += e.deltaY;
+      }
+    };
+
+    document.addEventListener("wheel", prevent, { passive: false, capture: true });
+    return () => document.removeEventListener("wheel", prevent, { capture: true });
+  }, [isOpen]);
+
   if (!project) return null;
 
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-0 md:p-12 overflow-hidden">
+        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-0 md:p-12 overflow-hidden pointer-events-auto">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -45,7 +77,10 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
             </div>
 
             {/* Right side: Content */}
-            <div className="w-full md:w-[40%] p-8 md:p-12 overflow-y-auto custom-scrollbar flex flex-col gap-8">
+            <div
+              ref={scrollRef}
+              className="w-full md:w-[40%] flex-1 min-h-0 p-8 md:p-12 overflow-y-auto overscroll-contain custom-scrollbar flex flex-col gap-8"
+            >
               <div>
                 <div className="flex items-center gap-3 mb-4">
                   <span className="font-mono text-xs uppercase tracking-[0.2em] px-2.5 py-1 border border-orange-500/40 bg-orange-500/10 text-orange-400">
