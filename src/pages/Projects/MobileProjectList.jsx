@@ -4,13 +4,14 @@ import { motion } from "framer-motion";
 import MobileProjectCard from "./MobileProjectCard";
 import { PROJECTS } from "../../config/siteData";
 
-export default function MobileProjectList({ onProjectSelect }) {
+export default function MobileProjectList({ onProjectSelect, onScroll }) {
   const navigate = useNavigate();
 
   return (
     <div
-      className="absolute inset-0 overflow-y-scroll"
+      className="absolute inset-0 overflow-y-scroll overscroll-contain"
       style={{ WebkitOverflowScrolling: "touch" }}
+      onScroll={onScroll}
     >
       <div className="px-5 pt-24 pb-20 flex flex-col gap-3 min-h-full">
         {/* Header */}

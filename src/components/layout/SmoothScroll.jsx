@@ -22,15 +22,19 @@ export default function SmoothScroll({ children }) {
 
   // Recreate Lenis after DOM settles
   useEffect(() => {
+    // Projects page manages its own scroll — skip Lenis so it doesn't
+    // swallow wheel events before they reach the inner scroll container.
+    if (pathname === "/projects") return;
+
     const timeout = setTimeout(() => {
       window.scrollTo(0, 0);
-      const lenis = new Lenis({ 
-        lerp: 0.08, 
-        duration: 1.1, 
+      const lenis = new Lenis({
+        lerp: 0.08,
+        duration: 1.1,
         smoothWheel: true,
         wheelMultiplier: 1.1,
         touchMultiplier: 1.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) // Custom exponential easing
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom exponential easing
       });
       lenisRef.current = lenis;
 

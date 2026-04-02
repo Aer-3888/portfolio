@@ -9,7 +9,7 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
   const { sensorRef, xSpring, ySpring, handleMouseMove, handleMouseLeave } = useMagneticEffect();
 
   return (
-    <div className="relative h-20 w-20 flex items-center justify-center z-50">
+    <div className="relative h-14 w-14 md:h-20 md:w-20 flex items-center justify-center z-50">
       <div
         ref={sensorRef}
         onMouseMove={handleMouseMove}
@@ -24,14 +24,14 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
           <button
             onClick={toggle}
             type="button"
-            className="relative h-20 w-20 flex items-center justify-center cursor-pointer"
+            className="relative h-14 w-14 md:h-20 md:w-20 flex items-center justify-center cursor-pointer"
             aria-label="Toggle menu"
           >
             <div className="absolute inset-0 pointer-events-none">
               <LiquidBackground isHovered={isHovered} blobColor={blobColor} />
             </div>
 
-            <div className="relative z-10 pointer-events-none">
+            <div className="relative z-10 pointer-events-none scale-75 md:scale-100">
               <BurgerLines isOpen={isOpen} lineColor={lineColor} />
             </div>
           </button>

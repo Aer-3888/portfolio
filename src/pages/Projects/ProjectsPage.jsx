@@ -32,6 +32,8 @@ export default function ProjectsPage() {
   const [showIntro, setShowIntro] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mobileNavVisible, setMobileNavVisible] = useState(true);
+  const lastScrollYRef = useRef(0);
 
   const introControls = useAnimation();
   const flashControls = useAnimation();
@@ -139,6 +141,24 @@ export default function ProjectsPage() {
     }
   }, [selectedProject]);
 
+  // Show mobile nav again whenever the modal closes
+  useEffect(() => {
+    if (!selectedProject) setMobileNavVisible(true);
+  }, [selectedProject]);
+
+  // Track scroll direction inside MobileProjectList to hide/show the nav
+  const handleMobileScroll = (e) => {
+    const currentY = e.currentTarget.scrollTop;
+    if (currentY <= 10) {
+      setMobileNavVisible(true);
+    } else if (currentY > lastScrollYRef.current) {
+      setMobileNavVisible(false);
+    } else {
+      setMobileNavVisible(true);
+    }
+    lastScrollYRef.current = currentY;
+  };
+
   // Keyboard Navigation
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -185,8 +205,9 @@ export default function ProjectsPage() {
       )}
 
       {/* Navigation */}
+      {/* HomeButton: desktop only — on mobile it lives inside the menu panel */}
       <div
-        className={`fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference transition-opacity duration-300 ${selectedProject ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+        className={`hidden md:block fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference transition-opacity duration-300 ${selectedProject ? "opacity-0 pointer-events-none" : "opacity-100"}`}
       >
         <HomeButton />
       </div>
@@ -198,7 +219,11 @@ export default function ProjectsPage() {
         />
       ) : (
         <div
-          className={`fixed top-4 right-4 z-[1200] transition-opacity duration-300 ${selectedProject ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+          className={`fixed top-4 right-4 z-[1200] transition-all duration-300 ${
+            selectedProject || !mobileNavVisible
+              ? "opacity-0 pointer-events-none -translate-y-2"
+              : "opacity-100 translate-y-0"
+          }`}
         >
           <LiquidMenu
             isOpen={isMenuOpen}
@@ -212,11 +237,14 @@ export default function ProjectsPage() {
       <MenuPanel
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
-        navItems={NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) }))}
+        navItems={[
+          ...(!isDesktop ? [{ label: "Home", onClick: () => navigate("/") }] : []),
+          ...NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) })),
+        ]}
       />
 
       <div
-        className="fixed inset-0 w-full h-full overflow-hidden bg-black flex items-center justify-center perspective-[1000px]"
+        className="fixed inset-0 w-full h-full bg-black flex items-center justify-center perspective-[1000px] overflow-hidden"
         onTouchStart={isDesktop ? handleTouchStart : undefined}
         onTouchMove={isDesktop ? handleTouchMove : undefined}
       >
@@ -321,7 +349,9 @@ export default function ProjectsPage() {
             isModalOpen={!!selectedProject}
           />
         ) : (
-          !showIntro && <MobileProjectList onProjectSelect={setSelectedProject} />
+          !showIntro && (
+            <MobileProjectList onProjectSelect={setSelectedProject} onScroll={handleMobileScroll} />
+          )
         )}
 
         {/* Project Details Modal */}
@@ -332,13 +362,21 @@ export default function ProjectsPage() {
         />
 
         {/* Grain & Gradient Overlays */}
-        <div
-          className="absolute inset-0 z-30 pointer-events-none opacity-[0.05]"
-          style={{
-            backgroundImage:
-              "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")",
-          }}
-        />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="absolute inset-0 z-30 pointer-events-none opacity-[0.05] w-full h-full"
+          aria-hidden="true"
+        >
+          <filter id="noise-grain">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.75"
+              numOctaves="4"
+              stitchTiles="stitch"
+            />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#noise-grain)" />
+        </svg>
         <div className="absolute inset-0 z-30 pointer-events-none bg-radial-gradient from-transparent via-transparent to-black/80" />
       </div>
     </div>

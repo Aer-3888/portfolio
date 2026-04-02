@@ -76,10 +76,13 @@ const TunnelView = forwardRef(function TunnelView(
             className="flex items-center pl-[35vw] gap-[10vw] w-max h-full will-change-transform"
           >
             {/* Tunnel header text */}
-            <div className="w-[30vw] shrink-0 text-left pl-12 relative mr-[-10vw]">
+            <div className="w-[30vw] shrink-0 text-left pl-12 relative mr-0 xl:mr-[-10vw]">
               <motion.div style={{ x: tunnelTextX }} className="relative z-10">
                 <div className="w-16 h-1 bg-orange-500 mb-6" />
-                <h2 className="text-7xl font-black uppercase tracking-tighter mb-2 leading-[0.85]">
+                <h2
+                  className="font-black uppercase tracking-tighter mb-2 leading-[0.85]"
+                  style={{ fontSize: "clamp(2rem, 4.5vw, 4.5rem)" }}
+                >
                   Selected <br /> Projects
                 </h2>
                 <p className="font-mono text-[10px] text-neutral-500 uppercase tracking-[0.2em] mt-4">

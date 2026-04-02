@@ -79,8 +79,8 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               </span>
             </button>
 
-            {/* Left side: Image/Media */}
-            <div className="w-full md:w-[60%] h-64 md:h-auto overflow-hidden relative group/img">
+            {/* Left side: Image/Media (Desktop) */}
+            <div className="hidden md:block w-full md:w-[60%] h-64 md:h-auto overflow-hidden relative group/img">
               <img
                 src={project.img}
                 alt={project.title}
@@ -89,11 +89,21 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent md:bg-gradient-to-r" />
             </div>
 
-            {/* Right side: Content */}
+            {/* Right side: Content (Scrollable on mobile) */}
             <div
               ref={scrollRef}
               className="w-full md:w-[40%] flex-1 min-h-0 p-8 md:p-12 overflow-y-auto overscroll-contain custom-scrollbar flex flex-col gap-8"
             >
+              {/* Mobile Image (Visible only on mobile, inside scrollable area) */}
+              <div className="md:hidden -mx-8 -mt-8 h-64 shrink-0 overflow-hidden relative group/img">
+                <img
+                  src={project.img}
+                  alt={project.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent" />
+              </div>
+
               <div>
                 <div className="flex items-center gap-3 mb-4">
                   <span className="font-mono text-xs uppercase tracking-[0.2em] px-2.5 py-1 border border-orange-500/40 bg-orange-500/10 text-orange-400">

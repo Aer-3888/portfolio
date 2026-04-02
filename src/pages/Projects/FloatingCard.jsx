@@ -34,7 +34,7 @@ export default function FloatingCard({ project, x, onClick }) {
       viewport={{ once: true, margin: "0px 100px" }}
       style={{ skewX, rotateZ, transformZ: 0 }}
       onClick={onClick}
-      className="relative w-[80vw] md:w-[600px] h-[38vh] md:h-[48vh] shrink-0 group cursor-pointer will-change-transform"
+      className="relative w-[80vw] md:w-[min(600px,40vw)] h-[38vh] md:h-[48vh] shrink-0 group cursor-pointer will-change-transform"
     >
       <motion.div
         style={{ y: yParallax, transformZ: 0 }}
@@ -45,7 +45,7 @@ export default function FloatingCard({ project, x, onClick }) {
             src={project.img}
             alt={project.title}
             loading="lazy"
-            className="w-full h-full object-cover opacity-70 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+            className="w-full h-full object-cover transition-all duration-700"
           />
         </div>
 

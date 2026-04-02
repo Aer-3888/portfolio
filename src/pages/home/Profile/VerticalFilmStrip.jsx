@@ -44,7 +44,7 @@ export default function VerticalFilmStrip({ activeHobby, direction, onClick }) {
           <img
             src={activeHobby.image}
             alt={activeHobby.label}
-            className="w-full h-full object-cover grayscale-[20%] hover:grayscale-0 transition-all duration-700"
+            className="w-full h-full object-cover transition-all duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950/40 via-transparent to-transparent" />
         </motion.div>
