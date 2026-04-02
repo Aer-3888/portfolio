@@ -1,22 +1,5 @@
 import { motion } from "framer-motion";
-
-const STATUS_ITEMS = [
-  {
-    label: "Currently",
-    value: "CS Student @ INSA Rennes",
-    sub: "First Year Engineering",
-  },
-  {
-    label: "Focus",
-    value: "AI & Full-Stack Systems",
-    sub: "Computer Vision • Deep Learning",
-  },
-  {
-    label: "Availability",
-    value: "Summer Internship 2026",
-    sub: "Open for Global Opportunities",
-  },
-];
+import { STATUS_ITEMS } from "../../../config/siteData";
 
 export default function StatusSection() {
   return (
@@ -41,9 +24,7 @@ export default function StatusSection() {
               <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight uppercase">
                 {item.value}
               </h3>
-              <p className="text-xs font-mono text-neutral-400">
-                {item.sub}
-              </p>
+              <p className="text-xs font-mono text-neutral-400">{item.sub}</p>
             </div>
           </motion.div>
         ))}
