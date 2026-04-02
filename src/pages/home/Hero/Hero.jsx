@@ -39,8 +39,12 @@ export default function Hero() {
 
   return (
     <div ref={containerRef} className="relative h-[100vh] w-full bg-neutral-900 overflow-x-hidden">
-      {/* 1. Text Navigation (Visible at Top) */}
-      <NavButtons items={navItems} navOpacity={navOpacity} />
+      {/* 1. Text Navigation (Visible at Top, desktop only) */}
+      <NavButtons
+        items={navItems}
+        navOpacity={navOpacity}
+        className="hidden md:flex fixed top-8 right-10 z-[999] gap-8 text-white mix-blend-difference"
+      />
 
       {/* Hero Stage */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">

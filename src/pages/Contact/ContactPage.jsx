@@ -5,9 +5,16 @@ import { NAV_ITEMS, SOCIALS } from "../../config/siteData";
 import NavButtons from "../../components/NavButtons";
 import ArcadeMachine from "./ArcadeMachine";
 import HomeButton from "../../components/HomeButton";
+import LiquidMenu from "../../components/layout/LiquidMenu";
+import MenuPanel from "../../components/MenuPanel";
+import useMediaQuery from "../../hooks/useMediaQuery";
+import useMobileNavVisible from "../../hooks/useMobileNavVisible";
 
 export default function ContactPage() {
   const navigate = useNavigate();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+  const mobileNavVisible = useMobileNavVisible();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [time, setTime] = useState("");
   const [copied, setCopied] = useState(false);
 
@@ -37,16 +44,40 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen w-full bg-neutral-950 relative overflow-hidden font-sans text-white flex flex-col items-center justify-center p-6 md:p-12">
-      {/* Home Button */}
-      <div className="fixed top-8 left-6 md:left-10 z-[1200]">
+      {/* Home Button — desktop only */}
+      <div className="hidden md:block fixed top-8 left-6 md:left-10 z-[1200]">
         <HomeButton />
       </div>
 
-      {/* Navigation */}
+      {/* Desktop Navigation */}
       <NavButtons
         items={navItems}
         currentPath="/contact"
-        className="fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference"
+        className="hidden md:flex fixed top-8 right-10 z-[1200] gap-8 text-white mix-blend-difference"
+      />
+
+      {/* Mobile Navigation */}
+      {!isDesktop && (
+        <div
+          className={`fixed top-4 right-4 z-[1200] transition-all duration-300 ${
+            mobileNavVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 pointer-events-none -translate-y-2"
+          }`}
+        >
+          <LiquidMenu
+            isOpen={isMenuOpen}
+            toggle={() => setIsMenuOpen((v) => !v)}
+            blobColor="#ffffff"
+            lineColor="#000000"
+          />
+        </div>
+      )}
+
+      <MenuPanel
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        navItems={[{ label: "Home", onClick: () => navigate("/") }, ...navItems]}
       />
 
       <motion.div
@@ -71,14 +102,15 @@ export default function ContactPage() {
 
             <div className="space-y-10">
               {/* Email Link */}
-              <div 
-                className="group cursor-pointer block"
-                onClick={handleCopyEmail}
-              >
+              <div className="group cursor-pointer block" onClick={handleCopyEmail}>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">Email</span>
-                  <span className={`text-[9px] font-bold text-orange-500 transition-opacity duration-300 ${copied ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-                    {copied ? 'Copied' : 'Copy'}
+                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                    Email
+                  </span>
+                  <span
+                    className={`text-[9px] font-bold text-orange-500 transition-opacity duration-300 ${copied ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                  >
+                    {copied ? "Copied" : "Copy"}
                   </span>
                 </div>
                 <div className="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-orange-500 transition-colors">
@@ -89,12 +121,18 @@ export default function ContactPage() {
               {/* Location & Time */}
               <div className="grid grid-cols-2 gap-12 pt-4">
                 <div className="space-y-2">
-                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">Location</span>
+                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                    Location
+                  </span>
                   <div className="text-sm font-bold uppercase tracking-wide">Rennes, France</div>
                 </div>
                 <div className="space-y-2">
-                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">Local Time</span>
-                  <div className="text-sm font-bold font-mono tracking-tight text-orange-500">{time}</div>
+                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                    Local Time
+                  </span>
+                  <div className="text-sm font-bold font-mono tracking-tight text-orange-500">
+                    {time}
+                  </div>
                 </div>
               </div>
             </div>
@@ -102,19 +140,21 @@ export default function ContactPage() {
 
           {/* Socials */}
           <div className="pt-12">
-            <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest block font-bold mb-4">Social Channels</span>
+            <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest block font-bold mb-4">
+              Social Channels
+            </span>
             <div className="flex flex-wrap gap-x-8 gap-y-4">
-            {SOCIALS.map((social) => (
-              <a
-                key={social.label}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 hover:text-orange-500 transition-colors"
-              >
-                {social.label}
-              </a>
-            ))}
+              {SOCIALS.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 hover:text-orange-500 transition-colors"
+                >
+                  {social.label}
+                </a>
+              ))}
             </div>
           </div>
         </div>
@@ -124,10 +164,11 @@ export default function ContactPage() {
           <div className="flex-1">
             <ArcadeMachine />
           </div>
-          
+
           <div className="p-10 border-t border-white/5 bg-neutral-900/50">
             <p className="text-neutral-500 text-[10px] md:text-xs leading-relaxed font-mono uppercase tracking-[0.3em]">
-              Efficiency is priority. The transmission form has been replaced with a high-speed perception test.
+              Efficiency is priority. The transmission form has been replaced with a high-speed
+              perception test.
             </p>
           </div>
         </div>

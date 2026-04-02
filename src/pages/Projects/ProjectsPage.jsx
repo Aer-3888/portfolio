@@ -10,17 +10,7 @@ import LiquidMenu from "../../components/layout/LiquidMenu";
 import MenuPanel from "../../components/MenuPanel";
 import { NAV_ITEMS, PROJECTS } from "../../config/siteData";
 import { BackgrounGrid } from "./BackgroundGrid";
-
-function useMediaQuery(query) {
-  const [matches, setMatches] = useState(() => window.matchMedia(query).matches);
-  useEffect(() => {
-    const mq = window.matchMedia(query);
-    const handler = (e) => setMatches(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, [query]);
-  return matches;
-}
+import useMediaQuery from "../../hooks/useMediaQuery";
 
 export default function ProjectsPage() {
   const navigate = useNavigate();
