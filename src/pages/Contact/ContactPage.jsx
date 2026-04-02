@@ -23,7 +23,9 @@ export default function ContactPage() {
       navigator.clipboard.writeText("theo.phan.quoc.huy@gmail.com");
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (_e) {}
+    } catch (_e) {
+      // clipboard write failed silently
+    }
   };
 
   return (

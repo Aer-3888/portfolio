@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 
 const variants = {
-  enter: (direction) => ({
+  enter: (_direction) => ({
     opacity: 0,
     scale: 1.05,
     filter: "blur(10px)",
@@ -12,7 +12,7 @@ const variants = {
     scale: 1,
     filter: "blur(0px)",
   },
-  exit: (direction) => ({
+  exit: (_direction) => ({
     zIndex: 0,
     opacity: 0,
     scale: 0.95,
@@ -51,7 +51,7 @@ export default function VerticalFilmStrip({ activeHobby, direction, onClick }) {
       </AnimatePresence>
 
       <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-      
+
       {/* Corner Metadata */}
       <div className="absolute top-6 right-6 z-30">
         <div className="bg-white/5 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full shadow-lg">
@@ -60,7 +60,7 @@ export default function VerticalFilmStrip({ activeHobby, direction, onClick }) {
           </span>
         </div>
       </div>
-      
+
       {/* Interaction Hint */}
       <div className="absolute bottom-6 left-6 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
         <span className="font-mono text-white/40 text-[9px] tracking-[0.3em] uppercase">
