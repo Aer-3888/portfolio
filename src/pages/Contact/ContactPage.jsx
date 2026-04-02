@@ -84,7 +84,7 @@ export default function ContactPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full max-w-7xl h-[85vh] md:h-[75vh] grid grid-cols-1 lg:grid-cols-12 bg-neutral-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] overflow-hidden rounded-sm border border-white/5"
+        className="w-full max-w-7xl h-auto lg:h-[75vh] grid grid-cols-1 lg:grid-cols-12 bg-neutral-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] overflow-hidden rounded-sm border border-white/5"
       >
         {/* Left: Communication & Details */}
         <div className="lg:col-span-5 flex flex-col justify-between p-10 md:p-16 border-b lg:border-b-0 lg:border-r border-white/5 bg-neutral-900">
@@ -159,8 +159,8 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Right: Arcade Game */}
-        <div className="lg:col-span-7 bg-neutral-950 flex flex-col">
+        {/* Right: Arcade Game — desktop only */}
+        <div className="hidden lg:flex lg:col-span-7 bg-neutral-950 flex-col">
           <div className="flex-1">
             <ArcadeMachine />
           </div>
