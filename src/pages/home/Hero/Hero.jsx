@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import InfiniteLoopText from "../../../components/InfiniteLoopText";
@@ -31,11 +31,6 @@ export default function Hero() {
 
   // Navigation Switch Logic
   const navOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-
-  useEffect(() => {
-    const unsub = navOpacity.on("change", () => {});
-    return unsub;
-  }, [navOpacity]);
 
   return (
     <div ref={containerRef} className="relative h-[100vh] w-full bg-neutral-900 overflow-x-hidden">

@@ -1,10 +1,5 @@
 import CipherText from "./CipherText";
-
-const socialUrls = {
-  Instagram: "https://www.instagram.com/phan.theo.huy/",
-  GitHub: "https://github.com/Aer-3888",
-  LinkedIn: "https://www.linkedin.com/in/theophanquochuy/",
-};
+import { SOCIALS } from "../../../config/siteData";
 
 export default function Footer() {
   return (
@@ -36,15 +31,15 @@ export default function Footer() {
             theo.phan.quoc.huy@gmail.com
           </a>
           <div className="flex gap-6">
-            {Object.keys(socialUrls).map((platform) => (
+            {SOCIALS.map((social) => (
               <a
-                key={platform}
-                href={socialUrls[platform]}
+                key={social.label}
+                href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-neutral-900 transition-colors"
               >
-                {platform}
+                {social.label}
               </a>
             ))}
           </div>
@@ -94,13 +89,13 @@ export default function Footer() {
             </a>
 
             <div className="flex gap-6">
-              {Object.keys(socialUrls).map((link) => (
-                <a key={link} href={socialUrls[link]} className="relative group overflow-hidden">
+              {SOCIALS.map((social) => (
+                <a key={social.label} href={social.url} className="relative group overflow-hidden">
                   <span className="block font-mono text-xs text-neutral-900 group-hover:-translate-y-full transition-transform duration-300">
-                    {link}
+                    {social.label}
                   </span>
                   <span className="absolute top-0 left-0 block font-mono text-xs text-orange-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    {link}
+                    {social.label}
                   </span>
                 </a>
               ))}
