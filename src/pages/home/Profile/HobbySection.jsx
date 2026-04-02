@@ -30,11 +30,11 @@ export default function HobbySection() {
         </div>
 
         {/* Scroll Container */}
-        <div className="w-full overflow-x-auto flex gap-6 px-6 snap-x snap-mandatory pb-8 no-scrollbar">
+        <div className="w-full overflow-x-auto flex gap-4 px-6 snap-x snap-mandatory pb-6 no-scrollbar">
           {hobbies.map((hobby) => (
             <div
               key={hobby.id}
-              className="relative min-w-[80vw] w-[80vw] md:w-[80vw] shrink-0 h-[60vh] bg-neutral-950 rounded-[2rem] overflow-hidden snap-center border border-white/10 shadow-2xl group"
+              className="relative min-w-[78vw] w-[78vw] shrink-0 h-[55vh] bg-neutral-950 rounded-2xl overflow-hidden snap-center border border-white/10 shadow-2xl group"
             >
               <img
                 src={hobby.src || hobby.img || hobby.image}
@@ -48,27 +48,25 @@ export default function HobbySection() {
 
               <div className="absolute bottom-0 left-0 right-0 h-3/5 bg-gradient-to-t from-black via-black/60 to-transparent z-10" />
 
-              {/* Tags */}
-              <div className="absolute top-5 left-5 right-5 flex justify-between items-start z-20">
-                <div className="bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full flex items-center gap-2 shadow-lg ml-auto">
+              {/* Tag */}
+              <div className="absolute top-4 right-4 z-20">
+                <div className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg">
                   <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                  <span className="font-mono text-xs text-white font-bold uppercase tracking-[0.15em]">
+                  <span className="font-mono text-[10px] text-white font-bold uppercase tracking-[0.15em]">
                     {hobby.id}
                   </span>
                 </div>
               </div>
 
               {/* Bottom Content */}
-              <div className="absolute bottom-0 left-0 w-full p-6 z-20 flex flex-col gap-3">
-                {/* Title */}
-                <h4 className="text-5xl font-black text-white uppercase tracking-tighter leading-[0.85] drop-shadow-2xl relative z-20">
+              <div className="absolute bottom-0 left-0 w-full p-5 z-20 flex flex-col gap-2">
+                <h4 className="text-3xl font-black text-white uppercase tracking-tighter leading-none drop-shadow-2xl">
                   {hobby.title}
                 </h4>
 
-                {/* Description Box */}
                 {hobby.description && (
-                  <div className="relative pl-4 border-l border-orange-500/80 z-20 mt-1">
-                    <p className="text-lg font-bold text-neutral-200 font-mono leading-relaxed line-clamp-5 drop-shadow-md">
+                  <div className="relative pl-3 border-l border-orange-500/80 z-20">
+                    <p className="text-xs font-bold text-neutral-300 font-mono leading-relaxed line-clamp-2 drop-shadow-md">
                       {hobby.description}
                     </p>
                   </div>
@@ -140,7 +138,11 @@ export default function HobbySection() {
                 stroke="currentColor"
                 className="w-4 h-4 text-white"
               >
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                />
               </svg>
             </div>
           </motion.button>

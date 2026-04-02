@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { NAV_ITEMS } from "../../config/siteData";

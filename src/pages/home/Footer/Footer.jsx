@@ -1,57 +1,10 @@
 import CipherText from "./CipherText";
-import { motion } from "framer-motion";
 
 const socialUrls = {
   Instagram: "https://www.instagram.com/phan.theo.huy/",
   GitHub: "https://github.com/Aer-3888",
   LinkedIn: "https://www.linkedin.com/in/theophanquochuy/",
 };
-
-function TechButton() {
-  return (
-    <a href="mailto:theo.phan.quoc.huy@gmail.com" className="block w-full h-full max-h-[50vh]">
-      <motion.div
-        className="relative w-full h-full bg-neutral-900 flex flex-col items-center justify-center overflow-hidden group"
-        initial={{ clipPath: "polygon(10% 0, 100% 0, 100% 90%, 90% 100%, 0 100%, 0 10%)" }}
-        whileTap={{
-          clipPath: "polygon(0 0, 90% 0, 100% 10%, 100% 100%, 10% 100%, 0 90%)",
-          scale: 0.98,
-        }}
-        transition={{ duration: 0.1 }}
-      >
-        {/* Background Noise Texture */}
-        <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none" />
-
-        {/* Central Icon */}
-        <span className="text-8xl text-white mb-2 relative z-10 group-active:scale-110 transition-transform duration-200">
-          ✉
-        </span>
-
-        {/* Infinite Marquee Text */}
-        <div className="w-full overflow-hidden relative z-10 border-y border-white/20 py-5 bg-white/5 backdrop-blur-sm mt-18">
-          <motion.div
-            className="whitespace-nowrap flex gap-8"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, ease: "linear", duration: 10 }}
-          >
-            {/* Duplicated text for seamless loop */}
-            <span className="text-xl font-mono font-bold text-[#FFE400] tracking-[0.2em] uppercase">
-              Start New Quest /// Send Mail /// Start New Quest /// Send Mail ///
-            </span>
-            <span className="text-xl font-mono font-bold text-[#FFE400] tracking-[0.2em] uppercase">
-              Start New Quest /// Send Mail /// Start New Quest /// Send Mail ///
-            </span>
-          </motion.div>
-        </div>
-
-        {/* Static Bottom Label */}
-        <span className="absolute bottom-12 font-mono text-[10px] text-neutral-500 uppercase tracking-widest z-10">
-          Click to Contact Me
-        </span>
-      </motion.div>
-    </a>
-  );
-}
 
 export default function Footer() {
   return (
