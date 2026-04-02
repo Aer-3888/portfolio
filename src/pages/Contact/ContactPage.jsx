@@ -1,20 +1,10 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { NAV_ITEMS, SOCIALS } from "../../config/siteData";
-import NavButtons from "../../components/NavButtons";
+import { SOCIALS } from "../../config/siteData";
 import ArcadeMachine from "./ArcadeMachine";
-import HomeButton from "../../components/HomeButton";
-import LiquidMenu from "../../components/layout/LiquidMenu";
-import MenuPanel from "../../components/MenuPanel";
-import useMediaQuery from "../../hooks/useMediaQuery";
-import useMobileNavVisible from "../../hooks/useMobileNavVisible";
+import PageNav from "../../components/layout/PageNav";
 
 export default function ContactPage() {
-  const navigate = useNavigate();
-  const isDesktop = useMediaQuery("(min-width: 768px)");
-  const mobileNavVisible = useMobileNavVisible();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [time, setTime] = useState("");
   const [copied, setCopied] = useState(false);
 
@@ -28,12 +18,6 @@ export default function ContactPage() {
     return () => clearInterval(interval);
   }, []);
 
-  const navItems = NAV_ITEMS.map((item) => ({
-    label: item.label,
-    path: item.path,
-    onClick: () => navigate(item.path),
-  }));
-
   const handleCopyEmail = () => {
     try {
       navigator.clipboard.writeText("theo.phan.quoc.huy@gmail.com");
@@ -44,41 +28,7 @@ export default function ContactPage() {
 
   return (
     <div className="min-h-screen w-full bg-neutral-950 relative overflow-hidden font-sans text-white flex flex-col items-center justify-center p-6 md:p-12">
-      {/* Home Button — desktop only */}
-      <div className="hidden md:block fixed top-8 left-6 md:left-10 z-[1200]">
-        <HomeButton />
-      </div>
-
-      {/* Desktop Navigation */}
-      <NavButtons
-        items={navItems}
-        currentPath="/contact"
-        className="hidden md:flex fixed top-8 right-10 z-[1200] gap-8 text-white mix-blend-difference"
-      />
-
-      {/* Mobile Navigation */}
-      {!isDesktop && (
-        <div
-          className={`fixed top-4 right-4 z-[1200] transition-all duration-300 ${
-            mobileNavVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 pointer-events-none -translate-y-2"
-          }`}
-        >
-          <LiquidMenu
-            isOpen={isMenuOpen}
-            toggle={() => setIsMenuOpen((v) => !v)}
-            blobColor="#ffffff"
-            lineColor="#000000"
-          />
-        </div>
-      )}
-
-      <MenuPanel
-        isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-        navItems={[{ label: "Home", onClick: () => navigate("/") }, ...navItems]}
-      />
+      <PageNav currentPath="/contact" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
