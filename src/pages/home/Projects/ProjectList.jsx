@@ -2,6 +2,7 @@ import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, useSpring, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import ProjectItem from "./ProjectItem";
+import ProjectDetails from "../../../components/ProjectDetails";
 import { PROJECTS } from "../../../config/siteData";
 
 function Cursor({ mouseX, mouseY, isHovered }) {
@@ -44,12 +45,11 @@ function ScrollReveal({ children, className }) {
   );
 }
 
-export default function ProjectList() {
+export default function ProjectList({ selectedProject, setSelectedProject }) {
   const containerRef = useRef(null);
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
   const [entryPoint, setEntryPoint] = useState(null);
-  const [activeProject, setActiveProject] = useState(null);
   const [isCoarsePointer, setIsCoarsePointer] = useState(false);
 
   const mouseX = useMotionValue(0);
@@ -58,28 +58,21 @@ export default function ProjectList() {
   useEffect(() => {
     const mq = window.matchMedia("(pointer: coarse)");
     const update = () => {
-      const wasCoarse = isCoarsePointer;
-      const isNowCoarse = mq.matches;
-      setIsCoarsePointer(isNowCoarse);
-
-      // Clear active project when switching from touch to mouse
-      if (wasCoarse && !isNowCoarse) {
-        setActiveProject(null);
-      }
+      setIsCoarsePointer(mq.matches);
     };
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
-  }, [isCoarsePointer]);
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Close all expanded projects when section leaves viewport
-        if (!entry.isIntersecting && activeProject !== null) {
-          setActiveProject(null);
+        // Close modal when section leaves viewport
+        if (!entry.isIntersecting && selectedProject !== null) {
+          setSelectedProject(null);
         }
       },
       { threshold: 0 }
@@ -87,12 +80,7 @@ export default function ProjectList() {
 
     observer.observe(containerRef.current);
     return () => observer.disconnect();
-  }, [activeProject]);
-
-  const handleProjectToggle = (index) => {
-    if (!isCoarsePointer) return; // clicks only matter on touch devices
-    setActiveProject((prev) => (prev === index ? null : index));
-  };
+  }, [selectedProject]);
 
   const handleMouseMove = useCallback(
     (e) => {
@@ -163,18 +151,21 @@ export default function ProjectList() {
         {PROJECTS.slice(0, 5).map((project, i) => (
           <ScrollReveal key={project.id || i} className="w-full">
             <ProjectItem
+              project={project}
               index={i}
-              isActive={activeProject === i}
               isCoarsePointer={isCoarsePointer}
-              onToggle={() => handleProjectToggle(i)}
-              title={project.title}
-              year={project.year}
-              services={project.services}
-              category={project.category}
+              onSelect={() => setSelectedProject(project)}
             />
           </ScrollReveal>
         ))}
       </div>
+
+      {/* Modal */}
+      <ProjectDetails
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
 
       <div className="container mx-auto px-6 md:px-12 mt-24 z-10 relative flex justify-center md:justify-start">
         <ScrollReveal>

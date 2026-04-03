@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Hero from "./Hero/Hero";
@@ -11,6 +11,7 @@ import PageNav from "../../components/layout/PageNav";
 export default function HomePage() {
   const location = useLocation();
   const { scrollYProgress } = useScroll();
+  const [selectedProject, setSelectedProject] = useState(null);
 
   const curve = useTransform(scrollYProgress, [0.85, 1], ["50% 50px", "0% 0px"]);
 
@@ -34,13 +35,13 @@ export default function HomePage() {
       >
         <Hero />
         <StatusSection />
-        <ProjectList />
+        <ProjectList selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         <HobbySection />
         <div className="w-full h-[20vh] bg-neutral-900 border-t border-neutral-800" />
       </motion.main>
       <Footer />
 
-      <PageNav scrollYProgress={scrollYProgress} />
+      <PageNav scrollYProgress={scrollYProgress} isHidden={!!selectedProject} />
     </div>
   );
 }

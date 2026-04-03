@@ -1,15 +1,13 @@
 import { motion } from "framer-motion";
 
 export default function ProjectItem({
-  title,
-  year,
-  services,
-  category,
+  project,
   index,
-  isActive,
   isCoarsePointer,
-  onToggle,
+  onSelect,
 }) {
+  const { title, year, services, category } = project;
+
   // Animation variants for the expansion
   const containerVariants = {
     idle: { height: "auto", minHeight: 80 },
@@ -30,10 +28,10 @@ export default function ProjectItem({
     <motion.div
       initial="idle"
       whileHover="hover"
-      animate={isActive ? "hover" : "idle"}
+      animate={isCoarsePointer ? "hover" : "idle"}
       variants={containerVariants}
       transition={{ duration: 0.4, ease: [0.32, 0.72, 0, 1] }}
-      onClick={isCoarsePointer ? onToggle : undefined}
+      onClick={onSelect}
       className="relative w-full border-b border-neutral-800 flex flex-col justify-center group cursor-pointer overflow-hidden py-8 md:py-10"
     >
       {/* Top Row : Project Name and Year */}

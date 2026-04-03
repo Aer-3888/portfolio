@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { render, screen, cleanup } from "@testing-library/react";
-import ProjectDetails from "../ProjectDetails";
-
+import ProjectDetails from "../../../components/ProjectDetails";
 const mockProject = {
+
   id: "01",
   title: "Waiki",
   year: "2025",
@@ -53,30 +53,26 @@ describe("ProjectDetails", () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it("blocks wheel scroll on document when modal is open and target is outside panel", () => {
+  it("locks body scroll when modal is open", () => {
     render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
-    const wheelEvent = new WheelEvent("wheel", { bubbles: true, cancelable: true, deltaY: 100 });
-    const preventDefaultSpy = vi.spyOn(wheelEvent, "preventDefault");
-    document.dispatchEvent(wheelEvent);
-    expect(preventDefaultSpy).toHaveBeenCalled();
+    expect(document.body.style.overflow).toBe("hidden");
+    expect(document.documentElement.classList.contains("lenis-stopped")).toBe(true);
   });
 
-  it("does not block wheel scroll when modal is closed", () => {
-    render(<ProjectDetails project={mockProject} isOpen={false} onClose={vi.fn()} />);
-    const wheelEvent = new WheelEvent("wheel", { bubbles: true, cancelable: true, deltaY: 100 });
-    const preventDefaultSpy = vi.spyOn(wheelEvent, "preventDefault");
-    document.dispatchEvent(wheelEvent);
-    expect(preventDefaultSpy).not.toHaveBeenCalled();
+  it("unlocks body scroll when modal is closed", () => {
+    const { unmount } = render(
+      <ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />
+    );
+    expect(document.body.style.overflow).toBe("hidden");
+    unmount();
+    expect(document.body.style.overflow).toBe("");
+    expect(document.documentElement.classList.contains("lenis-stopped")).toBe(false);
   });
 
-  it("always blocks native wheel scroll when modal is open, even inside the scroll panel", () => {
-    // The component intercepts ALL wheel events and manually forwards deltaY to the
-    // scroll panel — it never lets native scroll through.
+  it("has data-lenis-prevent attribute on scrollable container", () => {
     render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
-    const titleEl = screen.getByText("Waiki");
-    const wheelEvent = new WheelEvent("wheel", { bubbles: true, cancelable: true, deltaY: 100 });
-    const preventDefaultSpy = vi.spyOn(wheelEvent, "preventDefault");
-    titleEl.dispatchEvent(wheelEvent);
-    expect(preventDefaultSpy).toHaveBeenCalled();
+    const description = screen.getByText("Test description text.");
+    const scrollContainer = description.closest("[data-lenis-prevent]");
+    expect(scrollContainer).toBeInTheDocument();
   });
 });

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import PageNav from "../../components/layout/PageNav";
-import ProjectDetails from "./ProjectDetails";
+import ProjectDetails from "../../components/ProjectDetails";
 import TunnelView from "./TunnelView";
 import MobileProjectList from "./MobileProjectList";
 import { PROJECTS } from "../../config/siteData";

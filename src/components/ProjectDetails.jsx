@@ -11,38 +11,19 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
     }
   }, [isOpen]);
 
-  // iOS scroll lock: block touchmove on everything except the scrollable content panel
+  // Handle body scroll lock
   useEffect(() => {
-    if (!isOpen) return;
-
-    const prevent = (e) => {
-      if (scrollRef.current?.contains(e.target)) return;
-      e.preventDefault();
-    };
-
-    document.addEventListener("touchmove", prevent, { passive: false });
-    return () => document.removeEventListener("touchmove", prevent);
-  }, [isOpen]);
-
-  // Desktop scroll lock: always block document wheel scroll when modal is open,
-  // and manually forward the delta to the scrollable panel so it still scrolls.
-  // On close, keep the listener active briefly so trackpad inertia dissipates
-  // before the tunnel is free to scroll again.
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const prevent = (e) => {
-      e.preventDefault();
-      if (scrollRef.current?.contains(e.target)) {
-        scrollRef.current.scrollTop += e.deltaY;
-      }
-    };
-
-    document.addEventListener("wheel", prevent, { passive: false, capture: true });
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+      // Optional: add lenis-stopped class if manual management is needed
+      document.documentElement.classList.add("lenis-stopped");
+    } else {
+      document.body.style.overflow = "";
+      document.documentElement.classList.remove("lenis-stopped");
+    }
     return () => {
-      setTimeout(() => {
-        document.removeEventListener("wheel", prevent, { capture: true });
-      }, 300);
+      document.body.style.overflow = "";
+      document.documentElement.classList.remove("lenis-stopped");
     };
   }, [isOpen]);
 
@@ -92,6 +73,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
             {/* Right side: Content (Scrollable on mobile) */}
             <div
               ref={scrollRef}
+              data-lenis-prevent
               className="w-full md:w-[40%] flex-1 min-h-0 p-8 md:p-12 overflow-y-auto overscroll-contain custom-scrollbar flex flex-col gap-8"
             >
               {/* Mobile Image (Visible only on mobile, inside scrollable area) */}
