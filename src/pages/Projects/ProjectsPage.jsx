@@ -1,19 +1,14 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useAnimation, useReducedMotion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import NavButtons from "../../components/NavButtons";
-import HomeButton from "../../components/HomeButton";
+import PageNav from "../../components/layout/PageNav";
 import ProjectDetails from "./ProjectDetails";
 import TunnelView from "./TunnelView";
 import MobileProjectList from "./MobileProjectList";
-import LiquidMenu from "../../components/layout/LiquidMenu";
-import MenuPanel from "../../components/MenuPanel";
-import { NAV_ITEMS, PROJECTS } from "../../config/siteData";
+import { PROJECTS } from "../../config/siteData";
 import { BackgrounGrid } from "./BackgroundGrid";
 import useMediaQuery from "../../hooks/useMediaQuery";
 
 export default function ProjectsPage() {
-  const navigate = useNavigate();
   const tunnelRef = useRef(null);
   const scrollContainerRef = useRef(null);
   const totalScrollHeight = (PROJECTS.length + 2) * 100;
@@ -21,7 +16,6 @@ export default function ProjectsPage() {
   const [hasEntered, setHasEntered] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [mobileNavVisible, setMobileNavVisible] = useState(true);
   const lastScrollYRef = useRef(0);
 
@@ -195,42 +189,10 @@ export default function ProjectsPage() {
       )}
 
       {/* Navigation */}
-      {/* HomeButton: desktop only — on mobile it lives inside the menu panel */}
-      <div
-        className={`hidden md:block fixed top-8 left-6 md:left-10 z-[1200] mix-blend-difference transition-opacity duration-300 ${selectedProject ? "opacity-0 pointer-events-none" : "opacity-100"}`}
-      >
-        <HomeButton />
-      </div>
-      {isDesktop ? (
-        <NavButtons
-          items={NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) }))}
-          currentPath="/projects"
-          className={`fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference transition-opacity duration-300 ${selectedProject ? "opacity-0 pointer-events-none" : "opacity-100"}`}
-        />
-      ) : (
-        <div
-          className={`fixed top-4 right-4 z-[1200] transition-all duration-300 ${
-            selectedProject || !mobileNavVisible
-              ? "opacity-0 pointer-events-none -translate-y-2"
-              : "opacity-100 translate-y-0"
-          }`}
-        >
-          <LiquidMenu
-            isOpen={isMenuOpen}
-            toggle={() => setIsMenuOpen((v) => !v)}
-            blobColor="#ffffff"
-            lineColor="#000000"
-          />
-        </div>
-      )}
-
-      <MenuPanel
-        isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-        navItems={[
-          ...(!isDesktop ? [{ label: "Home", onClick: () => navigate("/") }] : []),
-          ...NAV_ITEMS.map((item) => ({ ...item, onClick: () => navigate(item.path) })),
-        ]}
+      <PageNav
+        currentPath="/projects"
+        isHidden={!!selectedProject}
+        isMobileNavVisible={mobileNavVisible}
       />
 
       <div

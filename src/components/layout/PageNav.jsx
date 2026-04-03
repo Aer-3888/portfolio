@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion, useTransform, useMotionValue } from "framer-motion";
+import { motion, useTransform, useMotionValue, AnimatePresence } from "framer-motion";
 import HomeButton from "../HomeButton";
 import NavButtons from "../NavButtons";
 import LiquidMenu from "./LiquidMenu";
@@ -18,11 +18,18 @@ import useMobileNavVisible from "../../hooks/useMobileNavVisible";
  * - isHidden: hides the entire nav (e.g. gallery fullscreen on AboutPage).
  * - currentPath: highlights the active NavButton and adds a "Home" entry to
  *   the mobile menu panel on non-home pages.
+ * - isMobileNavVisible: (optional) override for mobile navigation visibility.
  */
-export default function PageNav({ currentPath, scrollYProgress, isHidden = false }) {
+export default function PageNav({
+  currentPath,
+  scrollYProgress,
+  isHidden = false,
+  isMobileNavVisible,
+}) {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const mobileNavVisible = useMobileNavVisible();
+  const mobileNavScrollVisible = useMobileNavVisible();
+  const mobileNavVisible = isMobileNavVisible ?? mobileNavScrollVisible;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const hasScrollFade = !!scrollYProgress;
@@ -75,17 +82,38 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
               style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
               className="fixed top-8 right-10 z-[1200]"
             >
-              <LiquidMenu
-                isOpen={isMenuOpen}
-                toggle={() => setIsMenuOpen((v) => !v)}
-                blobColor="#ffffff"
-                lineColor="#000000"
-              />
+              <AnimatePresence mode="wait">
+                {!isMenuOpen && (
+                  <motion.div
+                    key="desktop-menu"
+                    initial={{ opacity: 0, scale: 0.5, filter: "blur(10px)" }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      filter: "blur(0px)",
+                      transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.5,
+                      filter: "blur(10px)",
+                      transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
+                    }}
+                  >
+                    <LiquidMenu
+                      isOpen={isMenuOpen}
+                      toggle={() => setIsMenuOpen((v) => !v)}
+                      blobColor="#ffffff"
+                      lineColor="#000000"
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           )}
         </>
       ) : (
-        /* Mobile LiquidMenu — show/hide based on scroll direction */
+        /* Mobile LiquidMenu — show/hide based on scroll direction AND menu open state */
         <div
           className={`fixed top-4 right-4 z-[1200] transition-all duration-300 ${
             mobileNavVisible
@@ -93,12 +121,33 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
               : "opacity-0 pointer-events-none -translate-y-2"
           }`}
         >
-          <LiquidMenu
-            isOpen={isMenuOpen}
-            toggle={() => setIsMenuOpen((v) => !v)}
-            blobColor="#ffffff"
-            lineColor="#000000"
-          />
+          <AnimatePresence mode="wait">
+            {!isMenuOpen && (
+              <motion.div
+                key="mobile-menu"
+                initial={{ opacity: 0, scale: 0.5, filter: "blur(10px)" }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  filter: "blur(0px)",
+                  transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.5,
+                  filter: "blur(10px)",
+                  transition: { duration: 0.2, ease: [0.22, 1, 0.36, 1] },
+                }}
+              >
+                <LiquidMenu
+                  isOpen={isMenuOpen}
+                  toggle={() => setIsMenuOpen((v) => !v)}
+                  blobColor="#ffffff"
+                  lineColor="#000000"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       )}
 
