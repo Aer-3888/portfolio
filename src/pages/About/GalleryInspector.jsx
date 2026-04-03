@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Lenis from "lenis";
 import { galleryFiles } from "./galleryData";
 
 export default function GalleryInspector({ onFullscreenChange }) {
@@ -8,6 +9,8 @@ export default function GalleryInspector({ onFullscreenChange }) {
   const [isImageLoading, setIsImageLoading] = useState(true);
   const listRef = useRef(null);
   const wheelStateRef = useRef({ acc: 0, lastTs: 0 });
+
+  const [isSidebarHovered, setIsSidebarHovered] = useState(false);
 
   // Preload adjacent images
   useEffect(() => {
@@ -28,43 +31,61 @@ export default function GalleryInspector({ onFullscreenChange }) {
     setActiveFile(file);
   };
 
+  // Consolidated Scroll Lock Logic
   useEffect(() => {
     if (onFullscreenChange) onFullscreenChange(isFullscreen);
-  }, [isFullscreen, onFullscreenChange]);
+    
+    if (isFullscreen || isSidebarHovered) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isFullscreen, isSidebarHovered, onFullscreenChange]);
 
   // Ensure we always signal exit on unmount.
-  useEffect(() => () => onFullscreenChange?.(false), [onFullscreenChange]);
+  useEffect(() => {
+    return () => {
+      onFullscreenChange?.(false);
+    };
+  }, [onFullscreenChange]);
 
   // Navigation Handlers
   const handleNext = useCallback(
     (e) => {
       if (e) e.stopPropagation();
-      const currentIndex = galleryFiles.findIndex((f) => f.name === activeFile.name);
-      const nextIndex = (currentIndex + 1) % galleryFiles.length;
-      handleSetFile(galleryFiles[nextIndex]);
+      setActiveFile((prev) => {
+        const currentIndex = galleryFiles.findIndex((f) => f.name === prev.name);
+        const nextIndex = (currentIndex + 1) % galleryFiles.length;
+        setIsImageLoading(true);
+        return galleryFiles[nextIndex];
+      });
     },
-    [activeFile]
+    []
   );
 
   const handlePrev = useCallback(
     (e) => {
       if (e) e.stopPropagation();
-      const currentIndex = galleryFiles.findIndex((f) => f.name === activeFile.name);
-      const prevIndex = (currentIndex - 1 + galleryFiles.length) % galleryFiles.length;
-      handleSetFile(galleryFiles[prevIndex]);
+      setActiveFile((prev) => {
+        const currentIndex = galleryFiles.findIndex((f) => f.name === prev.name);
+        const prevIndex = (currentIndex - 1 + galleryFiles.length) % galleryFiles.length;
+        setIsImageLoading(true);
+        return galleryFiles[prevIndex];
+      });
     },
-    [activeFile]
+    []
   );
 
-  // Mouse wheel navigation
-  const handleWheelNav = (e, allowWhenNotFullscreen = false) => {
-    const inFullscreen = isFullscreen;
-    if (!inFullscreen && !allowWhenNotFullscreen) return;
+  // Mouse wheel navigation (Fullscreen Only)
+  const handleWheelNav = useCallback((e) => {
+    if (!isFullscreen) return;
 
-    if (inFullscreen) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
+    e.preventDefault();
+    e.stopPropagation();
 
     const now = performance.now();
     const threshold = 60;
@@ -83,7 +104,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
     }
 
     wheelStateRef.current = { acc: 0, lastTs: now };
-  };
+  }, [isFullscreen, handleNext, handlePrev]);
 
   // Keyboard navigation in fullscreen
   useEffect(() => {
@@ -104,27 +125,11 @@ export default function GalleryInspector({ onFullscreenChange }) {
 
     const activeElement = document.getElementById(`file-${activeFile.name}`);
 
-    if (activeElement) {
-      const targetScroll =
-        activeElement.offsetTop - container.clientHeight / 2 + activeElement.clientHeight / 2;
-      const startScroll = container.scrollTop;
-      const distance = targetScroll - startScroll;
-      const duration = 600;
-      let startTime = null;
-
-      const animate = (currentTime) => {
-        if (!startTime) startTime = currentTime;
-        const timeElapsed = currentTime - startTime;
-        const progress = Math.min(timeElapsed / duration, 1);
-        const ease = 1 - Math.pow(1 - progress, 3);
-
-        container.scrollTop = startScroll + distance * ease;
-
-        if (timeElapsed < duration) {
-          requestAnimationFrame(animate);
-        }
-      };
-      requestAnimationFrame(animate);
+    if (activeElement && sidebarLenisRef.current) {
+      sidebarLenisRef.current.scrollTo(activeElement, {
+        offset: -container.clientHeight / 2 + activeElement.clientHeight / 2,
+        duration: 1.2,
+      });
     }
   }, [activeFile]);
 
@@ -132,7 +137,11 @@ export default function GalleryInspector({ onFullscreenChange }) {
     <>
       <div className="w-full flex flex-col md:flex-row h-[75vh] min-h-[500px] md:h-[600px] border border-neutral-800 bg-neutral-900/50 rounded-lg overflow-hidden font-sans">
         {/* Left: Side Bar (Not visible on mobile) */}
-        <div className="hidden md:flex w-full md:w-64 bg-neutral-900/80 border-r border-neutral-800 flex-col h-full backdrop-blur-sm">
+        <div 
+          className="hidden md:flex w-full md:w-64 bg-neutral-900/80 border-r border-neutral-800 flex-col h-full backdrop-blur-sm"
+          onMouseEnter={() => setIsSidebarHovered(true)}
+          onMouseLeave={() => setIsSidebarHovered(false)}
+        >
           <div className="p-4 pb-2 shrink-0 z-10 bg-neutral-900/90 border-b border-white/5">
             <span className="text-[10px] uppercase text-neutral-500 tracking-widest pl-2 font-mono block">
               /mnt/assets/
@@ -144,8 +153,9 @@ export default function GalleryInspector({ onFullscreenChange }) {
 
           <div
             ref={listRef}
+            data-lenis-prevent
             className="
-                  flex-1 p-2 flex flex-col gap-1 relative overflow-y-auto
+                  flex-1 p-2 flex flex-col gap-1 relative overflow-y-auto overscroll-contain
                   scrollbar-width-thin scrollbar-color-neutral-800
                   [&::-webkit-scrollbar]:w-1.5
                   [&::-webkit-scrollbar-track]:bg-transparent
@@ -154,7 +164,6 @@ export default function GalleryInspector({ onFullscreenChange }) {
                   hover:[&::-webkit-scrollbar-thumb]:bg-orange-500/50
                   [&::-webkit-scrollbar-thumb]:transition-colors
               "
-            onWheel={(e) => handleWheelNav(e, true)}
           >
             {galleryFiles.map((file) => (
               <button
@@ -175,10 +184,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
         </div>
 
         {/* Right: Preview Monitor */}
-        <div
-          className="flex-1 relative bg-neutral-950 p-4 md:p-8 flex items-center justify-center overflow-hidden h-full group"
-          onWheel={(e) => handleWheelNav(e, true)}
-        >
+        <div className="flex-1 relative bg-neutral-950 p-4 md:p-8 flex items-center justify-center overflow-hidden h-full group">
           {/* Fullscreen Button*/}
           <button
             onClick={() => setIsFullscreen(true)}
@@ -330,6 +336,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
             className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center"
             onClick={() => setIsFullscreen(false)}
             onWheel={handleWheelNav}
+            data-lenis-prevent
           >
             {/* Close Button */}
             <button
