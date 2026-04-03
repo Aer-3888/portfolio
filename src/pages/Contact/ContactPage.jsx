@@ -29,14 +29,14 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-neutral-950 relative overflow-hidden font-sans text-white flex flex-col items-center justify-center p-6 md:p-12">
+    <div className="min-h-screen w-full bg-neutral-950 relative overflow-y-auto font-sans text-white flex flex-col items-center py-12 md:py-24 px-6 md:px-12">
       <PageNav currentPath="/contact" />
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full max-w-7xl h-auto lg:h-[75vh] grid grid-cols-1 lg:grid-cols-12 bg-neutral-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] overflow-hidden rounded-sm border border-white/5"
+        className="w-full max-w-7xl h-auto lg:min-h-[75vh] grid grid-cols-1 lg:grid-cols-12 bg-neutral-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] overflow-hidden rounded-sm border border-white/5"
       >
         {/* Left: Communication & Details */}
         <div className="lg:col-span-5 flex flex-col justify-between p-10 md:p-16 border-b lg:border-b-0 lg:border-r border-white/5 bg-neutral-900">
@@ -115,13 +115,6 @@ export default function ContactPage() {
         <div className="hidden lg:flex lg:col-span-7 bg-neutral-950 flex-col">
           <div className="flex-1">
             <ArcadeMachine />
-          </div>
-
-          <div className="p-10 border-t border-white/5 bg-neutral-900/50">
-            <p className="text-neutral-500 text-[10px] md:text-xs leading-relaxed font-mono uppercase tracking-[0.3em]">
-              Efficiency is priority. The transmission form has been replaced with a high-speed
-              perception test.
-            </p>
           </div>
         </div>
       </motion.div>
