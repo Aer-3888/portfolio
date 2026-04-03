@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";
-const PHRASES = ["LET'S HAVE \n FUN", "HELLO \n WORLD.", "STUDENT \n HERE!"];
+const PHRASES = ["LET'S HAVE FUN", "HELLO WORLD.", "GOLD GOLD GOLD"];
 
 export default function CipherText() {
   const [display, setDisplay] = useState("");
@@ -62,7 +62,7 @@ export default function CipherText() {
   return (
     <span
       ref={ref}
-      className="block text-[9vw] leading-[0.9] font-black text-neutral-900 tracking-tighter whitespace-pre-line min-h-[1em]"
+      className="block text-[8vw] lg:text-[7.5vw] leading-[0.85] font-black text-neutral-900 tracking-tighter whitespace-pre-line min-h-[1em]"
     >
       {display}
       <motion.span
