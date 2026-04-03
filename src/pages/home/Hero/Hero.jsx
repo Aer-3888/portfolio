@@ -1,18 +1,9 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useNavigate } from "react-router-dom";
 import InfiniteLoopText from "../../../components/InfiniteLoopText";
-import NavButtons from "../../../components/NavButtons";
 
 export default function Hero() {
   const containerRef = useRef(null);
-  const navigate = useNavigate();
-
-  const navItems = [
-    { label: "Projects", onClick: () => navigate("/projects") },
-    { label: "About", onClick: () => navigate("/about") },
-    { label: "Contact", onClick: () => navigate("/contact") },
-  ];
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -29,18 +20,8 @@ export default function Hero() {
   const tickerOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
   const lockedOpacity = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
 
-  // Navigation Switch Logic
-  const navOpacity = useTransform(scrollYProgress, [0, 0.05], [1, 0]);
-
   return (
     <div ref={containerRef} className="relative h-[100vh] w-full bg-neutral-900 overflow-x-hidden">
-      {/* 1. Text Navigation (Visible at Top, desktop only) */}
-      <NavButtons
-        items={navItems}
-        navOpacity={navOpacity}
-        className="hidden md:flex fixed top-8 right-10 z-[999] gap-8 text-white mix-blend-difference"
-      />
-
       {/* Hero Stage */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
         {/* Layer 1: Text After Scroll Down */}
