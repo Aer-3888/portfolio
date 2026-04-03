@@ -17,7 +17,6 @@ export default function MobileProjectCard({ project, onClick }) {
         <img
           src={project.img}
           alt={project.title}
-          loading="lazy"
           className="w-full h-full object-cover transition-all duration-300"
         />
       </div>

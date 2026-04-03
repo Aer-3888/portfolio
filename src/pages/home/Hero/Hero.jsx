@@ -39,6 +39,8 @@ export default function Hero() {
           <img
             src={`${import.meta.env.BASE_URL}images/me_.png`}
             alt="Subject"
+            loading="eager"
+            fetchPriority="high"
             className="h-[100dvh] w-auto max-w-full object-contain drop-shadow-2xl"
           />
         </div>

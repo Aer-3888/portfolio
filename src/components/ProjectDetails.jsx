@@ -65,6 +65,8 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               <img
                 src={project.img}
                 alt={project.title}
+                loading="eager"
+                fetchPriority="high"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent md:bg-gradient-to-r" />
@@ -81,6 +83,8 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 <img
                   src={project.img}
                   alt={project.title}
+                  loading="eager"
+                  fetchPriority="high"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent" />

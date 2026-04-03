@@ -44,8 +44,7 @@ export default function FloatingCard({ project, x, onClick }) {
           <img
             src={project.img}
             alt={project.title}
-            loading="lazy"
-            className="w-full h-full object-cover transition-all duration-700"
+            className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
           />
         </div>
 
