@@ -8,9 +8,37 @@ export default function GalleryInspector({ onFullscreenChange }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const listRef = useRef(null);
+  const sidebarLenisRef = useRef(null);
   const wheelStateRef = useRef({ acc: 0, lastTs: 0 });
 
   const [isSidebarHovered, setIsSidebarHovered] = useState(false);
+
+  // Initialize sidebar Lenis
+  useEffect(() => {
+    if (!listRef.current) return;
+
+    const lenis = new Lenis({
+      wrapper: listRef.current,
+      content: listRef.current,
+      duration: 1.2,
+      smoothWheel: true,
+    });
+
+    sidebarLenisRef.current = lenis;
+
+    let rafId;
+    function raf(time) {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    }
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      lenis.destroy();
+      sidebarLenisRef.current = null;
+    };
+  }, []);
 
   // Preload adjacent images
   useEffect(() => {
