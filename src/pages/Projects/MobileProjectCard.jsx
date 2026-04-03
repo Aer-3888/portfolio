@@ -17,6 +17,7 @@ export default function MobileProjectCard({ project, onClick }) {
         <img
           src={project.img}
           alt={project.title}
+          fetchPriority="high"
           className="w-full h-full object-cover transition-all duration-300"
         />
       </div>
