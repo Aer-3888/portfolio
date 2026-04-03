@@ -42,7 +42,7 @@ export default function SystemWindow({ onFullscreenChange, defaultTab = "git" })
       {/* Animated wrapper for the draggable window only */}
       <motion.div
         initial={{ y: 50, opacity: 0 }}
-        whileInView={{ y: 0, opacity: 1 }}
+        animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8 }}
         className="w-full max-w-5xl mt-12 md:mt-20 relative z-10"
       >
