@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { render, screen, cleanup } from "@testing-library/react";
 import ProjectDetails from "../ProjectDetails";
 
 const mockProject = {
@@ -20,6 +20,16 @@ const mockProject = {
 };
 
 describe("ProjectDetails", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    cleanup();
+    vi.runAllTimers();
+    vi.useRealTimers();
+  });
+
   it("renders project title when open", () => {
     render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
     expect(screen.getByText("Waiki")).toBeInTheDocument();
@@ -59,12 +69,14 @@ describe("ProjectDetails", () => {
     expect(preventDefaultSpy).not.toHaveBeenCalled();
   });
 
-  it("does not block wheel scroll when target is inside the scroll panel", () => {
+  it("always blocks native wheel scroll when modal is open, even inside the scroll panel", () => {
+    // The component intercepts ALL wheel events and manually forwards deltaY to the
+    // scroll panel — it never lets native scroll through.
     render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
     const titleEl = screen.getByText("Waiki");
     const wheelEvent = new WheelEvent("wheel", { bubbles: true, cancelable: true, deltaY: 100 });
     const preventDefaultSpy = vi.spyOn(wheelEvent, "preventDefault");
     titleEl.dispatchEvent(wheelEvent);
-    expect(preventDefaultSpy).not.toHaveBeenCalled();
+    expect(preventDefaultSpy).toHaveBeenCalled();
   });
 });
