@@ -5,9 +5,9 @@ export default function NavButtons({
   navOpacity,
   navPointerEvents,
   currentPath,
-  className = "fixed top-8 right-10 z-[999] flex gap-8 text-white mix-blend-difference",
-  buttonClass = "cursor-pointer hover:opacity-50 transition-opacity uppercase text-xl font-medium tracking-widest",
-  activeButtonClass = "relative cursor-pointer uppercase text-xl font-medium tracking-widest text-orange-500",
+  className = "fixed top-8 right-10 z-[1200] flex gap-8 text-white mix-blend-difference items-center",
+  buttonClass = "cursor-pointer hover:opacity-60 transition-all uppercase text-sm font-medium tracking-[0.3em] py-2",
+  activeButtonClass = "relative cursor-pointer uppercase text-sm font-semibold tracking-[0.3em] text-white py-2",
 }) {
   const style = {};
   if (navOpacity) style.opacity = navOpacity;
@@ -20,8 +20,8 @@ export default function NavButtons({
         return (
           <motion.div
             key={item.label}
-            className="relative"
-            whileHover={{ opacity: 0.7 }}
+            className="relative flex items-center justify-center"
+            whileHover={{ y: -2 }}
             transition={{ duration: 0.2 }}
             layout
           >
@@ -34,15 +34,15 @@ export default function NavButtons({
             </button>
             {isActive && (
               <motion.div
-                className="absolute bottom-[-4px] left-0 right-0 h-0.5 bg-orange-500 rounded-full"
+                className="absolute bottom-0 left-0 right-0 h-[2px] bg-white rounded-full origin-left"
                 layoutId="navUnderline"
-                initial={false}
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
                 transition={{
-                  duration: 0.4,
+                  duration: 0.5,
                   type: "spring",
-                  stiffness: 400,
-                  damping: 40,
-                  mass: 0.8,
+                  stiffness: 300,
+                  damping: 30,
                 }}
               />
             )}
