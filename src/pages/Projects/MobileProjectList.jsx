@@ -13,28 +13,29 @@ export default function MobileProjectList({ onProjectSelect, onScroll }) {
       style={{ WebkitOverflowScrolling: "touch" }}
       onScroll={onScroll}
     >
-      <div className="px-5 pt-24 pb-20 flex flex-col gap-3 min-h-full">
+      <div className="px-6 pt-24 pb-20 flex flex-col gap-4 min-h-full">
         {/* Header */}
-        <div className="mb-6">
-          <div className="w-8 h-0.5 bg-orange-500 mb-4" />
-          <h2 className="text-4xl font-black uppercase tracking-tighter leading-none">
+        <div className="mb-10 px-2">
+          <div className="w-10 h-0.5 bg-orange-500 mb-6" />
+          <h2 className="text-5xl font-black uppercase tracking-tighter leading-[0.85]">
             Selected
             <br />
-            Projects
+            <span className="text-neutral-600">Projects</span>
           </h2>
-          <p className="font-mono text-[9px] text-neutral-500 uppercase tracking-[0.2em] mt-3">
+          <p className="font-mono text-[10px] text-neutral-500 uppercase tracking-[0.3em] mt-5 flex items-center gap-3">
+            <span className="w-6 h-[1px] bg-neutral-800" />
             [ INDEX.2024_2026 ]
           </p>
         </div>
 
         {/* Project list */}
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           {PROJECTS.map((project, i) => (
             <motion.div
               key={project.id}
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: i * 0.06, ease: "easeOut" }}
+              transition={{ duration: 0.5, delay: i * 0.08, ease: "easeOut" }}
             >
               <MobileProjectCard project={project} onClick={() => onProjectSelect(project)} />
             </motion.div>
