@@ -79,7 +79,7 @@ export default function PageNav({
             style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
             className="fixed top-10 left-12 z-[1200]"
           >
-            {currentPath ? <HomeButton /> : <Branding />}
+            {currentPath ? <HomeButton /> : scrollYProgress && <Branding />}
           </motion.div>
 
           {/* Nav Links */}
