@@ -53,7 +53,7 @@ export function HobbyList({ activeId, onHover }) {
                     }}
                     className="overflow-hidden"
                   >
-                    <p className="text-neutral-400 font-mono text-sm md:text-base mt-4 ml-6 mb-8 max-w-lg leading-relaxed border-l border-orange-500/50 pl-6">
+                    <p className="text-neutral-400 text-sm md:text-base mt-4 ml-6 mb-8 max-w-lg leading-relaxed">
                       {hobby.description}
                     </p>
                   </motion.div>

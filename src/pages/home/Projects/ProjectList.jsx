@@ -21,7 +21,7 @@ function Cursor({ mouseX, mouseY, isHovered }) {
         opacity: isHovered ? 0.8 : 0,
         scale: isHovered ? 1 : 0.5,
       }}
-      className="fixed w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[230px] md:h-[230px] lg:w-[260px] lg:h-[260px] bg-white rounded-full mix-blend-difference pointer-events-none z-30 -translate-x-1/2 -translate-y-1/2"
+      className="fixed w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[230px] md:h-[230px] lg:w-[260px] lg:h-[260px] bg-white/90 rounded-full pointer-events-none z-30 -translate-x-1/2 -translate-y-1/2"
     />
   );
 }
@@ -55,14 +55,32 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
+  const handleSelect = useCallback(
+    (project) => {
+      setSelectedProject(project);
+    },
+    [setSelectedProject]
+  );
+
   useEffect(() => {
-    const mq = window.matchMedia("(pointer: coarse)");
+    const coarseMq = window.matchMedia("(pointer: coarse)");
+    const hoverMq = window.matchMedia("(hover: none)");
     const update = () => {
-      setIsCoarsePointer(mq.matches);
+      setIsCoarsePointer(
+        coarseMq.matches ||
+          hoverMq.matches ||
+          ("ontouchstart" in window && window.innerWidth < 1024)
+      );
     };
     update();
-    mq.addEventListener("change", update);
-    return () => mq.removeEventListener("change", update);
+    coarseMq.addEventListener("change", update);
+    hoverMq.addEventListener("change", update);
+    window.addEventListener("resize", update);
+    return () => {
+      coarseMq.removeEventListener("change", update);
+      hoverMq.removeEventListener("change", update);
+      window.removeEventListener("resize", update);
+    };
   }, []);
 
   useEffect(() => {
@@ -123,15 +141,6 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
         isHovered={isHovered}
       />
 
-      {/* Noise Texture */}
-      <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none z-0"
-        style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}
-      />
-
-      {/* Background Glows for Transition */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80vw] h-[40vh] bg-orange-600/10 blur-[120px] pointer-events-none" />
-
       {/* Header */}
       <div className="container mx-auto px-6 md:px-12 mb-12 md:mb-24 z-10 relative">
         <ScrollReveal>
@@ -154,7 +163,7 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
               project={project}
               index={i}
               isCoarsePointer={isCoarsePointer}
-              onSelect={() => setSelectedProject(project)}
+              onSelect={handleSelect}
             />
           </ScrollReveal>
         ))}

@@ -1,8 +1,8 @@
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import InfiniteLoopText from "../../../components/InfiniteLoopText";
 
-export default function Hero() {
+function Hero() {
   const containerRef = useRef(null);
 
   const { scrollYProgress } = useScroll({
@@ -21,7 +21,7 @@ export default function Hero() {
   const lockedOpacity = useTransform(scrollYProgress, [0.1, 0.4], [0, 1]);
 
   return (
-    <div ref={containerRef} className="relative h-[100vh] w-full bg-neutral-900 overflow-x-hidden">
+    <div ref={containerRef} className="relative h-[100dvh] w-full bg-neutral-900 overflow-x-hidden">
       {/* Hero Stage */}
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
         {/* Layer 1: Text After Scroll Down */}
@@ -29,7 +29,7 @@ export default function Hero() {
           style={{ opacity: lockedOpacity, scale, y }}
           className="absolute z-10 w-full flex justify-center top-[65%] -translate-y-1/2"
         >
-          <h1 className="text-[15vw] font-black text-white leading-none tracking-tighter whitespace-nowrap drop-shadow-2xl">
+          <h1 className="text-[15vw] font-black text-white leading-none tracking-tighter whitespace-nowrap [text-shadow:_0_4px_30px_rgba(0,0,0,0.5)]">
             THEO PHAN
           </h1>
         </motion.div>
@@ -41,7 +41,7 @@ export default function Hero() {
             alt="Subject"
             loading="eager"
             fetchPriority="high"
-            className="h-[100dvh] w-auto max-w-full object-contain drop-shadow-2xl"
+            className="h-[100dvh] w-auto max-w-full object-contain"
           />
         </div>
 
@@ -54,23 +54,7 @@ export default function Hero() {
         </motion.div>
 
         {/* Background */}
-        <div className="absolute inset-0 z-0 overflow-hidden bg-neutral-800">
-          {/* Dot Pattern */}
-          <div
-            className="absolute inset-0 opacity-[0.2]"
-            style={{
-              backgroundImage: "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-              backgroundSize: "40px 40px",
-            }}
-          />
-
-          {/* Cool Light */}
-          <div className="absolute -top-[20%] -right-[10%] w-[70vw] h-[70vw] bg-neutral-600/30 rounded-full blur-[120px] mix-blend-screen" />
-
-          {/* Subtle Warmth/Accent */}
-          <div className="absolute -bottom-[20%] -left-[10%] w-[60vw] h-[60vw] bg-orange-900/20 rounded-full blur-[100px] mix-blend-screen" />
-
-          {/* Vignette */}
+        <div className="absolute inset-0 z-0 overflow-hidden bg-neutral-900">
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-neutral-900/80" />
           <div className="absolute inset-0 bg-gradient-to-r from-neutral-900/50 via-transparent to-neutral-900/50" />
         </div>
@@ -78,3 +62,5 @@ export default function Hero() {
     </div>
   );
 }
+
+export default memo(Hero);

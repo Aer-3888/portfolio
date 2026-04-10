@@ -1,7 +1,8 @@
+import { memo } from "react";
 import { motion } from "framer-motion";
 import { STATUS_ITEMS } from "../../../config/siteData";
 
-export default function StatusSection() {
+function StatusSection() {
   return (
     <section className="relative w-full bg-neutral-950 py-32 px-6 md:px-12 border-b border-neutral-900 overflow-hidden">
       {/* Subtle blend gradient from the Hero section above */}
@@ -32,3 +33,5 @@ export default function StatusSection() {
     </section>
   );
 }
+
+export default memo(StatusSection);

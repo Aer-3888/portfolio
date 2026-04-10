@@ -8,7 +8,7 @@ export default function CipherText() {
   const [display, setDisplay] = useState("");
   const [phraseIndex, setPhraseIndex] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
+  const isInView = useInView(ref, { margin: "-50px" });
 
   useEffect(() => {
     if (!isInView) return;

@@ -44,6 +44,19 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+/* Prevent pull-to-refresh and scroll chaining */
+html,
+body {
+  overscroll-behavior: none;
+}
+
+/* Eliminate 300ms tap delay on interactive elements */
+button,
+a,
+[role="button"] {
+  touch-action: manipulation;
+}
+
 /* Global election color*/
 ::selection {
   background-color: rgba(249, 115, 22, 0.35); /* orange-500 ~ 35% */

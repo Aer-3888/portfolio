@@ -10,11 +10,15 @@ export default function GalleryInspector({ onFullscreenChange }) {
   const listRef = useRef(null);
   const sidebarLenisRef = useRef(null);
   const wheelStateRef = useRef({ acc: 0, lastTs: 0 });
+  const touchStartX = useRef(0);
+  const touchStartY = useRef(0);
 
   const [isSidebarHovered, setIsSidebarHovered] = useState(false);
 
-  // Initialize sidebar Lenis
+  // Initialize sidebar Lenis (desktop only — sidebar is hidden on mobile)
   useEffect(() => {
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+    if (!isDesktop) return;
     if (!listRef.current) return;
 
     const lenis = new Lenis({
@@ -62,7 +66,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
   // Consolidated Scroll Lock Logic
   useEffect(() => {
     if (onFullscreenChange) onFullscreenChange(isFullscreen);
-    
+
     if (isFullscreen || isSidebarHovered) {
       document.body.style.overflow = "hidden";
     } else {
@@ -82,56 +86,51 @@ export default function GalleryInspector({ onFullscreenChange }) {
   }, [onFullscreenChange]);
 
   // Navigation Handlers
-  const handleNext = useCallback(
-    (e) => {
-      if (e) e.stopPropagation();
-      setActiveFile((prev) => {
-        const currentIndex = galleryFiles.findIndex((f) => f.name === prev.name);
-        const nextIndex = (currentIndex + 1) % galleryFiles.length;
-        setIsImageLoading(true);
-        return galleryFiles[nextIndex];
-      });
-    },
-    []
-  );
+  const handleNext = useCallback((e) => {
+    if (e) e.stopPropagation();
+    setActiveFile((prev) => {
+      const currentIndex = galleryFiles.findIndex((f) => f.name === prev.name);
+      const nextIndex = (currentIndex + 1) % galleryFiles.length;
+      setIsImageLoading(true);
+      return galleryFiles[nextIndex];
+    });
+  }, []);
 
-  const handlePrev = useCallback(
-    (e) => {
-      if (e) e.stopPropagation();
-      setActiveFile((prev) => {
-        const currentIndex = galleryFiles.findIndex((f) => f.name === prev.name);
-        const prevIndex = (currentIndex - 1 + galleryFiles.length) % galleryFiles.length;
-        setIsImageLoading(true);
-        return galleryFiles[prevIndex];
-      });
-    },
-    []
-  );
+  const handlePrev = useCallback((e) => {
+    if (e) e.stopPropagation();
+    setActiveFile((prev) => {
+      const currentIndex = galleryFiles.findIndex((f) => f.name === prev.name);
+      const prevIndex = (currentIndex - 1 + galleryFiles.length) % galleryFiles.length;
+      setIsImageLoading(true);
+      return galleryFiles[prevIndex];
+    });
+  }, []);
 
   // Mouse wheel navigation (Fullscreen Only)
-  const handleWheelNav = useCallback((e) => {
-    if (!isFullscreen) return;
+  const handleWheelNav = useCallback(
+    (e) => {
+      if (!isFullscreen) return;
 
-    e.preventDefault();
-    e.stopPropagation();
+      e.preventDefault();
+      e.stopPropagation();
 
-    const now = performance.now();
-    const threshold = 60;
-    const minInterval = 100;
-    const nextAcc = wheelStateRef.current.acc + e.deltaY;
+      const now = performance.now();
+      const threshold = 60;
+      const minInterval = 100;
+      const nextAcc = wheelStateRef.current.acc + e.deltaY;
 
-    if (Math.abs(nextAcc) < threshold || now - wheelStateRef.current.lastTs < minInterval) {
-      wheelStateRef.current.acc = nextAcc;
-      return;
-    }
+      if (Math.abs(nextAcc) < threshold || now - wheelStateRef.current.lastTs < minInterval) {
+        wheelStateRef.current.acc = nextAcc;
+        return;
+      }
 
-    if (nextAcc > 0) {
-      handleNext();
-    } else {
-      handlePrev();
-    }
+      if (nextAcc > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
 
-    wheelStateRef.current = { acc: 0, lastTs: now };
+      wheelStateRef.current = { acc: 0, lastTs: now };
   }, [isFullscreen, handleNext, handlePrev]);
 
   // Keyboard navigation in fullscreen
@@ -145,6 +144,28 @@ export default function GalleryInspector({ onFullscreenChange }) {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isFullscreen, handleNext, handlePrev]);
+
+  // Touch swipe navigation (Fullscreen Only)
+  const handleTouchStart = useCallback((e) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (e) => {
+      const deltaX = touchStartX.current - e.changedTouches[0].clientX;
+      const deltaY = touchStartY.current - e.changedTouches[0].clientY;
+      // Only act on horizontal swipes (not vertical scroll attempts)
+      if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+          handleNext();
+        } else {
+          handlePrev();
+        }
+      }
+    },
+    [handleNext, handlePrev]
+  );
 
   // Scroll in sidebar to active file
   useEffect(() => {
@@ -165,7 +186,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
     <>
       <div className="w-full flex flex-col md:flex-row h-[75vh] min-h-[500px] md:h-[600px] border border-neutral-800 bg-neutral-900/50 rounded-lg overflow-hidden font-sans">
         {/* Left: Side Bar (Not visible on mobile) */}
-        <div 
+        <div
           className="hidden md:flex w-full md:w-64 bg-neutral-900/80 border-r border-neutral-800 flex-col h-full backdrop-blur-sm"
           onMouseEnter={() => setIsSidebarHovered(true)}
           onMouseLeave={() => setIsSidebarHovered(false)}
@@ -291,7 +312,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="relative w-full h-full flex items-center justify-center p-2"
             >
-              <div 
+              <div
                 className="relative inline-block max-w-full max-h-full cursor-zoom-in group/img"
                 onClick={() => setIsFullscreen(true)}
               >
@@ -349,7 +370,14 @@ export default function GalleryInspector({ onFullscreenChange }) {
               </div>
             </motion.div>
           </AnimatePresence>
-          <div className="absolute inset-0 pointer-events-none opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+          <div
+            className="absolute inset-0 pointer-events-none opacity-10"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+              backgroundRepeat: "repeat",
+              backgroundSize: "256px 256px",
+            }}
+          />
         </div>
       </div>
 
@@ -362,8 +390,11 @@ export default function GalleryInspector({ onFullscreenChange }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex flex-col items-center justify-center"
+            style={{ touchAction: "none" }}
             onClick={() => setIsFullscreen(false)}
             onWheel={handleWheelNav}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
             data-lenis-prevent
           >
             {/* Close Button */}

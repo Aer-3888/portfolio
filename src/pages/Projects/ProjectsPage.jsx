@@ -1,11 +1,10 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { motion, useAnimation, useReducedMotion } from "framer-motion";
 import PageNav from "../../components/layout/PageNav";
 import ProjectDetails from "../../components/ProjectDetails";
 import TunnelView from "./TunnelView";
 import MobileProjectList from "./MobileProjectList";
 import { PROJECTS } from "../../config/siteData";
-import { BackgrounGrid } from "./BackgroundGrid";
 import useMediaQuery from "../../hooks/useMediaQuery";
 
 export default function ProjectsPage() {
@@ -131,17 +130,12 @@ export default function ProjectsPage() {
   }, [selectedProject]);
 
   // Track scroll direction inside MobileProjectList to hide/show the nav
-  const handleMobileScroll = (e) => {
+  const handleMobileScroll = useCallback((e) => {
     const currentY = e.currentTarget.scrollTop;
-    if (currentY <= 10) {
-      setMobileNavVisible(true);
-    } else if (currentY > lastScrollYRef.current) {
-      setMobileNavVisible(false);
-    } else {
-      setMobileNavVisible(true);
-    }
+    const next = currentY <= 10 || currentY < lastScrollYRef.current;
     lastScrollYRef.current = currentY;
-  };
+    setMobileNavVisible((prev) => (prev === next ? prev : next));
+  }, []);
 
   // Keyboard Navigation
   useEffect(() => {
@@ -178,7 +172,7 @@ export default function ProjectsPage() {
   };
 
   return (
-    <div className="bg-neutral-950 text-white font-sans selection:bg-orange-500/30 overflow-x-hidden">
+    <div className="bg-neutral-950 text-white font-sans overflow-x-hidden">
       {/* Scroll driver — must live outside fixed wrapper to create document scroll height */}
       {isDesktop && (
         <div
@@ -206,32 +200,6 @@ export default function ProjectsPage() {
             className="absolute inset-0 z-30 flex flex-col items-center justify-center origin-center overflow-hidden"
             style={{ willChange: "transform, opacity, filter" }}
           >
-            {/* Grid */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 2 }}
-              className="absolute inset-0 z-0"
-            >
-              <BackgrounGrid />
-            </motion.div>
-
-            {/* Pulse animation */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.5 }}
-              animate={{
-                opacity: [0, 0.2, 0.5, 0.2],
-                scale: [0.5, 0.8, 1.2, 0.8],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-                ease: "easeInOut",
-                times: [0, 0.2, 0.5, 1],
-              }}
-              className="absolute z-0 w-[40vw] h-[40vw] rounded-full bg-orange-500/20 blur-[120px] pointer-events-none mix-blend-screen"
-            />
-
             {/* Intro Text */}
             <motion.div
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
@@ -239,14 +207,14 @@ export default function ProjectsPage() {
               transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
               className="relative z-10 flex flex-col items-center"
             >
-              <h1 className="text-[12vw] font-black uppercase tracking-tighter leading-[0.8] text-center mix-blend-overlay opacity-90 pointer-events-none drop-shadow-2xl">
+              <h1 className="text-[12vw] font-black uppercase tracking-tighter leading-[0.8] text-center text-white/90 pointer-events-none">
                 My
                 <br />
                 Projects
               </h1>
             </motion.div>
 
-            {/* Warp Button */}
+            {/* Enter Button */}
             {!hasEntered && (
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -256,30 +224,11 @@ export default function ProjectsPage() {
               >
                 <motion.button
                   onClick={handleWarp}
-                  animate={{
-                    boxShadow: [
-                      "0px 0px 0px rgba(249, 115, 22, 0)",
-                      "0px 0px 30px rgba(249, 115, 22, 0.3)",
-                      "0px 0px 0px rgba(249, 115, 22, 0)",
-                    ],
-                    borderColor: [
-                      "rgba(249, 115, 22, 0.5)",
-                      "rgba(249, 115, 22, 1)",
-                      "rgba(249, 115, 22, 0.5)",
-                    ],
-                  }}
-                  transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  whileHover={{
-                    scale: 1.05,
-                    backgroundColor: "rgba(249, 115, 22, 0.15)",
-                    borderColor: "rgba(249, 115, 22, 1)",
-                  }}
+                  whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
                   whileTap={{ scale: 0.95 }}
-                  className="font-mono text-xs md:text-sm uppercase tracking-[0.3em] text-orange-500 border border-orange-500/50 bg-black/80 px-10 py-5 backdrop-blur-md hover:text-white transition-all cursor-pointer group overflow-hidden"
+                  className="text-sm uppercase tracking-[0.2em] text-white border border-white/20 bg-transparent px-10 py-5 hover:border-white/50 transition-all cursor-pointer"
                 >
-                  <span className="relative z-10">[ Let's Go ]</span>
-                  {/* Scanline */}
-                  <div className="absolute top-0 left-[-100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 group-hover:animate-[shimmer_1s_infinite]" />
+                  Enter
                 </motion.button>
               </motion.div>
             )}
@@ -314,21 +263,15 @@ export default function ProjectsPage() {
         />
 
         {/* Grain & Gradient Overlays */}
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="absolute inset-0 z-30 pointer-events-none opacity-[0.05] w-full h-full"
+        <div
+          className="absolute inset-0 z-30 pointer-events-none opacity-[0.05]"
           aria-hidden="true"
-        >
-          <filter id="noise-grain">
-            <feTurbulence
-              type="fractalNoise"
-              baseFrequency="0.75"
-              numOctaves="4"
-              stitchTiles="stitch"
-            />
-          </filter>
-          <rect width="100%" height="100%" filter="url(#noise-grain)" />
-        </svg>
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "256px 256px",
+          }}
+        />
         <div className="absolute inset-0 z-30 pointer-events-none bg-radial-gradient from-transparent via-transparent to-black/80" />
       </div>
     </div>

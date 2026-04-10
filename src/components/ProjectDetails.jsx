@@ -92,12 +92,12 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
               <div>
                 <div className="flex items-center gap-3 mb-4">
-                  <span className="font-mono text-xs uppercase tracking-[0.2em] px-2.5 py-1 border border-orange-500/40 bg-orange-500/10 text-orange-400">
+                  <span className="font-mono text-xs text-neutral-500 uppercase tracking-[0.2em]">
                     {project.type}
                   </span>
-                  <span className="w-1 h-1 rounded-full bg-white/20" />
-                  <span className="font-mono text-xs text-neutral-400 uppercase tracking-[0.3em]">
-                    {project.category} / {project.year}
+                  <span className="font-mono text-xs text-neutral-600">—</span>
+                  <span className="font-mono text-xs text-neutral-500 uppercase tracking-[0.2em]">
+                    {project.year}
                   </span>
                 </div>
                 <h2 className="text-5xl font-black uppercase tracking-tighter text-white mb-4">
@@ -106,37 +106,33 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 <p className="text-neutral-300 leading-relaxed text-lg">{project.description}</p>
               </div>
 
-              {/* Technical Profile Section */}
-              <div className="flex flex-col gap-6 bg-white/[0.02] border-l-2 border-orange-500/50 p-6">
-                <div>
-                  <h4 className="font-mono text-[10px] text-orange-500 uppercase tracking-[0.25em] mb-2">
-                    Core Insight
+              <div className="flex flex-col gap-4">
+                <div className="bg-white/[0.03] rounded-lg p-5">
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-2">
+                    Insight
                   </h4>
-                  <p className="text-[14px] text-neutral-100 leading-relaxed font-medium">
-                    {project.insight}
-                  </p>
+                  <p className="text-[14px] text-neutral-300 leading-relaxed">{project.insight}</p>
                 </div>
-                <div>
-                  <h4 className="font-mono text-[10px] text-orange-500 uppercase tracking-[0.25em] mb-2">
-                    Main Challenge
+                <div className="bg-white/[0.03] rounded-lg p-5">
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-2">
+                    Challenge
                   </h4>
-                  <p className="text-[14px] text-neutral-400 leading-relaxed italic">
-                    "{project.challenge}"
+                  <p className="text-[14px] text-neutral-400 leading-relaxed">
+                    {project.challenge}
                   </p>
                 </div>
               </div>
 
-              {/* Tags Section */}
-              <div className="grid grid-cols-1 gap-8">
+              <div className="flex flex-col gap-6">
                 <div>
-                  <h4 className="font-mono text-[11px] text-neutral-400 uppercase tracking-wider mb-4 border-b border-white/5 pb-2">
-                    Technologies
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
+                    Stack
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {project.tags?.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1.5 bg-white/5 border border-white/[0.15] rounded-sm text-[11px] font-mono text-white/80 uppercase"
+                        className="px-3 py-1 bg-white/5 rounded-full text-xs text-neutral-300"
                       >
                         {tag}
                       </span>
@@ -144,26 +140,29 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-8">
+                <div className="grid grid-cols-2 gap-6">
                   <div>
-                    <h4 className="font-mono text-[11px] text-neutral-400 uppercase tracking-wider mb-4 border-b border-white/5 pb-2">
+                    <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
                       Tools
                     </h4>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-wrap gap-2">
                       {project.tools?.map((tool) => (
-                        <span key={tool} className="text-sm font-mono text-neutral-200">
+                        <span
+                          key={tool}
+                          className="px-3 py-1 bg-white/5 rounded-full text-xs text-neutral-300"
+                        >
                           {tool}
                         </span>
                       ))}
                     </div>
                   </div>
                   <div>
-                    <h4 className="font-mono text-[11px] text-neutral-400 uppercase tracking-wider mb-4 border-b border-white/5 pb-2">
+                    <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
                       Architecture
                     </h4>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1.5">
                       {project.architecture?.map((arch) => (
-                        <span key={arch} className="text-sm font-mono text-neutral-200">
+                        <span key={arch} className="text-sm text-neutral-400">
                           {arch}
                         </span>
                       ))}

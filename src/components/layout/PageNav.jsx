@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, useTransform, useMotionValue, AnimatePresence } from "framer-motion";
 import HomeButton from "../HomeButton";
@@ -8,6 +8,24 @@ import MenuPanel from "../MenuPanel";
 import { NAV_ITEMS } from "../../config/siteData";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useMobileNavVisible from "../../hooks/useMobileNavVisible";
+
+const Branding = memo(function Branding({ className = "", onClick }) {
+  return (
+    <motion.button
+      onClick={onClick}
+      className={`group flex flex-col items-start cursor-pointer ${className}`}
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+    >
+      <span className="text-base font-bold tracking-tighter text-white/90 group-hover:text-white transition-colors">
+        Theo Phan
+      </span>
+      <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-white/40 leading-none group-hover:text-white/60 transition-colors">
+        Portfolio
+      </span>
+    </motion.button>
+  );
+});
 
 export default function PageNav({
   currentPath,
@@ -52,23 +70,9 @@ export default function PageNav({
     [isDesktop, currentPath, navItems, navigate]
   );
 
-  if (isHidden) return null;
+  const handleNavigateHome = useCallback(() => navigate("/"), [navigate]);
 
-  const Branding = ({ className = "" }) => (
-    <motion.button
-      onClick={() => navigate("/")}
-      className={`group flex flex-col items-start cursor-pointer ${className}`}
-      whileHover={{ scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
-    >
-      <span className="text-base font-bold tracking-tighter text-white/90 group-hover:text-white transition-colors">
-        Theo Phan
-      </span>
-      <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-white/40 leading-none group-hover:text-white/60 transition-colors">
-        Portfolio
-      </span>
-    </motion.button>
-  );
+  if (isHidden) return null;
 
   return (
     <>
@@ -79,7 +83,11 @@ export default function PageNav({
             style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
             className="fixed top-10 left-12 z-[1200]"
           >
-            {currentPath ? <HomeButton /> : scrollYProgress && <Branding />}
+            {currentPath ? (
+              <HomeButton />
+            ) : (
+              scrollYProgress && <Branding onClick={handleNavigateHome} />
+            )}
           </motion.div>
 
           {/* Nav Links */}
@@ -142,7 +150,7 @@ export default function PageNav({
               : "opacity-0 pointer-events-none -translate-y-full"
           }`}
         >
-          <Branding />
+          <Branding onClick={handleNavigateHome} />
 
           <div className="relative">
             <AnimatePresence mode="wait">

@@ -1,5 +1,5 @@
-import { motion, useAnimationFrame } from "framer-motion";
-import { useMemo, useRef, useState } from "react";
+import { useAnimationFrame } from "framer-motion";
+import { useMemo, useRef, useEffect } from "react";
 import { interpolate } from "flubber";
 
 // Organic blob shapes
@@ -14,7 +14,6 @@ const blobShapes = [
 const circlePath = "M50,5 C75,5 95,25 95,50 C95,75 75,95 50,95 C25,95 5,75 5,50 C5,25 25,5 50,5 Z";
 
 export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor = "white" }) {
-  // Build flubber interpolators for each adjacent pair, memoized
   const morphers = useMemo(() => {
     return blobShapes.map((shape, i) =>
       interpolate(shape, blobShapes[(i + 1) % blobShapes.length], {
@@ -24,11 +23,20 @@ export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor 
   }, []);
 
   const progressRef = useRef(0);
-  const [currentPath, setCurrentPath] = useState(blobShapes[0]);
+  const pathRef = useRef(null);
+  const isHoveredRef = useRef(isHovered);
 
-  useAnimationFrame((t, delta) => {
+  useEffect(() => {
+    isHoveredRef.current = isHovered;
+    if (isHovered && pathRef.current) {
+      pathRef.current.setAttribute("d", circlePath);
+    }
+  }, [isHovered]);
+
+  useAnimationFrame((_t, delta) => {
+    if (isHoveredRef.current) return;
+
     const total = morphers.length;
-    // advance progress; delta is ms
     const next = progressRef.current + delta * speed;
     const wrapped = next % total;
     progressRef.current = wrapped;
@@ -36,7 +44,7 @@ export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor 
     const index = Math.floor(wrapped);
     const localT = wrapped - index;
     const path = morphers[index](localT);
-    setCurrentPath(path);
+    if (pathRef.current) pathRef.current.setAttribute("d", path);
   });
 
   return (
@@ -47,11 +55,15 @@ export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor 
         preserveAspectRatio="xMidYMid meet"
         style={{ overflow: "visible" }}
       >
-        <motion.path
-          d={isHovered ? circlePath : currentPath}
-          animate={{ scale: isHovered ? 0.9 : 1, fill: blobColor }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="mix-blend-difference"
+        <path
+          ref={pathRef}
+          d={blobShapes[0]}
+          fill={blobColor}
+          style={{
+            transform: isHovered ? "scale(0.9)" : "scale(1)",
+            transformOrigin: "50px 50px",
+            transition: "transform 0.3s ease-out, d 0.3s ease-out",
+          }}
         />
       </svg>
     </div>

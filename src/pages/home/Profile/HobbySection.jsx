@@ -42,21 +42,18 @@ export default function HobbySection() {
                 className="absolute inset-0 w-full h-full object-cover opacity-70 z-0 transition-transform duration-700 group-hover:scale-105"
               />
 
-              <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] pointer-events-none z-0" />
+              <div
+                className="absolute inset-0 opacity-20 pointer-events-none z-0"
+                style={{
+                  backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+                  backgroundRepeat: "repeat",
+                  backgroundSize: "256px 256px",
+                }}
+              />
 
               <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10" />
 
               <div className="absolute bottom-0 left-0 right-0 h-3/5 bg-gradient-to-t from-black via-black/60 to-transparent z-10" />
-
-              {/* Tag */}
-              <div className="absolute top-4 right-4 z-20">
-                <div className="bg-white/10 backdrop-blur-md border border-white/20 px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg">
-                  <div className="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse" />
-                  <span className="font-mono text-[10px] text-white font-bold uppercase tracking-[0.15em]">
-                    {hobby.id}
-                  </span>
-                </div>
-              </div>
 
               {/* Bottom Content */}
               <div className="absolute bottom-0 left-0 w-full p-5 z-20 flex flex-col gap-2">
@@ -65,11 +62,9 @@ export default function HobbySection() {
                 </h4>
 
                 {hobby.description && (
-                  <div className="relative pl-3 border-l border-orange-500/80 z-20">
-                    <p className="text-xs font-bold text-neutral-300 font-mono leading-relaxed line-clamp-2 drop-shadow-md">
-                      {hobby.description}
-                    </p>
-                  </div>
+                  <p className="relative z-20 text-xs text-neutral-300 leading-relaxed line-clamp-2">
+                    {hobby.description}
+                  </p>
                 )}
               </div>
             </div>
@@ -81,13 +76,12 @@ export default function HobbySection() {
           <button
             type="button"
             onClick={() => navigate("/about")}
-            className="w-full relative py-4 rounded-full border border-white/20 bg-white/5 backdrop-blur-md overflow-hidden group shadow-lg"
+            className="w-full py-4 border border-white/20 active:bg-white/10 transition-colors flex items-center justify-center gap-3"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-500/0 via-orange-500/20 to-orange-500/0 translate-x-[-100%] group-active:translate-x-[100%] transition-transform duration-700" />
-
-            <span className="relative z-10 font-mono text-xs font-bold text-white uppercase tracking-[0.2em] group-active:tracking-[0.3em] transition-all duration-300">
+            <span className="font-mono text-xs font-bold text-white uppercase tracking-[0.2em]">
               More About Me
             </span>
+            <span className="text-white text-sm">→</span>
           </button>
         </div>
       </div>

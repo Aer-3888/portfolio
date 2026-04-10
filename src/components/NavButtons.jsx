@@ -14,7 +14,7 @@ export default function NavButtons({
   if (navPointerEvents) style.pointerEvents = navPointerEvents;
 
   return (
-    <motion.nav style={style} className={className} layout>
+    <motion.nav style={style} className={className}>
       {items.map((item) => {
         const isActive = currentPath && item.path === currentPath;
         return (
@@ -23,7 +23,6 @@ export default function NavButtons({
             className="relative flex items-center justify-center"
             whileHover={{ y: -2 }}
             transition={{ duration: 0.2 }}
-            layout
           >
             <button
               type="button"

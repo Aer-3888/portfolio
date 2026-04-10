@@ -1,7 +1,8 @@
+import { memo } from "react";
 import CipherText from "./CipherText";
 import { SOCIALS } from "../../../config/siteData";
 
-export default function Footer() {
+function Footer() {
   return (
     <footer className="fixed bottom-0 left-0 w-full h-[50vh] bg-white z-0 flex flex-col justify-between">
       {/* Mobile View */}
@@ -9,7 +10,7 @@ export default function Footer() {
         {/* Top: version */}
         <div className="border-b border-neutral-200 pb-4">
           <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">
-            V. 2026 © Edition
+            © 2026
           </span>
         </div>
 
@@ -50,7 +51,7 @@ export default function Footer() {
       <div className="hidden md:flex w-full h-full flex-col justify-between px-6 md:px-12 py-8">
         <div className="w-full flex items-start border-b border-neutral-200 pb-4">
           <span className="font-mono text-sm text-neutral-400 tracking-widest uppercase">
-            Version 2026 © Edition
+            © 2026
           </span>
         </div>
 
@@ -106,3 +107,5 @@ export default function Footer() {
     </footer>
   );
 }
+
+export default memo(Footer);

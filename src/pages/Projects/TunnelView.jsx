@@ -1,4 +1,4 @@
-import { forwardRef, useImperativeHandle } from "react";
+import { forwardRef, useCallback, useImperativeHandle } from "react";
 import {
   motion,
   useScroll,
@@ -17,6 +17,13 @@ const TunnelView = forwardRef(function TunnelView(
   ref
 ) {
   const navigate = useNavigate();
+
+  const handleSelect = useCallback(
+    (project) => {
+      setSelectedProject(project);
+    },
+    [setSelectedProject]
+  );
 
   const tunnelControls = useAnimation();
   const entryControls = useAnimation();
@@ -73,22 +80,18 @@ const TunnelView = forwardRef(function TunnelView(
         >
           <motion.div
             style={{ x: tunnelX }}
-            className="flex items-center pl-[40vw] gap-[20vw] w-max h-full will-change-transform"
+            className="flex items-center pl-[40vw] gap-[20vw] w-max h-full"
           >
             {/* Tunnel header text */}
             <div className="w-[35vw] shrink-0 text-left pl-12 relative">
               <motion.div style={{ x: tunnelTextX }} className="relative z-10">
-                <div className="w-20 h-1 bg-orange-500 mb-8" />
                 <h2
-                  className="font-black uppercase tracking-tighter mb-4 leading-[0.8] mix-blend-difference"
+                  className="font-black uppercase tracking-tighter mb-4 leading-[0.8]"
                   style={{ fontSize: "clamp(3rem, 6vw, 6.5rem)" }}
                 >
                   Selected <br /> <span className="text-neutral-500">Projects</span>
                 </h2>
-                <p className="font-mono text-[11px] text-neutral-500 uppercase tracking-[0.4em] mt-6 flex items-center gap-4">
-                  <span className="w-8 h-[1px] bg-neutral-800" />
-                  [ INDEX.2024_2026 ]
-                </p>
+                <p className="text-xs text-neutral-500 uppercase tracking-wide mt-6">2024 — 2026</p>
               </motion.div>
             </div>
 
@@ -98,7 +101,7 @@ const TunnelView = forwardRef(function TunnelView(
                 key={project.id}
                 project={project}
                 x={tunnelX}
-                onClick={() => setSelectedProject(project)}
+                onSelect={handleSelect}
               />
             ))}
 
@@ -108,8 +111,10 @@ const TunnelView = forwardRef(function TunnelView(
                 onClick={() => navigate("/contact")}
                 className="group flex flex-col items-center gap-6 relative cursor-pointer"
               >
-                <div className="w-28 h-28 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-orange-500 group-hover:border-orange-500 transition-all z-10 duration-500">
-                  <span className="text-3xl group-hover:translate-x-2 transition-transform duration-500">→</span>
+                <div className="w-28 h-28 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:border-white group-hover:text-black transition-all z-10 duration-500">
+                  <span className="text-3xl group-hover:translate-x-2 transition-transform duration-500">
+                    →
+                  </span>
                 </div>
                 <div className="flex flex-col items-center">
                   <span className="font-mono text-[10px] uppercase tracking-[0.3em] z-10 text-neutral-500 group-hover:text-white transition-colors duration-500">
@@ -130,7 +135,7 @@ const TunnelView = forwardRef(function TunnelView(
         <div className="fixed bottom-10 left-1/2 -translate-x-1/2 w-[30vw] h-[2px] bg-white/10 z-[1200] overflow-hidden">
           <motion.div
             style={{ scaleX: smoothScroll, transformOrigin: "left" }}
-            className="w-full h-full bg-orange-500"
+            className="w-full h-full bg-white"
           />
         </div>
       )}

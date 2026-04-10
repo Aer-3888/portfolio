@@ -2,9 +2,11 @@ import { useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import Lenis from "lenis";
 
+const isTouchDevice = () =>
+  window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
+
 export default function SmoothScroll({ children }) {
   const lenisRef = useRef(null);
-  const rafIdRef = useRef(null);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -13,44 +15,28 @@ export default function SmoothScroll({ children }) {
 
   // Reset scroll before paint
   useLayoutEffect(() => {
-    if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
     if (lenisRef.current) lenisRef.current.destroy();
     lenisRef.current = null;
-    rafIdRef.current = null;
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // Recreate Lenis after DOM settles
+  // Recreate Lenis after DOM settles (desktop only)
   useEffect(() => {
-    // Projects page manages its own scroll — skip Lenis so it doesn't
-    // swallow wheel events before they reach the inner scroll container.
     if (pathname === "/projects") return;
+    if (isTouchDevice()) return;
 
-    const timeout = setTimeout(() => {
-      window.scrollTo(0, 0);
-      const lenis = new Lenis({
-        lerp: 0.08,
-        duration: 1.1,
-        smoothWheel: true,
-        wheelMultiplier: 1.1,
-        touchMultiplier: 1.5,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Custom exponential easing
-      });
-      lenisRef.current = lenis;
-
-      function raf(time) {
-        lenis.raf(time);
-        rafIdRef.current = requestAnimationFrame(raf);
-      }
-      rafIdRef.current = requestAnimationFrame(raf);
-    }, 50);
+    window.scrollTo(0, 0);
+    const lenis = new Lenis({
+      autoRaf: true,
+      lerp: 0.1,
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+    });
+    lenisRef.current = lenis;
 
     return () => {
-      clearTimeout(timeout);
-      if (rafIdRef.current) cancelAnimationFrame(rafIdRef.current);
       if (lenisRef.current) lenisRef.current.destroy();
       lenisRef.current = null;
-      rafIdRef.current = null;
     };
   }, [pathname]);
 
