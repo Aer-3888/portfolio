@@ -42,11 +42,11 @@ export const PROJECTS = [
     logoType: "website",
     offset: 0,
     description:
-      "A digital wellness solution designed to combat social media addiction. Waiki combines system-wide DNS filtering with a physical hardware barrier, requiring users to scan an NFC device to unlock distracting apps. Developed in an Agile/Scrum environment with another engineer, utilizing issue-driven development, user stories, and Kanban to manage the product lifecycle.",
+      "A digital wellness solution designed to combat **social media addiction**. Waiki combines **system-wide DNS filtering** with a **physical hardware barrier**, requiring users to scan an **NFC device** to unlock distracting apps. Developed in an Agile/Scrum environment by leading a team of fellow engineering students, utilizing issue-driven development, user stories, and Kanban to manage the product lifecycle.",
     insight:
-      "Breaking digital habits by combining network-level DNS blocks with physical friction points.",
+      "Using a **physical hardware barrier** as the only key to a **software lock** — making screen time a conscious, deliberate act.",
     challenge:
-      "Developing a reliable background NFC service and system-wide DNS filtering that persists across iOS and Android power-saving modes.",
+      "Developing a reliable **background NFC service** and system-wide DNS filtering that persists across iOS and Android **power-saving modes**.",
     tags: ["Flutter", "Dart", "DNS Filtering", "Firebase", "Sqlite"],
     tools: ["Android Studio", "Git", "GitHub Issues", "Kanban"],
     architecture: [
@@ -68,11 +68,11 @@ export const PROJECTS = [
     logoType: "github",
     offset: 120,
     description:
-      "My personal portfolio website, focused on high-end animations and an immersive user experience using modern web technologies.",
+      "My personal portfolio website, focused on **animations** and an **immersive user experience** using modern web technologies.",
     insight:
-      "Creating a high-performance 'tunnel' navigation using vertical-to-horizontal scroll mapping.",
+      "Creating a **tunnel** navigation using **vertical-to-horizontal scroll mapping**.",
     challenge:
-      "Optimizing complex Framer Motion transforms and SVG filters for 60FPS performance on mobile browsers.",
+      "Adapting the **horizontal scroll tunnel** to fully **responsive layouts** while keeping **scroll-driven animations** smooth and consistent across devices.",
     tags: ["React", "JavaScript", "Tailwind CSS", "Framer Motion"],
     tools: ["Vite", "VS Code", "Lenis Scroll"],
     architecture: [
@@ -93,12 +93,12 @@ export const PROJECTS = [
     logoType: "github",
     offset: -50,
     description:
-      "An object detection system trained on PlantDoc and PlantVillage datasets to identify plant species and diseases in real-time. Features comparative performance analysis between YOLO and Faster R-CNN using a ResNet-50 backbone.",
-    insight: "Comparative study of real-time detection speed vs. classification accuracy.",
+      "An object detection system trained on **PlantDoc** and **PlantVillage** datasets to identify plant species and diseases **in real-time**. Features comparative performance analysis between **YOLO** and **Faster R-CNN** using a **ResNet-50** backbone.",
+    insight: "Comparative study of **real-time detection speed** vs. **classification accuracy**.",
     challenge:
-      "Training a custom YOLOv8 model on a diverse dataset with significant class imbalance and varying lighting conditions.",
+      "Training a custom **YOLOv8** model on a diverse dataset with significant **class imbalance** and varying lighting conditions.",
     tags: ["Python", "PyTorch", "OpenCV"],
-    tools: ["Jupyter Notebook", "Anaconda", "Docker"],
+    tools: ["Jupyter Notebook", "Anaconda"],
     architecture: [
       "YOLO (You Only Look Once)",
       "Faster R-CNN (Region-based CNN)",
@@ -118,11 +118,11 @@ export const PROJECTS = [
     logoType: "codeberg",
     offset: -30,
     description:
-      "A full-stack mobile solution for INSA Rennes students that replaces legacy systems with a reactive dashboard. It features a secure native Android bridge for grade retrieval and an anonymous data-sharing engine using Cloudflare Workers and D1 to calculate class averages and performance metrics without compromising student privacy.",
+      "A full-stack mobile solution for INSA Rennes students that replaces legacy systems with a **reactive dashboard**. It features a secure **native Android bridge** for grade retrieval and an **anonymous data-sharing engine** using **Cloudflare Workers** and **D1** to calculate class averages and performance metrics without compromising **student privacy**.",
     insight:
-      "Building a privacy-first community analytics engine to provide missing academic context like class averages and distributions.",
+      "Building a **privacy-first** community analytics engine to provide missing academic context like **class averages** and distributions.",
     challenge:
-      "Ensuring student privacy while collecting enough anonymous data to calculate accurate class-wide metrics at the edge.",
+      "Ensuring **student privacy** while collecting enough anonymous data to calculate accurate **class-wide metrics at the edge**.",
     tags: ["Flutter", "Cloudflare Workers", "D1 Database", "Riverpod", "SQL"],
     tools: ["Android Studio", "Wrangler", "VS Code", "Git"],
     architecture: [
@@ -133,6 +133,32 @@ export const PROJECTS = [
   },
   {
     id: "05",
+    title: "EDA Housing",
+    year: "2025",
+    type: "Data Analysis",
+    category: "Personal",
+    services: "Exploratory Data Analysis - Python - Data Visualization",
+    img: `${import.meta.env.BASE_URL}images/eda_housing.png`,
+    url: "https://github.com/Aer-3888/EDA_Housing",
+    linkText: "View Repository",
+    logoType: "github",
+    offset: 0,
+    description:
+      "An exploratory data analysis of **10 years** of French real estate transactions (**~12,000 records**) in the Pays de la Loire region. The study compares **pre-COVID (2014–2019)**, **COVID (2020–2021)**, and **post-COVID (2022–2023)** periods across five departments, revealing a **~32% surge** in average prices and price per m², with transaction volume remaining stable at ~1,200 annually.",
+    insight:
+      "COVID acted as a **price accelerator** rather than a market disruptor — transaction volumes held steady while prices **surged 32%** over the decade.",
+    challenge:
+      "Isolating the **COVID signal** from long-term price trends in a regional dataset with significant **inter-departmental variance**.",
+    tags: ["Python", "Pandas", "Matplotlib", "Seaborn", "Folium"],
+    tools: ["Jupyter Notebook", "Anaconda", "data.gouv.fr"],
+    architecture: [
+      "Exploratory Data Analysis (EDA)",
+      "Period-Based Comparative Analysis",
+      "Interactive Choropleth Mapping",
+    ],
+  },
+  {
+    id: "06",
     title: "Accountant Aut",
     year: "2024",
     type: "Automation Tool",
@@ -145,12 +171,12 @@ export const PROJECTS = [
     logoType: "github",
     offset: 0,
     description:
-      "A C++20 automation tool and interactive dashboard designed to synchronize accounting entries between Google Sheets and Sage 50. It provides a centralized interface for monitoring data flows, validating documentation on Google Drive, and programmatically mapping complex accounting codes.",
+      "A **C++20** automation tool and interactive **dashboard** designed to synchronize accounting entries between **Google Sheets** and **Sage 50**. It provides a centralized interface for monitoring data flows, validating documentation on Google Drive, and programmatically mapping complex **accounting codes**, leveraging a **local LLM** to handle edge cases in the mapping logic.",
     insight:
-      "Providing a high-visibility dashboard to monitor and manage the bridge between cloud spreadsheets and legacy accounting software.",
+      "Providing a **high-visibility dashboard** to monitor and manage the bridge between **cloud spreadsheets** and **legacy accounting software**.",
     challenge:
-      "Developing a robust engine to handle complex accounting code mapping and entry validation as defined by the professional Quality Manual.",
-    tags: ["C++", "Qt", "Google API", "OpenXLSX"],
+      "Developing a robust engine to handle complex **accounting code mapping** and entry validation as defined by the professional **Quality Manual**.",
+    tags: ["C++", "Qt", "Google API", "OpenXLSX", "Local LLM"],
     tools: ["CMake", "Git", "OpenXLSX"],
     architecture: [
       "Modular (Core/Network Architecture)",
