@@ -1,6 +1,21 @@
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+function RichText({ text, className }) {
+  const parts = text.split(/(\*\*[^*]+\*\*|__[^_]+__)/g);
+  return (
+    <p className={className}>
+      {parts.map((part, i) => {
+        if (part.startsWith("**") && part.endsWith("**"))
+          return <b key={i} className="text-white font-semibold">{part.slice(2, -2)}</b>;
+        if (part.startsWith("__") && part.endsWith("__"))
+          return <u key={i}>{part.slice(2, -2)}</u>;
+        return part;
+      })}
+    </p>
+  );
+}
+
 export default function ProjectDetails({ project, isOpen, onClose }) {
   const scrollRef = useRef(null);
 
@@ -103,7 +118,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 <h2 className="text-5xl font-black uppercase tracking-tighter text-white mb-4">
                   {project.title}
                 </h2>
-                <p className="text-neutral-300 leading-relaxed text-lg">{project.description}</p>
+                <RichText text={project.description} className="text-neutral-300 leading-relaxed text-lg" />
               </div>
 
               <div className="flex flex-col gap-4">
@@ -111,15 +126,13 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                   <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-2">
                     Insight
                   </h4>
-                  <p className="text-[14px] text-neutral-300 leading-relaxed">{project.insight}</p>
+                  <RichText text={project.insight} className="text-[14px] text-neutral-300 leading-relaxed" />
                 </div>
                 <div className="bg-white/[0.03] rounded-lg p-5">
                   <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-2">
                     Challenge
                   </h4>
-                  <p className="text-[14px] text-neutral-400 leading-relaxed">
-                    {project.challenge}
-                  </p>
+                  <RichText text={project.challenge} className="text-[14px] text-neutral-400 leading-relaxed" />
                 </div>
               </div>
 
@@ -140,33 +153,35 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-6">
-                  <div>
-                    <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
-                      Tools
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {project.tools?.map((tool) => (
-                        <span
-                          key={tool}
-                          className="px-3 py-1 bg-white/5 rounded-full text-xs text-neutral-300"
-                        >
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
+                    Tools
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tools?.map((tool) => (
+                      <span
+                        key={tool}
+                        className="px-3 py-1 bg-white/5 rounded-full text-xs text-neutral-300"
+                      >
+                        {tool}
+                      </span>
+                    ))}
                   </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
-                      Architecture
-                    </h4>
-                    <div className="flex flex-col gap-1.5">
-                      {project.architecture?.map((arch) => (
-                        <span key={arch} className="text-sm text-neutral-400">
-                          {arch}
-                        </span>
-                      ))}
-                    </div>
+                </div>
+
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
+                    Architecture
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {project.architecture?.map((arch) => (
+                      <span
+                        key={arch}
+                        className="px-3 py-1 bg-white/5 rounded-full text-xs text-neutral-300"
+                      >
+                        {arch}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </div>
