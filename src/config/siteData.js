@@ -44,10 +44,10 @@ export const PROJECTS = [
     description:
       "A digital wellness solution designed to combat **social media addiction**. Waiki combines **system-wide DNS filtering** with a **physical hardware barrier**, requiring users to scan an **NFC device** to unlock distracting apps. Developed in an Agile/Scrum environment by leading a team of fellow engineering students, utilizing issue-driven development, user stories, and Kanban to manage the product lifecycle.",
     insight:
-      "Using a **physical hardware barrier** as the only key to a **software lock** — making screen time a conscious, deliberate act.",
+      "Using a **physical hardware barrier** as the only key to a **software lock**, making screen time a conscious, deliberate act.",
     challenge:
       "Developing a reliable **background NFC service** and system-wide DNS filtering that persists across iOS and Android **power-saving modes**.",
-    tags: ["Flutter", "Dart", "DNS Filtering", "Firebase", "Sqlite"],
+    tags: ["Flutter", "Dart", "Firebase", "Sqlite"],
     tools: ["Android Studio", "Git", "GitHub Issues", "Kanban"],
     architecture: [
       "MVVM (Model-View-ViewModel)",
@@ -69,12 +69,11 @@ export const PROJECTS = [
     offset: 120,
     description:
       "My personal portfolio website, focused on **animations** and an **immersive user experience** using modern web technologies.",
-    insight:
-      "Creating a **tunnel** navigation using **vertical-to-horizontal scroll mapping**.",
+    insight: "Creating a **tunnel** navigation using **vertical-to-horizontal scroll mapping**.",
     challenge:
       "Adapting the **horizontal scroll tunnel** to fully **responsive layouts** while keeping **scroll-driven animations** smooth and consistent across devices.",
-    tags: ["React", "JavaScript", "Tailwind CSS", "Framer Motion"],
-    tools: ["Vite", "VS Code", "Lenis Scroll"],
+    tags: ["React", "JavaScript", "Tailwind CSS", "Framer Motion", "Lenis Scroll"],
+    tools: ["Vite", "VS Code"],
     architecture: [
       "Component-Driven (Atomic Principles)",
       "Feature-First (Modular Page Structure)",
@@ -97,13 +96,9 @@ export const PROJECTS = [
     insight: "Comparative study of **real-time detection speed** vs. **classification accuracy**.",
     challenge:
       "Training a custom **YOLOv8** model on a diverse dataset with significant **class imbalance** and varying lighting conditions.",
-    tags: ["Python", "PyTorch", "OpenCV"],
+    tags: ["Python", "PyTorch", "OpenCV", "YOLOv8", "Faster R-CNN", "ResNet-50"],
     tools: ["Jupyter Notebook", "Anaconda"],
-    architecture: [
-      "YOLO (You Only Look Once)",
-      "Faster R-CNN (Region-based CNN)",
-      "ResNet-50 (Residual Backbone)",
-    ],
+    architecture: ["Transfer Learning Pipeline", "Multi-Model Comparative Analysis"],
   },
   {
     id: "04",
@@ -144,13 +139,13 @@ export const PROJECTS = [
     logoType: "github",
     offset: 0,
     description:
-      "An exploratory data analysis of **10 years** of French real estate transactions (**~12,000 records**) in the Pays de la Loire region. The study compares **pre-COVID (2014–2019)**, **COVID (2020–2021)**, and **post-COVID (2022–2023)** periods across five departments, revealing a **~32% surge** in average prices and price per m², with transaction volume remaining stable at ~1,200 annually.",
+      "An exploratory data analysis of **10 years** of French real estate transactions (**~12,000 records**) in the Pays de la Loire region. The study compares **pre-COVID (2014-2019)**, **COVID (2020-2021)**, and **post-COVID (2022-2023)** periods across five departments, revealing a **~32% surge** in average prices and price per m², with transaction volume remaining stable at ~1,200 annually.",
     insight:
-      "COVID acted as a **price accelerator** rather than a market disruptor — transaction volumes held steady while prices **surged 32%** over the decade.",
+      "COVID acted as a **price accelerator** rather than a market disruptor: transaction volumes held steady while prices **surged 32%** over the decade.",
     challenge:
       "Isolating the **COVID signal** from long-term price trends in a regional dataset with significant **inter-departmental variance**.",
     tags: ["Python", "Pandas", "Matplotlib", "Seaborn", "Folium"],
-    tools: ["Jupyter Notebook", "Anaconda", "data.gouv.fr"],
+    tools: ["Jupyter Notebook", "Anaconda"],
     architecture: [
       "Exploratory Data Analysis (EDA)",
       "Period-Based Comparative Analysis",
@@ -176,8 +171,8 @@ export const PROJECTS = [
       "Providing a **high-visibility dashboard** to monitor and manage the bridge between **cloud spreadsheets** and **legacy accounting software**.",
     challenge:
       "Developing a robust engine to handle complex **accounting code mapping** and entry validation as defined by the professional **Quality Manual**.",
-    tags: ["C++", "Qt", "Google API", "OpenXLSX", "Local LLM"],
-    tools: ["CMake", "Git", "OpenXLSX"],
+    tags: ["C++", "Qt", "Google API", "OpenXLSX", "Ollama"],
+    tools: ["CMake", "Git"],
     architecture: [
       "Modular (Core/Network Architecture)",
       "Logic-Driven Mapping",
