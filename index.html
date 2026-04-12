@@ -5,6 +5,16 @@
     <link rel="icon" type="image/png" href="/images/me_icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Phan Theo</title>
+    <script>
+      // Handle SPA redirects from 404.html
+      (function() {
+        var q = window.location.search;
+        if (q && q.indexOf('?p=') === 0) {
+          var path = decodeURIComponent(q.slice(3));
+          window.history.replaceState(null, '', path);
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
