@@ -1,0 +1,139 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[left=1.4cm,right=1.4cm,top=1.4cm,bottom=1.4cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+% --- COLORS AND LINKS ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    pdftitle={CV - Ingénieur Informatique}
+}
+
+% --- TITLE FORMATTING ---
+\titleformat{\section}{\Large\bfseries\uppercase}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{10pt}{5pt}
+
+\titleformat{\subsection}{\large\bfseries}{}{0em}{}
+
+% --- CUSTOM COMMANDS ---
+\newcommand{\job}[4]{
+    \noindent \textbf{#1} \hfill \textbf{#3}\\
+    \textit{#2}
+    \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
+        #4
+    \end{itemize}
+    \vspace{0.4em}
+}
+
+\newcommand{\degree}[4]{
+    \noindent \textbf{#1} \hfill \textbf{#3}\\
+    \textit{#2}
+    \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
+        #4
+    \end{itemize}
+    \vspace{0.4em}
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% --- HEADER ---
+\begin{center}
+    {\huge \textbf{Théo PHAN}}\\[0.3em]
+    \small
+    \href{mailto:theo.phan.quoc.huy@gmail.com}{theo.phan.quoc.huy@gmail.com} $\mid$ +33 6 xx xx xx xx xx $\mid$ Rennes, France\\
+    \href{https://linkedin.com/in/theophanquochuy/}{linkedin.com/in/theophanquochuy/} $\mid$ \href{https://github.com/Aer-3888}{github.com/Aer-3888} $\mid$ \href{https://aer-3888.github.io/portfolio/}{aer-3888.github.io/portfolio}
+\end{center}
+
+% --- PROFILE ---
+\section*{Profil}
+Étudiant ingénieur en informatique (INSA Rennes) spécialisé en IA et Data Engineering. Fort d'une expérience pratique en Vision par Ordinateur et en développement Full-stack (Web \& Mobile). Passionné par l'architecture logicielle, je recherche une opportunité pour appliquer mes compétences techniques dans un environnement innovant.
+
+% --- EDUCATION ---
+\section*{Formation}
+
+\degree{Diplôme d'Ingénieur en Informatique}
+    {INSA Rennes, Rennes}
+    {2025 -- Présent}
+    {
+    \item \textbf{Spécialisation :} Informatique, Intelligence Artificielle et Data Engineering.
+    \item \textbf{Compétences clés :} Architecture logicielle, Algorithmes avancés, IA.
+    }
+
+\degree{BUT Informatique (Parcours Réalisation d'Applications)}
+    {IUT Nantes, Nantes}
+    {2023 -- 2025}
+    {
+    \item Formation axée sur le développement applicatif Full-stack et la gestion de données.
+    \item Projets académiques significatifs en Go, React et bases de données.
+    }
+
+% --- EXPERIENCE ---
+\section*{Expérience}
+
+\job{Stagiaire Ingénieur IA -- Computer Vision}
+    {FPT Telecom, Hanoï (Vietnam)}
+    {Avril 2025 -- Juin 2025}
+    {
+    \item Développement de modèles de détection d'objets utilisant \textbf{YOLO} et \textbf{PyTorch}.
+    \item Automatisation de l'identification de défauts et d'anomalies de câblage (Fibre optique).
+    \item Collaboration en environnement international anglophone.
+    }
+
+\job{Waiki -- Application Mobile de Productivité (Flutter)}
+    {Freelance, Remote}
+    {2025 - Actuel}
+    {
+    \item App de "Digital Detox" avec blocage d'applications et déverrouillage physique via \textbf{NFC}.
+    }
+
+\job{Assistant Administratif}
+    {BMW Alphabet, France}
+    {Août 2022}
+    {
+    \item Numérisation de contrats, gestion de la cohérence des données et développement de la rigueur.
+    }
+
+% --- PROJECTS ---
+\section*{Projets Significatifs}
+
+\job{Système de Détection de Plantes par IA}
+    {Projet Technique}
+    {2025}
+    {
+    \item Modèle de Computer Vision pour la reconnaissance de maladies sur les feuilles (\textbf{YOLO}).
+    }
+
+\job{Jeu Connect 4 en Réseau (Go/Golang)}
+    {Projet Académique}
+    {2024}
+    {
+    \item Jeu multijoueur avec gestion des \textbf{Sockets TCP/IP} pour la synchro temps réel.
+    }
+
+\job{Analyse de Données Immobilières}
+    {Projet Personnel}
+    {2024}
+    {
+    \item Analyse statistique de jeux de données via \textbf{Pandas} (Python) et visualisation.
+    }
+
+% --- SKILLS ---
+\section*{Compétences}
+\begin{itemize}[nosep,leftmargin=1.5em]
+    \item \textbf{Langages \& Frameworks :} Python, Go, Java, TS/JS, React, Flutter, SQL.
+    \item \textbf{Data \& IA :} PyTorch, YOLO, Pandas, Computer Vision.
+    \item \textbf{Outils \& Méthodes :} Git, Docker, Linux, Agile/Scrum.
+    \item \textbf{Langues :} Français (Natif), Anglais (Technique/Courant).
+\end{itemize}
+
+\end{document}

@@ -29,6 +29,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Cache CV build
+        uses: actions/cache@v4
+        with:
+          path: |
+            public/cv.pdf
+            cv/*.aux
+            cv/*.log
+          key: cv-${{ hashFiles('cv/cv.tex') }}
+
+      - name: Compile CV
+        if: hashFiles('public/cv.pdf') == ''
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: cv/cv.tex
+          working_directory: .
+          args: -output-directory=public
+
       - name: Lint
         run: npm run lint
 
