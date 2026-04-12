@@ -56,26 +56,7 @@
 
 % --- PROFILE ---
 \section*{Profil}
-Étudiant ingénieur en informatique (INSA Rennes) spécialisé en IA et Data Engineering. Fort d'une expérience pratique en Vision par Ordinateur et en développement Full-stack (Web \& Mobile). Passionné par l'architecture logicielle, je recherche une opportunité pour appliquer mes compétences techniques dans un environnement innovant.
-
-% --- EDUCATION ---
-\section*{Formation}
-
-\degree{Diplôme d'Ingénieur en Informatique}
-    {INSA Rennes, Rennes}
-    {2025 -- Présent}
-    {
-    \item \textbf{Spécialisation :} Informatique, Intelligence Artificielle et Data Engineering.
-    \item \textbf{Compétences clés :} Architecture logicielle, Algorithmes avancés, IA.
-    }
-
-\degree{BUT Informatique (Parcours Réalisation d'Applications)}
-    {IUT Nantes, Nantes}
-    {2023 -- 2025}
-    {
-    \item Formation axée sur le développement applicatif Full-stack et la gestion de données.
-    \item Projets académiques significatifs en Go, React et bases de données.
-    }
+Étudiant ingénieur en informatique (INSA Rennes) avec une expérience concrète en \textbf{Computer Vision} (YOLO, PyTorch) et en \textbf{analyse de données} (Pandas, Matplotlib). Stage de 3 mois en détection d'objets chez FPT Telecom (Vietnam). Disponible pour un \textbf{stage de Juin à Août 2026} en IA/ML ou Data Science.
 
 % --- EXPERIENCE ---
 \section*{Expérience}
@@ -84,56 +65,82 @@
     {FPT Telecom, Hanoï (Vietnam)}
     {Avril 2025 -- Juin 2025}
     {
-    \item Développement de modèles de détection d'objets utilisant \textbf{YOLO} et \textbf{PyTorch}.
-    \item Automatisation de l'identification de défauts et d'anomalies de câblage (Fibre optique).
-    \item Collaboration en environnement international anglophone.
+    \item Entraînement et optimisation de modèles \textbf{YOLOv8} avec \textbf{PyTorch} pour la détection de défauts sur câblage fibre optique.
+    \item Mise en place d'un pipeline d'annotation et d'augmentation de données pour améliorer la robustesse du modèle.
+    \item Automatisation de l'identification d'anomalies, réduisant le temps d'inspection manuelle.
+    \item Collaboration en environnement international anglophone au sein d'une équipe R\&D.
     }
 
-\job{Waiki -- Application Mobile de Productivité (Flutter)}
+\job{Waiki -- Application Mobile (Flutter)}
     {Freelance, Remote}
-    {2025 - Actuel}
+    {2025 -- Présent}
     {
-    \item App de "Digital Detox" avec blocage d'applications et déverrouillage physique via \textbf{NFC}.
-    }
-
-\job{Assistant Administratif}
-    {BMW Alphabet, France}
-    {Août 2022}
-    {
-    \item Numérisation de contrats, gestion de la cohérence des données et développement de la rigueur.
+    \item Direction technique d'une équipe de 4 étudiants ingénieurs pour développer une app de bien-être numérique.
+    \item Architecture \textbf{MVVM} avec \textbf{Firebase} et \textbf{SQLite}, intégrant un filtrage DNS système et un déverrouillage physique via \textbf{NFC}.
+    \item Gestion de projet en Agile/Scrum avec Kanban et issue-driven development.
     }
 
 % --- PROJECTS ---
-\section*{Projets Significatifs}
+\section*{Projets}
 
-\job{Système de Détection de Plantes par IA}
-    {Projet Technique}
+\job{Détection de Maladies des Plantes par IA}
+    {Python, PyTorch, OpenCV}
     {2025}
     {
-    \item Modèle de Computer Vision pour la reconnaissance de maladies sur les feuilles (\textbf{YOLO}).
+    \item Étude comparative \textbf{YOLOv8} vs \textbf{Faster R-CNN} (backbone \textbf{ResNet-50}) sur les datasets PlantDoc et PlantVillage.
+    \item Gestion du déséquilibre de classes et de conditions d'éclairage variables via augmentation de données.
+    \item Analyse des compromis vitesse de détection temps réel vs précision de classification.
     }
 
-\job{Jeu Connect 4 en Réseau (Go/Golang)}
-    {Projet Académique}
-    {2024}
+\job{Analyse Exploratoire du Marché Immobilier}
+    {Python, Pandas, Matplotlib, Seaborn, Folium}
+    {2025}
     {
-    \item Jeu multijoueur avec gestion des \textbf{Sockets TCP/IP} pour la synchro temps réel.
+    \item Analyse de \textbf{10 ans} de transactions immobilières (\textbf{$\sim$12 000 entrées}) en Pays de la Loire.
+    \item Comparaison statistique pré-COVID / COVID / post-COVID révélant une hausse de \textbf{$\sim$32\%} des prix au m².
+    \item Cartographie interactive par département avec \textbf{Folium} (choroplèthes).
     }
 
-\job{Analyse de Données Immobilières}
-    {Projet Personnel}
+\job{Outil d'Automatisation Comptable}
+    {C++, Qt, Google API, Ollama}
     {2024}
     {
-    \item Analyse statistique de jeux de données via \textbf{Pandas} (Python) et visualisation.
+    \item Dashboard \textbf{C++20/Qt} synchronisant les écritures entre \textbf{Google Sheets} et \textbf{Sage 50}.
+    \item Intégration d'un \textbf{LLM local} (Ollama) pour le mapping automatique de codes comptables complexes.
+    }
+
+\job{Notes INSA -- Dashboard Étudiant}
+    {Flutter, Cloudflare Workers, D1, SQL}
+    {2026}
+    {
+    \item Moteur d'analytique anonyme calculant moyennes de classe et métriques de performance à l'edge.
+    \item Backend serverless \textbf{Cloudflare Workers + D1} avec architecture privacy-first.
+    }
+
+% --- EDUCATION ---
+\section*{Formation}
+
+\degree{Diplôme d'Ingénieur en Informatique}
+    {INSA Rennes, Rennes}
+    {2025 -- Présent}
+    {
+    \item Spécialisation Intelligence Artificielle et Data Engineering.
+    }
+
+\degree{BUT Informatique (Parcours Réalisation d'Applications)}
+    {IUT Nantes, Nantes}
+    {2023 -- 2025}
+    {
+    \item Développement applicatif Full-stack, bases de données, projets en Go et React.
     }
 
 % --- SKILLS ---
 \section*{Compétences}
 \begin{itemize}[nosep,leftmargin=1.5em]
-    \item \textbf{Langages \& Frameworks :} Python, Go, Java, TS/JS, React, Flutter, SQL.
-    \item \textbf{Data \& IA :} PyTorch, YOLO, Pandas, Computer Vision.
-    \item \textbf{Outils \& Méthodes :} Git, Docker, Linux, Agile/Scrum.
-    \item \textbf{Langues :} Français (Natif), Anglais (Technique/Courant).
+    \item \textbf{IA \& Data :} PyTorch, YOLOv8, OpenCV, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter.
+    \item \textbf{Langages :} Python, C++, Go, Java, SQL, JavaScript/TypeScript, Dart.
+    \item \textbf{Frameworks \& Outils :} React, Flutter, Firebase, Cloudflare Workers, Docker, Git, Linux.
+    \item \textbf{Langues :} Français (Natif), Anglais (Professionnel courant).
 \end{itemize}
 
 \end{document}

@@ -34,15 +34,24 @@ jobs:
         with:
           path: |
             public/cv.pdf
+            public/cv_en.pdf
             cv/*.aux
             cv/*.log
-          key: cv-${{ hashFiles('cv/cv.tex') }}
+          key: cv-${{ hashFiles('cv/cv.tex', 'cv/cv_en.tex') }}
 
-      - name: Compile CV
+      - name: Compile CV (FR)
         if: hashFiles('public/cv.pdf') == ''
         uses: xu-cheng/latex-action@v3
         with:
           root_file: cv/cv.tex
+          working_directory: .
+          args: -output-directory=public
+
+      - name: Compile CV (EN)
+        if: hashFiles('public/cv_en.pdf') == ''
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: cv/cv_en.tex
           working_directory: .
           args: -output-directory=public
 

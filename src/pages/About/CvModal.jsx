@@ -1,10 +1,14 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-const CV_URL = `${import.meta.env.BASE_URL}cv.pdf`;
+const CV_URLS = {
+  fr: `${import.meta.env.BASE_URL}cv.pdf`,
+  en: `${import.meta.env.BASE_URL}cv_en.pdf`,
+};
 
 export default function CvModal({ isOpen, onClose }) {
+  const [lang, setLang] = useState("en");
   // Lock body scroll
   useEffect(() => {
     if (isOpen) {
@@ -49,13 +53,30 @@ export default function CvModal({ isOpen, onClose }) {
           >
             {/* Header */}
             <div className="flex items-center justify-between px-4 h-12 bg-neutral-950/80 border-b border-white/5 shrink-0">
-              <span className="font-mono text-[9px] text-neutral-500 uppercase tracking-widest">
-                cv.pdf
-              </span>
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-[9px] text-neutral-500 uppercase tracking-widest">
+                  cv.pdf
+                </span>
+                <div className="flex gap-1 bg-black/40 p-0.5 rounded-md">
+                  {["en", "fr"].map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => setLang(l)}
+                      className={`px-2.5 py-1 rounded text-[9px] font-mono font-bold uppercase tracking-wider transition-all ${
+                        lang === l
+                          ? "bg-neutral-800 text-white"
+                          : "text-neutral-500 hover:text-neutral-300"
+                      }`}
+                    >
+                      {l}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               <div className="flex items-center gap-2">
                 <a
-                  href={CV_URL}
+                  href={CV_URLS[lang]}
                   download
                   className="px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider bg-neutral-800 text-white hover:bg-orange-500 transition-colors"
                 >
@@ -85,11 +106,7 @@ export default function CvModal({ isOpen, onClose }) {
             </div>
 
             {/* PDF Preview */}
-            <iframe
-              src={CV_URL}
-              title="CV Preview"
-              className="flex-1 w-full bg-white"
-            />
+            <iframe src={CV_URLS[lang]} title="CV Preview" className="flex-1 w-full bg-white" />
           </motion.div>
         </motion.div>
       )}

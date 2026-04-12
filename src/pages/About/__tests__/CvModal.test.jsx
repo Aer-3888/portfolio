@@ -17,11 +17,18 @@ describe("CvModal", () => {
     expect(screen.getByTitle("CV Preview")).toBeInTheDocument();
   });
 
-  it("renders download link with correct href", () => {
+  it("renders download link with correct href (defaults to EN)", () => {
     render(<CvModal isOpen={true} onClose={vi.fn()} />);
     const downloadLink = screen.getByRole("link", { name: /download/i });
-    expect(downloadLink).toHaveAttribute("href", "/cv.pdf");
+    expect(downloadLink).toHaveAttribute("href", "/cv_en.pdf");
     expect(downloadLink).toHaveAttribute("download");
+  });
+
+  it("switches language when FR button is clicked", () => {
+    render(<CvModal isOpen={true} onClose={vi.fn()} />);
+    fireEvent.click(screen.getByRole("button", { name: "fr" }));
+    const downloadLink = screen.getByRole("link", { name: /download/i });
+    expect(downloadLink).toHaveAttribute("href", "/cv.pdf");
   });
 
   it("calls onClose when close button is clicked", () => {

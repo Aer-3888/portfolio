@@ -10,6 +10,7 @@ lerna-debug.log*
 
 # CI-generated CV
 public/cv.pdf
+public/cv_en.pdf
 
 # LaTeX build artifacts
 cv/*.aux

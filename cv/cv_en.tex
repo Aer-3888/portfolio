@@ -1,0 +1,145 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- PACKAGES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=1.4cm,right=1.4cm,top=1.4cm,bottom=1.4cm]{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+% --- COLORS AND LINKS ---
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    urlcolor=blue,
+    pdftitle={CV - Software Engineer}
+}
+
+% --- TITLE FORMATTING ---
+\titleformat{\section}{\Large\bfseries\uppercase}{}{0em}{}[\titlerule]
+\titlespacing*{\section}{0pt}{10pt}{5pt}
+
+\titleformat{\subsection}{\large\bfseries}{}{0em}{}
+
+% --- CUSTOM COMMANDS ---
+\newcommand{\job}[4]{
+    \noindent \textbf{#1} \hfill \textbf{#3}\\
+    \textit{#2}
+    \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
+        #4
+    \end{itemize}
+    \vspace{0.4em}
+}
+
+\newcommand{\degree}[4]{
+    \noindent \textbf{#1} \hfill \textbf{#3}\\
+    \textit{#2}
+    \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
+        #4
+    \end{itemize}
+    \vspace{0.4em}
+}
+
+\pagestyle{empty}
+
+\begin{document}
+
+% --- HEADER ---
+\begin{center}
+    {\huge \textbf{Th\'eo PHAN}}\\[0.3em]
+    \small
+    \href{mailto:theo.phan.quoc.huy@gmail.com}{theo.phan.quoc.huy@gmail.com} $\mid$ +33 6 xx xx xx xx xx $\mid$ Rennes, France\\
+    \href{https://linkedin.com/in/theophanquochuy/}{linkedin.com/in/theophanquochuy/} $\mid$ \href{https://github.com/Aer-3888}{github.com/Aer-3888} $\mid$ \href{https://aer-3888.github.io/portfolio/}{aer-3888.github.io/portfolio}
+\end{center}
+
+% --- PROFILE ---
+\section*{Profile}
+Computer Science engineering student (INSA Rennes) with hands-on experience in \textbf{Computer Vision} (YOLO, PyTorch) and \textbf{data analysis} (Pandas, Matplotlib). Completed a 3-month object detection internship at FPT Telecom (Vietnam). \textbf{Available for a June--August 2026 internship} in AI/ML or Data Science.
+
+% --- EXPERIENCE ---
+\section*{Experience}
+
+\job{AI Engineer Intern -- Computer Vision}
+    {FPT Telecom, Hanoi (Vietnam)}
+    {April 2025 -- June 2025}
+    {
+    \item Trained and optimized \textbf{YOLOv8} models with \textbf{PyTorch} for defect detection on fiber optic cabling.
+    \item Built a data annotation and augmentation pipeline to improve model robustness.
+    \item Automated anomaly identification, reducing manual inspection time.
+    \item Collaborated within an international R\&D team in an English-speaking environment.
+    }
+
+\job{Waiki -- Mobile Application (Flutter)}
+    {Freelance, Remote}
+    {2025 -- Present}
+    {
+    \item Led a team of 4 engineering students to build a digital wellness app.
+    \item Designed \textbf{MVVM} architecture with \textbf{Firebase} and \textbf{SQLite}, integrating system-wide DNS filtering and physical \textbf{NFC} unlock.
+    \item Managed the project using Agile/Scrum with Kanban and issue-driven development.
+    }
+
+% --- PROJECTS ---
+\section*{Projects}
+
+\job{Plant Disease Detection with AI}
+    {Python, PyTorch, OpenCV}
+    {2025}
+    {
+    \item Comparative study of \textbf{YOLOv8} vs \textbf{Faster R-CNN} (\textbf{ResNet-50} backbone) on PlantDoc and PlantVillage datasets.
+    \item Handled class imbalance and varying lighting conditions through data augmentation.
+    \item Analyzed trade-offs between real-time detection speed and classification accuracy.
+    }
+
+\job{Exploratory Analysis of the Housing Market}
+    {Python, Pandas, Matplotlib, Seaborn, Folium}
+    {2025}
+    {
+    \item Analyzed \textbf{10 years} of real estate transactions (\textbf{$\sim$12,000 records}) in the Pays de la Loire region.
+    \item Statistical comparison across pre-COVID / COVID / post-COVID periods, revealing a \textbf{$\sim$32\%} price-per-m\textsuperscript{2} increase.
+    \item Built interactive department-level choropleth maps with \textbf{Folium}.
+    }
+
+\job{Accounting Automation Tool}
+    {C++, Qt, Google API, Ollama}
+    {2024}
+    {
+    \item \textbf{C++20/Qt} dashboard synchronizing accounting entries between \textbf{Google Sheets} and \textbf{Sage 50}.
+    \item Integrated a \textbf{local LLM} (Ollama) for automated mapping of complex accounting codes.
+    }
+
+\job{Notes INSA -- Student Dashboard}
+    {Flutter, Cloudflare Workers, D1, SQL}
+    {2026}
+    {
+    \item Anonymous analytics engine computing class averages and performance metrics at the edge.
+    \item Serverless backend with \textbf{Cloudflare Workers + D1}, privacy-first architecture.
+    }
+
+% --- EDUCATION ---
+\section*{Education}
+
+\degree{Engineering Degree in Computer Science}
+    {INSA Rennes, Rennes}
+    {2025 -- Present}
+    {
+    \item Specialization in Artificial Intelligence and Data Engineering.
+    }
+
+\degree{Bachelor of Technology in Computer Science}
+    {IUT Nantes, Nantes}
+    {2023 -- 2025}
+    {
+    \item Full-stack application development, databases, projects in Go and React.
+    }
+
+% --- SKILLS ---
+\section*{Skills}
+\begin{itemize}[nosep,leftmargin=1.5em]
+    \item \textbf{AI \& Data:} PyTorch, YOLOv8, OpenCV, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter.
+    \item \textbf{Languages:} Python, C++, Go, Java, SQL, JavaScript/TypeScript, Dart.
+    \item \textbf{Frameworks \& Tools:} React, Flutter, Firebase, Cloudflare Workers, Docker, Git, Linux.
+    \item \textbf{Languages:} French (Native), English (Professional working proficiency).
+\end{itemize}
+
+\end{document}
