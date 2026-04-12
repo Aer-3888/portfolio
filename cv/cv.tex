@@ -1,10 +1,10 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 
 % --- PACKAGES ---
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[french]{babel}
-\usepackage[left=1.4cm,right=1.4cm,top=1.4cm,bottom=1.4cm]{geometry}
+\usepackage[left=1.2cm,right=1.2cm,top=1.0cm,bottom=1.0cm]{geometry}
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{titlesec}
@@ -19,7 +19,7 @@
 
 % --- TITLE FORMATTING ---
 \titleformat{\section}{\Large\bfseries\uppercase}{}{0em}{}[\titlerule]
-\titlespacing*{\section}{0pt}{10pt}{5pt}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
 
 \titleformat{\subsection}{\large\bfseries}{}{0em}{}
 
@@ -30,7 +30,7 @@
     \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
         #4
     \end{itemize}
-    \vspace{0.4em}
+    \vspace{0.2em}
 }
 
 \newcommand{\degree}[4]{
@@ -39,7 +39,7 @@
     \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
         #4
     \end{itemize}
-    \vspace{0.4em}
+    \vspace{0.2em}
 }
 
 \pagestyle{empty}
@@ -48,7 +48,7 @@
 
 % --- HEADER ---
 \begin{center}
-    {\huge \textbf{Théo PHAN}}\\[0.3em]
+    {\LARGE \textbf{Théo PHAN}}\\[0.2em]
     \small
     \href{mailto:theo.phan.quoc.huy@gmail.com}{theo.phan.quoc.huy@gmail.com} $\mid$ +33 6 xx xx xx xx xx $\mid$ Rennes, France\\
     \href{https://linkedin.com/in/theophanquochuy/}{linkedin.com/in/theophanquochuy/} $\mid$ \href{https://github.com/Aer-3888}{github.com/Aer-3888} $\mid$ \href{https://aer-3888.github.io/portfolio/}{aer-3888.github.io/portfolio}
@@ -68,16 +68,21 @@
     \item Entraînement et optimisation de modèles \textbf{YOLOv8} avec \textbf{PyTorch} pour la détection de défauts sur câblage fibre optique.
     \item Mise en place d'un pipeline d'annotation et d'augmentation de données pour améliorer la robustesse du modèle.
     \item Automatisation de l'identification d'anomalies, réduisant le temps d'inspection manuelle.
-    \item Collaboration en environnement international anglophone au sein d'une équipe R\&D.
     }
 
 \job{Waiki -- Application Mobile (Flutter)}
     {Freelance, Remote}
     {2025 -- Présent}
     {
-    \item Direction technique d'une équipe de 4 étudiants ingénieurs pour développer une app de bien-être numérique.
-    \item Architecture \textbf{MVVM} avec \textbf{Firebase} et \textbf{SQLite}, intégrant un filtrage DNS système et un déverrouillage physique via \textbf{NFC}.
+    \item Direction technique d'une équipe de 2 étudiants ingénieurs ; architecture \textbf{MVVM} avec \textbf{Firebase/SQLite}, filtrage DNS système et déverrouillage \textbf{NFC}.
     \item Gestion de projet en Agile/Scrum avec Kanban et issue-driven development.
+    }
+
+\job{Comptable}
+    {Junior Entreprise Ouest INSA, Rennes}
+    {2025 -- Présent}
+    {
+    \item Tenue de la comptabilité et suivi financier de la Junior Entreprise.
     }
 
 % --- PROJECTS ---
@@ -96,25 +101,21 @@
     {Python, Pandas, Matplotlib, Seaborn, Folium}
     {2025}
     {
-    \item Analyse de \textbf{10 ans} de transactions immobilières (\textbf{$\sim$12 000 entrées}) en Pays de la Loire.
-    \item Comparaison statistique pré-COVID / COVID / post-COVID révélant une hausse de \textbf{$\sim$32\%} des prix au m².
-    \item Cartographie interactive par département avec \textbf{Folium} (choroplèthes).
+    \item Analyse de \textbf{10 ans} de transactions immobilières (\textbf{$\sim$12 000 entrées}), comparaison pré/post-COVID révélant \textbf{+32\%} sur les prix au m².
     }
 
 \job{Outil d'Automatisation Comptable}
     {C++, Qt, Google API, Ollama}
     {2024}
     {
-    \item Dashboard \textbf{C++20/Qt} synchronisant les écritures entre \textbf{Google Sheets} et \textbf{Sage 50}.
-    \item Intégration d'un \textbf{LLM local} (Ollama) pour le mapping automatique de codes comptables complexes.
+    \item Dashboard \textbf{C++20/Qt} synchronisant \textbf{Google Sheets} et \textbf{Sage 50}, avec un \textbf{LLM local} (Ollama) pour le mapping automatique de codes comptables.
     }
 
 \job{Notes INSA -- Dashboard Étudiant}
-    {Flutter, Cloudflare Workers, D1, SQL}
+    {Cloudflare Workers, D1 (SQLite), SQL, Flutter}
     {2026}
     {
-    \item Moteur d'analytique anonyme calculant moyennes de classe et métriques de performance à l'edge.
-    \item Backend serverless \textbf{Cloudflare Workers + D1} avec architecture privacy-first.
+    \item Backend serverless \textbf{Cloudflare Workers + D1} (base \textbf{SQL} edge) calculant moyennes de classe et métriques de performance sur données anonymisées.
     }
 
 % --- EDUCATION ---
@@ -133,6 +134,13 @@
     {
     \item Développement applicatif Full-stack, bases de données, projets en Go et React.
     }
+
+% --- COMPETITIONS ---
+\section*{Compétitions}
+\begin{itemize}[nosep,leftmargin=1.5em]
+    \item \textbf{CTF} (Équipe Crabe) : 2\textsuperscript{e} place au IUT CTF ; 71\textsuperscript{e}/757 au \href{https://ctftime.org/event/3105}{GCC CTF 2025}.
+    \item \textbf{Hackathon} : Participant actif en hackathons d'innovation technologique.
+\end{itemize}
 
 % --- SKILLS ---
 \section*{Compétences}

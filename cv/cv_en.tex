@@ -1,9 +1,9 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[10pt,a4paper]{article}
 
 % --- PACKAGES ---
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[left=1.4cm,right=1.4cm,top=1.4cm,bottom=1.4cm]{geometry}
+\usepackage[left=1.2cm,right=1.2cm,top=1.0cm,bottom=1.0cm]{geometry}
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{titlesec}
@@ -18,7 +18,7 @@
 
 % --- TITLE FORMATTING ---
 \titleformat{\section}{\Large\bfseries\uppercase}{}{0em}{}[\titlerule]
-\titlespacing*{\section}{0pt}{10pt}{5pt}
+\titlespacing*{\section}{0pt}{6pt}{3pt}
 
 \titleformat{\subsection}{\large\bfseries}{}{0em}{}
 
@@ -29,7 +29,7 @@
     \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
         #4
     \end{itemize}
-    \vspace{0.4em}
+    \vspace{0.2em}
 }
 
 \newcommand{\degree}[4]{
@@ -38,7 +38,7 @@
     \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
         #4
     \end{itemize}
-    \vspace{0.4em}
+    \vspace{0.2em}
 }
 
 \pagestyle{empty}
@@ -47,7 +47,7 @@
 
 % --- HEADER ---
 \begin{center}
-    {\huge \textbf{Th\'eo PHAN}}\\[0.3em]
+    {\LARGE \textbf{Th\'eo PHAN}}\\[0.2em]
     \small
     \href{mailto:theo.phan.quoc.huy@gmail.com}{theo.phan.quoc.huy@gmail.com} $\mid$ +33 6 xx xx xx xx xx $\mid$ Rennes, France\\
     \href{https://linkedin.com/in/theophanquochuy/}{linkedin.com/in/theophanquochuy/} $\mid$ \href{https://github.com/Aer-3888}{github.com/Aer-3888} $\mid$ \href{https://aer-3888.github.io/portfolio/}{aer-3888.github.io/portfolio}
@@ -67,16 +67,21 @@ Computer Science engineering student (INSA Rennes) with hands-on experience in \
     \item Trained and optimized \textbf{YOLOv8} models with \textbf{PyTorch} for defect detection on fiber optic cabling.
     \item Built a data annotation and augmentation pipeline to improve model robustness.
     \item Automated anomaly identification, reducing manual inspection time.
-    \item Collaborated within an international R\&D team in an English-speaking environment.
     }
 
 \job{Waiki -- Mobile Application (Flutter)}
     {Freelance, Remote}
     {2025 -- Present}
     {
-    \item Led a team of 4 engineering students to build a digital wellness app.
-    \item Designed \textbf{MVVM} architecture with \textbf{Firebase} and \textbf{SQLite}, integrating system-wide DNS filtering and physical \textbf{NFC} unlock.
+    \item Led a team of 2 engineering students; designed \textbf{MVVM} architecture with \textbf{Firebase/SQLite}, system-wide DNS filtering and physical \textbf{NFC} unlock.
     \item Managed the project using Agile/Scrum with Kanban and issue-driven development.
+    }
+
+\job{Accountant}
+    {Junior Entreprise Ouest INSA, Rennes}
+    {2025 -- Present}
+    {
+    \item Bookkeeping and financial tracking for the student-run consulting firm.
     }
 
 % --- PROJECTS ---
@@ -95,25 +100,21 @@ Computer Science engineering student (INSA Rennes) with hands-on experience in \
     {Python, Pandas, Matplotlib, Seaborn, Folium}
     {2025}
     {
-    \item Analyzed \textbf{10 years} of real estate transactions (\textbf{$\sim$12,000 records}) in the Pays de la Loire region.
-    \item Statistical comparison across pre-COVID / COVID / post-COVID periods, revealing a \textbf{$\sim$32\%} price-per-m\textsuperscript{2} increase.
-    \item Built interactive department-level choropleth maps with \textbf{Folium}.
+    \item Analyzed \textbf{10 years} of real estate transactions (\textbf{$\sim$12,000 records}), pre/post-COVID comparison revealing a \textbf{+32\%} price-per-m\textsuperscript{2} increase.
     }
 
 \job{Accounting Automation Tool}
     {C++, Qt, Google API, Ollama}
     {2024}
     {
-    \item \textbf{C++20/Qt} dashboard synchronizing accounting entries between \textbf{Google Sheets} and \textbf{Sage 50}.
-    \item Integrated a \textbf{local LLM} (Ollama) for automated mapping of complex accounting codes.
+    \item \textbf{C++20/Qt} dashboard synchronizing \textbf{Google Sheets} and \textbf{Sage 50}, with a \textbf{local LLM} (Ollama) for automated accounting code mapping.
     }
 
 \job{Notes INSA -- Student Dashboard}
-    {Flutter, Cloudflare Workers, D1, SQL}
+    {Cloudflare Workers, D1 (SQLite), SQL, Flutter}
     {2026}
     {
-    \item Anonymous analytics engine computing class averages and performance metrics at the edge.
-    \item Serverless backend with \textbf{Cloudflare Workers + D1}, privacy-first architecture.
+    \item Serverless backend with \textbf{Cloudflare Workers + D1} (edge \textbf{SQL} database) computing class averages and performance metrics on anonymized data.
     }
 
 % --- EDUCATION ---
@@ -132,6 +133,13 @@ Computer Science engineering student (INSA Rennes) with hands-on experience in \
     {
     \item Full-stack application development, databases, projects in Go and React.
     }
+
+% --- COMPETITIONS ---
+\section*{Competitions}
+\begin{itemize}[nosep,leftmargin=1.5em]
+    \item \textbf{CTF} (Team Crabe): 2\textsuperscript{nd} place at IUT CTF; ranked 71\textsuperscript{st}/757 at \href{https://ctftime.org/event/3105}{GCC CTF 2025}.
+    \item \textbf{Hackathon}: Active participant in tech innovation hackathons.
+\end{itemize}
 
 % --- SKILLS ---
 \section*{Skills}
