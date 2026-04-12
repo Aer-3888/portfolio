@@ -87,17 +87,17 @@ export const PROJECTS = [
     category: "Personal",
     services: "Computer Vision - Python",
     img: `${import.meta.env.BASE_URL}images/plant_detection.png`,
-    url: "https://github.com/Aer-3888/plant-detection",
+    url: "https://github.com/Aer-3888/Plant_detection",
     linkText: "View Repository",
     logoType: "github",
     offset: -50,
     description:
-      "An object detection system trained on **PlantDoc** and **PlantVillage** datasets to identify plant species and diseases **in real-time**. Features comparative performance analysis between **YOLO** and **Faster R-CNN** using a **ResNet-50** backbone.",
-    insight: "Comparative study of **real-time detection speed** vs. **classification accuracy**.",
+      "A full **computer vision pipeline** for plant disease detection, comparing **EfficientNet B7**, **YOLOv8/v11**, and **Faster R-CNN** (ResNet-50 FPN) across classification and detection tasks on the **PlantVillage** and **PlantDoc** datasets.",
+    insight: "**Faster R-CNN** achieved the best results with **mAP@50 of 0.90** and **85.8% recall**, outperforming YOLO variants on the PlantDoc detection benchmark.",
     challenge:
-      "Training a custom **YOLOv8** model on a diverse dataset with significant **class imbalance** and varying lighting conditions.",
-    tags: ["Python", "PyTorch", "OpenCV", "YOLOv8", "Faster R-CNN", "ResNet-50"],
-    tools: ["Jupyter Notebook", "Anaconda"],
+      "Starting with **little prior knowledge** of computer vision and neural networks, we had to build understanding from scratch while tackling technical hurdles like the **background class index offset** in Faster R-CNN and optimizing **input resolution** (224×224) for EfficientNet.",
+    tags: ["Python", "PyTorch", "EfficientNet", "YOLOv8", "Faster R-CNN", "ResNet-50", "scikit-learn"],
+    tools: ["Jupyter Notebook", "Kaggle API"],
     architecture: ["Transfer Learning Pipeline", "Multi-Model Comparative Analysis"],
   },
   {
