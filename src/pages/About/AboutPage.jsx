@@ -3,6 +3,7 @@ import { useScroll } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import PageNav from "../../components/layout/PageNav";
 import SystemWindow from "./SystemWindow";
+import CvModal from "./CvModal";
 
 export default function AboutPage() {
   const containerRef = useRef(null);
@@ -13,6 +14,7 @@ export default function AboutPage() {
   });
 
   const [isGalleryFullscreen, setIsGalleryFullscreen] = useState(false);
+  const [showCv, setShowCv] = useState(false);
   const initialTab = location.state?.openGallery ? "gallery" : "git";
 
   return (
@@ -41,6 +43,12 @@ export default function AboutPage() {
             Currently studying Computer Science at INSA Rennes, specializing in AI Engineering and
             Full-Stack development.
           </p>
+          <button
+            onClick={() => setShowCv(true)}
+            className="self-start px-5 py-2 border border-white/10 rounded-md font-mono text-[10px] uppercase tracking-widest text-neutral-400 hover:text-white hover:border-orange-500 hover:bg-orange-500/10 transition-all"
+          >
+            View CV
+          </button>
         </div>
       </div>
 
@@ -50,10 +58,9 @@ export default function AboutPage() {
         isHidden={isGalleryFullscreen}
       />
 
-      <SystemWindow
-        defaultTab={initialTab}
-        onFullscreenChange={setIsGalleryFullscreen}
-      />
+      <SystemWindow defaultTab={initialTab} onFullscreenChange={setIsGalleryFullscreen} />
+
+      <CvModal isOpen={showCv} onClose={() => setShowCv(false)} />
     </main>
   );
 }

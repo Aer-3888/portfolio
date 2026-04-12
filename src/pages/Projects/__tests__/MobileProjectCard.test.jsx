@@ -15,25 +15,26 @@ const mockProject = {
 
 describe("MobileProjectCard", () => {
   it("renders project title", () => {
-    render(<MobileProjectCard project={mockProject} onClick={vi.fn()} />);
+    render(<MobileProjectCard project={mockProject} onSelect={vi.fn()} />);
     expect(screen.getByText("Waiki")).toBeInTheDocument();
   });
 
   it("renders type and category", () => {
-    render(<MobileProjectCard project={mockProject} onClick={vi.fn()} />);
+    render(<MobileProjectCard project={mockProject} onSelect={vi.fn()} />);
     expect(screen.getByText("Mobile Development")).toBeInTheDocument();
     expect(screen.getByText(/freelance/i)).toBeInTheDocument();
   });
 
-  it("calls onClick when tapped", () => {
-    const onClick = vi.fn();
-    render(<MobileProjectCard project={mockProject} onClick={onClick} />);
+  it("calls onSelect when tapped", () => {
+    const onSelect = vi.fn();
+    render(<MobileProjectCard project={mockProject} onSelect={onSelect} />);
     fireEvent.click(screen.getByRole("button"));
-    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onSelect).toHaveBeenCalledTimes(1);
+    expect(onSelect).toHaveBeenCalledWith(mockProject);
   });
 
   it("renders image with loading=lazy", () => {
-    render(<MobileProjectCard project={mockProject} onClick={vi.fn()} />);
+    render(<MobileProjectCard project={mockProject} onSelect={vi.fn()} />);
     const img = screen.getByRole("img");
     expect(img).toHaveAttribute("loading", "lazy");
   });
