@@ -3,8 +3,8 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 const CV_URLS = {
-  fr: `${import.meta.env.BASE_URL}cv.pdf`,
-  en: `${import.meta.env.BASE_URL}cv_en.pdf`,
+  fr: `${import.meta.env.BASE_URL}cv.pdf#toolbar=0&navpanes=0`,
+  en: `${import.meta.env.BASE_URL}cv_en.pdf#toolbar=0&navpanes=0`,
 };
 
 export default function CvModal({ isOpen, onClose }) {
@@ -40,7 +40,7 @@ export default function CvModal({ isOpen, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 md:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-2 md:p-8"
           onClick={onClose}
         >
           <motion.div
@@ -48,7 +48,7 @@ export default function CvModal({ isOpen, onClose }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-4xl h-[85vh] bg-neutral-900 border border-white/10 rounded-2xl overflow-hidden flex flex-col shadow-2xl"
+            className="relative w-full max-w-5xl h-[90vh] md:h-[85vh] bg-neutral-900 border border-white/10 rounded-xl md:rounded-2xl overflow-hidden flex flex-col shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
@@ -76,7 +76,7 @@ export default function CvModal({ isOpen, onClose }) {
 
               <div className="flex items-center gap-2">
                 <a
-                  href={CV_URLS[lang]}
+                  href={`${import.meta.env.BASE_URL}cv${lang === "fr" ? "" : "_en"}.pdf`}
                   download
                   className="px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider bg-neutral-800 text-white hover:bg-orange-500 transition-colors"
                 >
@@ -106,7 +106,12 @@ export default function CvModal({ isOpen, onClose }) {
             </div>
 
             {/* PDF Preview */}
-            <iframe src={CV_URLS[lang]} title="CV Preview" className="flex-1 w-full bg-white" />
+            <iframe
+              src={CV_URLS[lang]}
+              title="CV Preview"
+              className="flex-1 w-full bg-neutral-800"
+              style={{ border: "none" }}
+            />
           </motion.div>
         </motion.div>
       )}

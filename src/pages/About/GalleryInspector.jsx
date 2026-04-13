@@ -219,7 +219,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
                 key={file.name}
                 id={`file-${file.name}`}
                 onClick={() => handleSetFile(file)}
-                className={`w-full text-left px-3 py-2 text-xs font-mono truncate transition-all duration-200 rounded-sm shrink-0
+                className={`w-full text-left px-3 py-2 text-xs font-mono truncate transition-all duration-200 rounded-sm shrink-0 cursor-pointer
                               ${
                                 activeFile.name === file.name
                                   ? "bg-neutral-800 text-orange-500 border-l-2 border-orange-500 pl-3"
@@ -237,7 +237,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
           {/* Fullscreen Button*/}
           <button
             onClick={() => setIsFullscreen(true)}
-            className="absolute top-4 right-4 z-40 p-2 bg-black/50 backdrop-blur-md border border-white/10 rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+            className="absolute top-4 right-4 z-40 p-2 bg-black/50 backdrop-blur-md border border-white/10 rounded-md text-white/70 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
             title="Maximize View"
           >
             <svg
@@ -262,7 +262,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
           <div className="absolute inset-0 z-30 pointer-events-none flex items-center justify-between px-2 md:hidden">
             <button
               onClick={handlePrev}
-              className="pointer-events-auto p-3 bg-black/50 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-orange-500 active:scale-95 transition-all"
+              className="pointer-events-auto p-3 bg-black/50 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-orange-500 active:scale-95 transition-all cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -281,7 +281,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
             </button>
             <button
               onClick={handleNext}
-              className="pointer-events-auto p-3 bg-black/50 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-orange-500 active:scale-95 transition-all"
+              className="pointer-events-auto p-3 bg-black/50 backdrop-blur-md rounded-full border border-white/10 text-white hover:bg-orange-500 active:scale-95 transition-all cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -421,7 +421,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
             {/* Fullscreen Nav Controls */}
             <button
               onClick={handlePrev}
-              className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 z-50 p-4 bg-black/50 hover:bg-orange-500 rounded-full border border-white/10 text-white transition-all shadow-lg"
+              className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 z-50 p-4 bg-black/50 hover:bg-orange-500 rounded-full border border-white/10 text-white transition-all shadow-lg cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -440,7 +440,7 @@ export default function GalleryInspector({ onFullscreenChange }) {
             </button>
             <button
               onClick={handleNext}
-              className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 z-50 p-4 bg-black/50 hover:bg-orange-500 rounded-full border border-white/10 text-white transition-all shadow-lg"
+              className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 z-50 p-4 bg-black/50 hover:bg-orange-500 rounded-full border border-white/10 text-white transition-all shadow-lg cursor-pointer"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

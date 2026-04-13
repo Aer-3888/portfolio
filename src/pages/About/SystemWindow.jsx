@@ -75,7 +75,7 @@ export default function SystemWindow({ onFullscreenChange, defaultTab = "git" })
                 onPointerDown={(e) => e.stopPropagation()}
                 onClick={() => setActiveTab("git")}
                 className={`
-                  px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider transition-all
+                  px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer
                   ${
                     activeTab === "git"
                       ? "bg-neutral-800 text-white shadow-sm"
@@ -90,7 +90,7 @@ export default function SystemWindow({ onFullscreenChange, defaultTab = "git" })
                 onPointerDown={(e) => e.stopPropagation()}
                 onClick={() => setActiveTab("gallery")}
                 className={`
-                  px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider transition-all
+                  px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider transition-all cursor-pointer
                   ${
                     activeTab === "gallery"
                       ? "bg-neutral-800 text-white shadow-sm"

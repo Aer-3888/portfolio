@@ -45,7 +45,7 @@ export default function AboutPage() {
           </p>
           <button
             onClick={() => setShowCv(true)}
-            className="self-start px-5 py-2 border border-white/10 rounded-md font-mono text-[10px] uppercase tracking-widest text-neutral-400 hover:text-white hover:border-orange-500 hover:bg-orange-500/10 transition-all"
+            className="self-start px-5 py-2 border border-white/10 rounded-md font-mono text-[10px] uppercase tracking-widest text-neutral-400 hover:text-white hover:border-orange-500 hover:bg-orange-500/10 transition-all cursor-pointer"
           >
             View CV
           </button>
@@ -55,7 +55,7 @@ export default function AboutPage() {
       <PageNav
         currentPath="/about"
         scrollYProgress={scrollYProgress}
-        isHidden={isGalleryFullscreen}
+        isHidden={isGalleryFullscreen || showCv}
       />
 
       <SystemWindow defaultTab={initialTab} onFullscreenChange={setIsGalleryFullscreen} />
