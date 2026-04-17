@@ -1,19 +1,23 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import SmoothScroll from "./components/layout/SmoothScroll";
-import AboutPage from "./pages/About/AboutPage";
-import HomePage from "./pages/home/HomePage";
-import ContactPage from "./pages/Contact/ContactPage";
-import ProjectsPage from "./pages/Projects/ProjectsPage";
+
+const HomePage = lazy(() => import("./pages/home/HomePage"));
+const AboutPage = lazy(() => import("./pages/About/AboutPage"));
+const ContactPage = lazy(() => import("./pages/Contact/ContactPage"));
+const ProjectsPage = lazy(() => import("./pages/Projects/ProjectsPage"));
 
 function App() {
   return (
     <SmoothScroll>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/projects" element={<ProjectsPage />} />
-      </Routes>
+      <Suspense fallback={<div className="min-h-screen bg-neutral-900" />}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
+        </Routes>
+      </Suspense>
     </SmoothScroll>
   );
 }

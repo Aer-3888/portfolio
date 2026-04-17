@@ -6,6 +6,16 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig(({ command }) => ({
   plugins: [react(), tailwindcss()],
   base: command === "build" ? "/portfolio/" : "/",
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "react-router-dom"],
+          "vendor-motion": ["framer-motion"],
+        },
+      },
+    },
+  },
   test: {
     environment: "jsdom",
     globals: true,
