@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 const variants = {
   enter: (_direction) => ({
@@ -20,7 +20,15 @@ const variants = {
   }),
 };
 
+const reducedVariants = {
+  enter: () => ({ opacity: 0 }),
+  center: { zIndex: 1, opacity: 1 },
+  exit: () => ({ zIndex: 0, opacity: 0 }),
+};
+
 export default function VerticalFilmStrip({ activeHobby, direction, onClick }) {
+  const prefersReduced = useReducedMotion();
+
   return (
     <div
       className="relative w-full aspect-[4/5] max-h-[70vh] cursor-pointer group overflow-hidden bg-neutral-950 rounded-lg border border-white/5 shadow-2xl"
@@ -30,15 +38,19 @@ export default function VerticalFilmStrip({ activeHobby, direction, onClick }) {
         <motion.div
           key={activeHobby.id}
           custom={direction}
-          variants={variants}
+          variants={prefersReduced ? reducedVariants : variants}
           initial="enter"
           animate="center"
           exit="exit"
-          transition={{
-            opacity: { duration: 0.4, ease: "linear" },
-            scale: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
-            filter: { duration: 0.3, ease: "easeOut" },
-          }}
+          transition={
+            prefersReduced
+              ? { duration: 0.15 }
+              : {
+                  opacity: { duration: 0.4, ease: "linear" },
+                  scale: { duration: 0.5, ease: [0.22, 1, 0.36, 1] },
+                  filter: { duration: 0.3, ease: "easeOut" },
+                }
+          }
           className="absolute inset-0 w-full h-full"
         >
           <img

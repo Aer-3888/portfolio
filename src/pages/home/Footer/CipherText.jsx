@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";
 const PHRASES = ["LET'S HAVE FUN", "HELLO WORLD.", "GOLD GOLD GOLD"];
@@ -9,9 +9,18 @@ export default function CipherText() {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { margin: "-50px" });
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     if (!isInView) return;
+
+    if (prefersReduced) {
+      setDisplay(PHRASES[phraseIndex]);
+      const timeout = setTimeout(() => {
+        setPhraseIndex((prev) => (prev + 1) % PHRASES.length);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
 
     const currentPhrase = PHRASES[phraseIndex];
     let currentIndex = 0;
@@ -57,7 +66,7 @@ export default function CipherText() {
     }, 50);
 
     return () => clearInterval(interval);
-  }, [isInView, phraseIndex]);
+  }, [isInView, phraseIndex, prefersReduced]);
 
   return (
     <span
@@ -66,8 +75,8 @@ export default function CipherText() {
     >
       {display}
       <motion.span
-        animate={{ opacity: [0, 1, 0] }}
-        transition={{ repeat: Infinity, duration: 0.8 }}
+        animate={prefersReduced ? { opacity: 1 } : { opacity: [0, 1, 0] }}
+        transition={prefersReduced ? {} : { repeat: Infinity, duration: 0.8 }}
         className="text-orange-500 inline-block ml-1 align-baseline"
       >
         _

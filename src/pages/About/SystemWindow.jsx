@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { motion, useDragControls, useAnimation } from "framer-motion";
+import { motion, useDragControls, useAnimation, useReducedMotion } from "framer-motion";
 import GitGraph from "./GitGraph";
 import GalleryInspector from "./GalleryInspector";
 
@@ -11,9 +11,9 @@ export default function SystemWindow({ onFullscreenChange, defaultTab = "git" })
     setActiveTab(defaultTab);
   }, [defaultTab]);
 
-  // Drag Controls and Animation Controls
   const dragControls = useDragControls();
   const windowControls = useAnimation();
+  const prefersReduced = useReducedMotion();
 
   const handleDragEnd = (event, info) => {
     // Calculate distance from origin (0,0)
@@ -41,9 +41,9 @@ export default function SystemWindow({ onFullscreenChange, defaultTab = "git" })
     <>
       {/* Animated wrapper for the draggable window only */}
       <motion.div
-        initial={{ y: 50, opacity: 0 }}
+        initial={prefersReduced ? false : { y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8 }}
+        transition={prefersReduced ? { duration: 0 } : { duration: 0.8 }}
         className="w-full max-w-5xl mt-12 md:mt-20 relative z-10"
       >
         <motion.div

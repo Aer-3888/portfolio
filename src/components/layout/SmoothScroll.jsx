@@ -5,6 +5,9 @@ import Lenis from "lenis";
 const isTouchDevice = () =>
   window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
 
+const prefersReducedMotion = () =>
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 export default function SmoothScroll({ children }) {
   const lenisRef = useRef(null);
   const { pathname } = useLocation();
@@ -13,17 +16,16 @@ export default function SmoothScroll({ children }) {
     history.scrollRestoration = "manual";
   }, []);
 
-  // Reset scroll before paint
   useLayoutEffect(() => {
     if (lenisRef.current) lenisRef.current.destroy();
     lenisRef.current = null;
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  // Recreate Lenis after DOM settles (desktop only)
   useEffect(() => {
     if (pathname === "/projects") return;
     if (isTouchDevice()) return;
+    if (prefersReducedMotion()) return;
 
     window.scrollTo(0, 0);
     const lenis = new Lenis({

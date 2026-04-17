@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { SOCIALS } from "../../config/siteData";
 import ArcadeMachine from "./ArcadeMachine";
 import PageNav from "../../components/layout/PageNav";
@@ -7,6 +7,7 @@ import PageNav from "../../components/layout/PageNav";
 export default function ContactPage() {
   const [time, setTime] = useState("");
   const [copied, setCopied] = useState(false);
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     const updateTime = () => {
@@ -33,9 +34,9 @@ export default function ContactPage() {
       <PageNav currentPath="/contact" />
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        transition={prefersReduced ? { duration: 0 } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-7xl h-auto lg:min-h-[75vh] grid grid-cols-1 lg:grid-cols-12 bg-neutral-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] overflow-hidden rounded-sm border border-white/5"
       >
         {/* Left: Communication & Details */}

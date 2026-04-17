@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 function RichText({ text, className }) {
   const parts = text.split(/(\*\*[^*]+\*\*|__[^_]+__)/g);
@@ -18,6 +18,7 @@ function RichText({ text, className }) {
 
 export default function ProjectDetails({ project, isOpen, onClose }) {
   const scrollRef = useRef(null);
+  const prefersReduced = useReducedMotion();
 
   // Reset panel scroll position each time the modal opens
   useEffect(() => {
@@ -59,10 +60,10 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
           {/* Modal Container */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            initial={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
+            animate={prefersReduced ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
+            transition={prefersReduced ? { duration: 0.1 } : { type: "spring", damping: 25, stiffness: 300 }}
             className="relative w-full h-full md:max-w-[1300px] md:max-h-[85vh] md:h-auto bg-neutral-900 border-0 md:border md:border-white/10 overflow-hidden flex flex-col md:flex-row shadow-[0_0_80px_rgba(0,0,0,0.7)]"
           >
             {/* Close Button */}
@@ -122,19 +123,47 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               </div>
 
               <div className="flex flex-col gap-4">
-                <div className="bg-white/[0.03] rounded-lg p-5">
-                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-2">
-                    Insight
-                  </h4>
-                  <RichText text={project.insight} className="text-[14px] text-neutral-300 leading-relaxed" />
-                </div>
-                <div className="bg-white/[0.03] rounded-lg p-5">
-                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-2">
-                    Challenge
-                  </h4>
-                  <RichText text={project.challenge} className="text-[14px] text-neutral-400 leading-relaxed" />
-                </div>
+                {project.problem && (
+                  <div className="bg-white/[0.03] rounded-lg p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-orange-500 font-mono text-[10px] font-bold">01</span>
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wide">
+                        Problem
+                      </h4>
+                    </div>
+                    <RichText text={project.problem} className="text-[14px] text-neutral-400 leading-relaxed" />
+                  </div>
+                )}
+                {project.approach && (
+                  <div className="bg-white/[0.03] rounded-lg p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-orange-500 font-mono text-[10px] font-bold">02</span>
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wide">
+                        Approach
+                      </h4>
+                    </div>
+                    <RichText text={project.approach} className="text-[14px] text-neutral-300 leading-relaxed" />
+                  </div>
+                )}
+                {project.result && (
+                  <div className="bg-white/[0.03] rounded-lg p-5">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-orange-500 font-mono text-[10px] font-bold">03</span>
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wide">
+                        Result
+                      </h4>
+                    </div>
+                    <RichText text={project.result} className="text-[14px] text-neutral-300 leading-relaxed" />
+                  </div>
+                )}
               </div>
+
+              {project.role && (
+                <div className="flex items-center gap-3">
+                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest">Role</span>
+                  <span className="text-sm font-bold text-white">{project.role}</span>
+                </div>
+              )}
 
               <div className="flex flex-col gap-6">
                 <div>

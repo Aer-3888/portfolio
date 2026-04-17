@@ -1,4 +1,4 @@
-import { useAnimationFrame } from "framer-motion";
+import { useAnimationFrame, useReducedMotion } from "framer-motion";
 import { useMemo, useRef, useEffect } from "react";
 import { interpolate } from "flubber";
 
@@ -14,13 +14,16 @@ const blobShapes = [
 const circlePath = "M50,5 C75,5 95,25 95,50 C95,75 75,95 50,95 C25,95 5,75 5,50 C5,25 25,5 50,5 Z";
 
 export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor = "white" }) {
+  const prefersReduced = useReducedMotion();
+
   const morphers = useMemo(() => {
+    if (prefersReduced) return [];
     return blobShapes.map((shape, i) =>
       interpolate(shape, blobShapes[(i + 1) % blobShapes.length], {
         maxSegmentLength: 2,
       })
     );
-  }, []);
+  }, [prefersReduced]);
 
   const progressRef = useRef(0);
   const pathRef = useRef(null);
@@ -34,7 +37,7 @@ export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor 
   }, [isHovered]);
 
   useAnimationFrame((_t, delta) => {
-    if (isHoveredRef.current) return;
+    if (prefersReduced || isHoveredRef.current) return;
 
     const total = morphers.length;
     const next = progressRef.current + delta * speed;

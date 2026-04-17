@@ -1,5 +1,5 @@
 import { useRef, useEffect } from "react";
-import { motion, useAnimationFrame, useMotionValue, useTransform } from "framer-motion";
+import { motion, useAnimationFrame, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
 import { wrap } from "@motionone/utils";
 import TextStrip from "./TextStrip";
 
@@ -7,6 +7,7 @@ export default function InfiniteLoopText({ speed = 0.2 }) {
   const containerRef = useRef(null);
   const isVisible = useRef(true);
   const baseX = useMotionValue(0);
+  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     const el = containerRef.current;
@@ -22,7 +23,7 @@ export default function InfiniteLoopText({ speed = 0.2 }) {
   }, []);
 
   useAnimationFrame((_, delta) => {
-    if (!isVisible.current) return;
+    if (prefersReduced || !isVisible.current) return;
     let moveBy = -(speed * (delta / 200));
     baseX.set(baseX.get() + moveBy);
   });
@@ -31,7 +32,7 @@ export default function InfiniteLoopText({ speed = 0.2 }) {
 
   return (
     <div ref={containerRef} className="flex overflow-hidden whitespace-nowrap w-full">
-      <motion.div className="flex whitespace-nowrap" style={{ x }}>
+      <motion.div className="flex whitespace-nowrap" style={{ x: prefersReduced ? "0%" : x }}>
         <TextStrip />
         <TextStrip />
       </motion.div>
