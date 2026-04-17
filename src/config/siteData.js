@@ -43,10 +43,13 @@ export const PROJECTS = [
     offset: 0,
     description:
       "A digital wellness solution designed to combat **social media addiction**. Waiki combines **system-wide DNS filtering** with a **physical hardware barrier**, requiring users to scan an **NFC device** to unlock distracting apps. Developed in an Agile/Scrum environment by leading a team of fellow engineering students, utilizing issue-driven development, user stories, and Kanban to manage the product lifecycle.",
-    insight:
-      "Using a **physical hardware barrier** as the only key to a **software lock**, making screen time a conscious, deliberate act.",
-    challenge:
-      "Developing a reliable **background NFC service** and system-wide DNS filtering that persists across iOS and Android **power-saving modes**.",
+    problem:
+      "Social media addiction lacks effective solutions. Software-only blockers are too easy to bypass, reducing their impact on user behavior.",
+    approach:
+      "Combined a **physical NFC hardware barrier** with **system-wide DNS filtering** to make screen time a conscious, deliberate act that requires a physical key.",
+    result:
+      "Shipped to **iOS and Android** with persistent background services that survive power-saving modes. Led a **team of 4 engineers** using Agile/Scrum.",
+    role: "Lead Developer, Freelance",
     tags: ["Flutter", "Dart", "Firebase", "Sqlite"],
     tools: ["Android Studio", "Git", "GitHub Issues", "Kanban"],
     architecture: [
@@ -69,9 +72,13 @@ export const PROJECTS = [
     offset: 120,
     description:
       "My personal portfolio website, focused on **animations** and an **immersive user experience** using modern web technologies.",
-    insight: "Creating a **tunnel** navigation using **vertical-to-horizontal scroll mapping**.",
-    challenge:
-      "Adapting the **horizontal scroll tunnel** to fully **responsive layouts** while keeping **scroll-driven animations** smooth and consistent across devices.",
+    problem:
+      "Standard portfolio templates fail to demonstrate frontend engineering skills. The portfolio itself should be the proof of capability.",
+    approach:
+      "Mapped **vertical scroll to horizontal movement** to create a tunnel effect where projects float toward the viewer. Each animation gracefully degrades for users who prefer reduced motion.",
+    result:
+      "A fully responsive portfolio with a unique spatial navigation on desktop and a clean vertical layout on mobile, all driven by **Framer Motion** and **Lenis** scroll physics.",
+    role: "Solo Project",
     tags: ["React", "JavaScript", "Tailwind CSS", "Framer Motion", "Lenis Scroll"],
     tools: ["Vite", "VS Code"],
     architecture: [
@@ -93,9 +100,13 @@ export const PROJECTS = [
     offset: -50,
     description:
       "A full **computer vision pipeline** for plant disease detection, comparing **EfficientNet B7**, **YOLOv8/v11**, and **Faster R-CNN** (ResNet-50 FPN) across classification and detection tasks on the **PlantVillage** and **PlantDoc** datasets.",
-    insight: "**Faster R-CNN** achieved the best results with **mAP@50 of 0.90** and **85.8% recall**, outperforming YOLO variants on the PlantDoc detection benchmark.",
-    challenge:
-      "Starting with **little prior knowledge** of computer vision and neural networks, we had to build understanding from scratch while tackling technical hurdles like the **background class index offset** in Faster R-CNN and optimizing **input resolution** (224×224) for EfficientNet.",
+    problem:
+      "Manual plant disease identification is slow and error-prone. Automated detection could help farmers respond faster to crop threats.",
+    approach:
+      "Compared three model families (**EfficientNet**, **YOLOv8/v11**, **Faster R-CNN**) across classification and detection tasks, tackling challenges like background class offsets and input resolution optimization.",
+    result:
+      "**Faster R-CNN** achieved **mAP@50 of 0.90** and **85.8% recall** on PlantDoc, outperforming YOLO variants on the detection benchmark.",
+    role: "Team of 2",
     tags: ["Python", "PyTorch", "EfficientNet", "YOLOv8", "Faster R-CNN", "ResNet-50", "scikit-learn"],
     tools: ["Jupyter Notebook", "Kaggle API"],
     architecture: ["Transfer Learning Pipeline", "Multi-Model Comparative Analysis"],
@@ -114,10 +125,13 @@ export const PROJECTS = [
     offset: -30,
     description:
       "A full-stack mobile solution for INSA Rennes students that replaces legacy systems with a **reactive dashboard**. It features a secure **native Android bridge** for grade retrieval and an **anonymous data-sharing engine** using **Cloudflare Workers** and **D1** to calculate class averages and performance metrics without compromising **student privacy**.",
-    insight:
-      "Building a **privacy-first** community analytics engine to provide missing academic context like **class averages** and distributions.",
-    challenge:
-      "Ensuring **student privacy** while collecting enough anonymous data to calculate accurate **class-wide metrics at the edge**.",
+    problem:
+      "INSA students had no way to see **class averages** or compare performance. The legacy system only showed individual grades with no context.",
+    approach:
+      "Built a **privacy-first analytics engine** on **Cloudflare Workers + D1** that collects anonymous data at the edge and computes class-wide metrics without storing identifiable information.",
+    result:
+      "Deployed to Android with a **native bridge** for grade retrieval, providing students with class averages and performance distributions in real-time.",
+    role: "Team of 2",
     tags: ["Flutter", "Cloudflare Workers", "D1 Database", "Riverpod", "SQL"],
     tools: ["Android Studio", "Wrangler", "VS Code", "Git"],
     architecture: [
@@ -140,10 +154,13 @@ export const PROJECTS = [
     offset: 0,
     description:
       "An exploratory data analysis of **10 years** of French real estate transactions (**~12,000 records**) in the Pays de la Loire region. The study compares **pre-COVID (2014-2019)**, **COVID (2020-2021)**, and **post-COVID (2022-2023)** periods across five departments, revealing a **~32% surge** in average prices and price per m², with transaction volume remaining stable at ~1,200 annually.",
-    insight:
-      "COVID acted as a **price accelerator** rather than a market disruptor: transaction volumes held steady while prices **surged 32%** over the decade.",
-    challenge:
-      "Isolating the **COVID signal** from long-term price trends in a regional dataset with significant **inter-departmental variance**.",
+    problem:
+      "Understanding how COVID impacted regional French real estate required isolating pandemic effects from long-term price trends across diverse departments.",
+    approach:
+      "Segmented **~12,000 transactions** into pre-COVID, COVID, and post-COVID periods across five departments, using **choropleth mapping** and statistical analysis to reveal spatial and temporal patterns.",
+    result:
+      "Identified COVID as a **price accelerator** (not disruptor): transaction volumes held steady while prices **surged 32%**, with significant inter-departmental variance.",
+    role: "Solo Project",
     tags: ["Python", "Pandas", "Matplotlib", "Seaborn", "Folium"],
     tools: ["Jupyter Notebook", "Anaconda"],
     architecture: [
@@ -167,10 +184,13 @@ export const PROJECTS = [
     offset: 0,
     description:
       "A **C++20** automation tool and interactive **dashboard** designed to synchronize accounting entries between **Google Sheets** and **Sage 50**. It provides a centralized interface for monitoring data flows, validating documentation on Google Drive, and programmatically mapping complex **accounting codes**, leveraging a **local LLM** to handle edge cases in the mapping logic.",
-    insight:
-      "Providing a **high-visibility dashboard** to monitor and manage the bridge between **cloud spreadsheets** and **legacy accounting software**.",
-    challenge:
-      "Developing a robust engine to handle complex **accounting code mapping** and entry validation as defined by the professional **Quality Manual**.",
+    problem:
+      "Manual accounting entry transfer between **Google Sheets** and **Sage 50** was error-prone and time-consuming, with complex code mapping rules defined by a professional Quality Manual.",
+    approach:
+      "Built a **C++20 dashboard** with a rule-based mapping engine augmented by a **local LLM** for edge cases, providing real-time monitoring of data flows and document validation.",
+    result:
+      "Automated the full sync pipeline between cloud spreadsheets and legacy accounting software, eliminating manual entry errors.",
+    role: "Solo Project",
     tags: ["C++", "Qt", "Google API", "OpenXLSX", "Ollama"],
     tools: ["CMake", "Git"],
     architecture: [
