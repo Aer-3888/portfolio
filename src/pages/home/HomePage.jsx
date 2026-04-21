@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Hero from "./Hero/Hero";
@@ -7,17 +7,23 @@ import ProjectList from "./Projects/ProjectList";
 import Footer from "./Footer/Footer";
 import HobbySection from "./Profile/HobbySection";
 import PageNav from "../../components/layout/PageNav";
+import SystemWindow from "../About/SystemWindow";
 
 export default function HomePage() {
+  const containerRef = useRef(null);
   const location = useLocation();
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress } = useScroll({
+    container: containerRef
+  });
   const [selectedProject, setSelectedProject] = useState(null);
+  const [isSystemFullscreen, setIsSystemFullscreen] = useState(false);
 
+  // Keep curve transform for downstream consistency if needed
   const curve = useTransform(scrollYProgress, [0.85, 1], ["50% 50px", "0% 0px"]);
 
   useEffect(() => {
-    if (location.state?.scrollTo === "projects") {
-      const el = document.getElementById("projects");
+    if (location.state?.scrollTo) {
+      const el = document.getElementById(location.state.scrollTo);
       if (el) {
         setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
       }
@@ -25,23 +31,45 @@ export default function HomePage() {
   }, [location.state]);
 
   return (
-    <div className="relative bg-neutral-900">
-      <motion.main
-        style={{
-          borderBottomLeftRadius: curve,
-          borderBottomRightRadius: curve,
-        }}
-        className="relative z-10 bg-neutral-900 shadow-2xl mb-[50vh] overflow-hidden"
-      >
-        <Hero />
-        <StatusSection />
-        <ProjectList selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
-        <HobbySection />
-        <div className="w-full h-[20vh] bg-neutral-900 border-t border-neutral-800" />
-      </motion.main>
-      <Footer />
+    <div ref={containerRef} className="cinematic-container bg-neutral-950">
+      <PageNav
+        currentPath="/"
+        scrollYProgress={scrollYProgress}
+        isHidden={!!selectedProject || isSystemFullscreen}
+      />
+      
+      <main>
+        <section id="home" className="cinematic-scene">
+          <Hero />
+        </section>
 
-      <PageNav scrollYProgress={scrollYProgress} isHidden={!!selectedProject} />
+        <section id="about" className="cinematic-scene">
+          <StatusSection />
+        </section>
+
+        <section id="projects" className="cinematic-scene">
+          <ProjectList selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
+        </section>
+
+        <section id="hobbies" className="cinematic-scene">
+          <HobbySection />
+        </section>
+
+        <section id="system" className="cinematic-scene min-h-[200vh]">
+          <motion.div 
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            className="w-full max-w-7xl mx-auto px-6 md:px-12 py-24"
+          >
+            <SystemWindow onFullscreenChange={setIsSystemFullscreen} />
+          </motion.div>
+        </section>
+
+        <section id="contact" className="cinematic-scene">
+          <Footer />
+        </section>
+      </main>
     </div>
   );
 }
