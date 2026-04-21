@@ -8,6 +8,7 @@ import Footer from "./Footer/Footer";
 import HobbySection from "./Profile/HobbySection";
 import PageNav from "../../components/layout/PageNav";
 import SystemWindow from "../About/SystemWindow";
+import LiquidBackground from "../../components/home/LiquidBackground";
 
 export default function HomePage() {
   const containerRef = useRef(null);
@@ -18,8 +19,13 @@ export default function HomePage() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isSystemFullscreen, setIsSystemFullscreen] = useState(false);
 
-  // Keep curve transform for downstream consistency if needed
-  const curve = useTransform(scrollYProgress, [0.85, 1], ["50% 50px", "0% 0px"]);
+  // Dynamic background transforms based on scroll progress
+  const bgColor = useTransform(
+    scrollYProgress, 
+    [0, 0.3, 0.6, 1], 
+    ["#0a0a0a", "#111111", "#0f0700", "#000000"]
+  );
+  const rippleIntensity = useTransform(scrollYProgress, [0, 1], [0.2, 0.8]);
 
   useEffect(() => {
     if (location.state?.scrollTo) {
@@ -31,14 +37,16 @@ export default function HomePage() {
   }, [location.state]);
 
   return (
-    <div ref={containerRef} className="cinematic-container bg-neutral-950">
+    <div ref={containerRef} className="cinematic-container">
+      <LiquidBackground color={bgColor} intensity={rippleIntensity} />
+
       <PageNav
         currentPath="/"
         scrollYProgress={scrollYProgress}
         isHidden={!!selectedProject || isSystemFullscreen}
       />
       
-      <main>
+      <motion.main className="relative z-10">
         <section id="home" className="cinematic-scene">
           <Hero />
         </section>
@@ -69,7 +77,7 @@ export default function HomePage() {
         <section id="contact" className="cinematic-scene">
           <Footer />
         </section>
-      </main>
+      </motion.main>
     </div>
   );
 }
