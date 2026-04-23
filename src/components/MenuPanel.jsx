@@ -54,8 +54,9 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
                       if (typeof item.onClick === "function") item.onClick();
                       if (typeof onClose === "function") onClose();
                     }}
+                    aria-current={item.isActive ? "page" : undefined}
                   >
-                    <span className="relative z-10 text-3xl font-bold uppercase tracking-[0.15em] text-white/80 group-hover:text-white transition-colors">
+                    <span className={`relative z-10 text-3xl font-bold uppercase tracking-[0.15em] transition-colors ${item.isActive ? "text-white" : "text-white/80 group-hover:text-white"}`}>
                       {item.label}
                     </span>
                     <motion.div 

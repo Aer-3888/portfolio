@@ -72,18 +72,27 @@ export default function PageNav({
 
   const navItems = useMemo(
     () => [
-      { label: "Projects", onClick: () => handleNavigate("/projects", "projects") },
-      { label: "About", onClick: () => handleNavigate("/", "about") },
-      { label: "Contact", onClick: () => handleNavigate("/contact", "contact") },
+      { label: "Projects", path: "/projects", onClick: () => handleNavigate("/projects", "projects") },
+      { label: "About", path: "/", onClick: () => handleNavigate("/", "about") },
+      { label: "Contact", path: "/contact", onClick: () => handleNavigate("/contact", "contact") },
     ],
     [handleNavigate]
   );
 
   const menuItems = useMemo(
-    () => [
-      ...(!isDesktop && currentPath !== "/" ? [{ label: "Home", onClick: () => navigate("/") }] : []),
-      ...navItems,
-    ],
+    () => {
+      const items = !isDesktop && currentPath !== "/" ? [{ label: "Home", path: "/", onClick: () => navigate("/") }] : [];
+      return [
+        ...items,
+        ...navItems.map(item => ({
+          ...item,
+          isActive: currentPath === item.path
+        })),
+      ].map(item => ({
+        ...item,
+        isActive: item.isActive ?? (currentPath === item.path)
+      }));
+    },
     [isDesktop, currentPath, navItems, navigate]
   );
 

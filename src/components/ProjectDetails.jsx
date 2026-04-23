@@ -17,8 +17,50 @@ function RichText({ text, className }) {
 }
 
 export default function ProjectDetails({ project, isOpen, onClose }) {
+  const modalRef = useRef(null);
   const scrollRef = useRef(null);
   const prefersReduced = useReducedMotion();
+
+  // Focus trap logic
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key !== "Tab") return;
+
+      const focusableElements = modalRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey) {
+        if (document.activeElement === firstElement) {
+          lastElement.focus();
+          e.preventDefault();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          firstElement.focus();
+          e.preventDefault();
+        }
+      }
+    };
+
+    const previousFocus = document.activeElement;
+    window.addEventListener("keydown", handleKeyDown);
+    
+    // Set initial focus to the close button or first element
+    setTimeout(() => {
+      const firstFocusable = modalRef.current?.querySelector("button");
+      firstFocusable?.focus();
+    }, 100);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      previousFocus?.focus();
+    };
+  }, [isOpen]);
 
   // Reset panel scroll position each time the modal opens
   useEffect(() => {
@@ -48,7 +90,10 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[2000] flex items-center justify-center p-0 md:p-12 overflow-hidden pointer-events-auto">
+        <div 
+          ref={modalRef}
+          className="fixed inset-0 z-[2000] flex items-center justify-center p-0 md:p-12 overflow-hidden pointer-events-auto"
+        >
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}

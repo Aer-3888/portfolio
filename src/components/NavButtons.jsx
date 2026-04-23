@@ -28,6 +28,7 @@ export default function NavButtons({
             <button
               type="button"
               className={isActive ? activeButtonClass : buttonClass}
+              aria-current={isActive ? "page" : undefined}
             >
               {item.label}
             </button>

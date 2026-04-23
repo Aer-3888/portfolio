@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -9,6 +9,8 @@ const CV_URLS = {
 
 export default function CvModal({ isOpen, onClose }) {
   const [lang, setLang] = useState("en");
+  const modalRef = useRef(null);
+
   // Lock body scroll
   useEffect(() => {
     if (isOpen) {
@@ -21,14 +23,47 @@ export default function CvModal({ isOpen, onClose }) {
     };
   }, [isOpen]);
 
-  // Escape key
+  // Focus trap and Escape key
   useEffect(() => {
     if (!isOpen) return;
+
     const handleKey = (e) => {
       if (e.key === "Escape") onClose();
+
+      if (e.key === "Tab") {
+        const focusableElements = modalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
     };
+
+    const previousFocus = document.activeElement;
     window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
+
+    // Initial focus
+    setTimeout(() => {
+      const firstFocusable = modalRef.current?.querySelector("button");
+      firstFocusable?.focus();
+    }, 100);
+
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      previousFocus?.focus();
+    };
   }, [isOpen, onClose]);
 
   return createPortal(
@@ -44,6 +79,7 @@ export default function CvModal({ isOpen, onClose }) {
           onClick={onClose}
         >
           <motion.div
+            ref={modalRef}
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}

@@ -6,8 +6,7 @@ import { galleryFiles } from "./galleryData";
 const GalleryModal = ({ isOpen, onClose }) => {
   const [activeFile, setActiveFile] = useState(galleryFiles[0]);
   const [isImageLoading, setIsImageLoading] = useState(true);
-  const touchStartX = useRef(0);
-  const touchStartY = useRef(0);
+  const modalRef = useRef(null);
 
   // Lock body scroll
   useEffect(() => {
@@ -52,16 +51,49 @@ const GalleryModal = ({ isOpen, onClose }) => {
     });
   }, []);
 
-  // Keyboard navigation
+  // Keyboard navigation and Focus trap
   useEffect(() => {
     if (!isOpen) return;
+
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onClose();
       if (e.key === "ArrowRight") handleNext();
       if (e.key === "ArrowLeft") handlePrev();
+
+      if (e.key === "Tab") {
+        const focusableElements = modalRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            lastElement.focus();
+            e.preventDefault();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            firstElement.focus();
+            e.preventDefault();
+          }
+        }
+      }
     };
+
+    const previousFocus = document.activeElement;
     window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
+
+    // Initial focus
+    setTimeout(() => {
+      const firstFocusable = modalRef.current?.querySelector("button");
+      firstFocusable?.focus();
+    }, 100);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      previousFocus?.focus();
+    };
   }, [isOpen, handleNext, handlePrev, onClose]);
 
   if (!isOpen) return null;
@@ -69,6 +101,7 @@ const GalleryModal = ({ isOpen, onClose }) => {
   return createPortal(
     <AnimatePresence>
       <motion.div
+        ref={modalRef}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
