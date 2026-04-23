@@ -21,9 +21,12 @@ beforeAll(() => {
 
 vi.mock("framer-motion", async () => {
   const actual = await vi.importActual("framer-motion");
-  const mockComponent = (Tag) => ({ children, whileHover, whileTap, transition, animate, initial, exit, layoutId, ...props }) => (
-    <Tag {...props}>{children}</Tag>
-  );
+  const mockComponent = (tag) => {
+    const Component = tag;
+    return ({ children, whileHover, whileTap, transition, animate, initial, exit, layoutId, ...props }) => (
+      <Component {...props}>{children}</Component>
+    );
+  };
   return {
     ...actual,
     useMotionValue: () => ({ get: () => 0 }),
