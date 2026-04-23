@@ -49,13 +49,13 @@ function ProjectItem({ project, isCoarsePointer, onSelect }) {
     >
       <div className="flex flex-col md:flex-row md:items-center justify-between px-6 md:px-12 z-10 gap-2 md:gap-0">
         <motion.div variants={textVariants} className="flex items-baseline gap-4">
-          <span className="text-xs md:text-sm font-mono text-neutral-500">{category}</span>
-          <h3 className="text-3xl sm:text-4xl md:text-7xl font-black uppercase tracking-tighter text-white mix-blend-difference leading-[0.9]">
+          <span className="text-[10px] md:text-xs font-mono text-neutral-500 uppercase tracking-widest">{category}</span>
+          <h3 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tighter text-white mix-blend-difference leading-[0.9]">
             {title}
           </h3>
         </motion.div>
 
-        <span className="text-sm md:text-lg font-mono text-neutral-500 mix-blend-difference z-10">
+        <span className="text-sm md:text-base font-mono text-neutral-500 mix-blend-difference z-10">
           {year}
         </span>
       </div>

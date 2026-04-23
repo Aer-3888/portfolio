@@ -20,13 +20,13 @@ export default function NavButtons({
         return (
           <motion.div
             key={item.label}
-            className="relative flex items-center justify-center"
+            className="relative flex items-center justify-center cursor-pointer"
             whileHover={{ y: -2 }}
             transition={{ duration: 0.2 }}
+            onClick={item.onClick}
           >
             <button
               type="button"
-              onClick={item.onClick}
               className={isActive ? activeButtonClass : buttonClass}
             >
               {item.label}

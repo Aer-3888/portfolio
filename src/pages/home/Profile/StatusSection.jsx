@@ -4,10 +4,7 @@ import { STATUS_ITEMS } from "../../../config/siteData";
 
 function StatusSection() {
   return (
-    <section className="relative w-full bg-neutral-950 py-32 px-6 md:px-12 border-b border-neutral-900 overflow-hidden">
-      {/* Subtle blend gradient from the Hero section above */}
-      <div className="absolute top-0 left-0 w-full h-[20vh] bg-gradient-to-b from-neutral-900 to-transparent pointer-events-none" />
-
+    <section className="relative w-full bg-neutral-950 pt-0 pb-24 px-6 md:px-12 border-b border-neutral-900 overflow-hidden">
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24 relative z-10">
         {STATUS_ITEMS.map((item, index) => (
           <motion.div

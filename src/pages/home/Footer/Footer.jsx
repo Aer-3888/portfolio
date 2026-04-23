@@ -1,107 +1,101 @@
 import { memo } from "react";
 import CipherText from "./CipherText";
 import { SOCIALS } from "../../../config/siteData";
+import ArcadeMachine from "../../Contact/ArcadeMachine";
 
 function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 w-full h-[50vh] bg-white z-0 flex flex-col justify-between">
-      {/* Mobile View */}
-      <div className="flex md:hidden w-full h-full flex-col px-6 py-8 bg-white">
-        {/* Top: version */}
-        <div className="border-b border-neutral-200 pb-4">
-          <span className="font-mono text-[10px] text-neutral-400 uppercase tracking-widest">
-            © 2026
-          </span>
-        </div>
-
-        {/* Centre: name */}
-        <div className="flex-1 flex items-center">
-          <h2 className="text-5xl font-black text-neutral-900 tracking-tighter uppercase leading-none">
-            Théo
-            <br />
-            <span className="text-neutral-300">Phan.</span>
-          </h2>
-        </div>
-
-        {/* Bottom: email + socials */}
-        <div className="flex flex-col gap-3">
-          <a
-            href="mailto:theo.phan.quoc.huy@gmail.com"
-            className="text-sm font-bold text-neutral-900 hover:text-orange-600 transition-colors tracking-tight"
-          >
-            theo.phan.quoc.huy@gmail.com
-          </a>
-          <div className="flex gap-6">
-            {SOCIALS.map((social) => (
-              <a
-                key={social.label}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-[10px] font-bold uppercase tracking-widest text-neutral-400 hover:text-neutral-900 transition-colors"
-              >
-                {social.label}
-              </a>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop View */}
-      <div className="hidden md:flex w-full h-full flex-col justify-between px-6 md:px-12 py-8">
-        <div className="w-full flex items-start border-b border-neutral-200 pb-4">
-          <span className="font-mono text-sm text-neutral-400 tracking-widest uppercase">
-            © 2026
-          </span>
-        </div>
-
-        <div className="flex-1 flex items-center w-full overflow-hidden py-4">
-          <div className="w-full z-10 mix-blend-hard-light">
-            <CipherText />
-          </div>
-        </div>
-
-        <div className="w-full flex flex-col md:flex-row justify-between items-end pt-4 z-10 bg-white">
-          <div className="flex flex-col gap-1">
-            <span className="text-neutral-400 font-mono text-[10px] uppercase tracking-widest">
-              Get in Touch @
+    <footer id="contact" className="relative w-full bg-neutral-950 py-16 md:py-24 border-t border-white/5 text-white">
+      {/* Desktop & Tablet View */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-16 lg:gap-24">
+        {/* Left: Communication & Details */}
+        <div className="flex-1 space-y-12">
+          <div className="space-y-4">
+            <span className="text-orange-500 font-mono text-[10px] uppercase tracking-[0.4em] block font-bold">
+              Inquiries
             </span>
-            <a
-              href="mailto:theo.phan.quoc.huy@gmail.com"
-              className="text-xl lg:text-3xl font-bold text-neutral-900 hover:text-orange-600 transition-colors tracking-tight"
-            >
-              theo.phan.quoc.huy@gmail.com
-            </a>
+            <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.8]">
+              Get In
+              <br />
+              <span className="text-neutral-700">Touch.</span>
+            </h1>
           </div>
 
-          <div className="flex flex-col items-end gap-4">
+          <div className="space-y-6">
+            <div className="flex flex-col gap-1">
+              <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                Email
+              </span>
+              <a
+                href="mailto:theo.phan.quoc.huy@gmail.com"
+                className="text-xl md:text-2xl font-bold hover:text-orange-500 transition-colors tracking-tight"
+              >
+                theo.phan.quoc.huy@gmail.com
+              </a>
+            </div>
+
+            <div className="flex gap-12 pt-4">
+              <div className="space-y-2">
+                <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                  Location
+                </span>
+                <div className="text-xs font-bold uppercase tracking-wide">Rennes, France</div>
+              </div>
+              <div className="space-y-2">
+                <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                  © 2026
+                </span>
+                <div className="text-xs font-bold uppercase tracking-wide">Portfolio V2</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Socials & Barcode */}
+          <div className="pt-12 flex justify-between items-end">
+            <div className="space-y-4">
+              <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest block font-bold">
+                Social Channels
+              </span>
+              <div className="flex flex-wrap gap-x-6 gap-y-2">
+                {SOCIALS.map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 hover:text-white transition-colors"
+                  >
+                    {social.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+            
             <a
               href="https://github.com/Aer-3888"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:block opacity-50 hover:opacity-100 transition-opacity cursor-pointer group"
-              title="Scan or click to visit GitHub"
+              className="hidden md:block opacity-30 hover:opacity-100 transition-opacity"
             >
               <img
-                src="https://barcode.tec-it.com/barcode.ashx?data=https://github.com/Aer-3888&code=Code128&translate-esc=on"
-                alt="Scan barcode to visit GitHub"
-                className="h-10 group-hover:scale-105 transition-transform"
+                src="https://barcode.tec-it.com/barcode.ashx?data=https://github.com/Aer-3888&code=Code128&translate-esc=on&forecolor=ffffff&backcolor=00000000"
+                alt="Barcode"
+                className="h-8"
               />
             </a>
-
-            <div className="flex gap-6">
-              {SOCIALS.map((social) => (
-                <a key={social.label} href={social.url} className="relative group overflow-hidden">
-                  <span className="block font-mono text-xs text-neutral-900 group-hover:-translate-y-full transition-transform duration-300">
-                    {social.label}
-                  </span>
-                  <span className="absolute top-0 left-0 block font-mono text-xs text-orange-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    {social.label}
-                  </span>
-                </a>
-              ))}
-            </div>
           </div>
+        </div>
+
+        {/* Right: Arcade Game — hidden on small screens */}
+        <div className="hidden lg:flex flex-1 bg-neutral-900/30 rounded-2xl border border-white/5 min-h-[400px]">
+          <ArcadeMachine />
+        </div>
+      </div>
+
+      {/* Cipher Text Background Reveal (Full Width) */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-5 flex items-center justify-center z-0">
+        <div className="w-full mix-blend-overlay">
+          <CipherText />
         </div>
       </div>
     </footer>

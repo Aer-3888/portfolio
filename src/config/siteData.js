@@ -18,7 +18,7 @@ export const STATUS_ITEMS = [
 
 export const NAV_ITEMS = [
   { label: "Projects", path: "/projects" },
-  { label: "About", path: "/about" },
+  { label: "About", path: "/", scrollTo: "about" },
   { label: "Contact", path: "/contact" },
 ];
 

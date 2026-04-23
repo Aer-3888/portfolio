@@ -10,7 +10,7 @@ const blobShapes = [
   "M50,8 C68,10 82,22 88,42 C92,62 88,80 68,92 C48,98 30,94 18,78 C8,62 6,42 14,26 C22,14 35,7 50,8 Z",
 ];
 
-export default function LiquidBackground({ color, intensity, speed }) {
+export default function LiquidBackground({ color, intensity, speed, isPaused = false }) {
   const prefersReduced = useReducedMotion();
   
   // Refs for multiple background blobs for a more cinematic feel
@@ -27,7 +27,7 @@ export default function LiquidBackground({ color, intensity, speed }) {
   }, [prefersReduced]);
 
   useAnimationFrame((_t, delta) => {
-    if (prefersReduced) return;
+    if (prefersReduced || isPaused) return;
 
     // Default values if MotionValues are not provided or not yet ready
     const s = speed ? speed.get() : 0.0004;
@@ -51,11 +51,11 @@ export default function LiquidBackground({ color, intensity, speed }) {
   });
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div className={`fixed inset-0 pointer-events-none z-0 overflow-hidden transition-opacity duration-700 ${isPaused ? 'opacity-20' : 'opacity-100'}`}>
       {/* Background base color driven by scroll */}
       <motion.div 
         style={{ backgroundColor: color }}
-        className="absolute inset-0 transition-colors duration-1000 ease-in-out"
+        className="absolute inset-0"
       />
       
       {/* Drifting liquid blobs */}

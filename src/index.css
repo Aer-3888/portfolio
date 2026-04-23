@@ -57,7 +57,7 @@ a,
   touch-action: manipulation;
 }
 
-/* Global election color*/
+/* Global selection color */
 ::selection {
   background-color: rgba(249, 115, 22, 0.35); /* orange-500 ~ 35% */
   color: white;
@@ -79,17 +79,4 @@ a,
   }
 }
 
-@layer base {
-  .cinematic-container {
-    scroll-snap-type: y proximity;
-    overflow-y: auto;
-    height: 100vh;
-  }
-  .cinematic-scene {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    min-height: 100vh;
-    width: 100%;
-    position: relative;
-  }
-}
+

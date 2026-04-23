@@ -49,7 +49,7 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
                       transition: { delay: 0.1 + index * 0.08, duration: 0.4, ease: "easeOut" },
                     }}
                     exit={{ opacity: 0, x: 20, transition: { duration: 0.2 } }}
-                    className="group relative text-left py-2"
+                    className="group relative text-left py-2 cursor-pointer"
                     onClick={() => {
                       if (typeof item.onClick === "function") item.onClick();
                       if (typeof onClose === "function") onClose();

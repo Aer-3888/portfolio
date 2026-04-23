@@ -1,12 +1,10 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { HobbyList } from "./HobbyList";
 import { hobbies } from "./hobbiesData";
 import VerticalFilmStrip from "./VerticalFilmStrip";
 import { motion } from "framer-motion";
 
-export default function HobbySection() {
-  const navigate = useNavigate();
+export default function HobbySection({ onGalleryOpen }) {
   const [activeId, setActiveId] = useState(hobbies[0].id);
   const [tuple, setTuple] = useState([0, 0]);
 
@@ -20,7 +18,7 @@ export default function HobbySection() {
   };
 
   return (
-    <section className="relative w-full bg-neutral-900 py-12 min-[1025px]:py-32 z-10 overflow-hidden">
+    <section className="relative w-full py-12 min-[1025px]:py-20 z-10 overflow-hidden bg-transparent">
       {/* 1. Mobile and Tablet View (<= 1024px) */}
       <div className="min-[1025px]:hidden w-full flex flex-col gap-8">
         <div className="px-6 mb-4">
@@ -35,6 +33,7 @@ export default function HobbySection() {
             <div
               key={hobby.id}
               className="relative min-w-[78vw] w-[78vw] shrink-0 h-[55vh] bg-neutral-950 rounded-2xl overflow-hidden snap-center border border-white/10 shadow-2xl group"
+              onClick={onGalleryOpen}
             >
               <img
                 src={hobby.src || hobby.img || hobby.image}
@@ -75,11 +74,11 @@ export default function HobbySection() {
         <div className="px-6 mt-2">
           <button
             type="button"
-            onClick={() => navigate("/about")}
+            onClick={onGalleryOpen}
             className="w-full py-4 border border-white/20 active:bg-white/10 transition-colors flex items-center justify-center gap-3"
           >
             <span className="font-mono text-xs font-bold text-white uppercase tracking-[0.2em]">
-              More About Me
+              View Visual Diary
             </span>
             <span className="text-white text-sm">→</span>
           </button>
@@ -106,7 +105,7 @@ export default function HobbySection() {
             type="button"
             whileHover="hover"
             initial="initial"
-            onClick={() => navigate("/about")}
+            onClick={onGalleryOpen}
             className="group relative mt-8 ml-1 px-10 py-5 border border-white/20 overflow-hidden bg-transparent cursor-pointer flex items-center gap-4"
           >
             {/* 1. Fill Animation */}
@@ -122,7 +121,7 @@ export default function HobbySection() {
             {/* 2. Text Content */}
             <div className="relative z-10 flex items-center gap-4 mix-blend-difference">
               <span className="text-white font-mono text-sm font-bold uppercase tracking-[0.2em]">
-                More About Me
+                View Visual Diary
               </span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -147,7 +146,7 @@ export default function HobbySection() {
           <VerticalFilmStrip
             activeHobby={activeHobby}
             direction={tuple[1]}
-            onClick={() => navigate("/about", { state: { openGallery: true } })}
+            onClick={onGalleryOpen}
           />
         </div>
       </div>

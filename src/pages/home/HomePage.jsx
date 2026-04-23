@@ -1,23 +1,24 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Hero from "./Hero/Hero";
 import StatusSection from "./Profile/StatusSection";
+import ExperienceSection from "./Profile/ExperienceSection";
 import ProjectList from "./Projects/ProjectList";
 import Footer from "./Footer/Footer";
 import HobbySection from "./Profile/HobbySection";
 import PageNav from "../../components/layout/PageNav";
-import SystemWindow from "../About/SystemWindow";
 import LiquidBackground from "../../components/home/LiquidBackground";
 
+const CvModal = lazy(() => import("../About/CvModal"));
+const GalleryModal = lazy(() => import("../About/GalleryInspector"));
+
 export default function HomePage() {
-  const containerRef = useRef(null);
   const location = useLocation();
-  const { scrollYProgress } = useScroll({
-    container: containerRef
-  });
+  const { scrollYProgress } = useScroll();
   const [selectedProject, setSelectedProject] = useState(null);
-  const [isSystemFullscreen, setIsSystemFullscreen] = useState(false);
+  const [isCvModalOpen, setIsCvModalOpen] = useState(false);
+  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   // Dynamic background transforms based on scroll progress
   const bgColor = useTransform(
@@ -37,47 +38,39 @@ export default function HomePage() {
   }, [location.state]);
 
   return (
-    <div ref={containerRef} className="cinematic-container">
-      <LiquidBackground color={bgColor} intensity={rippleIntensity} />
+    <div className="bg-neutral-950 overflow-x-hidden">
+      <LiquidBackground color={bgColor} intensity={rippleIntensity} isPaused={!!selectedProject || isGalleryOpen} />
 
       <PageNav
         currentPath="/"
         scrollYProgress={scrollYProgress}
-        isHidden={!!selectedProject || isSystemFullscreen}
+        isHidden={!!selectedProject || isCvModalOpen || isGalleryOpen}
       />
       
-      <motion.main className="relative z-10">
-        <section id="home" className="cinematic-scene">
-          <Hero />
+      <motion.main className="relative z-10 bg-neutral-950 shadow-2xl">
+        <section id="home">
+          <Hero onCvToggle={setIsCvModalOpen} />
         </section>
 
-        <section id="about" className="cinematic-scene">
+        <section id="about">
           <StatusSection />
+          <ExperienceSection />
         </section>
 
-        <section id="projects" className="cinematic-scene">
+        <section id="projects" className="bg-neutral-900 pt-24 pb-0">
           <ProjectList selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         </section>
 
-        <section id="hobbies" className="cinematic-scene">
-          <HobbySection />
+        <section id="hobbies" className="py-24">
+          <HobbySection onGalleryOpen={() => setIsGalleryOpen(true)} />
         </section>
+        </motion.main>
+      <Footer />
 
-        <section id="system" className="cinematic-scene min-h-[200vh]">
-          <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="w-full max-w-7xl mx-auto px-6 md:px-12 py-24"
-          >
-            <SystemWindow onFullscreenChange={setIsSystemFullscreen} />
-          </motion.div>
-        </section>
-
-        <section id="contact" className="cinematic-scene">
-          <Footer />
-        </section>
-      </motion.main>
+      <Suspense fallback={null}>
+        <CvModal isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />
+        <GalleryModal isOpen={isGalleryOpen} onClose={() => setIsGalleryOpen(false)} />
+      </Suspense>
     </div>
   );
 }

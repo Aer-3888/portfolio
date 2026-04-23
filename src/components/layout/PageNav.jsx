@@ -53,18 +53,35 @@ export default function PageNav({
   const barBlur = useTransform(progress, [0, 0.02], ["blur(0px)", "blur(12px)"]);
   const barBorder = useTransform(progress, [0, 0.02], ["rgba(255,255,255,0)", "rgba(255,255,255,0.1)"]);
 
+  const handleNavigate = useCallback(
+    (path, scrollToId) => {
+      if (currentPath === "/" && scrollToId) {
+        // Scroll to anchor on home page
+        const el = document.getElementById(scrollToId);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      } else {
+        // Navigate to dedicated route with scroll state
+        navigate(path, { state: { scrollTo: scrollToId } });
+      }
+      setIsMenuOpen(false);
+    },
+    [currentPath, navigate]
+  );
+
   const navItems = useMemo(
-    () =>
-      NAV_ITEMS.map((item) => ({
-        ...item,
-        onClick: () => navigate(item.path),
-      })),
-    [navigate]
+    () => [
+      { label: "Projects", onClick: () => handleNavigate("/projects", "projects") },
+      { label: "About", onClick: () => handleNavigate("/", "about") },
+      { label: "Contact", onClick: () => handleNavigate("/contact", "contact") },
+    ],
+    [handleNavigate]
   );
 
   const menuItems = useMemo(
     () => [
-      ...(!isDesktop && currentPath ? [{ label: "Home", onClick: () => navigate("/") }] : []),
+      ...(!isDesktop && currentPath !== "/" ? [{ label: "Home", onClick: () => navigate("/") }] : []),
       ...navItems,
     ],
     [isDesktop, currentPath, navItems, navigate]
@@ -83,11 +100,9 @@ export default function PageNav({
             style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
             className="fixed top-10 left-12 z-[1200]"
           >
-            {currentPath ? (
+            {currentPath && currentPath !== "/" ? (
               <HomeButton />
-            ) : (
-              scrollYProgress && <Branding onClick={handleNavigateHome} />
-            )}
+            ) : null}
           </motion.div>
 
           {/* Nav Links */}

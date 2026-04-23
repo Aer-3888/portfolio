@@ -98,7 +98,7 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
 
     observer.observe(containerRef.current);
     return () => observer.disconnect();
-  }, [selectedProject]);
+  }, [selectedProject, setSelectedProject]);
 
   const handleMouseMove = useCallback(
     (e) => {
@@ -132,14 +132,16 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
         setIsHovered(false);
       }}
       onTouchStart={handleTouchStart}
-      className="relative w-full min-h-screen bg-neutral-900 py-20 md:py-32 flex flex-col justify-center cursor-default overflow-hidden"
+      className="relative w-full py-20 flex flex-col justify-center cursor-default overflow-hidden bg-neutral-900"
     >
-      <Cursor
-        key={`${entryPoint?.x}-${entryPoint?.y}`}
-        mouseX={mouseX}
-        mouseY={mouseY}
-        isHovered={isHovered}
-      />
+      {!selectedProject && (
+        <Cursor
+          key={`${entryPoint?.x}-${entryPoint?.y}`}
+          mouseX={mouseX}
+          mouseY={mouseY}
+          isHovered={isHovered}
+        />
+      )}
 
       {/* Header */}
       <div className="container mx-auto px-6 md:px-12 mb-12 md:mb-24 z-10 relative">
@@ -223,6 +225,10 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
           </motion.button>
         </ScrollReveal>
       </div>
+
+      {/* Bottom transition gradient to Hobbies */}
+      <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-transparent to-neutral-900 pointer-events-none z-0" />
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-neutral-900 to-transparent translate-y-full pointer-events-none z-10" />
     </section>
   );
 }
