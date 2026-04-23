@@ -20,6 +20,7 @@ export default defineConfig(({ command }) => ({
     environment: "jsdom",
     globals: true,
     setupFiles: "./src/test-setup.js",
+    exclude: ["**/tests/**", "**/node_modules/**"],
     deps: {
       inline: ["react-router", "react-router-dom"],
     },

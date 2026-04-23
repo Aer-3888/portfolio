@@ -1,6 +1,6 @@
 import { useAnimationFrame, useReducedMotion } from "framer-motion";
 import { useMemo, useRef, useEffect } from "react";
-import { interpolate } from "flubber";
+import * as flubber from "flubber";
 
 // Organic blob shapes
 const blobShapes = [
@@ -12,6 +12,8 @@ const blobShapes = [
 ];
 
 const circlePath = "M50,5 C75,5 95,25 95,50 C95,75 75,95 50,95 C25,95 5,75 5,50 C5,25 25,5 50,5 Z";
+
+const interpolate = flubber.interpolate || (flubber.default && flubber.default.interpolate) || flubber.default;
 
 export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor = "white" }) {
   const prefersReduced = useReducedMotion();

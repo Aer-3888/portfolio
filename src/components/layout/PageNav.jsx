@@ -111,7 +111,9 @@ export default function PageNav({
           >
             {currentPath && currentPath !== "/" ? (
               <HomeButton />
-            ) : null}
+            ) : (
+              scrollYProgress && <Branding onClick={handleNavigateHome} />
+            )}
           </motion.div>
 
           {/* Nav Links */}
