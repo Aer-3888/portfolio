@@ -53,9 +53,9 @@ export default function ProjectsPage() {
     window.scrollTo(0, 0);
   }, []);
 
-  // Skip intro for return visitors
+  // Skip intro for return visitors within the same session
   useEffect(() => {
-    if (localStorage.getItem("hasVisitedProjects")) {
+    if (sessionStorage.getItem("hasVisitedProjects")) {
       setShowIntro(false);
       setHasEntered(true);
     }
@@ -64,7 +64,7 @@ export default function ProjectsPage() {
   // Warp Sequence
   const handleWarp = async () => {
     setHasEntered(true);
-    localStorage.setItem("hasVisitedProjects", "1");
+    sessionStorage.setItem("hasVisitedProjects", "1");
 
     if (prefersReduced) {
       setShowIntro(false);

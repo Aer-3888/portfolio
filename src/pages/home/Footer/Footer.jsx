@@ -1,6 +1,7 @@
 import { memo } from "react";
 import CipherText from "./CipherText";
-import { SOCIALS } from "../../../config/siteData";
+import Barcode from "./Barcode";
+import { SOCIALS, EMAIL } from "../../../config/siteData";
 import ArcadeMachine from "../../Contact/ArcadeMachine";
 
 function Footer() {
@@ -11,13 +12,13 @@ function Footer() {
         {/* Left: Communication & Details */}
         <div className="flex-1 space-y-12">
           <div className="space-y-4">
-            <span className="text-orange-500 font-mono text-[10px] uppercase tracking-[0.4em] block font-bold">
+            <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.4em] block font-bold">
               Inquiries
             </span>
             <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.8]">
               Get In
               <br />
-              <span className="text-neutral-700">Touch.</span>
+              <span className="text-neutral-600">Touch.</span>
             </h1>
           </div>
 
@@ -27,10 +28,10 @@ function Footer() {
                 Email
               </span>
               <a
-                href="mailto:theo.phan.quoc.huy@gmail.com"
+                href={`mailto:${EMAIL}`}
                 className="text-xl md:text-2xl font-bold hover:text-orange-500 transition-colors tracking-tight"
               >
-                theo.phan.quoc.huy@gmail.com
+                {EMAIL}
               </a>
             </div>
 
@@ -75,13 +76,9 @@ function Footer() {
               href="https://github.com/Aer-3888"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden md:block opacity-30 hover:opacity-100 transition-opacity"
+              className="hidden md:block hover:opacity-80 transition-opacity"
             >
-              <img
-                src="https://barcode.tec-it.com/barcode.ashx?data=https://github.com/Aer-3888&code=Code128&translate-esc=on&forecolor=ffffff&backcolor=00000000"
-                alt="Barcode"
-                className="h-8"
-              />
+              <Barcode />
             </a>
           </div>
         </div>

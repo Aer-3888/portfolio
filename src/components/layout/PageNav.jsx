@@ -5,7 +5,6 @@ import HomeButton from "../HomeButton";
 import NavButtons from "../NavButtons";
 import LiquidMenu from "./LiquidMenu";
 import MenuPanel from "../MenuPanel";
-import { NAV_ITEMS } from "../../config/siteData";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useMobileNavVisible from "../../hooks/useMobileNavVisible";
 
@@ -105,16 +104,14 @@ export default function PageNav({
       {isDesktop ? (
         <>
           {/* Desktop Branding — fades with scroll progress */}
-          <motion.div
-            style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
-            className="fixed top-10 left-12 z-[1200]"
-          >
-            {currentPath && currentPath !== "/" ? (
+          {currentPath && currentPath !== "/" && (
+            <motion.div
+              style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
+              className="fixed top-10 left-12 z-[1200]"
+            >
               <HomeButton />
-            ) : (
-              scrollYProgress && <Branding onClick={handleNavigateHome} />
-            )}
-          </motion.div>
+            </motion.div>
+          )}
 
           {/* Nav Links */}
           <NavButtons

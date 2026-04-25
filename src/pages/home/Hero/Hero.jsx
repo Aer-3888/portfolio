@@ -35,7 +35,7 @@ function Hero({ onCvToggle }) {
             y: driftY,
             willChange: "transform, opacity"
           }}
-          className="absolute z-10 w-full flex justify-center top-[65%] -translate-y-1/2"
+          className="absolute z-10 w-full flex justify-center bottom-[8%]"
         >
           <h1 className="text-[15vw] font-black text-white/90 leading-none tracking-tighter whitespace-nowrap [text-shadow:_0_4px_30px_rgba(0,0,0,0.5)]">
             THEO PHAN
@@ -53,7 +53,7 @@ function Hero({ onCvToggle }) {
         >
           <img
             src={`${import.meta.env.BASE_URL}images/me_.png`}
-            alt="Subject"
+            alt="Theo Phan"
             loading="eager"
             fetchPriority="high"
             className="h-[100dvh] w-auto max-w-full object-contain"
@@ -71,12 +71,12 @@ function Hero({ onCvToggle }) {
         {/* Layer 4: Executive Summary Overlay (Visible at Start) */}
         <motion.div
           style={{ opacity: bioOpacity, y: bioY }}
-          className="absolute z-40 top-12 left-6 md:left-12 max-w-lg space-y-6 pt-24"
+          className="absolute z-40 top-0 left-6 md:left-12 max-w-lg space-y-6 pt-20 md:pt-14"
         >
-          <p className="text-white text-xl md:text-3xl font-black tracking-tighter leading-[0.9] uppercase drop-shadow-lg">
+          <p className="text-white text-xl md:text-3xl font-extrabold tracking-tight leading-[0.9] uppercase">
             Engineering systems where technical precision meets creative exploration.
           </p>
-          <p className="text-neutral-400 text-sm md:text-base leading-relaxed font-mono max-w-md drop-shadow-md">
+          <p className="text-neutral-400 text-sm md:text-base leading-relaxed font-mono max-w-md">
             CS Student at INSA Rennes, specializing in AI Engineering and
             Full-Stack development.
           </p>

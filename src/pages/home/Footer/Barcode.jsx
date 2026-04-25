@@ -1,14 +1,13 @@
+const BAR_WIDTHS = [3, 8, 3, 3, 8, 3, 8, 3, 8, 3, 3, 8, 3, 8, 3, 3, 8, 3, 8, 3, 3, 8, 3];
+
 export default function Barcode() {
   return (
-    <div className="flex items-end gap-1 h-16 opacity-50 select-none">
-      {[...Array(20)].map((_, i) => (
+    <div className="flex items-end gap-[2px] h-8 opacity-40 select-none" aria-hidden="true">
+      {BAR_WIDTHS.map((width, i) => (
         <div
           key={i}
-          className="bg-neutral-900"
-          style={{
-            width: Math.random() > 0.5 ? "4px" : "12px",
-            height: "100%",
-          }}
+          className="bg-white shrink-0"
+          style={{ width: `${width}px`, height: "100%" }}
         />
       ))}
     </div>

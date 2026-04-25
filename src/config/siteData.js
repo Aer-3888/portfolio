@@ -1,3 +1,5 @@
+export const EMAIL = "theo.phan.quoc.huy@gmail.com";
+
 export const STATUS_ITEMS = [
   {
     label: "Currently",

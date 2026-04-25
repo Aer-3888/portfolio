@@ -96,7 +96,7 @@ function ExperienceSection() {
             Professional Path
           </span>
           <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
-            Career <span className="text-neutral-700">Milestones.</span>
+            Career <span className="text-neutral-600">Milestones.</span>
           </h2>
         </div>
 

@@ -171,7 +171,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 {project.problem && (
                   <div className="bg-white/[0.03] rounded-lg p-5">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-orange-500 font-mono text-[10px] font-bold">01</span>
+                      <span className="text-neutral-500 font-mono text-[10px] font-bold">01</span>
                       <h4 className="text-xs font-bold text-white uppercase tracking-wide">
                         Problem
                       </h4>
@@ -182,7 +182,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 {project.approach && (
                   <div className="bg-white/[0.03] rounded-lg p-5">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-orange-500 font-mono text-[10px] font-bold">02</span>
+                      <span className="text-neutral-500 font-mono text-[10px] font-bold">02</span>
                       <h4 className="text-xs font-bold text-white uppercase tracking-wide">
                         Approach
                       </h4>
@@ -193,7 +193,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 {project.result && (
                   <div className="bg-white/[0.03] rounded-lg p-5">
                     <div className="flex items-center gap-2 mb-2">
-                      <span className="text-orange-500 font-mono text-[10px] font-bold">03</span>
+                      <span className="text-neutral-500 font-mono text-[10px] font-bold">03</span>
                       <h4 className="text-xs font-bold text-white uppercase tracking-wide">
                         Result
                       </h4>
@@ -219,7 +219,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                     {project.tags?.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 bg-white/5 rounded-full text-xs text-neutral-300"
+                        className="px-3 py-1 bg-orange-950/30 border border-orange-900/40 rounded-full text-xs text-orange-200/70"
                       >
                         {tag}
                       </span>
@@ -251,7 +251,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                     {project.architecture?.map((arch) => (
                       <span
                         key={arch}
-                        className="px-3 py-1 bg-white/5 rounded-full text-xs text-neutral-300"
+                        className="px-3 py-1 border border-white/10 rounded-full text-xs text-neutral-500"
                       >
                         {arch}
                       </span>
@@ -279,16 +279,6 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                   </a>
                 )}
 
-                {!project.isClosedSource && (
-                  <a
-                    href={project.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 border border-white/20 hover:border-white transition-colors cursor-pointer flex items-center justify-center"
-                  >
-                    <span className="text-xl">↗</span>
-                  </a>
-                )}
               </div>
             </div>
           </motion.div>

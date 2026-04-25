@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { SOCIALS } from "../../config/siteData";
+import { SOCIALS, EMAIL } from "../../config/siteData";
 import ArcadeMachine from "./ArcadeMachine";
 import PageNav from "../../components/layout/PageNav";
 
@@ -21,7 +21,7 @@ export default function ContactPage() {
 
   const handleCopyEmail = () => {
     try {
-      navigator.clipboard.writeText("theo.phan.quoc.huy@gmail.com");
+      navigator.clipboard.writeText(EMAIL);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (_e) {
@@ -43,7 +43,7 @@ export default function ContactPage() {
         <div className="lg:col-span-5 flex flex-col justify-between p-10 md:p-16 border-b lg:border-b-0 lg:border-r border-white/5 bg-neutral-900">
           <div className="space-y-16">
             <div className="space-y-4">
-              <span className="text-orange-500 font-mono text-[10px] uppercase tracking-[0.4em] block font-bold">
+              <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.4em] block font-bold">
                 Inquiries
               </span>
               <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.8]">
@@ -66,8 +66,8 @@ export default function ContactPage() {
                     {copied ? "Copied" : "Copy"}
                   </span>
                 </div>
-                <div className="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-orange-500 transition-colors">
-                  theo.phan.quoc.huy@gmail.com
+                <div className="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-orange-500 transition-colors break-all">
+                  {EMAIL}
                 </div>
               </div>
 
