@@ -64,12 +64,12 @@ function HobbyCard({ hobby, index, onClick }) {
 
 export default function HobbySection({ onGalleryOpen }) {
   return (
-    <section className="relative w-full py-24 z-10">
+    <section className="relative w-full py-16 md:py-24 z-10">
       <div className="px-6 md:px-12 mb-10">
         <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.4em] block mb-4">
           Outside the Code
         </span>
-        <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
+        <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
           Personal <span className="text-neutral-600">Interests.</span>
         </h2>
       </div>

@@ -60,31 +60,38 @@ function Hero({ onCvToggle }) {
           />
         </motion.div>
 
-        {/* Layer 3: Front Text Loop (fades out early) */}
+        {/* Layer 3: Front Text Loop (fades out early) — hidden on mobile to avoid clutter */}
         <motion.div
           style={{ opacity: tickerOpacity, scale: initialTextScale, y: driftY }}
-          className="absolute z-30 inset-x-0 top-[65%] -translate-y-1/2"
+          className="absolute z-30 inset-x-0 top-[65%] -translate-y-1/2 hidden md:block"
         >
           <InfiniteLoopText speed={0.2} />
         </motion.div>
 
-        {/* Layer 4: Executive Summary Overlay (Visible at Start) */}
+        {/* Layer 4: Executive Summary Overlay
+            Mobile: anchored to bottom-left so it clears the face/upper-body area of the image.
+            Desktop: anchored to top-left as original. */}
         <motion.div
           style={{ opacity: bioOpacity, y: bioY }}
-          className="absolute z-40 top-0 left-6 md:left-12 max-w-lg space-y-6 pt-20 md:pt-14"
+          className="absolute z-40
+            bottom-[20%] left-6 right-6
+            md:bottom-auto md:top-0 md:left-12 md:right-auto md:w-auto
+            max-w-sm md:max-w-lg
+            space-y-4 md:space-y-6
+            pt-0 md:pt-14"
         >
-          <p className="text-white text-xl md:text-3xl font-extrabold tracking-tight leading-[0.9] uppercase">
+          <p className="text-white text-lg md:text-3xl font-extrabold tracking-tight leading-[1.15] md:leading-[0.9] uppercase">
             Engineering systems where technical precision meets creative exploration.
           </p>
-          <p className="text-neutral-400 text-sm md:text-base leading-relaxed font-mono max-w-md">
+          <p className="text-neutral-400 text-xs md:text-base leading-relaxed font-mono">
             CS Student at INSA Rennes, specializing in AI Engineering and
             Full-Stack development.
           </p>
           <button
             onClick={() => onCvToggle(true)}
-            className="group relative px-6 py-3 border border-white/20 rounded-sm font-mono text-[10px] uppercase tracking-widest text-white overflow-hidden transition-colors hover:text-black cursor-pointer"
+            className="group relative px-6 py-3 min-h-[44px] border border-white/20 rounded-sm font-mono text-[10px] uppercase tracking-widest text-white overflow-hidden transition-colors hover:text-black cursor-pointer"
           >
-            <motion.div 
+            <motion.div
               className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300"
             />
             <span className="relative z-10">View Curriculum Vitae</span>

@@ -15,7 +15,7 @@ function Footer() {
             <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.4em] block font-bold">
               Inquiries
             </span>
-            <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.8]">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.8]">
               Get In
               <br />
               <span className="text-neutral-600">Touch.</span>
@@ -29,7 +29,7 @@ function Footer() {
               </span>
               <a
                 href={`mailto:${EMAIL}`}
-                className="text-xl md:text-2xl font-bold hover:text-orange-500 transition-colors tracking-tight"
+                className="text-base sm:text-xl md:text-2xl font-bold hover:text-orange-500 transition-colors tracking-tight break-all"
               >
                 {EMAIL}
               </a>

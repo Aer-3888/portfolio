@@ -89,13 +89,13 @@ function ExperienceItem({ exp, index }) {
 
 function ExperienceSection() {
   return (
-    <section id="experience" className="relative w-full bg-neutral-950 py-32 px-6 overflow-hidden border-b border-neutral-900">
+    <section id="experience" className="relative w-full bg-neutral-950 py-16 md:py-32 px-6 overflow-hidden border-b border-neutral-900">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-24 text-center">
+        <div className="mb-12 md:mb-24 text-center">
           <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.4em] block mb-4">
             Professional Path
           </span>
-          <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
+          <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
             Career <span className="text-neutral-600">Milestones.</span>
           </h2>
         </div>

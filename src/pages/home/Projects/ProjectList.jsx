@@ -178,7 +178,7 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
         onClose={() => setSelectedProject(null)}
       />
 
-      <div className="container mx-auto px-6 md:px-12 mt-24 z-10 relative flex justify-center md:justify-start">
+      <div className="container mx-auto px-6 md:px-12 mt-12 md:mt-24 z-10 relative flex justify-center md:justify-start">
         <ScrollReveal>
           <motion.button
             whileHover="hover"
