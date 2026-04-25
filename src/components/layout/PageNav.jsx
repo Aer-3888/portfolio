@@ -104,12 +104,19 @@ export default function PageNav({
       {isDesktop ? (
         <>
           {/* Desktop Branding — fades with scroll progress */}
-          {currentPath && currentPath !== "/" && (
+          {currentPath && currentPath !== "/" ? (
             <motion.div
               style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
               className="fixed top-10 left-12 z-[1200]"
             >
               <HomeButton />
+            </motion.div>
+          ) : scrollYProgress && (
+            <motion.div
+              style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
+              className="fixed top-8 left-12 z-[1200]"
+            >
+              <Branding onClick={handleNavigateHome} />
             </motion.div>
           )}
 
