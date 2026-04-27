@@ -126,11 +126,11 @@ export const PROJECTS = [
     logoType: "codeberg",
     offset: -30,
     description:
-      "A full-stack mobile solution for INSA Rennes students that replaces legacy systems with a **reactive dashboard**. It features a secure **native Android bridge** for grade retrieval and an **anonymous data-sharing engine** using **Cloudflare Workers** and **D1** to calculate class averages and performance metrics without compromising **student privacy**.",
+      "A full-stack mobile solution for INSA Rennes students that replaces legacy systems with a **reactive dashboard**. It features a secure **native Android bridge** for grade retrieval and an **anonymous data-sharing engine** using **Cloudflare Workers** and **D1** to store peer submissions, with all class averages and performance metrics computed client-side to keep the backend logic-free.",
     problem:
       "The school portal only shows your own grades. There was no way to know if a 12/20 was average or the top of the class.",
     approach:
-      "Built an anonymous submission system on **Cloudflare Workers + D1** at the edge, so grades get aggregated into class stats without anyone's identity being stored.",
+      "Built an anonymous submission system on **Cloudflare Workers + D1** as a thin storage layer — no computation on the backend. The Flutter app fetches the raw anonymized submissions and computes class stats locally.",
     result:
       "Android app with a **native bridge** that pulls grades directly from the portal and shows real-time class averages and distributions alongside your own results.",
     role: "Team of 2",
@@ -144,7 +144,7 @@ export const PROJECTS = [
   },
   {
     id: "05",
-    title: "EDA Housing",
+    title: "EDA Housing Market",
     year: "2025",
     type: "Data Analysis",
     category: "Personal",

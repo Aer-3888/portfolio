@@ -8,20 +8,21 @@
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage{xcolor}
 
-% --- COLORS AND LINKS ---
+% --- COLORS ---
+\definecolor{accent}{HTML}{1E3A5F}
+
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
-    urlcolor=blue,
+    urlcolor=accent,
     pdftitle={CV - Ingénieur Informatique}
 }
 
 % --- TITLE FORMATTING ---
-\titleformat{\section}{\Large\bfseries\uppercase}{}{0em}{}[\titlerule]
-\titlespacing*{\section}{0pt}{6pt}{3pt}
-
-\titleformat{\subsection}{\large\bfseries}{}{0em}{}
+\titleformat{\section}{\Large\bfseries\color{accent}}{}{0em}{\uppercase}[\color{accent}\titlerule]
+\titlespacing*{\section}{0pt}{5pt}{2pt}
 
 % --- CUSTOM COMMANDS ---
 \newcommand{\job}[4]{
@@ -30,7 +31,12 @@
     \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
         #4
     \end{itemize}
-    \vspace{0.1em}
+    \vspace{0pt}
+}
+
+\newcommand{\shortjob}[3]{
+    \noindent \textbf{#1} \hfill \textbf{#3}\\
+    \textit{#2}\vspace{0.2em}
 }
 
 \newcommand{\degree}[4]{
@@ -39,7 +45,7 @@
     \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
         #4
     \end{itemize}
-    \vspace{0.1em}
+    \vspace{0pt}
 }
 
 \pagestyle{empty}
@@ -51,41 +57,47 @@
     {\LARGE \textbf{Théo PHAN}}\\[0.2em]
     \small
     \href{mailto:theo.phan.quoc.huy@gmail.com}{theo.phan.quoc.huy@gmail.com} $\mid$ +33 6 xx xx xx xx xx $\mid$ Rennes, France\\
-    \href{https://linkedin.com/in/theophanquochuy/}{linkedin.com/in/theophanquochuy/} $\mid$ \href{https://github.com/Aer-3888}{github.com/Aer-3888} $\mid$ \href{https://aer-3888.github.io/portfolio/}{aer-3888.github.io/portfolio}
+    \href{https://linkedin.com/in/theophanquochuy/}{linkedin.com/in/theophanquochuy/} $\mid$ \href{https://github.com/Aer-3888}{github.com/Aer-3888} $\mid$ \href{https://portfolio-theo.pages.dev/}{portfolio-theo.pages.dev}
 \end{center}
 
-% --- PROFILE ---
+% --- PROFIL ---
 \section*{Profil}
-Étudiant ingénieur en informatique (INSA Rennes) avec une expérience concrète en \textbf{Computer Vision} (YOLO, PyTorch) et en \textbf{analyse de données} (Pandas, Matplotlib). Stage de 3 mois en détection d'objets chez FPT Telecom (Vietnam). Disponible pour un \textbf{stage de Juin à Août 2026} en IA/ML ou Data Science.
+Étudiant ingénieur IA/Data à l'INSA Rennes avec un stage en Computer Vision chez FPT Telecom Vietnam, où j'ai entraîné \textbf{YOLOv8} pour la détection de défauts industriels sur câblage fibre optique. Stack ML solide (PyTorch, OpenCV, Scikit-learn). \textbf{Disponible de juin à août 2026} pour un stage en IA/ML ou Data Science.
 
-% --- EXPERIENCE ---
+% --- COMPÉTENCES ---
+\section*{Compétences}
+\begin{itemize}[nosep,leftmargin=1.5em]
+    \item \textbf{IA \& Data :} PyTorch, YOLOv8, OpenCV, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter, R.
+    \item \textbf{Langages de programmation :} Python, C++, Go, Java, SQL, JavaScript/TypeScript, Dart.
+    \item \textbf{Frameworks \& Outils :} React, Flutter, Firebase, Cloudflare Workers, AWS Bedrock, Docker, Git, GitHub Actions, Linux.
+    \item \textbf{Langues :} Français (Natif), Vietnamien (Natif), Anglais (Professionnel courant).
+\end{itemize}
+
+% --- EXPÉRIENCE ---
 \section*{Expérience}
 
-\job{Stagiaire Ingénieur IA - Vision par Ordinateur}
+\job{Stagiaire Ingénieur IA -- Vision par Ordinateur}
     {FPT Telecom, Hanoï (Vietnam)}
     {Avril 2025 -- Juin 2025}
     {
     \item Entraînement et optimisation de modèles \textbf{YOLOv8} avec \textbf{PyTorch} pour la détection de défauts sur câblage fibre optique.
     \item Mise en place d'un pipeline d'annotation et d'augmentation de données pour améliorer la robustesse du modèle.
-    \item Automatisation de l'identification d'anomalies, réduisant le temps d'inspection manuelle.
+    \item Automatisation du pipeline d'identification d'anomalies, réduisant le temps d'inspection manuelle.
     }
 
 \job{Waiki -- Application Mobile (Flutter)}
     {Freelance, Remote}
     {2025 -- Présent}
     {
-    \item Direction technique d'une équipe de 2 étudiants ingénieurs. En utilisant une architecture \textbf{MVVM} avec \textbf{Firebase/SQLite}, filtrage DNS système et déverrouillage \textbf{NFC}.
+    \item Direction d'une équipe de 3 ingénieurs sur une app Flutter \textbf{MVVM} (\textbf{Firebase/SQLite}), filtrage DNS système et déverrouillage \textbf{NFC}.
     \item Gestion de projet en Agile/Scrum avec Kanban et issue-driven development.
     }
 
-\job{Comptable}
+\shortjob{Comptable}
     {Junior Entreprise Ouest INSA, Rennes}
     {2025 -- Présent}
-    {
-    \item Tenue de la comptabilité et suivi financier de la Junior Entreprise.
-    }
 
-% --- PROJECTS ---
+% --- PROJETS ---
 \section*{Projets}
 
 \job{Détection de Maladies des Plantes par IA}
@@ -97,7 +109,15 @@
     \item Analyse des compromis vitesse de détection temps réel vs précision de classification.
     }
 
-\job{Analyse Exploratoire du Marché Immobilier}
+\job{Notes INSA -- Dashboard Étudiant}
+    {Cloudflare Workers, D1 (SQLite), SQL, Flutter}
+    {2026}
+    {
+    \item Backend serverless \textbf{Cloudflare Workers + D1} (base \textbf{SQL} edge) stockant les soumissions de notes anonymisées des étudiants.
+    \item Application mobile \textbf{Flutter} permettant aux étudiants de consulter leurs notes et de se situer par rapport à la promotion.
+    }
+
+\job{Analyse Exploratoire de Données du Marché Immobilier}
     {Python, Pandas, Matplotlib, Seaborn, Folium}
     {2025}
     {
@@ -111,14 +131,7 @@
     \item Dashboard \textbf{C++20/Qt} synchronisant \textbf{Google Sheets} et \textbf{Sage 50}, avec un \textbf{LLM local} (Ollama) pour le mapping automatique de codes comptables.
     }
 
-\job{Notes INSA - Dashboard Étudiant}
-    {Cloudflare Workers, D1 (SQLite), SQL, Flutter}
-    {2026}
-    {
-    \item Backend serverless \textbf{Cloudflare Workers + D1} (base \textbf{SQL} edge) calculant moyennes de classe et métriques de performance sur données anonymisées.
-    }
-
-% --- EDUCATION ---
+% --- FORMATION ---
 \section*{Formation}
 
 \degree{Diplôme d'Ingénieur en Informatique}
@@ -135,20 +148,12 @@
     \item Développement applicatif Full-stack, bases de données, projets en Go et React.
     }
 
-% --- COMPETITIONS ---
+% --- COMPÉTITIONS ---
 \section*{Compétitions}
 \begin{itemize}[nosep,leftmargin=1.5em]
-    \item \textbf{Code Game Jam 2025} : \href{https://afissard.itch.io/lode-aux-etoiles}{L'Ode aux Étoiles} (Thème : "Mélodie à l'Infini").
-    \item \textbf{CTF} (Équipe Crabe) : 2\textsuperscript{e} place IUT CTF, 71\textsuperscript{e}/757 \href{https://ctftime.org/event/3105}{Midnight Flag}.
-\end{itemize}
-
-% --- SKILLS ---
-\section*{Compétences}
-\begin{itemize}[nosep,leftmargin=1.5em]
-    \item \textbf{IA \& Data :} PyTorch, YOLOv8, OpenCV, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter.
-    \item \textbf{Langages :} Python, C++, Go, Java, SQL, JavaScript/TypeScript, Dart.
-    \item \textbf{Frameworks \& Outils :} React, Flutter, Firebase, Cloudflare Workers, Docker, Git, Linux.
-    \item \textbf{Langues :} Français (Natif), Anglais (Professionnel courant).
+    \item \textbf{CTF} (Équipe Crabe) : 2\textsuperscript{e} place IUT CTF, 71\textsuperscript{e}/757 au classement mondial du \href{https://ctftime.org/event/3105}{Midnight Flag CTF 2026}.
+    \item \textbf{AI for Business Hackathon 2026} : Participation à un projet en équipe appliquant des solutions IA à des problématiques business.
+    \item \textbf{Code Game Jam 2025} : \href{https://afissard.itch.io/lode-aux-etoiles}{L'Ode aux Étoiles} (Thème : «~Mélodie à l'Infini~»).
 \end{itemize}
 
 \end{document}

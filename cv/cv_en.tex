@@ -7,20 +7,21 @@
 \usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{titlesec}
+\usepackage{xcolor}
 
-% --- COLORS AND LINKS ---
+% --- COLORS ---
+\definecolor{accent}{HTML}{1E3A5F}
+
 \hypersetup{
     colorlinks=true,
     linkcolor=black,
-    urlcolor=blue,
+    urlcolor=accent,
     pdftitle={CV - Software Engineer}
 }
 
 % --- TITLE FORMATTING ---
-\titleformat{\section}{\Large\bfseries\uppercase}{}{0em}{}[\titlerule]
+\titleformat{\section}{\Large\bfseries\color{accent}}{}{0em}{\uppercase}[\color{accent}\titlerule]
 \titlespacing*{\section}{0pt}{6pt}{3pt}
-
-\titleformat{\subsection}{\large\bfseries}{}{0em}{}
 
 % --- CUSTOM COMMANDS ---
 \newcommand{\job}[4]{
@@ -30,6 +31,11 @@
         #4
     \end{itemize}
     \vspace{0.1em}
+}
+
+\newcommand{\shortjob}[3]{
+    \noindent \textbf{#1} \hfill \textbf{#3}\\
+    \textit{#2}\vspace{0.3em}
 }
 
 \newcommand{\degree}[4]{
@@ -50,39 +56,45 @@
     {\LARGE \textbf{Th\'eo PHAN}}\\[0.2em]
     \small
     \href{mailto:theo.phan.quoc.huy@gmail.com}{theo.phan.quoc.huy@gmail.com} $\mid$ +33 6 xx xx xx xx xx $\mid$ Rennes, France\\
-    \href{https://linkedin.com/in/theophanquochuy/}{linkedin.com/in/theophanquochuy/} $\mid$ \href{https://github.com/Aer-3888}{github.com/Aer-3888} $\mid$ \href{https://aer-3888.github.io/portfolio/}{aer-3888.github.io/portfolio}
+    \href{https://linkedin.com/in/theophanquochuy/}{linkedin.com/in/theophanquochuy/} $\mid$ \href{https://github.com/Aer-3888}{github.com/Aer-3888} $\mid$ \href{https://portfolio-theo.pages.dev/}{portfolio-theo.pages.dev}
 \end{center}
 
 % --- PROFILE ---
 \section*{Profile}
-Computer Science engineering student (INSA Rennes) with hands-on experience in \textbf{Computer Vision} (YOLO, PyTorch) and \textbf{data analysis} (Pandas, Matplotlib). Completed a 3-month object detection internship at FPT Telecom (Vietnam). \textbf{Available for a June--August 2026 internship} in AI/ML or Data Science.
+AI/Data engineering student at INSA Rennes with a Computer Vision internship at FPT Telecom Vietnam, training \textbf{YOLOv8} for industrial defect detection on fiber optic systems. Strong ML stack (PyTorch, OpenCV, Scikit-learn). \textbf{Available June--August 2026} for an AI/ML or Data Science internship.
+
+% --- SKILLS ---
+\section*{Skills}
+\begin{itemize}[nosep,leftmargin=1.5em]
+    \item \textbf{AI \& Data:} PyTorch, YOLOv8, OpenCV, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter, R.
+    \item \textbf{Programming:} Python, C++, Go, Java, SQL, JavaScript/TypeScript, Dart.
+    \item \textbf{Frameworks \& Tools:} React, Flutter, Firebase, Cloudflare Workers, AWS Bedrock, Docker, Git, GitHub Actions, Linux.
+    \item \textbf{Languages:} French (Native), Vietnamese (Native), English (Professional working proficiency).
+\end{itemize}
 
 % --- EXPERIENCE ---
 \section*{Experience}
 
-\job{AI Engineer Intern - Computer Vision}
+\job{AI Engineer Intern -- Computer Vision}
     {FPT Telecom, Hanoi (Vietnam)}
     {April 2025 -- June 2025}
     {
     \item Trained and optimized \textbf{YOLOv8} models with \textbf{PyTorch} for defect detection on fiber optic cabling.
     \item Built a data annotation and augmentation pipeline to improve model robustness.
-    \item Automated anomaly identification, reducing manual inspection time.
+    \item Automated anomaly identification pipeline, reducing manual inspection time.
     }
 
 \job{Waiki -- Mobile Application (Flutter)}
     {Freelance, Remote}
     {2025 -- Present}
     {
-    \item Led a team of 2 engineering students. Using \textbf{MVVM} architecture with \textbf{Firebase/SQLite}, system-wide DNS filtering and physical \textbf{NFC} unlock.
+    \item Led a team of 3 student engineers building a Flutter app with \textbf{MVVM} architecture (\textbf{Firebase/SQLite}), system-wide DNS filtering, and physical \textbf{NFC} unlock.
     \item Managed the project using Agile/Scrum with Kanban and issue-driven development.
     }
 
-\job{Accountant}
+\shortjob{Accountant}
     {Junior Entreprise Ouest INSA, Rennes}
     {2025 -- Present}
-    {
-    \item Bookkeeping and financial tracking for the student-run consulting firm.
-    }
 
 % --- PROJECTS ---
 \section*{Projects}
@@ -96,7 +108,15 @@ Computer Science engineering student (INSA Rennes) with hands-on experience in \
     \item Analyzed trade-offs between real-time detection speed and classification accuracy.
     }
 
-\job{Exploratory Analysis of the Housing Market}
+\job{Notes INSA -- Student Dashboard}
+    {Cloudflare Workers, D1 (SQLite), SQL, Flutter}
+    {2026}
+    {
+    \item Serverless backend with \textbf{Cloudflare Workers + D1} (edge \textbf{SQL} database) storing anonymized grade submissions from students.
+    \item \textbf{Flutter} mobile app letting students view their grades and benchmark themselves against the cohort.
+    }
+
+\job{Exploratory Data Analysis of the Housing Market}
     {Python, Pandas, Matplotlib, Seaborn, Folium}
     {2025}
     {
@@ -108,13 +128,6 @@ Computer Science engineering student (INSA Rennes) with hands-on experience in \
     {2024}
     {
     \item \textbf{C++20/Qt} dashboard synchronizing \textbf{Google Sheets} and \textbf{Sage 50}, with a \textbf{local LLM} (Ollama) for automated accounting code mapping.
-    }
-
-\job{Notes INSA - Student Dashboard}
-    {Cloudflare Workers, D1 (SQLite), SQL, Flutter}
-    {2026}
-    {
-    \item Serverless backend with \textbf{Cloudflare Workers + D1} (edge \textbf{SQL} database) computing class averages and performance metrics on anonymized data.
     }
 
 % --- EDUCATION ---
@@ -137,17 +150,9 @@ Computer Science engineering student (INSA Rennes) with hands-on experience in \
 % --- COMPETITIONS ---
 \section*{Competitions}
 \begin{itemize}[nosep,leftmargin=1.5em]
-    \item \textbf{Code Game Jam 2025}: \href{https://afissard.itch.io/lode-aux-etoiles}{L'Ode aux Étoiles} (Theme: "Infinite Melody").
-    \item \textbf{CTF} (Team Crabe): 2\textsuperscript{nd} place IUT CTF, 71\textsuperscript{st}/757 \href{https://ctftime.org/event/3105}{Midnight Flag}.
-\end{itemize}
-
-% --- SKILLS ---
-\section*{Skills}
-\begin{itemize}[nosep,leftmargin=1.5em]
-    \item \textbf{AI \& Data:} PyTorch, YOLOv8, OpenCV, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter.
-    \item \textbf{Languages:} Python, C++, Go, Java, SQL, JavaScript/TypeScript, Dart.
-    \item \textbf{Frameworks \& Tools:} React, Flutter, Firebase, Cloudflare Workers, Docker, Git, Linux.
-    \item \textbf{Languages:} French (Native), English (Professional working proficiency).
+    \item \textbf{CTF} (Team Crabe): 2\textsuperscript{nd} place IUT CTF, 71\textsuperscript{st}/757 worldwide at \href{https://ctftime.org/event/3105}{Midnight Flag CTF 2026}.
+    \item \textbf{AI for Business Hackathon 2026}: Participated in a team project applying AI solutions to business challenges.
+    \item \textbf{Code Game Jam 2025}: \href{https://afissard.itch.io/lode-aux-etoiles}{L'Ode aux \'Etoiles} (Theme: ``Infinite Melody'').
 \end{itemize}
 
 \end{document}
