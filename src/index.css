@@ -59,12 +59,12 @@ a,
 
 /* Global selection color */
 ::selection {
-  background-color: rgba(249, 115, 22, 0.35); /* orange-500 ~ 35% */
+  background-color: rgba(148, 163, 184, 0.35); /* slate-400 ~ 35% */
   color: white;
 }
 
 ::-moz-selection {
-  background-color: rgba(249, 115, 22, 0.35);
+  background-color: rgba(148, 163, 184, 0.35);
   color: white;
 }
 
@@ -78,5 +78,3 @@ a,
     scroll-behavior: auto !important;
   }
 }
-
-

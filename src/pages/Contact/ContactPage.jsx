@@ -43,7 +43,7 @@ export default function ContactPage() {
         <div className="lg:col-span-5 flex flex-col justify-between p-10 md:p-16 border-b lg:border-b-0 lg:border-r border-white/5 bg-neutral-900">
           <div className="space-y-16">
             <div className="space-y-4">
-              <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.4em] block font-bold">
+              <span className="text-neutral-500 font-mono text-[10px] tracking-[0.3em] block">
                 Inquiries
               </span>
               <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.8]">
@@ -57,16 +57,16 @@ export default function ContactPage() {
               {/* Email Link */}
               <div className="group cursor-pointer block" onClick={handleCopyEmail}>
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                  <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                     Email
                   </span>
                   <span
-                    className={`text-[9px] font-bold text-orange-500 transition-opacity duration-300 ${copied ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                    className={`text-[9px] font-mono text-slate-400 transition-opacity duration-300 ${copied ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
                   >
                     {copied ? "Copied" : "Copy"}
                   </span>
                 </div>
-                <div className="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-orange-500 transition-colors break-all">
+                <div className="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-slate-400 transition-colors break-all">
                   {EMAIL}
                 </div>
               </div>
@@ -74,16 +74,16 @@ export default function ContactPage() {
               {/* Location & Time */}
               <div className="grid grid-cols-2 gap-12 pt-4">
                 <div className="space-y-2">
-                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                  <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                     Location
                   </span>
                   <div className="text-sm font-bold uppercase tracking-wide">Rennes, France</div>
                 </div>
                 <div className="space-y-2">
-                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                  <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                     Local Time
                   </span>
-                  <div className="text-sm font-bold font-mono tracking-tight text-orange-500">
+                  <div className="text-sm font-mono tracking-tight text-slate-400">
                     {time}
                   </div>
                 </div>
@@ -103,7 +103,7 @@ export default function ContactPage() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 hover:text-orange-500 transition-colors"
+                  className="text-[10px] font-mono tracking-[0.2em] text-neutral-500 hover:text-slate-400 transition-colors"
                 >
                   {social.label}
                 </a>

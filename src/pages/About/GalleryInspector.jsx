@@ -15,7 +15,9 @@ const GalleryModal = ({ isOpen, onClose }) => {
     } else {
       document.body.style.overflow = "";
     }
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isOpen]);
 
   // Preload adjacent images
@@ -110,22 +112,36 @@ const GalleryModal = ({ isOpen, onClose }) => {
       >
         {/* Header Metadata */}
         <div className="absolute top-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none">
-          <span className="text-orange-500 font-mono text-[10px] uppercase tracking-[0.4em] font-bold">
+          <span className="text-slate-400 font-mono text-[10px] tracking-[0.3em]">
             Visual Diary — {galleryFiles.indexOf(activeFile) + 1} of {galleryFiles.length}
           </span>
           <div className="flex gap-4 items-center bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
-            <span className="text-white font-mono text-[9px] font-bold uppercase tracking-widest">{activeFile.meta.loc}</span>
+            <span className="text-white font-mono text-[9px] font-bold uppercase tracking-widest">
+              {activeFile.meta.loc}
+            </span>
             <span className="text-white/20">|</span>
-            <span className="text-white/60 font-mono text-[9px] uppercase">{activeFile.meta.aperture} {activeFile.meta.shutter} ISO{activeFile.meta.iso}</span>
+            <span className="text-white/60 font-mono text-[9px] uppercase">
+              {activeFile.meta.aperture} {activeFile.meta.shutter} ISO{activeFile.meta.iso}
+            </span>
           </div>
         </div>
 
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-8 right-8 z-50 p-3 bg-white/5 hover:bg-orange-500 rounded-full text-white transition-all cursor-pointer border border-white/10"
+          className="absolute top-8 right-8 z-50 p-3 bg-white/5 hover:bg-white/10 rounded-full text-white transition-all cursor-pointer border border-white/10"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <line x1="18" y1="6" x2="6" y2="18"></line>
             <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
@@ -144,9 +160,19 @@ const GalleryModal = ({ isOpen, onClose }) => {
           {/* Navigation Arrows */}
           <button
             onClick={handlePrev}
-            className="absolute -left-20 hidden lg:flex p-4 bg-white/5 hover:bg-orange-500 rounded-full text-white transition-all cursor-pointer"
+            className="absolute -left-20 hidden lg:flex p-4 bg-white/5 hover:bg-white/10 rounded-full text-white transition-all cursor-pointer"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M15 18l-6-6 6-6" />
             </svg>
           </button>
@@ -155,14 +181,24 @@ const GalleryModal = ({ isOpen, onClose }) => {
             src={activeFile.url}
             alt={activeFile.name}
             onLoad={() => setIsImageLoading(false)}
-            className={`max-w-[90vw] max-h-[75vh] object-contain shadow-2xl border border-white/10 bg-black transition-opacity duration-500 ${isImageLoading ? 'opacity-0' : 'opacity-100'}`}
+            className={`max-w-[90vw] max-h-[75vh] object-contain shadow-2xl border border-white/10 bg-black transition-opacity duration-500 ${isImageLoading ? "opacity-0" : "opacity-100"}`}
           />
 
           <button
             onClick={handleNext}
-            className="absolute -right-20 hidden lg:flex p-4 bg-white/5 hover:bg-orange-500 rounded-full text-white transition-all cursor-pointer"
+            className="absolute -right-20 hidden lg:flex p-4 bg-white/5 hover:bg-white/10 rounded-full text-white transition-all cursor-pointer"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M9 18l6-6-6-6" />
             </svg>
           </button>

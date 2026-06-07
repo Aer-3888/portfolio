@@ -50,7 +50,11 @@ export default function PageNav({
   // Mobile bar background/blur transforms
   const barBackground = useTransform(progress, [0, 0.02], ["rgba(0,0,0,0)", "rgba(10,10,10,0.8)"]);
   const barBlur = useTransform(progress, [0, 0.02], ["blur(0px)", "blur(12px)"]);
-  const barBorder = useTransform(progress, [0, 0.02], ["rgba(255,255,255,0)", "rgba(255,255,255,0.1)"]);
+  const barBorder = useTransform(
+    progress,
+    [0, 0.02],
+    ["rgba(255,255,255,0)", "rgba(255,255,255,0.1)"]
+  );
 
   const handleNavigate = useCallback(
     (path, scrollToId) => {
@@ -71,29 +75,33 @@ export default function PageNav({
 
   const navItems = useMemo(
     () => [
-      { label: "Projects", path: "/projects", onClick: () => handleNavigate("/projects", "projects") },
+      {
+        label: "Projects",
+        path: "/projects",
+        onClick: () => handleNavigate("/projects", "projects"),
+      },
       { label: "About", path: "/", onClick: () => handleNavigate("/", "about") },
       { label: "Contact", path: "/contact", onClick: () => handleNavigate("/contact", "contact") },
     ],
     [handleNavigate]
   );
 
-  const menuItems = useMemo(
-    () => {
-      const items = !isDesktop && currentPath !== "/" ? [{ label: "Home", path: "/", onClick: () => navigate("/") }] : [];
-      return [
-        ...items,
-        ...navItems.map(item => ({
-          ...item,
-          isActive: currentPath === item.path
-        })),
-      ].map(item => ({
+  const menuItems = useMemo(() => {
+    const items =
+      !isDesktop && currentPath !== "/"
+        ? [{ label: "Home", path: "/", onClick: () => navigate("/") }]
+        : [];
+    return [
+      ...items,
+      ...navItems.map((item) => ({
         ...item,
-        isActive: item.isActive ?? (currentPath === item.path)
-      }));
-    },
-    [isDesktop, currentPath, navItems, navigate]
-  );
+        isActive: currentPath === item.path,
+      })),
+    ].map((item) => ({
+      ...item,
+      isActive: item.isActive ?? currentPath === item.path,
+    }));
+  }, [isDesktop, currentPath, navItems, navigate]);
 
   const handleNavigateHome = useCallback(() => navigate("/"), [navigate]);
 
@@ -111,13 +119,15 @@ export default function PageNav({
             >
               <HomeButton />
             </motion.div>
-          ) : scrollYProgress && (
-            <motion.div
-              style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
-              className="fixed top-8 left-12 z-[1200]"
-            >
-              <Branding onClick={handleNavigateHome} />
-            </motion.div>
+          ) : (
+            scrollYProgress && (
+              <motion.div
+                style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
+                className="fixed top-8 left-12 z-[1200]"
+              >
+                <Branding onClick={handleNavigateHome} />
+              </motion.div>
+            )
           )}
 
           {/* Nav Links */}
@@ -205,11 +215,7 @@ export default function PageNav({
         </motion.div>
       )}
 
-      <MenuPanel
-        isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-        navItems={menuItems}
-      />
+      <MenuPanel isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} navItems={menuItems} />
     </>
   );
 }

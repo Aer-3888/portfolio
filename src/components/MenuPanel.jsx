@@ -25,14 +25,18 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
           >
             <div className="flex flex-col gap-12">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] uppercase tracking-[0.5em] text-white/30 font-mono">Navigation</span>
+                <span className="text-[10px] uppercase tracking-[0.5em] text-white/30 font-mono">
+                  Navigation
+                </span>
                 <button
                   type="button"
                   className="group flex items-center gap-2 text-white/40 hover:text-white transition-colors cursor-pointer"
                   onClick={onClose}
                 >
                   <span className="text-[10px] uppercase tracking-[0.3em] font-mono">Close</span>
-                  <span className="text-lg group-hover:rotate-90 transition-transform duration-300">×</span>
+                  <span className="text-lg group-hover:rotate-90 transition-transform duration-300">
+                    ×
+                  </span>
                 </button>
               </div>
 
@@ -56,20 +60,25 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
                     }}
                     aria-current={item.isActive ? "page" : undefined}
                   >
-                    <span className={`relative z-10 text-3xl font-bold uppercase tracking-[0.15em] transition-colors ${item.isActive ? "text-white" : "text-white/80 group-hover:text-white"}`}>
+                    <span
+                      className={`relative z-10 text-3xl font-bold uppercase tracking-[0.15em] transition-colors ${item.isActive ? "text-white" : "text-white/80 group-hover:text-white"}`}
+                    >
                       {item.label}
                     </span>
-                    <motion.div 
-                      className="absolute left-0 bottom-0 h-[1px] bg-white/20 w-0 group-hover:w-full transition-all duration-500"
-                    />
+                    <motion.div className="absolute left-0 bottom-0 h-[1px] bg-white/20 w-0 group-hover:w-full transition-all duration-500" />
                   </motion.button>
                 ))}
               </nav>
             </div>
 
             <div className="flex flex-col gap-4 border-t border-white/5 pt-8">
-              <p className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-mono">Get in touch</p>
-              <a href="mailto:theo.phan.quoc.huy@gmail.com" className="text-sm text-white/60 hover:text-white transition-colors tracking-widest">
+              <p className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-mono">
+                Get in touch
+              </p>
+              <a
+                href="mailto:theo.phan.quoc.huy@gmail.com"
+                className="text-sm text-white/60 hover:text-white transition-colors tracking-widest"
+              >
                 theo.phan.quoc.huy@gmail.com
               </a>
             </div>

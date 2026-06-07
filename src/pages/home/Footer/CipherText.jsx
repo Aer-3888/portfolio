@@ -77,7 +77,7 @@ export default function CipherText() {
       <motion.span
         animate={prefersReduced ? { opacity: 1 } : { opacity: [0, 1, 0] }}
         transition={prefersReduced ? {} : { repeat: Infinity, duration: 0.8 }}
-        className="text-orange-500 inline-block ml-1 align-baseline"
+        className="text-slate-400 inline-block ml-1 align-baseline"
       >
         _
       </motion.span>

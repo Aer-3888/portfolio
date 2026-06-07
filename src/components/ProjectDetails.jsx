@@ -7,9 +7,12 @@ function RichText({ text, className }) {
     <p className={className}>
       {parts.map((part, i) => {
         if (part.startsWith("**") && part.endsWith("**"))
-          return <b key={i} className="text-white font-semibold">{part.slice(2, -2)}</b>;
-        if (part.startsWith("__") && part.endsWith("__"))
-          return <u key={i}>{part.slice(2, -2)}</u>;
+          return (
+            <b key={i} className="text-white font-semibold">
+              {part.slice(2, -2)}
+            </b>
+          );
+        if (part.startsWith("__") && part.endsWith("__")) return <u key={i}>{part.slice(2, -2)}</u>;
         return part;
       })}
     </p>
@@ -49,7 +52,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
     const previousFocus = document.activeElement;
     window.addEventListener("keydown", handleKeyDown);
-    
+
     // Set initial focus to the close button or first element
     setTimeout(() => {
       const firstFocusable = modalRef.current?.querySelector("button");
@@ -90,7 +93,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div 
+        <div
           ref={modalRef}
           className="fixed inset-0 z-[2000] flex items-center justify-center p-0 md:p-12 overflow-hidden pointer-events-auto"
         >
@@ -108,7 +111,9 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
             initial={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
             animate={prefersReduced ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
             exit={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
-            transition={prefersReduced ? { duration: 0.1 } : { type: "spring", damping: 25, stiffness: 300 }}
+            transition={
+              prefersReduced ? { duration: 0.1 } : { type: "spring", damping: 25, stiffness: 300 }
+            }
             className="relative w-full h-full md:max-w-[1300px] md:max-h-[85vh] md:h-auto bg-neutral-900 border-0 md:border md:border-white/10 overflow-hidden flex flex-col md:flex-row shadow-[0_0_80px_rgba(0,0,0,0.7)]"
           >
             {/* Close Button */}
@@ -164,7 +169,10 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 <h2 className="text-5xl font-black uppercase tracking-tighter text-white mb-4">
                   {project.title}
                 </h2>
-                <RichText text={project.description} className="text-neutral-300 leading-relaxed text-lg" />
+                <RichText
+                  text={project.description}
+                  className="text-neutral-300 leading-relaxed text-lg"
+                />
               </div>
 
               <div className="flex flex-col gap-4">
@@ -176,7 +184,10 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                         Problem
                       </h4>
                     </div>
-                    <RichText text={project.problem} className="text-[14px] text-neutral-400 leading-relaxed" />
+                    <RichText
+                      text={project.problem}
+                      className="text-[14px] text-neutral-400 leading-relaxed"
+                    />
                   </div>
                 )}
                 {project.approach && (
@@ -187,7 +198,10 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                         Approach
                       </h4>
                     </div>
-                    <RichText text={project.approach} className="text-[14px] text-neutral-300 leading-relaxed" />
+                    <RichText
+                      text={project.approach}
+                      className="text-[14px] text-neutral-300 leading-relaxed"
+                    />
                   </div>
                 )}
                 {project.result && (
@@ -198,28 +212,33 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                         Result
                       </h4>
                     </div>
-                    <RichText text={project.result} className="text-[14px] text-neutral-300 leading-relaxed" />
+                    <RichText
+                      text={project.result}
+                      className="text-[14px] text-neutral-300 leading-relaxed"
+                    />
                   </div>
                 )}
               </div>
 
               {project.role && (
                 <div className="flex items-center gap-3">
-                  <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest">Role</span>
+                  <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
+                    Role
+                  </span>
                   <span className="text-sm font-bold text-white">{project.role}</span>
                 </div>
               )}
 
               <div className="flex flex-col gap-6">
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
+                  <h4 className="text-xs font-medium text-neutral-400 tracking-wide mb-3">
                     Stack
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {project.tags?.map((tag) => (
                       <span
                         key={tag}
-                        className="px-3 py-1 bg-orange-950/30 border border-orange-900/40 rounded-full text-xs text-orange-200/70"
+                        className="px-3 py-1 bg-slate-900/40 border border-slate-700/30 rounded-full text-xs text-slate-300/70"
                       >
                         {tag}
                       </span>
@@ -228,7 +247,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
+                  <h4 className="text-xs font-medium text-neutral-400 tracking-wide mb-3">
                     Tools
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -244,7 +263,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-bold text-white uppercase tracking-wide mb-3">
+                  <h4 className="text-xs font-medium text-neutral-400 tracking-wide mb-3">
                     Architecture
                   </h4>
                   <div className="flex flex-wrap gap-2">
@@ -272,13 +291,12 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 bg-white text-black font-mono text-xs font-bold uppercase py-4 tracking-widest hover:bg-orange-500 hover:text-white transition-colors cursor-pointer text-center flex items-center justify-center gap-3"
+                    className="flex-1 bg-white text-black font-mono text-xs font-bold uppercase py-4 tracking-widest hover:bg-slate-200 transition-colors cursor-pointer text-center flex items-center justify-center gap-3"
                   >
                     <ProjectLogo type={project.logoType} />
                     {project.linkText || "View Project Website"}
                   </a>
                 )}
-
               </div>
             </div>
           </motion.div>

@@ -19,7 +19,7 @@ function Hero({ onCvToggle }) {
   const tickerOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
   const bioOpacity = useTransform(scrollYProgress, [0, 0.4, 0.7], [1, 1, 0]);
   const bioY = useTransform(scrollYProgress, [0, 0.4, 0.7], [0, 0, -20]);
-  
+
   // The big name "THEO PHAN" behind the subject
   const nameOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0, 1]);
 
@@ -29,11 +29,11 @@ function Hero({ onCvToggle }) {
       <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
         {/* Layer 1: Big Name Behind Subject */}
         <motion.div
-          style={{ 
-            opacity: nameOpacity, 
-            scale: driftScale, 
+          style={{
+            opacity: nameOpacity,
+            scale: driftScale,
             y: driftY,
-            willChange: "transform, opacity"
+            willChange: "transform, opacity",
           }}
           className="absolute z-10 w-full flex justify-center bottom-[8%]"
         >
@@ -43,11 +43,11 @@ function Hero({ onCvToggle }) {
         </motion.div>
 
         {/* Layer 2: Main Subject Image */}
-        <motion.div 
-          style={{ 
-            scale: driftScale, 
+        <motion.div
+          style={{
+            scale: driftScale,
             y: driftY,
-            willChange: "transform"
+            willChange: "transform",
           }}
           className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
         >
@@ -80,21 +80,17 @@ function Hero({ onCvToggle }) {
             space-y-4 md:space-y-6
             pt-0 md:pt-14"
         >
-          <p className="text-white text-lg md:text-3xl font-extrabold tracking-tight leading-[1.15] md:leading-[0.9] uppercase">
-            Engineering systems where technical precision meets creative exploration.
+          <p className="text-white/90 text-base md:text-xl font-light tracking-wide leading-relaxed">
+            Half engineer, half pixel-pusher.
           </p>
-          <p className="text-neutral-400 text-xs md:text-base leading-relaxed font-mono">
-            CS Student at INSA Rennes, specializing in AI Engineering and
-            Full-Stack development.
+          <p className="text-neutral-500 text-xs md:text-sm leading-relaxed font-mono">
+            CS Student at INSA Rennes. AI Engineering & Full-Stack.
           </p>
           <button
             onClick={() => onCvToggle(true)}
-            className="group relative px-6 py-3 min-h-[44px] border border-white/20 rounded-sm font-mono text-[10px] uppercase tracking-widest text-white overflow-hidden transition-colors hover:text-black cursor-pointer"
+            className="px-6 py-3 min-h-[44px] border border-white/20 rounded-sm font-mono text-[10px] uppercase tracking-widest text-white/70 hover:text-white hover:border-white/50 transition-colors cursor-pointer"
           >
-            <motion.div
-              className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300"
-            />
-            <span className="relative z-10">View Curriculum Vitae</span>
+            View Curriculum Vitae
           </button>
         </motion.div>
 

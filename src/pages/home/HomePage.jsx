@@ -22,8 +22,8 @@ export default function HomePage() {
 
   // Dynamic background transforms based on scroll progress
   const bgColor = useTransform(
-    scrollYProgress, 
-    [0, 0.3, 0.6, 1], 
+    scrollYProgress,
+    [0, 0.3, 0.6, 1],
     ["#0a0a0a", "#111111", "#0f0700", "#000000"]
   );
   const rippleIntensity = useTransform(scrollYProgress, [0, 1], [0.2, 0.8]);
@@ -39,14 +39,18 @@ export default function HomePage() {
 
   return (
     <div className="bg-neutral-950 overflow-x-hidden">
-      <LiquidBackground color={bgColor} intensity={rippleIntensity} isPaused={!!selectedProject || isGalleryOpen} />
+      <LiquidBackground
+        color={bgColor}
+        intensity={rippleIntensity}
+        isPaused={!!selectedProject || isGalleryOpen}
+      />
 
       <PageNav
         currentPath="/"
         scrollYProgress={scrollYProgress}
         isHidden={!!selectedProject || isCvModalOpen || isGalleryOpen}
       />
-      
+
       <motion.main className="relative z-10 bg-neutral-950 shadow-2xl">
         <section id="home">
           <Hero onCvToggle={setIsCvModalOpen} />
@@ -57,14 +61,14 @@ export default function HomePage() {
           <ExperienceSection />
         </section>
 
-        <section id="projects" className="bg-neutral-900 pt-24 pb-0">
+        <section id="projects" className="bg-neutral-900 pt-32 pb-0">
           <ProjectList selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         </section>
 
-        <section id="hobbies" className="py-24">
+        <section id="hobbies" className="py-32">
           <HobbySection onGalleryOpen={() => setIsGalleryOpen(true)} />
         </section>
-        </motion.main>
+      </motion.main>
       <Footer />
 
       <Suspense fallback={null}>

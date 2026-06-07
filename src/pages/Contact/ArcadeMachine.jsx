@@ -26,10 +26,13 @@ export default function ArcadeMachine() {
   const start = () => {
     setState("waiting");
     setScore(null);
-    timerRef.current = setTimeout(() => {
-      setState("active");
-      startRef.current = Date.now();
-    }, Math.random() * 2500 + 1000);
+    timerRef.current = setTimeout(
+      () => {
+        setState("active");
+        startRef.current = Date.now();
+      },
+      Math.random() * 2500 + 1000
+    );
   };
 
   const trigger = () => {
@@ -63,8 +66,7 @@ export default function ArcadeMachine() {
         </span>
         {best && (
           <span className="text-[10px] font-mono text-neutral-500 tracking-widest">
-            Best:{" "}
-            <span className="text-white font-bold">{best}ms</span>
+            Best: <span className="text-white font-bold">{best}ms</span>
           </span>
         )}
       </div>
@@ -80,9 +82,7 @@ export default function ArcadeMachine() {
             transition={{ duration: 0.3 }}
             className="flex-1 flex flex-col items-center justify-center gap-3"
           >
-            <p className="text-4xl font-black text-white tracking-tighter">
-              Ready?
-            </p>
+            <p className="text-4xl font-black text-white tracking-tighter">Ready?</p>
             <p className="text-[10px] font-mono text-neutral-600 uppercase tracking-widest">
               Click anywhere to begin
             </p>
@@ -113,9 +113,7 @@ export default function ArcadeMachine() {
             transition={{ duration: 0.05 }}
             className="flex-1 flex items-center justify-center bg-white"
           >
-            <p className="text-6xl font-black text-black tracking-tighter uppercase">
-              Now
-            </p>
+            <p className="text-6xl font-black text-black tracking-tighter uppercase">Now</p>
           </motion.div>
         )}
 
@@ -127,9 +125,7 @@ export default function ArcadeMachine() {
             exit={{ opacity: 0 }}
             className="flex-1 flex flex-col items-center justify-center gap-3"
           >
-            <p className="text-4xl font-black text-red-400 tracking-tighter">
-              Too early.
-            </p>
+            <p className="text-4xl font-black text-red-400 tracking-tighter">Too early.</p>
             <p className="text-[10px] font-mono text-neutral-600 uppercase tracking-widest">
               Click to retry
             </p>
@@ -144,9 +140,7 @@ export default function ArcadeMachine() {
             exit={{ opacity: 0 }}
             className="flex-1 flex flex-col items-center justify-center gap-3"
           >
-            <p className="text-7xl md:text-8xl font-black text-white tracking-tighter">
-              {score}ms
-            </p>
+            <p className="text-7xl md:text-8xl font-black text-white tracking-tighter">{score}ms</p>
             <p className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
               {getRating(score)}
             </p>

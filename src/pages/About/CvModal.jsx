@@ -114,7 +114,7 @@ export default function CvModal({ isOpen, onClose }) {
                 <a
                   href={`${import.meta.env.BASE_URL}cv${lang === "fr" ? "" : "_en"}.pdf`}
                   download
-                  className="px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider bg-neutral-800 text-white hover:bg-orange-500 transition-colors"
+                  className="px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider bg-neutral-800 text-white hover:bg-slate-600 transition-colors"
                 >
                   Download
                 </a>

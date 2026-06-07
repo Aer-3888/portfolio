@@ -11,11 +11,12 @@ const blobShapes = [
   "M50,8 C68,10 82,22 88,42 C92,62 88,80 68,92 C48,98 30,94 18,78 C8,62 6,42 14,26 C22,14 35,7 50,8 Z",
 ];
 
-const interpolate = flubber.interpolate || (flubber.default && flubber.default.interpolate) || flubber.default;
+const interpolate =
+  flubber.interpolate || (flubber.default && flubber.default.interpolate) || flubber.default;
 
 export default function LiquidBackground({ color, intensity, speed, isPaused = false }) {
   const prefersReduced = useReducedMotion();
-  
+
   // Refs for multiple background blobs for a more cinematic feel
   const pathRefs = [useRef(null), useRef(null), useRef(null)];
   const progressRefs = [useRef(0), useRef(1.5), useRef(3)];
@@ -54,13 +55,12 @@ export default function LiquidBackground({ color, intensity, speed, isPaused = f
   });
 
   return (
-    <div className={`fixed inset-0 pointer-events-none z-0 overflow-hidden transition-opacity duration-700 ${isPaused ? 'opacity-20' : 'opacity-100'}`}>
+    <div
+      className={`fixed inset-0 pointer-events-none z-0 overflow-hidden transition-opacity duration-700 ${isPaused ? "opacity-20" : "opacity-100"}`}
+    >
       {/* Background base color driven by scroll */}
-      <motion.div 
-        style={{ backgroundColor: color }}
-        className="absolute inset-0"
-      />
-      
+      <motion.div style={{ backgroundColor: color }} className="absolute inset-0" />
+
       {/* Drifting liquid blobs */}
       <svg
         viewBox="0 0 100 100"

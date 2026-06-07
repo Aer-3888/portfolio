@@ -6,13 +6,16 @@ import ArcadeMachine from "../../Contact/ArcadeMachine";
 
 function Footer() {
   return (
-    <footer id="contact" className="relative w-full bg-neutral-950 py-16 md:py-24 border-t border-white/5 text-white">
+    <footer
+      id="contact"
+      className="relative w-full bg-neutral-950 py-20 md:py-32 border-t border-white/5 text-white"
+    >
       {/* Desktop & Tablet View */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-16 lg:gap-24">
         {/* Left: Communication & Details */}
         <div className="flex-1 space-y-12">
           <div className="space-y-4">
-            <span className="text-neutral-500 font-mono text-[10px] uppercase tracking-[0.4em] block font-bold">
+            <span className="text-neutral-500 font-mono text-[10px] tracking-[0.3em] block">
               Inquiries
             </span>
             <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.8]">
@@ -24,12 +27,12 @@ function Footer() {
 
           <div className="space-y-6">
             <div className="flex flex-col gap-1">
-              <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+              <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                 Email
               </span>
               <a
                 href={`mailto:${EMAIL}`}
-                className="text-base sm:text-xl md:text-2xl font-bold hover:text-orange-500 transition-colors tracking-tight break-all"
+                className="text-base sm:text-xl md:text-2xl font-bold hover:text-slate-400 transition-colors tracking-tight break-all"
               >
                 {EMAIL}
               </a>
@@ -37,13 +40,13 @@ function Footer() {
 
             <div className="flex gap-12 pt-4">
               <div className="space-y-2">
-                <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                   Location
                 </span>
                 <div className="text-xs font-bold uppercase tracking-wide">Rennes, France</div>
               </div>
               <div className="space-y-2">
-                <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest font-bold">
+                <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                   © 2026
                 </span>
                 <div className="text-xs font-bold uppercase tracking-wide">Portfolio V2</div>
@@ -64,14 +67,14 @@ function Footer() {
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 hover:text-white transition-colors"
+                    className="text-[10px] font-mono tracking-[0.2em] text-neutral-500 hover:text-white transition-colors"
                   >
                     {social.label}
                   </a>
                 ))}
               </div>
             </div>
-            
+
             <a
               href="https://github.com/Aer-3888"
               target="_blank"

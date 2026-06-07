@@ -1,5 +1,11 @@
 import { useRef, useEffect } from "react";
-import { motion, useAnimationFrame, useMotionValue, useReducedMotion, useTransform } from "framer-motion";
+import {
+  motion,
+  useAnimationFrame,
+  useMotionValue,
+  useReducedMotion,
+  useTransform,
+} from "framer-motion";
 import { wrap } from "@motionone/utils";
 import TextStrip from "./TextStrip";
 

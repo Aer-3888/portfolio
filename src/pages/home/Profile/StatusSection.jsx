@@ -15,11 +15,11 @@ function StatusSection() {
             transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col gap-4 md:px-10 first:md:pl-0 last:md:pr-0"
           >
-            <span className="text-[10px] font-mono text-neutral-500 uppercase tracking-widest">
+            <span className="text-[10px] font-mono text-neutral-500 tracking-widest">
               {item.label}
             </span>
             <div className="flex flex-col gap-1">
-              <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight uppercase">
+              <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight">
                 {item.value}
               </h3>
               <p className="text-xs font-mono text-neutral-400">{item.sub}</p>

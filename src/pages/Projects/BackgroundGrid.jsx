@@ -42,7 +42,7 @@ export const BackgrounGrid = () => {
       {particles.map((p, i) => (
         <motion.div
           key={i}
-          className="absolute bg-orange-500 rounded-full opacity-20"
+          className="absolute bg-slate-400 rounded-full opacity-15"
           style={{ width: p.width, height: p.height, left: p.left, top: p.top }}
           animate={{ y: [0, -100], opacity: [0, 0.5, 0] }}
           transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: "linear" }}

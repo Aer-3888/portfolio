@@ -5,8 +5,7 @@ import Lenis from "lenis";
 const isTouchDevice = () =>
   window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
 
-const prefersReducedMotion = () =>
-  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export default function SmoothScroll({ children }) {
   const lenisRef = useRef(null);
