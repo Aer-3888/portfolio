@@ -1,22 +1,20 @@
 import { useAnimationFrame, useReducedMotion } from "framer-motion";
-import { useMemo, useRef, useEffect } from "react";
+import { useMemo, useRef } from "react";
 import * as flubber from "flubber";
 
-// Organic blob shapes
+// Organic blob silhouettes, morphed continuously by flubber.
 const blobShapes = [
-  "M50,10 C70,10 85,20 90,40 C95,60 90,75 70,85 C50,95 30,90 15,75 C5,60 5,40 15,25 C25,15 35,10 50,10 Z",
-  "M50,15 C65,12 80,25 85,45 C88,65 80,82 60,88 C40,92 25,85 18,70 C10,55 12,35 22,22 C32,12 40,16 50,15 Z",
-  "M50,12 C72,15 88,30 92,50 C94,70 85,85 65,90 C45,93 28,88 18,72 C8,56 10,38 20,25 C30,14 38,10 50,12 Z",
-  "M50,8 C68,10 82,22 88,42 C92,62 88,80 68,92 C48,98 30,94 18,78 C8,62 6,42 14,26 C22,14 35,7 50,8 Z",
-  "M50,10 C70,10 85,20 90,40 C95,60 90,75 70,85 C50,95 30,90 15,75 C5,60 5,40 15,25 C25,15 35,10 50,10 Z",
+  "M48,8 C68,5 85,16 91,37 C97,57 92,75 73,86 C57,95 33,94 17,82 C3,71 4,47 12,29 C20,14 33,10 48,8 Z",
+  "M53,6 C73,9 87,25 88,45 C90,67 83,82 61,90 C41,97 21,89 11,71 C2,54 9,33 23,19 C34,9 41,4 53,6 Z",
+  "M50,9 C71,7 91,21 92,46 C94,69 81,87 59,92 C39,97 19,87 12,69 C4,51 7,29 23,17 C34,8 38,10 50,9 Z",
+  "M45,8 C68,3 87,17 93,40 C98,61 89,81 67,90 C45,98 25,91 13,75 C2,59 6,35 19,21 C29,11 33,11 45,8 Z",
+  "M48,8 C68,5 85,16 91,37 C97,57 92,75 73,86 C57,95 33,94 17,82 C3,71 4,47 12,29 C20,14 33,10 48,8 Z",
 ];
-
-const circlePath = "M50,5 C75,5 95,25 95,50 C95,75 75,95 50,95 C25,95 5,75 5,50 C5,25 25,5 50,5 Z";
 
 const interpolate =
   flubber.interpolate || (flubber.default && flubber.default.interpolate) || flubber.default;
 
-export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor = "white" }) {
+export default function LiquidBackground({ isHovered, speed = 0.0018, blobColor = "white" }) {
   const prefersReduced = useReducedMotion();
 
   const morphers = useMemo(() => {
@@ -30,20 +28,13 @@ export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor 
 
   const progressRef = useRef(0);
   const pathRef = useRef(null);
-  const isHoveredRef = useRef(isHovered);
-
-  useEffect(() => {
-    isHoveredRef.current = isHovered;
-    if (isHovered && pathRef.current) {
-      pathRef.current.setAttribute("d", circlePath);
-    }
-  }, [isHovered]);
 
   useAnimationFrame((_t, delta) => {
-    if (prefersReduced || isHoveredRef.current) return;
+    if (prefersReduced || !morphers.length) return;
 
+    // Keep morphing even while hovered.
     const total = morphers.length;
-    const next = progressRef.current + delta * speed;
+    const next = progressRef.current + delta * speed * (isHovered ? 1.6 : 1);
     const wrapped = next % total;
     progressRef.current = wrapped;
 
@@ -54,7 +45,7 @@ export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor 
   });
 
   return (
-    <div className="absolute -inset-4 aspect-square flex items-center justify-center">
+    <div className="absolute -inset-3 aspect-square flex items-center justify-center">
       <svg
         viewBox="0 0 100 100"
         className="w-full h-full"
@@ -66,9 +57,9 @@ export default function LiquidBackground({ isHovered, speed = 0.0007, blobColor 
           d={blobShapes[0]}
           fill={blobColor}
           style={{
-            transform: isHovered ? "scale(0.9)" : "scale(1)",
+            transform: isHovered ? "scale(1.08)" : "scale(1)",
             transformOrigin: "50px 50px",
-            transition: "transform 0.3s ease-out, d 0.3s ease-out",
+            transition: "transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)",
           }}
         />
       </svg>

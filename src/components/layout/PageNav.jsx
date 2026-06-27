@@ -43,7 +43,7 @@ export default function PageNav({
 }) {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  // The home page uses the light "Walden" canvas; other routes stay dark.
+  // Home uses the light canvas; other routes stay dark.
   const isHomeLight = currentPath === "/";
   const mobileNavScrollVisible = useMobileNavVisible();
   const mobileNavVisible = isMobileNavVisible ?? mobileNavScrollVisible;
@@ -122,7 +122,7 @@ export default function PageNav({
     <>
       {isDesktop ? (
         <>
-          {/* Desktop Branding — fades with scroll progress */}
+          {/* Desktop branding, fades on scroll */}
           {currentPath && currentPath !== "/" && (
             <motion.div
               style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
@@ -131,9 +131,7 @@ export default function PageNav({
               <HomeButton />
             </motion.div>
           )}
-          {/* On the home page the persistent wordmark is intentionally dropped:
-              it duplicated the hero name and collided with section eyebrows.
-              The hamburger menu (top-right) carries navigation once scrolled. */}
+          {/* Home: wordmark dropped, the menu carries nav once scrolled */}
 
           {/* Nav Links */}
           <NavButtons
@@ -144,7 +142,7 @@ export default function PageNav({
             className="fixed top-10 right-12 z-[1200] flex gap-10 items-center text-white mix-blend-difference"
           />
 
-          {/* Desktop LiquidMenu — only shown when scrolled */}
+          {/* Desktop menu, shown when scrolled */}
           {scrollYProgress && (
             <motion.div
               style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
@@ -171,7 +169,7 @@ export default function PageNav({
                     <LiquidMenu
                       isOpen={isMenuOpen}
                       toggle={() => setIsMenuOpen((v) => !v)}
-                      blobColor={isHomeLight ? "#3f3f3f" : "#ffffff"}
+                      blobColor={isHomeLight ? "#686867" : "#ffffff"}
                       lineColor={isHomeLight ? "#ffffff" : "#000000"}
                     />
                   </motion.div>
@@ -181,7 +179,7 @@ export default function PageNav({
           )}
         </>
       ) : (
-        /* Mobile nav bar — glassmorphism container */
+        /* Mobile nav bar */
         <motion.div
           style={{
             backgroundColor: barBackground,
