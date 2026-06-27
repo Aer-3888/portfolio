@@ -8,7 +8,8 @@ import MenuPanel from "../MenuPanel";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useMobileNavVisible from "../../hooks/useMobileNavVisible";
 
-const Branding = memo(function Branding({ className = "", onClick }) {
+const Branding = memo(function Branding({ className = "", onClick, variant = "light" }) {
+  const isDark = variant === "dark";
   return (
     <motion.button
       onClick={onClick}
@@ -16,10 +17,18 @@ const Branding = memo(function Branding({ className = "", onClick }) {
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
     >
-      <span className="text-base font-bold tracking-tighter text-white/90 group-hover:text-white transition-colors">
-        Theo Phan
+      <span
+        className={`text-sm font-medium tracking-tight transition-colors ${
+          isDark ? "text-ink group-hover:text-sumi" : "text-white/90 group-hover:text-white"
+        }`}
+      >
+        Théo Phan
       </span>
-      <span className="text-[10px] font-mono uppercase tracking-[0.4em] text-white/40 leading-none group-hover:text-white/60 transition-colors">
+      <span
+        className={`text-[10px] uppercase tracking-[0.3em] leading-none transition-colors ${
+          isDark ? "text-pebble group-hover:text-ash" : "text-white/40 group-hover:text-white/60"
+        }`}
+      >
         Portfolio
       </span>
     </motion.button>
@@ -34,6 +43,8 @@ export default function PageNav({
 }) {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  // The home page uses the light "Walden" canvas; other routes stay dark.
+  const isHomeLight = currentPath === "/";
   const mobileNavScrollVisible = useMobileNavVisible();
   const mobileNavVisible = isMobileNavVisible ?? mobileNavScrollVisible;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -112,23 +123,17 @@ export default function PageNav({
       {isDesktop ? (
         <>
           {/* Desktop Branding — fades with scroll progress */}
-          {currentPath && currentPath !== "/" ? (
+          {currentPath && currentPath !== "/" && (
             <motion.div
               style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
               className="fixed top-10 left-12 z-[1200]"
             >
               <HomeButton />
             </motion.div>
-          ) : (
-            scrollYProgress && (
-              <motion.div
-                style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
-                className="fixed top-8 left-12 z-[1200]"
-              >
-                <Branding onClick={handleNavigateHome} />
-              </motion.div>
-            )
           )}
+          {/* On the home page the persistent wordmark is intentionally dropped:
+              it duplicated the hero name and collided with section eyebrows.
+              The hamburger menu (top-right) carries navigation once scrolled. */}
 
           {/* Nav Links */}
           <NavButtons
@@ -166,8 +171,8 @@ export default function PageNav({
                     <LiquidMenu
                       isOpen={isMenuOpen}
                       toggle={() => setIsMenuOpen((v) => !v)}
-                      blobColor="#ffffff"
-                      lineColor="#000000"
+                      blobColor={isHomeLight ? "#3f3f3f" : "#ffffff"}
+                      lineColor={isHomeLight ? "#ffffff" : "#000000"}
                     />
                   </motion.div>
                 )}

@@ -91,7 +91,7 @@ const TunnelView = forwardRef(function TunnelView(
                 >
                   Selected <br /> <span className="text-neutral-500">Projects</span>
                 </h2>
-                <p className="text-xs text-neutral-500 uppercase tracking-wide mt-6">2024 — 2026</p>
+                <p className="text-xs text-neutral-500 uppercase tracking-wide mt-6">2024 · 2026</p>
               </motion.div>
             </div>
 

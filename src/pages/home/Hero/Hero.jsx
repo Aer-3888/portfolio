@@ -1,6 +1,5 @@
 import { memo, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import InfiniteLoopText from "../../../components/InfiniteLoopText";
 
 function Hero({ onCvToggle }) {
   const containerRef = useRef(null);
@@ -10,94 +9,105 @@ function Hero({ onCvToggle }) {
     offset: ["start start", "end start"],
   });
 
-  // Animation transforms
-  const driftScale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
-  const driftY = useTransform(scrollYProgress, [0, 1], ["0%", "-5%"]);
-  const initialTextScale = useTransform(scrollYProgress, [0, 1], [1.1, 1]);
+  // Subtle scroll motion only.
+  const textY = useTransform(scrollYProgress, [0, 1], [0, -28]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const photoY = useTransform(scrollYProgress, [0, 1], [0, -44]);
 
-  // Opacity Logic
-  const tickerOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
-  const bioOpacity = useTransform(scrollYProgress, [0, 0.4, 0.7], [1, 1, 0]);
-  const bioY = useTransform(scrollYProgress, [0, 0.4, 0.7], [0, 0, -20]);
-
-  // The big name "THEO PHAN" behind the subject
-  const nameOpacity = useTransform(scrollYProgress, [0.1, 0.5], [0, 1]);
+  const ease = [0.22, 1, 0.36, 1];
 
   return (
-    <div ref={containerRef} className="relative h-[110dvh] w-full bg-transparent">
-      {/* Hero Stage */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col items-center justify-center">
-        {/* Layer 1: Big Name Behind Subject */}
+    <div ref={containerRef} className="relative w-full bg-paper">
+      <div className="relative min-h-[100svh] w-full overflow-hidden">
+        {/* Gallery wall-label, top-left */}
         <motion.div
-          style={{
-            opacity: nameOpacity,
-            scale: driftScale,
-            y: driftY,
-            willChange: "transform, opacity",
-          }}
-          className="absolute z-10 w-full flex justify-center bottom-[8%]"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease, delay: 0.1 }}
+          className="absolute top-28 left-6 md:left-12 z-20"
         >
-          <h1 className="text-[15vw] font-black text-white/90 leading-none tracking-tighter whitespace-nowrap [text-shadow:_0_4px_30px_rgba(0,0,0,0.5)]">
-            THEO PHAN
-          </h1>
+          <p className="text-[11px] tracking-[0.18em] uppercase text-ash leading-relaxed">
+            Portfolio · 2026
+          </p>
+          <p className="text-[11px] tracking-[0.18em] uppercase text-pebble leading-relaxed">
+            Rennes, France
+          </p>
         </motion.div>
 
-        {/* Layer 2: Main Subject Image */}
+        {/* Photo cutout */}
         <motion.div
-          style={{
-            scale: driftScale,
-            y: driftY,
-            willChange: "transform",
-          }}
-          className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none"
+          style={{ y: photoY }}
+          initial={{ opacity: 0, scale: 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.4, ease }}
+          className="absolute inset-x-0 bottom-0 z-10 flex justify-center md:justify-end md:right-[4%] pointer-events-none"
         >
           <img
             src={`${import.meta.env.BASE_URL}images/me_.png`}
-            alt="Theo Phan"
+            alt="Théo Phan"
             loading="eager"
             fetchPriority="high"
-            className="h-[100dvh] w-auto max-w-full object-contain"
+            className="h-[52svh] md:h-[88svh] w-auto max-w-full object-contain object-bottom select-none"
           />
         </motion.div>
 
-        {/* Layer 3: Front Text Loop (fades out early) — hidden on mobile to avoid clutter */}
+        {/* Name: the large editorial anchor (top zone on mobile, clear of the photo) */}
         <motion.div
-          style={{ opacity: tickerOpacity, scale: initialTextScale, y: driftY }}
-          className="absolute z-30 inset-x-0 top-[65%] -translate-y-1/2 hidden md:block"
+          style={{ y: textY, opacity: textOpacity }}
+          className="absolute z-20 left-6 right-6 top-40
+            md:left-12 md:right-auto md:top-1/2 md:-translate-y-1/2 md:max-w-[42rem]"
         >
-          <InfiniteLoopText speed={0.2} />
-        </motion.div>
-
-        {/* Layer 4: Executive Summary Overlay
-            Mobile: anchored to bottom-left so it clears the face/upper-body area of the image.
-            Desktop: anchored to top-left as original. */}
-        <motion.div
-          style={{ opacity: bioOpacity, y: bioY }}
-          className="absolute z-40
-            bottom-[20%] left-6 right-6
-            md:bottom-auto md:top-0 md:left-12 md:right-auto md:w-auto
-            max-w-sm md:max-w-lg
-            space-y-4 md:space-y-6
-            pt-0 md:pt-14"
-        >
-          <p className="text-white/90 text-base md:text-xl font-light tracking-wide leading-relaxed">
-            Half engineer, half pixel-pusher.
-          </p>
-          <p className="text-neutral-500 text-xs md:text-sm leading-relaxed font-mono">
-            CS Student at INSA Rennes. AI Engineering & Full-Stack.
-          </p>
-          <button
-            onClick={() => onCvToggle(true)}
-            className="px-6 py-3 min-h-[44px] border border-white/20 rounded-sm font-mono text-[10px] uppercase tracking-widest text-white/70 hover:text-white hover:border-white/50 transition-colors cursor-pointer"
+          <motion.h1
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, ease, delay: 0.25 }}
+            className="text-[clamp(3rem,15vw,3.5rem)] md:text-[clamp(5rem,9vw,8.5rem)]
+              font-normal tracking-[-0.03em] text-ink leading-[0.92]"
           >
-            View Curriculum Vitae
-          </button>
+            Théo Phan
+          </motion.h1>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, ease, delay: 0.45 }}
+            className="mt-6 md:mt-8 max-w-sm"
+          >
+            <p className="text-sm md:text-base text-ash leading-relaxed">
+              Half engineer, half pixel-pusher. A computer-science student at
+              INSA Rennes, building in AI and full-stack.
+            </p>
+
+            <div className="mt-6 h-px w-10 bg-stone" />
+
+            <p className="mt-5 text-[13px] text-ash leading-relaxed">
+              Open to a summer 2026 internship.
+            </p>
+
+            <button
+              onClick={() => onCvToggle(true)}
+              className="group mt-6 inline-flex items-center gap-2 text-[13px] text-ink cursor-pointer"
+            >
+              <span className="border-b border-transparent group-hover:border-ink transition-colors duration-300 pb-0.5">
+                View curriculum vitae
+              </span>
+              <span className="text-ash transition-transform duration-300 group-hover:translate-x-0.5">
+                →
+              </span>
+            </button>
+          </motion.div>
         </motion.div>
 
-        {/* Subtle Gradient Overlays for Depth */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950/80" />
-        </div>
+        {/* Scroll cue */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, ease, delay: 0.9 }}
+          className="absolute bottom-10 left-6 md:left-12 z-20 hidden md:flex items-center gap-3"
+        >
+          <span className="h-8 w-px bg-stone" />
+          <span className="text-[11px] tracking-[0.18em] uppercase text-pebble">Scroll</span>
+        </motion.div>
       </div>
     </div>
   );

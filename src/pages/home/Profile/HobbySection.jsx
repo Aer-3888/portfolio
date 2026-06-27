@@ -2,9 +2,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { hobbies } from "./hobbiesData";
 
-const GRAIN =
-  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
-
 function HobbyCard({ hobby, index, onClick }) {
   const [hovered, setHovered] = useState(false);
 
@@ -14,49 +11,34 @@ function HobbyCard({ hobby, index, onClick }) {
       onClick={onClick}
       onHoverStart={() => setHovered(true)}
       onHoverEnd={() => setHovered(false)}
-      className="relative w-full h-full overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+      className="relative w-full h-full overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-ink"
     >
       <motion.img
         src={hobby.image}
         alt={hobby.title}
         className="absolute inset-0 w-full h-full object-cover"
-        animate={{ scale: hovered ? 1.06 : 1 }}
+        animate={{ scale: hovered ? 1.04 : 1, opacity: hovered ? 1 : 0.95 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       />
 
-      {/* Base gradient */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      {/* A soft footer wash, only enough to keep the small label legible */}
+      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
 
-      {/* Deeper gradient on hover for description legibility */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"
-        animate={{ opacity: hovered ? 1 : 0 }}
-        transition={{ duration: 0.4 }}
-      />
-
-      <div
-        className="absolute inset-0 opacity-[0.08] pointer-events-none"
-        style={{ backgroundImage: GRAIN, backgroundSize: "256px 256px" }}
-      />
-
-      <span className="absolute top-5 left-5 font-mono text-[10px] text-white/30 tracking-widest z-10">
+      <span className="absolute top-4 left-4 text-[11px] text-white/60 tracking-[0.18em] z-10">
         0{index + 1}
       </span>
 
-      {/* Description — anchored independently above the title, never shifts the title */}
+      {/* Description, fades in on hover */}
       <motion.p
-        className="absolute bottom-14 left-0 right-0 px-5 md:px-6 text-xs text-neutral-300 leading-relaxed z-10"
+        className="absolute bottom-12 left-0 right-0 px-5 text-[12px] text-white/85 leading-relaxed z-10"
         animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 6 }}
         transition={{ duration: 0.3, ease: "easeOut" }}
       >
         {hobby.description}
       </motion.p>
 
-      {/* Title — always at bottom, never moves */}
-      <div className="absolute bottom-0 left-0 right-0 px-5 md:px-6 pb-5 z-10">
-        <h3 className="text-xl font-black text-white uppercase tracking-tighter leading-none">
-          {hobby.title}
-        </h3>
+      <div className="absolute bottom-0 left-0 right-0 px-5 pb-4 z-10">
+        <h3 className="text-sm font-medium text-white tracking-tight">{hobby.title}</h3>
       </div>
     </motion.button>
   );
@@ -64,17 +46,17 @@ function HobbyCard({ hobby, index, onClick }) {
 
 export default function HobbySection({ onGalleryOpen }) {
   return (
-    <section className="relative w-full py-24 md:py-32 z-10">
-      <div className="px-6 md:px-12 mb-10">
-        <span className="text-neutral-500 font-mono text-[10px] tracking-[0.3em] block mb-4">
-          Outside the Code
+    <section className="relative w-full bg-paper py-24 md:py-32 border-t border-stone z-10">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-10">
+        <span className="text-[11px] uppercase tracking-[0.18em] text-pebble block mb-3">
+          Outside the code
         </span>
-        <h2 className="text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
-          Personal <span className="text-neutral-600">Interests.</span>
+        <h2 className="text-3xl md:text-5xl font-normal text-ink tracking-[-0.02em] leading-[0.95]">
+          Things I spend time on
         </h2>
       </div>
 
-      <div className="px-6 md:px-12">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-3">
           <div className="h-[420px] md:h-[540px]">
             <HobbyCard hobby={hobbies[0]} index={0} onClick={onGalleryOpen} />
@@ -91,39 +73,19 @@ export default function HobbySection({ onGalleryOpen }) {
         </div>
       </div>
 
-      <div className="px-6 md:px-12 mt-8">
-        <motion.button
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-10">
+        <button
           type="button"
-          whileHover="hover"
-          initial="initial"
           onClick={onGalleryOpen}
-          className="group relative px-10 py-5 border border-white/20 overflow-hidden bg-transparent cursor-pointer flex items-center gap-4"
+          className="group inline-flex items-center gap-2 text-[13px] text-ink cursor-pointer"
         >
-          <motion.div
-            variants={{ initial: { y: "100%" }, hover: { y: "0%" } }}
-            transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-            className="absolute inset-0 bg-white"
-          />
-          <div className="relative z-10 flex items-center gap-4 mix-blend-difference">
-            <span className="text-white font-mono text-sm font-bold uppercase tracking-[0.2em]">
-              View Visual Diary
-            </span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={2}
-              stroke="currentColor"
-              className="w-4 h-4 text-white"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-              />
-            </svg>
-          </div>
-        </motion.button>
+          <span className="border-b border-transparent group-hover:border-ink transition-colors duration-300 pb-0.5">
+            View visual diary
+          </span>
+          <span className="text-ash transition-transform duration-300 group-hover:translate-x-0.5">
+            →
+          </span>
+        </button>
       </div>
     </section>
   );

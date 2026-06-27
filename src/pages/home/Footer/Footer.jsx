@@ -1,73 +1,49 @@
 import { memo } from "react";
-import CipherText from "./CipherText";
-import Barcode from "./Barcode";
 import { SOCIALS, EMAIL } from "../../../config/siteData";
-import ArcadeMachine from "../../Contact/ArcadeMachine";
 
 function Footer() {
   return (
     <footer
       id="contact"
-      className="relative w-full bg-neutral-950 py-20 md:py-32 border-t border-white/5 text-white"
+      className="relative w-full bg-paper py-24 md:py-32 border-t border-stone text-ink"
     >
-      {/* Desktop & Tablet View */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col lg:flex-row gap-16 lg:gap-24">
-        {/* Left: Communication & Details */}
-        <div className="flex-1 space-y-12">
-          <div className="space-y-4">
-            <span className="text-neutral-500 font-mono text-[10px] tracking-[0.3em] block">
-              Inquiries
-            </span>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.8]">
-              Get In
-              <br />
-              <span className="text-neutral-600">Touch.</span>
-            </h1>
+      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
+        <div className="flex flex-col gap-16 md:gap-20">
+          {/* Get in touch */}
+          <div className="flex flex-col gap-6">
+            <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">Get in touch</span>
+            <a
+              href={`mailto:${EMAIL}`}
+              className="text-xl md:text-3xl font-medium tracking-tight text-ink hover:text-sumi transition-colors break-all w-fit border-b border-transparent hover:border-stone pb-1"
+            >
+              {EMAIL}
+            </a>
           </div>
 
-          <div className="space-y-6">
-            <div className="flex flex-col gap-1">
-              <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
-                Email
-              </span>
-              <a
-                href={`mailto:${EMAIL}`}
-                className="text-base sm:text-xl md:text-2xl font-bold hover:text-slate-400 transition-colors tracking-tight break-all"
-              >
-                {EMAIL}
-              </a>
+          {/* Meta row */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-6 border-t border-stone pt-12">
+            <div className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">Location</span>
+              <span className="text-[13px] text-ash">Rennes, France</span>
             </div>
 
-            <div className="flex gap-12 pt-4">
-              <div className="space-y-2">
-                <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
-                  Location
-                </span>
-                <div className="text-xs font-bold uppercase tracking-wide">Rennes, France</div>
-              </div>
-              <div className="space-y-2">
-                <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
-                  © 2026
-                </span>
-                <div className="text-xs font-bold uppercase tracking-wide">Portfolio V2</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Socials & Barcode */}
-          <div className="pt-12 flex justify-between items-end">
-            <div className="space-y-4">
-              <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest block font-bold">
-                Social Channels
+            <div className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">
+                Availability
               </span>
-              <div className="flex flex-wrap gap-x-6 gap-y-2">
+              <span className="text-[13px] text-ash">Summer 2026 internship</span>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">Elsewhere</span>
+              <div className="flex flex-col gap-1.5">
                 {SOCIALS.map((social) => (
                   <a
                     key={social.label}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[10px] font-mono tracking-[0.2em] text-neutral-500 hover:text-white transition-colors"
+                    className="text-[13px] text-ash hover:text-ink transition-colors w-fit"
                   >
                     {social.label}
                   </a>
@@ -75,27 +51,11 @@ function Footer() {
               </div>
             </div>
 
-            <a
-              href="https://github.com/Aer-3888"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden md:block hover:opacity-80 transition-opacity"
-            >
-              <Barcode />
-            </a>
+            <div className="flex flex-col gap-2">
+              <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">© 2026</span>
+              <span className="text-[13px] text-ash">Théo Phan · Portfolio</span>
+            </div>
           </div>
-        </div>
-
-        {/* Right: Arcade Game — hidden on small screens */}
-        <div className="hidden lg:flex flex-1 bg-neutral-900/30 rounded-2xl border border-white/5 min-h-[400px]">
-          <ArcadeMachine />
-        </div>
-      </div>
-
-      {/* Cipher Text Background Reveal (Full Width) */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-5 flex items-center justify-center z-0">
-        <div className="w-full mix-blend-overlay">
-          <CipherText />
         </div>
       </div>
     </footer>

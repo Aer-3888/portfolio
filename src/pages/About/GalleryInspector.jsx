@@ -113,7 +113,7 @@ const GalleryModal = ({ isOpen, onClose }) => {
         {/* Header Metadata */}
         <div className="absolute top-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none">
           <span className="text-slate-400 font-mono text-[10px] tracking-[0.3em]">
-            Visual Diary — {galleryFiles.indexOf(activeFile) + 1} of {galleryFiles.length}
+            Visual Diary · {galleryFiles.indexOf(activeFile) + 1} of {galleryFiles.length}
           </span>
           <div className="flex gap-4 items-center bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
             <span className="text-white font-mono text-[9px] font-bold uppercase tracking-widest">

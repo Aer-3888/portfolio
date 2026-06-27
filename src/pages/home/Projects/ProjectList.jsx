@@ -1,10 +1,11 @@
 import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useSpring, useMotionValue, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import ProjectItem from "./ProjectItem";
 import ProjectDetails from "../../../components/ProjectDetails";
 import { PROJECTS } from "../../../config/siteData";
 
+// Black spotlight that trails the cursor; mix-blend inverts the names to white.
 function Cursor({ mouseX, mouseY, isHovered }) {
   const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
   const xSpring = useSpring(mouseX, springConfig);
@@ -12,31 +13,24 @@ function Cursor({ mouseX, mouseY, isHovered }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.5 }}
-      style={{
-        left: xSpring,
-        top: ySpring,
-      }}
-      animate={{
-        opacity: isHovered ? 0.8 : 0,
-        scale: isHovered ? 1 : 0.5,
-      }}
-      className="fixed w-[160px] h-[160px] sm:w-[200px] sm:h-[200px] md:w-[230px] md:h-[230px] lg:w-[260px] lg:h-[260px] bg-white/90 rounded-full pointer-events-none z-30 -translate-x-1/2 -translate-y-1/2"
+      style={{ left: xSpring, top: ySpring }}
+      initial={{ opacity: 0, scale: 0.4 }}
+      animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.4 }}
+      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+      className="absolute z-0 w-[130px] h-[130px] md:w-[230px] md:h-[230px] bg-black rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"
     />
   );
 }
-
-// Project Data moved to src/config/siteData.js as PROJECTS
 
 // Scroll Reveal Component
 function ScrollReveal({ children, className }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 95%", "end 5%"], // Earlier trigger
+    offset: ["start 95%", "end 5%"],
   });
   const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [30, 0, 0, -30]); // Smaller shift
+  const y = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [24, 0, 0, -24]);
 
   return (
     <motion.div ref={ref} style={{ opacity, y }} className={className}>
@@ -48,9 +42,9 @@ function ScrollReveal({ children, className }) {
 export default function ProjectList({ selectedProject, setSelectedProject }) {
   const containerRef = useRef(null);
   const navigate = useNavigate();
+  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [entryPoint, setEntryPoint] = useState(null);
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -88,7 +82,6 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        // Close modal when section leaves viewport
         if (!entry.isIntersecting && selectedProject !== null) {
           setSelectedProject(null);
         }
@@ -102,15 +95,14 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
 
   const handleMouseMove = useCallback(
     (e) => {
-      // Don't show spotlight on touch devices
       if (isCoarsePointer) return;
-
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-
-      // Only show spotlight after the cursor actually moves inside
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      mouseX.set(x);
+      mouseY.set(y);
       if (!isHovered) {
-        setEntryPoint({ x: e.clientX, y: e.clientY });
+        setEntryPoint({ x, y });
         setIsHovered(true);
       }
     },
@@ -118,7 +110,6 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
   );
 
   const handleTouchStart = useCallback(() => {
-    // Hide spotlight on touch to prevent it showing during scroll
     setIsHovered(false);
   }, []);
 
@@ -127,14 +118,11 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
       id="projects"
       ref={containerRef}
       onMouseMove={handleMouseMove}
-      onMouseEnter={undefined}
-      onMouseLeave={() => {
-        setIsHovered(false);
-      }}
+      onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
-      className="relative w-full py-20 flex flex-col justify-center cursor-default overflow-hidden bg-neutral-900"
+      className="relative isolate w-full bg-paper py-24 md:py-32 flex flex-col justify-center border-t border-stone overflow-hidden cursor-default"
     >
-      {!selectedProject && (
+      {!selectedProject && !isCoarsePointer && (
         <Cursor
           key={`${entryPoint?.x}-${entryPoint?.y}`}
           mouseX={mouseX}
@@ -144,21 +132,19 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
       )}
 
       {/* Header */}
-      <div className="container mx-auto px-6 md:px-12 mb-12 md:mb-24 z-10 relative">
+      <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 mb-12 md:mb-16">
         <ScrollReveal>
-          <div className="flex flex-col gap-4 mb-6 md:mb-8">
-            <h2 className="text-4xl sm:text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none">
-              Selected <span className="text-neutral-600">Works.</span>
-            </h2>
-          </div>
-        </ScrollReveal>
-        <ScrollReveal>
-          <div className="w-full h-[1px] bg-neutral-800/50" />
+          <span className="text-[11px] uppercase tracking-[0.18em] text-neutral-500 mix-blend-difference block mb-3">
+            Selected work
+          </span>
+          <h2 className="text-3xl md:text-5xl font-normal text-white mix-blend-difference tracking-[-0.02em] leading-[0.95]">
+            A few things I&apos;ve built
+          </h2>
         </ScrollReveal>
       </div>
 
       {/* List */}
-      <div className="container mx-auto px-0 z-10 relative">
+      <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12">
         {PROJECTS.slice(0, 5).map((project, i) => (
           <ScrollReveal key={project.id || i} className="w-full">
             <ProjectItem
@@ -178,57 +164,19 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
         onClose={() => setSelectedProject(null)}
       />
 
-      <div className="container mx-auto px-6 md:px-12 mt-12 md:mt-24 z-10 relative flex justify-center md:justify-start">
+      <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 mt-12">
         <ScrollReveal>
-          <motion.button
-            whileHover="hover"
-            initial="initial"
-            className="group relative px-10 py-5 border border-white/20 overflow-hidden bg-transparent cursor-pointer flex items-center gap-4"
+          <button
             onClick={() => navigate("/projects")}
+            className="group inline-flex items-center gap-2 text-[13px] text-white mix-blend-difference cursor-pointer"
           >
-            {/* 1. Fill Animation: Slides up from bottom */}
-            <motion.div
-              variants={{
-                initial: { y: "100%" },
-                hover: { y: "0%" },
-              }}
-              transition={{ duration: 0.4, ease: [0.33, 1, 0.68, 1] }}
-              className="absolute inset-0 bg-white"
-            />
-
-            {/* 2. Text Content */}
-            <div className="relative z-10 flex items-center gap-4 mix-blend-difference">
-              <span className="text-white font-mono text-sm font-bold uppercase tracking-[0.2em]">
-                View All Projects
-              </span>
-
-              {/* Animated Arrow */}
-              <motion.svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                stroke="currentColor"
-                className="w-4 h-4 text-white"
-                variants={{
-                  initial: { x: 0 },
-                  hover: { x: 5 },
-                }}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                />
-              </motion.svg>
-            </div>
-          </motion.button>
+            <span className="border-b border-transparent group-hover:border-white transition-colors duration-300 pb-0.5">
+              View all projects
+            </span>
+            <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+          </button>
         </ScrollReveal>
       </div>
-
-      {/* Bottom transition gradient to Hobbies */}
-      <div className="absolute bottom-0 left-0 w-full h-[30vh] bg-gradient-to-t from-transparent to-neutral-900 pointer-events-none z-0" />
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-b from-neutral-900 to-transparent translate-y-full pointer-events-none z-10" />
     </section>
   );
 }

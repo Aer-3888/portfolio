@@ -28,7 +28,7 @@ function MobileProjectList({ onProjectSelect, onScroll }) {
             <br />
             <span className="text-neutral-600">Projects</span>
           </h2>
-          <p className="text-xs text-neutral-500 uppercase tracking-wide mt-5">2024 — 2026</p>
+          <p className="text-xs text-neutral-500 uppercase tracking-wide mt-5">2024 · 2026</p>
         </div>
 
         {/* Project list */}

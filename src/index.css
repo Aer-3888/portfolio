@@ -17,14 +17,31 @@ html.lenis body {
 
 /* Global styles and custom utilities */
 @theme {
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Inter", ui-monospace, monospace;
   --color-dark: #0a0a0a;
+
+  /* Walden light palette (home page) */
+  --color-paper: #ffffff; /* page canvas */
+  --color-ink: #3f3f3f; /* primary text, borders */
+  --color-stone: #d3cec5; /* hairline borders, dividers */
+  --color-sumi: #030302; /* filled buttons / highest emphasis */
+  --color-ash: #686867; /* secondary text, captions */
+  --color-pebble: #acacac; /* quietest separators, disabled */
 }
 
 body {
   background-color: var(--color-dark);
   color: white;
   font-family: var(--font-sans);
+}
+
+/* Light canvas for the home page wrapper */
+.walden {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 @utility transform-style-3d {
@@ -57,15 +74,15 @@ a,
   touch-action: manipulation;
 }
 
-/* Global selection color */
+/* Global selection color — warm stone, in keeping with the quiet palette */
 ::selection {
-  background-color: rgba(148, 163, 184, 0.35); /* slate-400 ~ 35% */
-  color: white;
+  background-color: rgba(211, 206, 197, 0.6); /* stone */
+  color: #030302;
 }
 
 ::-moz-selection {
-  background-color: rgba(148, 163, 184, 0.35);
-  color: white;
+  background-color: rgba(211, 206, 197, 0.6);
+  color: #030302;
 }
 
 @media (prefers-reduced-motion: reduce) {

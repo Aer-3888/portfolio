@@ -36,7 +36,7 @@ function MobileProjectCard({ project, onSelect }) {
           {project.title}
         </span>
         <span className="text-[10px] text-neutral-600 uppercase tracking-wide mt-0.5 truncate">
-          {project.category} — {project.year}
+          {project.category} · {project.year}
         </span>
       </div>
 

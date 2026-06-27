@@ -161,7 +161,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                   <span className="font-mono text-xs text-neutral-500 uppercase tracking-[0.2em]">
                     {project.type}
                   </span>
-                  <span className="font-mono text-xs text-neutral-600">—</span>
+                  <span className="font-mono text-xs text-neutral-600">·</span>
                   <span className="font-mono text-xs text-neutral-500 uppercase tracking-[0.2em]">
                     {project.year}
                   </span>
