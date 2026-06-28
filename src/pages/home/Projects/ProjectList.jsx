@@ -5,7 +5,9 @@ import ProjectItem from "./ProjectItem";
 import ProjectDetails from "../../../components/ProjectDetails";
 import { PROJECTS } from "../../../config/siteData";
 
-// Black spotlight that trails the cursor; mix-blend inverts the names to white.
+// Black spotlight that trails the cursor, mix-blend inverts the names to white.
+// Positioned with a compositor-only transform (x/y) rather than left/top so the
+// browser skips layout/paint on every frame, which keeps the mix-blend repaint cheap.
 function Cursor({ mouseX, mouseY, isHovered }) {
   const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
   const xSpring = useSpring(mouseX, springConfig);
@@ -13,12 +15,20 @@ function Cursor({ mouseX, mouseY, isHovered }) {
 
   return (
     <motion.div
-      style={{ left: xSpring, top: ySpring }}
-      initial={{ opacity: 0, scale: 0.4 }}
-      animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.4 }}
-      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      className="absolute z-0 w-[130px] h-[130px] md:w-[230px] md:h-[230px] bg-black rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"
-    />
+      style={{ x: xSpring, y: ySpring }}
+      className="absolute left-0 top-0 z-0 pointer-events-none will-change-transform"
+    >
+      {/* Centering wrapper: static transform, kept separate so it never fights
+          the spring transform above or the scale transform below. */}
+      <div className="-translate-x-1/2 -translate-y-1/2">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.4 }}
+          animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.4 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          className="w-[130px] h-[130px] md:w-[230px] md:h-[230px] bg-black rounded-full"
+        />
+      </div>
+    </motion.div>
   );
 }
 
@@ -41,6 +51,7 @@ function ScrollReveal({ children, className }) {
 
 export default function ProjectList({ selectedProject, setSelectedProject }) {
   const containerRef = useRef(null);
+  const rectRef = useRef(null);
   const navigate = useNavigate();
   const [isCoarsePointer, setIsCoarsePointer] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
@@ -77,6 +88,22 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
     };
   }, []);
 
+  // Cache the section's bounding rect so handleMouseMove never forces a
+  // synchronous reflow on every pointer event. Refresh it on scroll/resize,
+  // the only things that move the section relative to the viewport.
+  useEffect(() => {
+    const updateRect = () => {
+      if (containerRef.current) rectRef.current = containerRef.current.getBoundingClientRect();
+    };
+    updateRect();
+    window.addEventListener("scroll", updateRect, { passive: true });
+    window.addEventListener("resize", updateRect);
+    return () => {
+      window.removeEventListener("scroll", updateRect);
+      window.removeEventListener("resize", updateRect);
+    };
+  }, []);
+
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -96,7 +123,7 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
   const handleMouseMove = useCallback(
     (e) => {
       if (isCoarsePointer) return;
-      const rect = e.currentTarget.getBoundingClientRect();
+      const rect = rectRef.current || e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
       mouseX.set(x);

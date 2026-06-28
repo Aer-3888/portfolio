@@ -1,5 +1,4 @@
 import { memo } from "react";
-import { motion } from "framer-motion";
 
 function ProjectItem({ project, isCoarsePointer, onSelect }) {
   const { title, year, services, category, metric } = project;
@@ -23,9 +22,7 @@ function ProjectItem({ project, isCoarsePointer, onSelect }) {
   }
 
   return (
-    <motion.div
-      initial="idle"
-      whileHover="hover"
+    <div
       onClick={() => onSelect(project)}
       className="group relative w-full border-t border-stone flex flex-col justify-center cursor-pointer py-7"
     >
@@ -49,26 +46,24 @@ function ProjectItem({ project, isCoarsePointer, onSelect }) {
         </div>
       </div>
 
-      <motion.div
-        className="flex items-center justify-between overflow-hidden md:pl-[6.25rem]"
-        variants={{
-          idle: { opacity: 0, height: 0, marginTop: 0 },
-          hover: { opacity: 1, height: "auto", marginTop: 12 },
-        }}
-        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <p className="text-[13px] text-neutral-500 mix-blend-difference leading-relaxed">
-          {services}
-        </p>
+      {/* Reveal via grid-template-rows 0fr -> 1fr: a native CSS transition to
+          auto height. No JS height measuring per frame (the old framer
+          height:"auto" tween), so the expand stays smooth under the section's
+          mix-blend repaints. */}
+      <div className="grid grid-rows-[0fr] transition-[grid-template-rows] duration-[450ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:grid-rows-[1fr] md:pl-[6.25rem]">
+        <div className="overflow-hidden min-h-0 transform-gpu will-change-transform">
+          <div className="flex items-center justify-between pt-3 opacity-0 translate-y-1 transition-[transform,opacity] duration-[450ms] delay-[40ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0 group-hover:opacity-100">
+            <p className="text-[13px] text-neutral-500 mix-blend-difference leading-relaxed">
+              {services}
+            </p>
 
-        <motion.span
-          className="text-white mix-blend-difference text-lg shrink-0 ml-4"
-          variants={{ idle: { opacity: 0, x: -8 }, hover: { opacity: 1, x: 0 } }}
-        >
-          →
-        </motion.span>
-      </motion.div>
-    </motion.div>
+            <span className="text-white mix-blend-difference text-lg shrink-0 ml-4 -translate-x-2 opacity-0 transition-[transform,opacity] duration-[450ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-0 group-hover:opacity-100">
+              →
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

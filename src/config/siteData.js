@@ -4,7 +4,7 @@ export const STATUS_ITEMS = [
   {
     label: "Currently",
     value: "CS Student @ INSA Rennes",
-    sub: "3rd-year engineering (INFO)",
+    sub: "3rd-year engineering · AI specialization",
   },
   {
     label: "Focus",
@@ -33,58 +33,66 @@ export const SOCIALS = [
 export const EXPERIENCES = [
   {
     date: "2025 - Present",
-    title: "Engineering Degree",
-    org: "INSA Rennes",
+    title: "Founding Engineer & Tech Lead",
+    org: "Waiki (Freelance)",
     detail:
-      "Specializing in Computer Science. Building on the foundations of AI and Data Engineering.",
-    tags: ["Architecture", "Algorithms", "AI"],
-  },
-  {
-    date: "12/2025 - Present",
-    title: "Freelance Developer",
-    org: "Waiki",
-    detail:
-      "Collaborated on building and optimizing full-stack features and user experiences for client platforms.",
-    tags: ["Freelance", "Full-Stack", "Optimization"],
+      "Led a team of 3 engineering students (Agile/Scrum) from idea to iOS and Android release, now live with 1,425+ units sold. Built the cross-platform Flutter app with phone-wide app blocking and an NFC tap-to-unlock key, reliable even on phones that aggressively close apps.",
+    tags: ["Flutter", "NFC", "DNS Filtering", "Leadership"],
   },
   {
     date: "04/2025 - 06/2025",
     title: "AI Engineer Intern",
     org: "FPT Telecom",
     detail:
-      "Developed object detection models (YOLO/PyTorch) to automate identification of anomalies in fiber optic distribution.",
-    tags: ["Computer Vision", "Object Detection", "PyTorch"],
+      "Built a Python computer-vision pipeline to detect defects on fiber-optic cabling, comparing YOLOv8 and Faster R-CNN on mAP, precision/recall and latency. Delivered a working pipeline and full technical documentation for the internal team.",
+    tags: ["Computer Vision", "PyTorch", "YOLOv8"],
+  },
+  {
+    date: "2025 - 2028",
+    title: "Engineering Degree, Computer Science",
+    org: "INSA Rennes",
+    detail:
+      "Five-year French engineering degree, specializing in Artificial Intelligence.",
+    tags: ["Artificial Intelligence", "Algorithms", "Architecture"],
+  },
+  {
+    date: "2026 - Present",
+    title: "Backend Developer (Volunteer)",
+    org: "Gnut06",
+    detail:
+      "Building features and the Doctrine/MySQL data layer on the association's Symfony 7.1 / PHP platform that powers VR/AR experiences and tech workshops for people with disabilities.",
+    tags: ["Symfony", "PHP", "MySQL", "Docker"],
   },
   {
     date: "2026",
     title: "Cybersecurity Competitor",
-    org: "CTF Tournaments",
+    org: "CTF · Team Crabe",
     detail:
-      "71st/757 worldwide at Midnight Flag CTF 2026. 2nd Place at IUT CTF. Specializing in Cryptography, OSINT, and Network Security.",
+      "71st/757 worldwide at Midnight Flag CTF 2026 and 2nd place at IUT CTF. Focused on cryptography, OSINT, forensics, and network security.",
     tags: ["Security", "Cryptography", "CTF"],
   },
   {
-    date: "12/2025 - Present",
+    date: "2025 - Present",
     title: "Accountant",
-    org: "Ouest INSA",
+    org: "Junior Entreprise Ouest INSA",
     detail:
-      "Managing financial oversight and budget tracking. Developed a custom AI solution to automate accounting entries and streamline administrative workflows.",
-    tags: ["AI Automation", "Management", "Rigour"],
+      "Managing financial flows and budget tracking for a student-led engineering consultancy. Built a custom tool to automate accounting entries and streamline admin workflows.",
+    tags: ["Management", "Automation", "Rigour"],
   },
   {
     date: "2023 - 2025",
     title: "BUT Informatique",
     org: "IUT Nantes",
     detail:
-      "Application Development Track. Built full-stack projects: Real Estate Data Analysis (Pandas) and E-commerce platforms.",
-    tags: ["Go", "React", "Node.js", "SQL", "Pandas"],
+      "Application development track: design, development and validation. Built full-stack projects including real-estate data analysis and e-commerce platforms.",
+    tags: ["React", "Node.js", "Go", "SQL", "Pandas"],
   },
   {
-    date: "08/2022",
+    date: "2022",
     title: "Admin Assistant",
     org: "BMW Alphabet",
     detail:
-      "Digitization of contracts and resolving formatting inconsistencies. Developed rigor and professional adaptability.",
+      "Digitized contracts and resolved formatting inconsistencies. Developed rigor and professional adaptability.",
     tags: ["Organization", "Adaptability"],
   },
 ];
@@ -92,39 +100,9 @@ export const EXPERIENCES = [
 export const PROJECTS = [
   {
     id: "01",
-    title: "SafeWalk",
-    year: "2026",
-    metric: "Survives OS kills · HMAC-SHA256",
-    type: "Mobile Security",
-    category: "Personal",
-    services: "Android - Fused Location - Cryptography",
-    img: "https://images.unsplash.com/photo-1555861496-faa3a07675f9?q=80&w=2670", // Placeholder
-    url: "#",
-    linkText: "Security Project",
-    logoType: "github",
-    offset: 0,
-    description:
-      "A native Android application focused on continuous user safety through geolocation and cryptographic verification. Features continuous GPS tracking via **Fused Location Provider** within a `START_STICKY` Foreground Service.",
-    problem:
-      "Needed a resilient mobile safety solution that guarantees location tracking continuity and message integrity even in constrained OS environments.",
-    approach:
-      "Implemented a background service robust against OS kills, coupled with **HMAC-SHA256** signing via **Android Keystore** for secure message verification and BLE scanning for beacon check-ins.",
-    result:
-      "A highly resilient safety application with session persistence that survives service restarts, tailored for security-first environments.",
-    role: "Solo Project",
-    tags: ["Android Native", "Kotlin", "Cryptography", "BLE", "Foreground Services"],
-    tools: ["Android Studio", "Android Keystore API"],
-    architecture: [
-      "Native Android Architecture",
-      "Secure Geolocation",
-      "Resilient Background Services",
-    ],
-  },
-  {
-    id: "02",
     title: "Waiki",
     year: "2025",
-    metric: "Shipped iOS + Android · led team of 3",
+    metric: "Live on iOS + Android · 1,425+ units sold",
     type: "Mobile Development",
     category: "Freelance",
     services: "Flutter - NFC Auth - DNS Filtering",
@@ -134,14 +112,14 @@ export const PROJECTS = [
     logoType: "website",
     offset: 120,
     description:
-      "A digital wellness solution designed to combat **social media addiction**. Waiki combines **system-wide DNS filtering** (via a VPN service) and an **AccessibilityService** with a physical hardware barrier, requiring users to scan an **NFC device** (NTAG 424 DNA with AES-128 CMAC) to unlock distracting apps. Developed in an Agile/Scrum environment by leading a team of fellow engineering students.",
+      "A mobile app that helps people break **social-media addiction**. It blocks distracting apps across the whole phone and only unlocks them when you tap a small **NFC tag**, a physical key that can't be copied, so the barrier feels real instead of a setting you can switch off. Built in **Flutter** for iPhone and Android while leading a small student team.",
     problem:
-      "Software blockers are bypassable in seconds. The friction has to be physical, not digital, or people just won't feel it.",
+      "People know they scroll too much, but app blockers are too easy to switch off. The barrier had to feel real, not just a setting you can tap away.",
     approach:
-      "Paired system-wide DNS filtering and accessibility monitoring with a hardware-backed anti-cloning NFC tag as a physical key via native MethodChannels.",
+      "We paired phone-wide content filtering with a physical key: to unlock a distracting app, you tap a small **NFC tag** with your phone. The tag can't be copied, so the friction is genuine. Built once in **Flutter** for both iPhone and Android.",
     result:
-      "Shipped on **iOS and Android** with resilient background processes (`START_STICKY`) that survive power-saving modes like MIUI. Led a team of 3 engineering students through the full product cycle.",
-    role: "Lead Developer, Freelance",
+      "Launched on the **App Store and Google Play**, now live with **1,425+ units sold**. The app keeps running reliably in the background, even on phones that aggressively close apps. I led a team of 3 from first idea to release.",
+    role: "Founding Engineer & Tech Lead, Freelance",
     tags: ["Flutter", "Dart", "Kotlin/Swift", "Firebase", "NFC"],
     tools: ["Android Studio", "Git", "GitHub Issues", "Kanban"],
     architecture: [
@@ -151,63 +129,37 @@ export const PROJECTS = [
     ],
   },
   {
-    id: "03",
-    title: "Notes INSA",
+    id: "09",
+    title: "GardeFou",
     year: "2026",
-    metric: "Cloudflare Workers + D1 · client-side stats",
-    type: "Mobile Development",
+    metric: "Prompt-injection lab · red team then blue team",
+    type: "AI Security",
     category: "Personal",
-    services: "Flutter - Cloudflare Workers - D1 Database",
-    img: "https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=2670",
-    url: "https://codeberg.org/AerLight/Notes_insa",
-    linkText: "View Source Code",
-    logoType: "codeberg",
-    offset: -50,
+    services: "LLM Security - RAG - Python",
+    img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2670", // Placeholder
+    url: "https://github.com/Aer-3888/GardeFou",
+    linkText: "View Repository",
+    logoType: "github",
+    offset: 0,
     description:
-      "A full-stack mobile solution for INSA Rennes students that replaces legacy systems with a **reactive dashboard**. It features a secure **native Android bridge** for grade retrieval and an **anonymous data-sharing engine** using **Cloudflare Workers** and **D1** to store peer submissions, with all class averages and performance metrics computed client-side to keep the backend logic-free.",
+      "An **AI security** lab built around a deliberately vulnerable **RAG** assistant that answers questions over financial documents. It is a hands-on target for learning how to attack large language model apps and then harden them, because with an LLM the prompt is also the data.",
     problem:
-      "The school portal only shows your own grades. There was no way to know if a 12/20 was average or the top of the class.",
+      "LLM apps have a new attack surface. The prompt is also the data, so a malicious instruction hidden inside a document can quietly hijack the model. I wanted to study that hands-on instead of just reading about it.",
     approach:
-      "Built an anonymous submission system on **Cloudflare Workers + D1** as a thin storage layer, with no computation on the backend. The Flutter app fetches the raw anonymized submissions and computes class stats locally.",
+      "Built a small **RAG** Q&A assistant over synthetic financial documents in **Python**, then worked it in phases. First red team it to leak data and follow hidden instructions, then blue team it with guardrails, and finally measure that the same attacks now fail and map each finding to industry frameworks.",
     result:
-      "Android app with a **native bridge** that pulls grades directly from the portal and shows real-time class averages and distributions alongside your own results.",
-    role: "Team of 2",
-    tags: ["Flutter", "Cloudflare Workers", "D1 Database", "Riverpod", "SQL"],
-    tools: ["Android Studio", "Wrangler", "VS Code", "Git"],
+      "A working lab that demonstrates real prompt-injection attacks and the guardrails that stop them, with before and after evidence for each finding. A clear, repeatable way to show how LLM apps break and how to defend them.",
+    role: "Solo Project",
+    tags: ["Python", "RAG", "LLM Security", "Prompt Injection", "Chroma", "Ollama"],
+    tools: ["FastAPI", "Streamlit", "sentence-transformers"],
     architecture: [
-      "Riverpod (State Management)",
-      "Edge Computing (Serverless)",
-      "Feature-First Architecture",
+      "Local RAG Pipeline",
+      "Red Team / Blue Team",
+      "Framework-Mapped Findings",
     ],
   },
   {
-    id: "04",
-    title: "Intelligent File Manager",
-    year: "2025",
-    metric: "SBERT vs CLIP comparative study",
-    type: "AI Research",
-    category: "Research",
-    services: "Semantic Search - SBERT - CLIP",
-    img: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2670", // Placeholder
-    url: "#",
-    linkText: "Research Project",
-    logoType: "github",
-    offset: -30,
-    description:
-      "A conceptual file management system using semantic embeddings to organize and retrieve files. Conducted comparative research studies evaluating **SBERT** and **CLIP** for cross-modal search capabilities, specifically analyzing precision versus latency trade-offs.",
-    problem:
-      "Traditional file managers rely on strict hierarchical structures and exact keyword matches, making retrieval difficult when exact filenames are forgotten.",
-    approach:
-      "Explored replacing traditional indexing with vector embeddings, allowing natural language and cross-modal queries to find relevant files based on semantic meaning.",
-    result:
-      "Produced comprehensive research comparing embedding models, establishing foundational metrics for a future functional prototype.",
-    role: "Solo Project",
-    tags: ["Python", "SBERT", "CLIP", "Machine Learning"],
-    tools: ["Jupyter Notebook", "PyTorch"],
-    architecture: ["Vector Embeddings", "Semantic Search", "Cross-modal Retrieval"],
-  },
-  {
-    id: "05",
+    id: "03",
     title: "Plant Detection",
     year: "2025",
     metric: "mAP@50 0.90 · 85.8% recall",
@@ -220,13 +172,13 @@ export const PROJECTS = [
     logoType: "github",
     offset: 0,
     description:
-      "A full **computer vision pipeline** for plant disease detection, comparing **YOLOv8/v11** and **Faster R-CNN** (ResNet-50 FPN) across classification and detection tasks on the **PlantVillage** and **PlantDoc** datasets.",
+      "An **AI computer-vision** project that detects plant disease from photos. It compares several leading image-recognition models (including YOLO and Faster R-CNN) to find which performs best on real, messy field images.",
     problem:
-      "I wanted to see how far off-the-shelf models could get on a real agricultural problem, and which family was actually worth using for detection versus classification.",
+      "Spotting crop disease early is hard to do by eye at scale. I wanted to know how well today's ready-made AI vision models cope with messy, real-world photos of plants.",
     approach:
-      "Evaluated YOLOv8/v11 against Faster R-CNN on diverse datasets. Handled complex backgrounds and varying lighting conditions by implementing custom data augmentation pipelines.",
+      "Trained and compared several leading image-recognition models on public plant-disease datasets, then improved their accuracy by varying the training images to mimic real conditions like odd lighting and busy backgrounds.",
     result:
-      "**Faster R-CNN** achieved a **mAP@50 of 0.90** and **85.8% recall** on PlantDoc, demonstrating superior detection performance despite YOLO's speed advantage.",
+      "The strongest model (**Faster R-CNN**) correctly located diseased areas around **90% of the time** (mAP@50 0.90, 85.8% recall), showing which approach is genuinely worth using in the field.",
     role: "Solo Project",
     tags: ["Python", "PyTorch", "EfficientNet", "YOLOv8", "Faster R-CNN", "OpenCV"],
     tools: ["Jupyter Notebook", "Kaggle API"],
@@ -237,10 +189,96 @@ export const PROJECTS = [
     ],
   },
   {
+    id: "04",
+    title: "Notes INSA",
+    year: "2026",
+    metric: "Cloudflare Workers + D1 · client-side stats",
+    type: "Mobile Development",
+    category: "Personal",
+    services: "Flutter - Cloudflare Workers - D1 Database",
+    img: "https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=2670",
+    url: "https://codeberg.org/AerLight/Notes_insa",
+    linkText: "View Source Code",
+    logoType: "codeberg",
+    offset: -50,
+    description:
+      "A mobile app for INSA Rennes students that pulls your grades from the school portal and lets the class pool their results **anonymously**, so you can see where you stand. The rankings are worked out on your own phone, so the server never stores anything personal.",
+    problem:
+      "The school portal only shows your own grades, so there's no way to tell whether a 12/20 is below or above the class. Students wanted that context without exposing anyone's marks.",
+    approach:
+      "Built a mobile app that pulls your grades from the portal and lets students anonymously pool their results. The class averages and rankings are worked out **on your own phone**, so the server never holds anything identifiable.",
+    result:
+      "A live app that shows, in real time, how your results compare to the rest of the class, while keeping every submission anonymous.",
+    role: "Team of 2",
+    tags: ["Flutter", "Cloudflare Workers", "D1 Database", "Riverpod", "SQL"],
+    tools: ["Android Studio", "Wrangler", "VS Code", "Git"],
+    architecture: [
+      "Riverpod (State Management)",
+      "Edge Computing (Serverless)",
+      "Feature-First Architecture",
+    ],
+  },
+  {
+    id: "05",
+    title: "Intelligent File Manager",
+    year: "2026",
+    metric: "Desktop semantic search · SBERT + CLIP",
+    type: "AI Desktop App",
+    category: "Personal",
+    services: "C# / .NET 10 - Avalonia - Semantic Search",
+    img: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2670", // Placeholder
+    url: "#",
+    linkText: "Personal Project",
+    logoType: "github",
+    offset: -30,
+    description:
+      "A **desktop app** (built in C# / .NET) that lets you search your text and image files by meaning instead of exact filenames, the way you would describe them to a person. Backed by a comparison of several AI models to find the best mix of accuracy and speed.",
+    problem:
+      "Finding a file usually means remembering its exact name or which folder you buried it in. I wanted to search by meaning instead, the way you'd describe it to a person.",
+    approach:
+      "Built a **desktop app** (C# / .NET) that understands what's inside your text and image files, so you can search with plain descriptions. I compared several AI text and image models to find the best balance of accuracy and speed.",
+    result:
+      "A working desktop app that finds files by meaning, including pulling up images from a text description, backed by a clear comparison of which AI models work best for the task.",
+    role: "Solo Project",
+    tags: ["C#", ".NET 10", "Avalonia", "SBERT", "CLIP", "Machine Learning"],
+    tools: ["Avalonia", "Skia", "JetBrains Rider"],
+    architecture: ["Vector Embeddings", "Cross-modal Retrieval", "MVVM Desktop"],
+  },
+  {
+    id: "02",
+    title: "SafeWalk",
+    year: "2026",
+    metric: "Always-on tracking · tamper-proof check-ins",
+    type: "Mobile Security",
+    category: "Personal",
+    services: "Android - Geolocation - Security",
+    img: "https://images.unsplash.com/photo-1555861496-faa3a07675f9?q=80&w=2670", // Placeholder
+    url: "https://github.com/Aer-3888/SafeWalk",
+    linkText: "View Repository",
+    logoType: "github",
+    offset: 0,
+    description:
+      "A native **Android** safety app that keeps tracking your location reliably, even when the phone tries to shut it down to save battery, and protects every safety message so it can't be tampered with.",
+    problem:
+      "If something happens while you're walking alone, a safety app is only useful if it never silently stops tracking you. Phones love to shut background apps down to save battery.",
+    approach:
+      "Built an **Android** app whose location tracking keeps running even when the system tries to close it, and that signs every safety message so it can't be tampered with. It can also check you in automatically near trusted **Bluetooth beacons**.",
+    result:
+      "A dependable safety companion that keeps tracking through restarts and low-power modes, with tamper-proof check-ins. Built for situations where reliability genuinely matters.",
+    role: "Solo Project",
+    tags: ["Android Native", "Kotlin", "Cryptography", "BLE", "Foreground Services"],
+    tools: ["Android Studio", "Android Keystore API"],
+    architecture: [
+      "Native Android Architecture",
+      "Secure Geolocation",
+      "Resilient Background Services",
+    ],
+  },
+  {
     id: "06",
     title: "Accountant Aut",
     year: "2024",
-    metric: "Hours of manual entry → one click",
+    metric: "~2-3h/week of manual entry, automated",
     type: "Automation Tool",
     category: "Personal",
     services: "C++ - GUI Dashboard - Automation",
@@ -251,13 +289,13 @@ export const PROJECTS = [
     logoType: "github",
     offset: 0,
     description:
-      "A **C++20** automation tool and interactive **dashboard** designed to synchronize accounting entries between **Google Sheets** and **Sage 50**. It provides a centralized interface for monitoring data flows, validating documentation on Google Drive, and programmatically mapping complex **accounting codes**, leveraging a **local LLM (Ollama)** to handle edge cases in the mapping logic.",
+      "A desktop tool that automatically syncs accounting entries between **Google Sheets** and the **Sage 50** accounting software, and matches each entry to the right code. A **local AI model** handles the tricky cases that don't fit a simple rule.",
     problem:
-      "As the accountant at my school's Junior Enterprise, I was copying entries between **Google Sheets** and **Sage 50** by hand every week. The mapping rules were complex enough that one wrong code could throw off the whole ledger.",
+      "As treasurer of my school's junior enterprise, I re-typed accounting entries between **Google Sheets** and the accounting software by hand every week. It was slow, and a single wrong code could throw off the books.",
     approach:
-      "Built a **C++20 dashboard** (Qt) with a rule-based mapper for the common cases and a **local LLM** to handle the edge cases that didn't fit neatly into any rule.",
+      "Built a small desktop tool that syncs the two systems automatically and matches each entry to the right accounting code. For the tricky cases that don't fit a clear rule, a **local AI model** suggests the right one.",
     result:
-      "The full sync runs automatically now, significantly reducing manual entry errors. What used to take hours is down to a button click, with a validation layer that flags suspicious data.",
+      "What used to take a few hours a week is now a single click, with far fewer mistakes and a safety check that flags anything suspicious before it's saved.",
     role: "Solo Project",
     tags: ["C++", "Qt", "Google API", "OpenXLSX", "Ollama"],
     tools: ["CMake", "Git"],
@@ -271,7 +309,7 @@ export const PROJECTS = [
     id: "07",
     title: "EDA Housing Market",
     year: "2025",
-    metric: "12k records · prices +32% post-COVID",
+    metric: "12k records · price/m² +27% post-COVID",
     type: "Data Analysis",
     category: "Personal",
     services: "Exploratory Data Analysis - Python - Data Visualization",
@@ -281,13 +319,13 @@ export const PROJECTS = [
     logoType: "github",
     offset: 0,
     description:
-      "An exploratory data analysis of **10 years** of French real estate transactions (**~12,000 records**) in the Pays de la Loire region. The study compares **pre-COVID (2014-2019)**, **COVID (2020-2021)**, and **post-COVID (2022-2023)** periods across five departments.",
+      "A data analysis of **10 years** of French real estate sales (**~12,000 records**) in the Pays de la Loire region, comparing prices before, during and after COVID across five areas.",
     problem:
-      "COVID hit right in the middle of a decade of real estate data. It was hard to tell which price movements were the pandemic and which were already in motion.",
+      "COVID landed in the middle of a decade of housing data, making it hard to separate the pandemic's real effect on prices from trends that were already underway.",
     approach:
-      "Split transactions from Pays de la Loire into three periods and mapped the patterns using interactive **choropleth visualizations** (Folium) to make spatial differences visible.",
+      "Cleaned and analysed about **12,000** property transactions across a French region, split into before, during and after COVID, then mapped the differences area by area on interactive maps.",
     result:
-      "Identified that COVID acted as a price accelerator. Volumes remained stable while average prices **surged 32%**, highlighting distinct regional trends.",
+      "Found that prices per square metre **rose 27%** after COVID while the number of sales stayed steady, with clear differences between areas shown on the maps.",
     role: "Solo Project",
     tags: ["Python", "Pandas", "Matplotlib", "Seaborn", "Folium"],
     tools: ["Jupyter Notebook", "Anaconda"],
@@ -313,11 +351,11 @@ export const PROJECTS = [
     description:
       "My personal portfolio website, focused on **animations** and an **immersive user experience** using modern web technologies.",
     problem:
-      "Most portfolio sites look the same. I wanted mine to actually show what I can do with frontend, not just list the tools I know.",
+      "Most developer portfolios look the same and just list tools. I wanted mine to actually demonstrate what I can build on the front end.",
     approach:
-      "Mapped scroll position to horizontal movement so projects feel like they float toward you. On mobile it falls back to a clean vertical list, and the whole thing respects reduced motion preferences.",
+      "Designed the site so projects move with your scroll for a sense of depth, while staying fast and fully usable on phones, and respecting accessibility settings for people who prefer less motion.",
     result:
-      "Fully responsive with a spatial tunnel on desktop and a clean card layout on mobile, driven by **Framer Motion** and **Lenis** scroll physics.",
+      "A fast, responsive site with smooth motion on desktop and a clean layout on mobile, built to stand as a project in its own right.",
     role: "Solo Project",
     tags: ["React", "JavaScript", "Tailwind CSS", "Framer Motion", "Lenis Scroll"],
     tools: ["Vite", "VS Code"],
