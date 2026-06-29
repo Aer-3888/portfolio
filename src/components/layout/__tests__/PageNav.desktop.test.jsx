@@ -71,9 +71,9 @@ function renderNav(props = {}) {
 }
 
 describe("PageNav — desktop", () => {
-  it("renders the name on desktop when scrollYProgress is provided", () => {
+  it("does not render the wordmark on desktop (the menu carries nav)", () => {
     renderNav();
-    expect(screen.getByText("Theo Phan")).toBeInTheDocument();
+    expect(screen.queryByText("Théo Phan")).not.toBeInTheDocument();
   });
 
   it("renders nav links on desktop", () => {
@@ -83,12 +83,12 @@ describe("PageNav — desktop", () => {
     expect(screen.getByText("Contact")).toBeInTheDocument();
   });
 
-  it("does not render the name when scrollYProgress is not provided", () => {
+  it("does not render the wordmark when scrollYProgress is not provided", () => {
     render(
       <MemoryRouter>
         <PageNav />
       </MemoryRouter>
     );
-    expect(screen.queryByText("Theo Phan")).not.toBeInTheDocument();
+    expect(screen.queryByText("Théo Phan")).not.toBeInTheDocument();
   });
 });
