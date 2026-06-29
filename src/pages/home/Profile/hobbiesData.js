@@ -1,17 +1,11 @@
 export const hobbies = [
   {
-    id: "photo",
-    index: 0,
-    label: "PHOTOGRAPHY",
     title: "PHOTOGRAPHY",
     description:
       "Freezing reality. A study of light physics, urban geometry, and shifting perspectives.",
     image: `${import.meta.env.BASE_URL}images/Gallery/IMG_6944.jpg`,
   },
   {
-    id: "climb",
-    index: 1,
-    label: "BOULDERING",
     title: "BOULDERING",
     description:
       "Physical algorithm design. Debugging movement patterns and refining execution until the route is solved.",
@@ -19,9 +13,6 @@ export const hobbies = [
       "https://images.unsplash.com/photo-1522163182402-834f871fd851?q=80&w=800&auto=format&fit=crop",
   },
   {
-    id: "escape",
-    index: 2,
-    label: "ESCAPE GAMES",
     title: "ESCAPE GAMES",
     description:
       "Logic under pressure. Decrypting patterns and breaking complex systems before the timer hits zero.",

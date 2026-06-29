@@ -8,8 +8,7 @@ import MenuPanel from "../MenuPanel";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useMobileNavVisible from "../../hooks/useMobileNavVisible";
 
-const Branding = memo(function Branding({ className = "", onClick, variant = "light" }) {
-  const isDark = variant === "dark";
+const Branding = memo(function Branding({ className = "", onClick }) {
   return (
     <motion.button
       onClick={onClick}
@@ -17,36 +16,22 @@ const Branding = memo(function Branding({ className = "", onClick, variant = "li
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
     >
-      <span
-        className={`text-sm font-medium tracking-tight transition-colors ${
-          isDark ? "text-ink group-hover:text-sumi" : "text-white/90 group-hover:text-white"
-        }`}
-      >
+      <span className="text-sm font-medium tracking-tight transition-colors text-white/90 group-hover:text-white">
         Théo Phan
       </span>
-      <span
-        className={`text-[10px] uppercase tracking-[0.3em] leading-none transition-colors ${
-          isDark ? "text-pebble group-hover:text-ash" : "text-white/40 group-hover:text-white/60"
-        }`}
-      >
+      <span className="text-[10px] uppercase tracking-[0.3em] leading-none transition-colors text-white/40 group-hover:text-white/60">
         Portfolio
       </span>
     </motion.button>
   );
 });
 
-export default function PageNav({
-  currentPath,
-  scrollYProgress,
-  isHidden = false,
-  isMobileNavVisible,
-}) {
+export default function PageNav({ currentPath, scrollYProgress, isHidden = false }) {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 768px)");
   // Home uses the light canvas, other routes stay dark.
   const isHomeLight = currentPath === "/";
-  const mobileNavScrollVisible = useMobileNavVisible();
-  const mobileNavVisible = isMobileNavVisible ?? mobileNavScrollVisible;
+  const mobileNavVisible = useMobileNavVisible();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const staticProgress = useMotionValue(0);

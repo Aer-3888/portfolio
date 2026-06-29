@@ -1,18 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { renderHook } from "@testing-library/react";
-import React from "react";
-
-// Self-contained hook copy for unit testing
-function useMediaQuery(query) {
-  const [matches, setMatches] = React.useState(() => window.matchMedia(query).matches);
-  React.useEffect(() => {
-    const mq = window.matchMedia(query);
-    const handler = (e) => setMatches(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, [query]);
-  return matches;
-}
+import useMediaQuery from "../../../hooks/useMediaQuery";
 
 describe("useMediaQuery", () => {
   beforeEach(() => {
