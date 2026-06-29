@@ -22,7 +22,6 @@ export default function SmoothScroll({ children }) {
   }, [pathname]);
 
   useEffect(() => {
-    if (pathname === "/projects") return;
     if (isTouchDevice()) return;
     if (prefersReducedMotion()) return;
 

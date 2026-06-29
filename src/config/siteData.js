@@ -72,6 +72,14 @@ export const EXPERIENCES = [
     tags: ["Security", "Cryptography", "CTF"],
   },
   {
+    date: "2026",
+    title: "AI for Business Hackathon",
+    org: "Team Project",
+    detail:
+      "Built an AI and data driven solution to a real business challenge with a small team, taking it from problem framing to a working prototype under a tight deadline.",
+    tags: ["AI", "Data", "Hackathon", "Teamwork"],
+  },
+  {
     date: "2025 - Present",
     title: "Accountant",
     org: "Junior Entreprise Ouest INSA",
@@ -136,7 +144,7 @@ export const PROJECTS = [
     type: "AI Security",
     category: "Personal",
     services: "LLM Security - RAG - Python",
-    img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=2670", // Placeholder
+    img: `${import.meta.env.BASE_URL}images/ph-gardefou.svg`, // Placeholder
     url: "https://github.com/Aer-3888/GardeFou",
     linkText: "View Repository",
     logoType: "github",
@@ -196,7 +204,7 @@ export const PROJECTS = [
     type: "Mobile Development",
     category: "Personal",
     services: "Flutter - Cloudflare Workers - D1 Database",
-    img: "https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=2670",
+    img: `${import.meta.env.BASE_URL}images/ph-notes-insa.svg`, // Placeholder
     url: "https://codeberg.org/AerLight/Notes_insa",
     linkText: "View Source Code",
     logoType: "codeberg",
@@ -226,7 +234,7 @@ export const PROJECTS = [
     type: "AI Desktop App",
     category: "Personal",
     services: "C# / .NET 10 - Avalonia - Semantic Search",
-    img: "https://images.unsplash.com/photo-1555099962-4199c345e5dd?q=80&w=2670", // Placeholder
+    img: `${import.meta.env.BASE_URL}images/ph-file-manager.svg`, // Placeholder
     url: "#",
     linkText: "Personal Project",
     logoType: "github",
@@ -252,7 +260,7 @@ export const PROJECTS = [
     type: "Mobile Security",
     category: "Personal",
     services: "Android - Geolocation - Security",
-    img: "https://images.unsplash.com/photo-1555861496-faa3a07675f9?q=80&w=2670", // Placeholder
+    img: `${import.meta.env.BASE_URL}images/ph-safewalk.svg`, // Placeholder
     url: "https://github.com/Aer-3888/SafeWalk",
     linkText: "View Repository",
     logoType: "github",

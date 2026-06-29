@@ -43,7 +43,7 @@ export default function PageNav({
 }) {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  // Home uses the light canvas; other routes stay dark.
+  // Home uses the light canvas, other routes stay dark.
   const isHomeLight = currentPath === "/";
   const mobileNavScrollVisible = useMobileNavVisible();
   const mobileNavVisible = isMobileNavVisible ?? mobileNavScrollVisible;

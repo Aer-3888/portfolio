@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 function RichText({ text, className }) {
@@ -90,7 +91,9 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
   if (!project) return null;
 
-  return (
+  // Render in a portal on document.body so the fixed overlay always covers the
+  // full viewport, never trapped by a transformed or clipped ancestor section.
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <div
@@ -302,7 +305,8 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
           </motion.div>
         </div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
 
