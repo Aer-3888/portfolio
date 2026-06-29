@@ -59,7 +59,7 @@ function renderNav(props = {}) {
 describe("PageNav — mobile", () => {
   it("renders the name on mobile", () => {
     renderNav();
-    expect(screen.getByText("Theo Phan")).toBeInTheDocument();
+    expect(screen.getByText("Théo Phan")).toBeInTheDocument();
   });
 
   it("does not render desktop nav links on mobile", () => {
