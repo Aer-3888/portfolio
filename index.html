@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Théo Phan | Portfolio</title>
-    <meta name="description" content="Théo Phan — CS student at INSA Rennes specializing in AI Engineering and Full-Stack development. Portfolio showcasing web, mobile, and computer vision projects." />
+    <meta name="description" content="Théo Phan, CS student at INSA Rennes specializing in AI Engineering and Full-Stack development. Portfolio showcasing web, mobile, and computer vision projects." />
     <meta name="author" content="Théo Phan" />
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="canonical" href="https://aer-3888.github.io/portfolio/" />
+    <link rel="canonical" href="https://portfolio-theo.pages.dev/" />
 
     <!-- Preload the LCP hero image so it is discoverable before React mounts -->
     <link rel="preload" as="image" href="/images/optimized/me_.webp" fetchpriority="high" />
@@ -37,9 +37,9 @@
 
     <!-- Open Graph -->
     <meta property="og:title" content="Théo Phan | Portfolio" />
-    <meta property="og:description" content="CS student at INSA Rennes — AI Engineering & Full-Stack Development" />
-    <meta property="og:image" content="https://aer-3888.github.io/portfolio/images/og-preview.png" />
-    <meta property="og:url" content="https://aer-3888.github.io/portfolio/" />
+    <meta property="og:description" content="CS student at INSA Rennes, AI Engineering and Full-Stack Development" />
+    <meta property="og:image" content="https://portfolio-theo.pages.dev/og-preview.png" />
+    <meta property="og:url" content="https://portfolio-theo.pages.dev/" />
     <meta property="og:type" content="website" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -47,17 +47,25 @@
     <!-- Twitter/X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Théo Phan | Portfolio" />
-    <meta name="twitter:description" content="CS student at INSA Rennes — AI Engineering & Full-Stack Development" />
-    <meta name="twitter:image" content="https://aer-3888.github.io/portfolio/images/og-preview.png" />
-    <script>
-      // Handle SPA redirects from 404.html
-      (function() {
-        var q = window.location.search;
-        if (q && q.indexOf('?p=') === 0) {
-          var path = decodeURIComponent(q.slice(3));
-          window.history.replaceState(null, '', path);
-        }
-      })();
+    <meta name="twitter:description" content="CS student at INSA Rennes, AI Engineering and Full-Stack Development" />
+    <meta name="twitter:image" content="https://portfolio-theo.pages.dev/og-preview.png" />
+
+    <!-- Structured data: personal identity for name searches -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Théo Phan",
+        "url": "https://portfolio-theo.pages.dev/",
+        "image": "https://portfolio-theo.pages.dev/og-preview.png",
+        "jobTitle": "Computer Science Student",
+        "affiliation": { "@type": "CollegeOrUniversity", "name": "INSA Rennes" },
+        "sameAs": [
+          "https://github.com/Aer-3888",
+          "https://www.linkedin.com/in/theophanquochuy/",
+          "https://www.instagram.com/phan.theo.huy/"
+        ]
+      }
     </script>
   </head>
   <body>

@@ -8,6 +8,7 @@ import ProjectList from "./Projects/ProjectList";
 import Footer from "./Footer/Footer";
 import HobbySection from "./Profile/HobbySection";
 import PageNav from "../../components/layout/PageNav";
+import useSeo from "../../hooks/useSeo";
 
 const CvModal = lazy(() => import("../About/CvModal"));
 const GalleryModal = lazy(() => import("../About/GalleryInspector"));
@@ -18,6 +19,13 @@ export default function HomePage() {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isCvModalOpen, setIsCvModalOpen] = useState(false);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+
+  useSeo({
+    title: "Théo Phan | Portfolio",
+    description:
+      "Théo Phan, CS student at INSA Rennes specializing in AI Engineering and Full-Stack development. Portfolio showcasing web, mobile, and computer vision projects.",
+    path: "/",
+  });
 
   useEffect(() => {
     if (location.state?.scrollTo) {

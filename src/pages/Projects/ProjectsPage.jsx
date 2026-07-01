@@ -4,10 +4,18 @@ import PageNav from "../../components/layout/PageNav";
 import ProjectDetails from "../../components/ProjectDetails";
 import ProjectGallery from "./ProjectGallery";
 import { PROJECTS } from "../../config/siteData";
+import useSeo from "../../hooks/useSeo";
 
 export default function ProjectsPage() {
   const { scrollYProgress } = useScroll();
   const [selectedProject, setSelectedProject] = useState(null);
+
+  useSeo({
+    title: "Projects | Théo Phan",
+    description:
+      "Selected projects by Théo Phan across mobile, AI, computer vision, security, and web development.",
+    path: "/projects",
+  });
 
   // Land at the top on mount
   useEffect(() => {

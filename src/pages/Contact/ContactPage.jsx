@@ -3,11 +3,19 @@ import { motion, useReducedMotion } from "framer-motion";
 import { SOCIALS, EMAIL } from "../../config/siteData";
 import ArcadeMachine from "./ArcadeMachine";
 import PageNav from "../../components/layout/PageNav";
+import useSeo from "../../hooks/useSeo";
 
 export default function ContactPage() {
   const [time, setTime] = useState("");
   const [copied, setCopied] = useState(false);
   const prefersReduced = useReducedMotion();
+
+  useSeo({
+    title: "Contact | Théo Phan",
+    description:
+      "Get in touch with Théo Phan, CS student at INSA Rennes, open to a summer 2026 internship.",
+    path: "/contact",
+  });
 
   useEffect(() => {
     const updateTime = () => {

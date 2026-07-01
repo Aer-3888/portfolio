@@ -69,8 +69,47 @@ async function run() {
     console.log(`  me_icon.png -> ${name} (${size}px, ${((await stat(dest)).size / 1024).toFixed(1)}KB)`);
   }
 
+  console.log("Social preview card:");
+  await generateOgImage();
+
   const mb = (n) => (n / 1024 / 1024).toFixed(1);
   console.log(`\nDerivatives total: ${mb(before)}MB originals -> ${mb(after)}MB WebP`);
+}
+
+// 1200x630 Open Graph card: hero cutout on the right, name + role on the paper canvas.
+// Site tokens: paper #ffffff, ink #3f3f3f, stone #d3cec5, ash #686867, pebble #acacac.
+// Text is rendered by librsvg via the SVG below; if Inter is not installed on this machine
+// it falls back to a system sans, which is fine for a share card.
+async function generateOgImage() {
+  const W = 1200;
+  const H = 630;
+  const photo = await sharp(path.join(imagesDir, "me_.png"))
+    .resize({ height: 600, fit: "inside" })
+    .png()
+    .toBuffer();
+  const photoW = (await sharp(photo).metadata()).width;
+  const photoLeft = W - photoW - 90;
+
+  const svg = Buffer.from(
+    `<svg width="${W}" height="${H}" xmlns="http://www.w3.org/2000/svg">
+      <text x="90" y="300" font-family="Inter, Arial, sans-serif" font-size="96" font-weight="700" letter-spacing="-3" fill="#3f3f3f">Théo Phan</text>
+      <rect x="93" y="332" width="70" height="3" fill="#d3cec5"/>
+      <text x="90" y="392" font-family="Inter, Arial, sans-serif" font-size="30" fill="#686867">CS student, INSA Rennes</text>
+      <text x="90" y="434" font-family="Inter, Arial, sans-serif" font-size="30" fill="#686867">AI + Full-Stack</text>
+      <text x="90" y="565" font-family="Inter, Arial, sans-serif" font-size="21" letter-spacing="3" fill="#acacac">PORTFOLIO · 2026</text>
+    </svg>`,
+    "utf8"
+  );
+
+  const dest = path.join(publicDir, "og-preview.png");
+  await sharp({ create: { width: W, height: H, channels: 4, background: "#ffffff" } })
+    .composite([
+      { input: photo, left: photoLeft, top: H - 600 },
+      { input: svg, left: 0, top: 0 },
+    ])
+    .png()
+    .toFile(dest);
+  console.log(`  og-preview.png (${W}x${H}, ${((await stat(dest)).size / 1024).toFixed(1)}KB)`);
 }
 
 run().catch((e) => {
