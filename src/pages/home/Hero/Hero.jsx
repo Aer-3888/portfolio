@@ -43,7 +43,7 @@ function Hero({ onCvToggle }) {
           className="absolute inset-x-0 bottom-0 z-10 flex justify-center md:justify-end md:right-[4%] pointer-events-none"
         >
           <img
-            src={`${import.meta.env.BASE_URL}images/me_.png`}
+            src={`${import.meta.env.BASE_URL}images/optimized/me_.webp`}
             alt="Théo Phan"
             loading="eager"
             fetchPriority="high"
