@@ -172,7 +172,7 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
             borderBottom: `1px solid`,
             borderColor: barBorder,
           }}
-          className={`fixed top-0 left-0 right-0 z-[1200] flex items-center justify-between px-6 h-20 transition-all duration-500 ${
+          className={`fixed top-0 left-0 right-0 z-[1200] flex min-h-20 items-center justify-between px-5 pb-3 pt-[calc(var(--safe-top)+0.75rem)] sm:px-6 transition-all duration-500 ${
             mobileNavVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 pointer-events-none -translate-y-full"

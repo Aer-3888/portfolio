@@ -117,12 +117,12 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
             transition={
               prefersReduced ? { duration: 0.1 } : { type: "spring", damping: 25, stiffness: 300 }
             }
-            className="relative w-full h-full md:max-w-[1300px] md:max-h-[85vh] md:h-auto bg-neutral-900 border-0 md:border md:border-white/10 overflow-hidden flex flex-col md:flex-row shadow-[0_0_80px_rgba(0,0,0,0.7)]"
+            className="relative flex h-full w-full flex-col overflow-hidden bg-neutral-900 shadow-[0_0_80px_rgba(0,0,0,0.7)] md:h-auto md:max-h-[85vh] md:max-w-[1300px] md:flex-row md:border md:border-white/10"
           >
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="absolute top-6 right-6 z-50 w-11 h-11 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center hover:bg-white/10 transition-all group cursor-pointer"
+              className="absolute right-4 top-[calc(var(--safe-top)+1rem)] z-50 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md transition-all group cursor-pointer hover:bg-white/10 md:right-6 md:top-6"
             >
               <span className="text-xl text-white group-hover:rotate-90 transition-transform duration-300">
                 ✕
@@ -145,10 +145,10 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
             <div
               ref={scrollRef}
               data-lenis-prevent
-              className="w-full md:w-[40%] flex-1 min-h-0 p-8 md:p-12 overflow-y-auto overscroll-contain custom-scrollbar flex flex-col gap-8"
+              className="flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-6 pb-[calc(var(--safe-bottom)+1.5rem)] pt-5 custom-scrollbar md:w-[40%] md:gap-8 md:p-12"
             >
               {/* Mobile Image (Visible only on mobile, inside scrollable area) */}
-              <div className="md:hidden -mx-8 -mt-8 h-64 shrink-0 overflow-hidden relative group/img">
+              <div className="relative -mx-6 -mt-5 h-[38svh] min-h-[16rem] max-h-[22rem] shrink-0 overflow-hidden group/img md:hidden">
                 <img
                   src={project.img}
                   alt={project.title}
@@ -160,7 +160,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               </div>
 
               <div>
-                <div className="flex items-center gap-3 mb-4">
+                <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1">
                   <span className="font-mono text-xs text-neutral-500 uppercase tracking-[0.2em]">
                     {project.type}
                   </span>
@@ -169,12 +169,12 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                     {project.year}
                   </span>
                 </div>
-                <h2 className="text-5xl font-black uppercase tracking-tighter text-white mb-4">
+                <h2 className="mb-4 text-4xl font-black uppercase tracking-tighter text-white md:text-5xl">
                   {project.title}
                 </h2>
                 <RichText
                   text={project.description}
-                  className="text-neutral-300 leading-relaxed text-lg"
+                  className="text-base text-neutral-300 leading-relaxed md:text-lg"
                 />
               </div>
 
@@ -224,7 +224,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               </div>
 
               {project.role && (
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-3">
                   <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                     Role
                   </span>
@@ -234,9 +234,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
               <div className="flex flex-col gap-6">
                 <div>
-                  <h4 className="text-xs font-medium text-neutral-400 tracking-wide mb-3">
-                    Stack
-                  </h4>
+                  <h4 className="text-xs font-medium text-neutral-400 tracking-wide mb-3">Stack</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.tags?.map((tag) => (
                       <span
@@ -250,9 +248,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 </div>
 
                 <div>
-                  <h4 className="text-xs font-medium text-neutral-400 tracking-wide mb-3">
-                    Tools
-                  </h4>
+                  <h4 className="text-xs font-medium text-neutral-400 tracking-wide mb-3">Tools</h4>
                   <div className="flex flex-wrap gap-2">
                     {project.tools?.map((tool) => (
                       <span
@@ -283,9 +279,9 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               </div>
 
               {/* Action Buttons */}
-              <div className="mt-auto pt-8 flex gap-4">
+              <div className="mt-2 flex flex-col gap-3 pt-6 sm:flex-row md:mt-auto md:gap-4 md:pt-8">
                 {project.isClosedSource ? (
-                  <div className="flex-1 bg-neutral-800 text-neutral-500 font-mono text-xs font-bold uppercase py-4 tracking-widest text-center flex items-center justify-center gap-3 border border-white/5 cursor-not-allowed">
+                  <div className="flex min-h-14 flex-1 items-center justify-center gap-3 border border-white/5 bg-neutral-800 py-4 text-center font-mono text-xs font-bold uppercase tracking-widest text-neutral-500 cursor-not-allowed">
                     <ProjectLogo type={project.logoType} />
                     {project.linkText || "Closed Source"}
                   </div>
@@ -294,7 +290,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                     href={project.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 bg-white text-black font-mono text-xs font-bold uppercase py-4 tracking-widest hover:bg-slate-200 transition-colors cursor-pointer text-center flex items-center justify-center gap-3"
+                    className="flex min-h-14 flex-1 items-center justify-center gap-3 bg-white py-4 text-center font-mono text-xs font-bold uppercase tracking-widest text-black transition-colors cursor-pointer hover:bg-slate-200"
                   >
                     <ProjectLogo type={project.logoType} />
                     {project.linkText || "View Project Website"}

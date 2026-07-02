@@ -38,23 +38,23 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-neutral-950 relative overflow-y-auto font-sans text-white flex flex-col items-center py-12 md:py-24 px-6 md:px-12">
+    <div className="relative flex min-h-screen w-full flex-col items-center overflow-y-auto bg-neutral-950 px-5 pb-[calc(var(--safe-bottom)+3rem)] pt-[calc(var(--safe-top)+var(--mobile-nav-height)+1.5rem)] font-sans text-white sm:px-6 md:px-12 md:py-24">
       <PageNav currentPath="/contact" />
 
       <motion.div
         initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={prefersReduced ? { duration: 0 } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full max-w-7xl h-auto lg:min-h-[75vh] grid grid-cols-1 lg:grid-cols-12 bg-neutral-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] overflow-hidden rounded-sm border border-white/5"
+        className="grid h-auto w-full max-w-7xl grid-cols-1 overflow-hidden rounded-2xl border border-white/5 bg-neutral-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] lg:min-h-[75vh] lg:grid-cols-12 lg:rounded-sm"
       >
         {/* Left: Communication & Details */}
-        <div className="lg:col-span-5 flex flex-col justify-between p-10 md:p-16 border-b lg:border-b-0 lg:border-r border-white/5 bg-neutral-900">
-          <div className="space-y-16">
+        <div className="flex flex-col justify-between border-b border-white/5 bg-neutral-900 p-6 sm:p-8 md:p-16 lg:col-span-5 lg:border-b-0 lg:border-r">
+          <div className="space-y-10 md:space-y-16">
             <div className="space-y-4">
               <span className="text-neutral-500 font-mono text-[10px] tracking-[0.3em] block">
                 Inquiries
               </span>
-              <h1 className="text-6xl md:text-8xl font-black tracking-tighter uppercase leading-[0.8]">
+              <h1 className="text-5xl font-black uppercase leading-[0.82] tracking-tighter sm:text-6xl md:text-8xl">
                 Get In
                 <br />
                 <span className="text-neutral-600">Touch.</span>
@@ -74,13 +74,13 @@ export default function ContactPage() {
                     {copied ? "Copied" : "Copy"}
                   </span>
                 </div>
-                <div className="text-2xl md:text-3xl font-bold tracking-tight group-hover:text-slate-400 transition-colors break-all">
+                <div className="break-all text-xl font-bold tracking-tight transition-colors group-hover:text-slate-400 sm:text-2xl md:text-3xl">
                   {EMAIL}
                 </div>
               </div>
 
               {/* Location & Time */}
-              <div className="grid grid-cols-2 gap-12 pt-4">
+              <div className="grid grid-cols-1 gap-6 pt-4 sm:grid-cols-2 sm:gap-12">
                 <div className="space-y-2">
                   <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                     Location
@@ -91,16 +91,14 @@ export default function ContactPage() {
                   <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                     Local Time
                   </span>
-                  <div className="text-sm font-mono tracking-tight text-slate-400">
-                    {time}
-                  </div>
+                  <div className="text-sm font-mono tracking-tight text-slate-400">{time}</div>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Socials */}
-          <div className="pt-12">
+          <div className="pt-10 md:pt-12">
             <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest block font-bold mb-4">
               Social Channels
             </span>

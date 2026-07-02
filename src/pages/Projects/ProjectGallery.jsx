@@ -11,15 +11,15 @@ function ProjectGallery({ onSelect }) {
   const prefersReduced = useReducedMotion();
 
   return (
-    <div className="relative z-10 mx-auto w-full max-w-[1400px] px-6 pb-32 pt-28 md:px-12 md:pt-40">
+    <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 pb-24 pt-[calc(var(--safe-top)+var(--mobile-nav-height)+1.5rem)] sm:px-6 md:px-12 md:pb-32 md:pt-40">
       {/* Header */}
       <motion.header
         initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-24 md:mb-36"
+        className="mb-16 md:mb-36"
       >
-        <h1 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.85]">
+        <h1 className="text-5xl font-black uppercase tracking-tighter leading-[0.85] sm:text-6xl md:text-8xl">
           Selected
           <br />
           <span className="text-neutral-600">Projects</span>
@@ -28,19 +28,19 @@ function ProjectGallery({ onSelect }) {
       </motion.header>
 
       {/* Cards */}
-      <div className="flex flex-col gap-28 md:gap-44">
+      <div className="flex flex-col gap-16 md:gap-44">
         {PROJECTS.map((project, i) => (
           <ProjectGalleryCard key={project.id} project={project} index={i} onSelect={onSelect} />
         ))}
       </div>
 
       {/* Contact CTA */}
-      <div className="mt-32 flex justify-center md:mt-48">
+      <div className="mt-24 flex justify-center md:mt-48">
         <button
           onClick={() => navigate("/contact")}
           className="group flex cursor-pointer flex-col items-center gap-6"
         >
-          <div className="flex h-24 w-24 items-center justify-center rounded-full border border-white/10 transition-all duration-500 group-hover:border-white group-hover:bg-white group-hover:text-black">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full border border-white/10 transition-all duration-500 group-hover:border-white group-hover:bg-white group-hover:text-black md:h-24 md:w-24">
             <span className="text-2xl transition-transform duration-500 group-hover:translate-x-2">
               →
             </span>

@@ -58,15 +58,15 @@ export default function HobbySection({ onGalleryOpen }) {
 
       <div className="max-w-[1400px] mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-3">
-          <div className="h-[420px] md:h-[540px]">
+          <div className="h-[340px] sm:h-[420px] md:h-[540px]">
             <HobbyCard hobby={hobbies[0]} index={0} onClick={onGalleryOpen} />
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-1 gap-3">
-            <div className="h-[200px] md:h-[265px]">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-1">
+            <div className="h-[180px] sm:h-[200px] md:h-[265px]">
               <HobbyCard hobby={hobbies[1]} index={1} onClick={onGalleryOpen} />
             </div>
-            <div className="h-[200px] md:h-[265px]">
+            <div className="h-[180px] sm:h-[200px] md:h-[265px]">
               <HobbyCard hobby={hobbies[2]} index={2} onClick={onGalleryOpen} />
             </div>
           </div>

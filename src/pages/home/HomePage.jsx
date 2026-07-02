@@ -21,9 +21,9 @@ export default function HomePage() {
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   useSeo({
-    title: "Théo Phan | Portfolio",
+    title: "Th\u00E9o Phan | Portfolio",
     description:
-      "Théo Phan, CS student at INSA Rennes specializing in AI Engineering and Full-Stack development. Portfolio showcasing web, mobile, and computer vision projects.",
+      "Th\u00E9o Phan, CS student at INSA Rennes specializing in AI Engineering and Full-Stack development. Portfolio showcasing web, mobile, and computer vision projects.",
     path: "/",
   });
 

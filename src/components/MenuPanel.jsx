@@ -15,7 +15,7 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
           />
 
           <motion.aside
-            className="fixed top-0 right-0 h-screen w-[380px] max-w-[90vw] bg-neutral-950/95 border-l border-white/5 shadow-2xl z-[1200] p-12 flex flex-col justify-between"
+            className="fixed top-0 right-0 z-[1200] flex h-screen w-full flex-col justify-between overflow-y-auto border-l border-white/5 bg-neutral-950/95 px-6 pb-[calc(var(--safe-bottom)+1.5rem)] pt-[calc(var(--safe-top)+1.5rem)] shadow-2xl sm:w-[380px] sm:max-w-[90vw] sm:p-12"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -23,7 +23,7 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
             role="dialog"
             aria-modal="true"
           >
-            <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-10 sm:gap-12">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] uppercase tracking-[0.5em] text-white/30 font-mono">
                   Navigation
@@ -40,7 +40,7 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
                 </button>
               </div>
 
-              <nav className="flex flex-col gap-6">
+              <nav className="flex flex-col gap-4 sm:gap-6">
                 {navItems.map((item, index) => (
                   <motion.button
                     key={item.label}
@@ -61,7 +61,7 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
                     aria-current={item.isActive ? "page" : undefined}
                   >
                     <span
-                      className={`relative z-10 text-3xl font-bold uppercase tracking-[0.15em] transition-colors ${item.isActive ? "text-white" : "text-white/80 group-hover:text-white"}`}
+                      className={`relative z-10 text-2xl font-bold uppercase tracking-[0.15em] transition-colors sm:text-3xl ${item.isActive ? "text-white" : "text-white/80 group-hover:text-white"}`}
                     >
                       {item.label}
                     </span>
@@ -77,7 +77,7 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
               </p>
               <a
                 href="mailto:theo.phan.quoc.huy@gmail.com"
-                className="text-sm text-white/60 hover:text-white transition-colors tracking-widest"
+                className="break-all text-sm tracking-widest text-white/60 transition-colors hover:text-white"
               >
                 theo.phan.quoc.huy@gmail.com
               </a>

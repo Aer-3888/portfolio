@@ -32,7 +32,7 @@ function ProjectGalleryCard({ project, index, onSelect }) {
       viewport={{ once: true, margin: "0px 0px -10% 0px" }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       aria-label={`View ${project.title} details`}
-      className="group relative grid w-full cursor-pointer grid-cols-1 items-center gap-8 text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40 focus-visible:ring-offset-4 focus-visible:ring-offset-neutral-950 md:grid-cols-2 md:gap-16"
+      className="group relative grid w-full cursor-pointer grid-cols-1 items-center gap-6 text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40 focus-visible:ring-offset-4 focus-visible:ring-offset-neutral-950 md:grid-cols-2 md:gap-16"
     >
       {/* Image frame */}
       <div
@@ -57,7 +57,9 @@ function ProjectGalleryCard({ project, index, onSelect }) {
       </div>
 
       {/* Meta */}
-      <div className={`flex flex-col gap-5 md:px-4 ${imageFirst ? "md:order-2" : "md:order-1"}`}>
+      <div
+        className={`flex flex-col gap-4 md:gap-5 md:px-4 ${imageFirst ? "md:order-2" : "md:order-1"}`}
+      >
         <div className="flex items-center gap-4">
           <span className="font-black text-2xl leading-none text-white/10 tabular-nums">
             {number}
@@ -67,11 +69,11 @@ function ProjectGalleryCard({ project, index, onSelect }) {
           </span>
         </div>
 
-        <h3 className="text-5xl md:text-6xl font-black uppercase tracking-tighter leading-[0.9] text-white">
+        <h3 className="text-4xl font-black uppercase tracking-tighter leading-[0.92] text-white sm:text-5xl md:text-6xl">
           {project.title}
         </h3>
 
-        <div className="flex items-center gap-3 text-xs uppercase tracking-wide text-neutral-500">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase tracking-wide text-neutral-500">
           <span>{project.category}</span>
           <span className="text-neutral-700">·</span>
           <span>{project.year}</span>
