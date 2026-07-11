@@ -139,6 +139,11 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent md:bg-gradient-to-r" />
+              {project.imageCredit && (
+                <span className="absolute bottom-4 left-4 z-10 font-mono text-[10px] tracking-wide text-white/70 [text-shadow:0_1px_3px_rgba(0,0,0,0.7)]">
+                  {project.imageCredit}
+                </span>
+              )}
             </div>
 
             {/* Right side: Content (Scrollable on mobile) */}
@@ -157,6 +162,11 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-transparent to-transparent" />
+                {project.imageCredit && (
+                  <span className="absolute bottom-3 left-4 z-10 font-mono text-[10px] tracking-wide text-white/70 [text-shadow:0_1px_3px_rgba(0,0,0,0.7)]">
+                    {project.imageCredit}
+                  </span>
+                )}
               </div>
 
               <div>
