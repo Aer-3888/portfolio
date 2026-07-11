@@ -61,19 +61,19 @@ function ProjectGalleryCard({ project, index, onSelect }) {
         className={`flex flex-col gap-4 md:gap-5 md:px-4 ${imageFirst ? "md:order-2" : "md:order-1"}`}
       >
         <div className="flex items-center gap-4">
-          <span className="font-black text-2xl leading-none text-white/10 tabular-nums">
+          <span className="font-mono text-2xl leading-none text-white/15 tabular-nums">
             {number}
           </span>
-          <span className="text-[11px] uppercase tracking-[0.2em] text-neutral-500">
+          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-neutral-500">
             {project.type}
           </span>
         </div>
 
-        <h3 className="text-4xl font-black uppercase tracking-tighter leading-[0.92] text-white sm:text-5xl md:text-6xl">
+        <h3 className="text-3xl font-medium tracking-tight leading-[1.05] text-white sm:text-4xl md:text-5xl">
           {project.title}
         </h3>
 
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase tracking-wide text-neutral-500">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-wide text-neutral-500">
           <span>{project.category}</span>
           <span className="text-neutral-700">·</span>
           <span>{project.year}</span>
@@ -85,7 +85,7 @@ function ProjectGalleryCard({ project, index, onSelect }) {
           </p>
         )}
 
-        <span className="mt-2 inline-flex items-center gap-2 text-[13px] uppercase tracking-[0.15em] text-neutral-400 transition-colors duration-300 group-hover:text-white">
+        <span className="mt-2 inline-flex items-center gap-2 font-mono text-[13px] uppercase tracking-[0.15em] text-neutral-400 transition-colors duration-300 group-hover:text-white">
           View project
           <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
         </span>

@@ -11,7 +11,7 @@ function Footer() {
         <div className="flex flex-col gap-16 md:gap-20">
           {/* Get in touch */}
           <div className="flex flex-col gap-6">
-            <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">Get in touch</span>
+            <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">Get in touch</span>
             <a
               href={`mailto:${EMAIL}`}
               className="text-xl md:text-3xl font-medium tracking-tight text-ink hover:text-sumi transition-colors break-all w-fit border-b border-transparent hover:border-stone pb-1"
@@ -23,19 +23,19 @@ function Footer() {
           {/* Meta row */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-6 border-t border-stone pt-12">
             <div className="flex flex-col gap-2">
-              <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">Location</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">Location</span>
               <span className="text-[13px] text-ash">Rennes, France</span>
             </div>
 
             <div className="flex flex-col gap-2">
-              <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">
+              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">
                 Availability
               </span>
               <span className="text-[13px] text-ash">Summer 2026 internship</span>
             </div>
 
             <div className="flex flex-col gap-2">
-              <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">Elsewhere</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">Elsewhere</span>
               <div className="flex flex-col gap-1.5">
                 {SOCIALS.map((social) => (
                   <a
@@ -52,7 +52,7 @@ function Footer() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">© 2026</span>
+              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">© 2026</span>
               <span className="text-[13px] text-ash">Théo Phan · Portfolio</span>
             </div>
           </div>

@@ -64,7 +64,7 @@ export default function ProjectsPage() {
       {/* Atmospheric texture: grain sits above the background, below the content, so text
           stays crisp. pointer-events-none so it never blocks clicks. */}
       <div
-        className="pointer-events-none fixed inset-0 z-[1] opacity-[0.05]"
+        className="pointer-events-none fixed inset-0 z-[1] opacity-[0.03]"
         aria-hidden="true"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
@@ -72,7 +72,7 @@ export default function ProjectsPage() {
           backgroundSize: "256px 256px",
         }}
       />
-      <div className="pointer-events-none fixed inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_0%,transparent_55%,rgba(0,0,0,0.85)_100%)]" />
+      <div className="pointer-events-none fixed inset-0 z-[1] bg-[radial-gradient(ellipse_at_center,transparent_0%,transparent_60%,rgba(0,0,0,0.55)_100%)]" />
     </div>
   );
 }

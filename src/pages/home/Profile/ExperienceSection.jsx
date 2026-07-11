@@ -11,7 +11,7 @@ function ExperienceItem({ exp, index }) {
       transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: (index % 2) * 0.05 }}
       className="grid grid-cols-1 md:grid-cols-[10rem_1fr] gap-2 md:gap-10 py-8 border-t border-stone"
     >
-      <span className="text-[12px] text-pebble tracking-wide pt-1">{exp.date}</span>
+      <span className="font-mono text-[12px] text-pebble tracking-tight pt-1">{exp.date}</span>
 
       <div className="flex flex-col gap-2 max-w-2xl">
         <div className="flex flex-col gap-0.5">
@@ -22,7 +22,7 @@ function ExperienceItem({ exp, index }) {
 
         <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
           {exp.tags.map((tag) => (
-            <span key={tag} className="text-[11px] uppercase tracking-[0.14em] text-pebble">
+            <span key={tag} className="font-mono text-[11px] uppercase tracking-[0.08em] text-pebble">
               {tag}
             </span>
           ))}
@@ -40,10 +40,10 @@ function ExperienceSection() {
     >
       <div className="max-w-[1400px] mx-auto">
         <div className="mb-12 md:mb-16">
-          <span className="text-[11px] uppercase tracking-[0.18em] text-pebble block mb-3">
+          <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble block mb-3">
             Path
           </span>
-          <h2 className="text-3xl md:text-5xl font-normal text-ink tracking-[-0.02em] leading-[0.95]">
+          <h2 className="font-serif text-4xl md:text-6xl font-normal text-ink tracking-[0] leading-[0.95]">
             Experience &amp; education
           </h2>
         </div>

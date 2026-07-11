@@ -28,7 +28,7 @@ function ProjectItem({ project, isCoarsePointer, onSelect }) {
     >
       <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-2 md:gap-0">
         <div className="flex items-baseline gap-5">
-          <span className="text-[11px] uppercase tracking-[0.14em] text-neutral-500 mix-blend-difference w-20 shrink-0">
+          <span className="font-mono text-[11px] uppercase tracking-[0.08em] text-neutral-500 mix-blend-difference w-20 shrink-0">
             {category}
           </span>
           <h3 className="text-xl md:text-2xl font-medium tracking-tight text-white mix-blend-difference leading-snug">

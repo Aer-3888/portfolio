@@ -45,7 +45,7 @@ export default function ContactPage() {
         initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={prefersReduced ? { duration: 0 } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="grid h-auto w-full max-w-7xl grid-cols-1 overflow-hidden rounded-2xl border border-white/5 bg-neutral-900 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.8)] lg:min-h-[75vh] lg:grid-cols-12 lg:rounded-sm"
+        className="grid h-auto w-full max-w-7xl grid-cols-1 overflow-hidden rounded-2xl border border-white/5 bg-neutral-900 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.6)] lg:min-h-[75vh] lg:grid-cols-12 lg:rounded-sm"
       >
         {/* Left: Communication & Details */}
         <div className="flex flex-col justify-between border-b border-white/5 bg-neutral-900 p-6 sm:p-8 md:p-16 lg:col-span-5 lg:border-b-0 lg:border-r">
@@ -54,10 +54,10 @@ export default function ContactPage() {
               <span className="text-neutral-500 font-mono text-[10px] tracking-[0.3em] block">
                 Inquiries
               </span>
-              <h1 className="text-5xl font-black uppercase leading-[0.82] tracking-tighter sm:text-6xl md:text-8xl">
-                Get In
+              <h1 className="font-serif text-6xl font-normal leading-[0.92] tracking-[-0.01em] sm:text-7xl md:text-8xl">
+                Get in
                 <br />
-                <span className="text-neutral-600">Touch.</span>
+                <span className="text-neutral-600">touch.</span>
               </h1>
             </div>
 
@@ -85,7 +85,7 @@ export default function ContactPage() {
                   <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
                     Location
                   </span>
-                  <div className="text-sm font-bold uppercase tracking-wide">Rennes, France</div>
+                  <div className="text-sm tracking-wide text-neutral-300">Rennes, France</div>
                 </div>
                 <div className="space-y-2">
                   <span className="text-neutral-500 font-mono text-[9px] tracking-widest">

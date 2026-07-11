@@ -19,12 +19,14 @@ function ProjectGallery({ onSelect }) {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         className="mb-16 md:mb-36"
       >
-        <h1 className="text-5xl font-black uppercase tracking-tighter leading-[0.85] sm:text-6xl md:text-8xl">
+        <h1 className="font-serif text-6xl font-normal tracking-[-0.01em] leading-[0.9] sm:text-7xl md:text-8xl">
           Selected
           <br />
-          <span className="text-neutral-600">Projects</span>
+          <span className="text-neutral-600">projects</span>
         </h1>
-        <p className="mt-6 text-xs uppercase tracking-[0.2em] text-neutral-500">2024 - 2026</p>
+        <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
+          2024 - 2026
+        </p>
       </motion.header>
 
       {/* Cards */}
@@ -49,8 +51,8 @@ function ProjectGallery({ onSelect }) {
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 transition-colors duration-500 group-hover:text-white">
               Let&apos;s build
             </span>
-            <span className="text-lg font-black uppercase tracking-tighter text-white/40 transition-colors duration-500 group-hover:text-white">
-              Something Together
+            <span className="font-serif text-2xl font-normal tracking-[-0.005em] text-white/40 transition-colors duration-500 group-hover:text-white">
+              Something together
             </span>
           </div>
         </button>

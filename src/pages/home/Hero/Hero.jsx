@@ -28,10 +28,10 @@ function Hero({ onCvToggle }) {
             transition={{ duration: 1, ease, delay: 0.1 }}
             className="max-w-fit"
           >
-            <p className="text-[11px] tracking-[0.18em] uppercase text-ash leading-relaxed">
+            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-ash leading-relaxed">
               {"Portfolio · 2026"}
             </p>
-            <p className="text-[11px] tracking-[0.18em] uppercase text-pebble leading-relaxed">
+            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-pebble leading-relaxed">
               Rennes, France
             </p>
           </motion.div>
@@ -42,7 +42,7 @@ function Hero({ onCvToggle }) {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.1, ease, delay: 0.25 }}
-            className="mt-10 text-[clamp(3.5rem,16vw,5.5rem)] font-normal tracking-[-0.03em] text-ink leading-[0.9]"
+            className="mt-10 font-serif text-[clamp(4rem,18vw,6rem)] font-normal tracking-[-0.005em] text-ink leading-[0.88]"
           >
             {"Théo"}
             <br />
@@ -109,10 +109,10 @@ function Hero({ onCvToggle }) {
             transition={{ duration: 1, ease, delay: 0.1 }}
             className="relative max-w-fit md:absolute md:left-12 md:top-28"
           >
-            <p className="text-[11px] tracking-[0.18em] uppercase text-ash leading-relaxed">
+            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-ash leading-relaxed">
               {"Portfolio \u00B7 2026"}
             </p>
-            <p className="text-[11px] tracking-[0.18em] uppercase text-pebble leading-relaxed">
+            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-pebble leading-relaxed">
               Rennes, France
             </p>
           </motion.div>
@@ -126,7 +126,7 @@ function Hero({ onCvToggle }) {
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1.1, ease, delay: 0.25 }}
-              className="text-[clamp(3rem,14vw,4.5rem)] font-normal tracking-[-0.03em] text-ink leading-[0.92] md:text-[clamp(5rem,9vw,8.5rem)]"
+              className="font-serif text-[clamp(3.25rem,15vw,5rem)] font-normal tracking-[-0.005em] text-ink leading-[0.9] md:text-[clamp(5.5rem,10vw,9.5rem)]"
             >
               {"Th\u00E9o Phan"}
             </motion.h1>
@@ -192,7 +192,7 @@ function Hero({ onCvToggle }) {
           className="absolute bottom-10 left-6 md:left-12 z-20 hidden md:flex items-center gap-3"
         >
           <span className="h-8 w-px bg-stone" />
-          <span className="text-[11px] tracking-[0.18em] uppercase text-pebble">Scroll</span>
+          <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-pebble">Scroll</span>
         </motion.div>
       </div>
     </div>

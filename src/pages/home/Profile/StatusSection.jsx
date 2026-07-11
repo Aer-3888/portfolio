@@ -15,7 +15,7 @@ function StatusSection() {
             transition={{ delay: index * 0.1, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col gap-3 md:px-10 first:md:pl-0 last:md:pr-0"
           >
-            <span className="text-[11px] uppercase tracking-[0.18em] text-pebble">
+            <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">
               {item.label}
             </span>
             <div className="flex flex-col gap-1.5">

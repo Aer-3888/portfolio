@@ -169,7 +169,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                     {project.year}
                   </span>
                 </div>
-                <h2 className="mb-4 text-4xl font-black uppercase tracking-tighter text-white md:text-5xl">
+                <h2 className="mb-4 text-3xl font-medium tracking-tight text-white md:text-4xl">
                   {project.title}
                 </h2>
                 <RichText

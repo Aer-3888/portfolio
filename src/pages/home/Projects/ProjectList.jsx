@@ -161,10 +161,10 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
       {/* Header */}
       <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 mb-12 md:mb-16">
         <ScrollReveal>
-          <span className="text-[11px] uppercase tracking-[0.18em] text-neutral-500 mix-blend-difference block mb-3">
+          <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-neutral-500 mix-blend-difference block mb-3">
             Selected work
           </span>
-          <h2 className="text-3xl md:text-5xl font-normal text-white mix-blend-difference tracking-[-0.02em] leading-[0.95]">
+          <h2 className="font-serif text-4xl md:text-6xl font-normal text-white mix-blend-difference tracking-[0] leading-[0.95]">
             A few things I&apos;ve built
           </h2>
         </ScrollReveal>
