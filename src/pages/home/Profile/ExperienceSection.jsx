@@ -1,57 +1,92 @@
 import { memo } from "react";
 import { motion } from "framer-motion";
-import { EXPERIENCES } from "../../../config/siteData";
 
-function ExperienceItem({ exp, index }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: (index % 2) * 0.05 }}
-      className="grid grid-cols-1 md:grid-cols-[10rem_1fr] gap-2 md:gap-10 py-8 border-t border-stone"
-    >
-      <span className="font-mono text-[12px] text-pebble tracking-tight pt-1">{exp.date}</span>
-
-      <div className="flex flex-col gap-2 max-w-2xl">
-        <div className="flex flex-col gap-0.5">
-          <h3 className="text-base md:text-lg font-medium text-ink tracking-tight">{exp.title}</h3>
-          <h4 className="text-[13px] text-ash">{exp.org}</h4>
-        </div>
-        <p className="text-[13px] text-ash leading-relaxed">{exp.detail}</p>
-
-        <div className="flex flex-wrap gap-x-4 gap-y-1 mt-1">
-          {exp.tags.map((tag) => (
-            <span key={tag} className="font-mono text-[11px] uppercase tracking-[0.08em] text-pebble">
-              {tag}
-            </span>
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  );
-}
+const moments = [
+  {
+    year: "2023",
+    kicker: "The foundation",
+    title: "Learned to make applications hold together.",
+    detail:
+      "At IUT Nantes, full-stack projects taught me the full path from an idea and a data model to something another person can actually use.",
+  },
+  {
+    year: "2025",
+    kicker: "The real world",
+    title: "Pointed computer vision at fiber-optic defects.",
+    detail:
+      "At FPT Telecom, accuracy was only one part of the job. Latency, messy images, documentation, and leaving a maintainable pipeline behind mattered too.",
+  },
+  {
+    year: "2025",
+    kicker: "The leap",
+    title: "Helped turn an NFC tag into a shipped product.",
+    detail:
+      "Waiki was the first time I led a team from a blank page to both app stores. It taught me that background reliability and team clarity are product features.",
+  },
+  {
+    year: "2026",
+    kicker: "The sharp edges",
+    title: "Started breaking systems to understand them.",
+    detail:
+      "CTFs pulled me into cryptography, forensics, and OSINT. GardeFou brought that mindset to AI: build the vulnerable thing, attack it, then prove the defense works.",
+  },
+  {
+    year: "Now",
+    kicker: "The next chapter",
+    title: "Studying AI, while keeping one foot outside the model.",
+    detail:
+      "I’m at INSA Rennes, building backend tools for an accessibility association and looking for a summer 2027 internship where software meets a hard, real problem.",
+  },
+];
 
 function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="relative w-full bg-paper py-24 md:py-32 px-6 md:px-12 border-t border-stone"
+      className="relative overflow-hidden bg-[#ded8cc] px-5 py-24 text-[#121212] sm:px-8 md:px-12 md:py-36"
     >
-      <div className="max-w-[1400px] mx-auto">
-        <div className="mb-12 md:mb-16">
-          <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble block mb-3">
-            Path
-          </span>
-          <h2 className="font-serif text-4xl md:text-6xl font-normal text-ink tracking-[0] leading-[0.95]">
-            Experience &amp; education
-          </h2>
-        </div>
+      <div className="mx-auto max-w-[1500px]">
+        <div className="relative z-10 grid gap-10 md:grid-cols-[0.75fr_1.25fr] md:gap-20">
+          <div className="md:sticky md:top-28 md:h-fit">
+            <span className="font-serif text-2xl italic leading-none tracking-[-0.03em] text-[#121212]/70">
+              How I got here
+            </span>
+            <h2 className="mt-5 max-w-[8ch] font-serif text-[clamp(4rem,7vw,7.5rem)] leading-[0.8] tracking-[-0.04em]">
+              A path, not a checklist.
+            </h2>
+            <p className="mt-8 max-w-sm text-sm leading-relaxed text-[#121212]/60">
+              Each step made the next question a little more ambitious, and a little closer to the
+              physical world.
+            </p>
+          </div>
 
-        <div className="flex flex-col">
-          {EXPERIENCES.map((exp, i) => (
-            <ExperienceItem key={i} exp={exp} index={i} />
-          ))}
+          <div className="relative border-t border-[#121212]">
+            {moments.map((moment, index) => (
+              <motion.article
+                key={moment.year + moment.title}
+                initial={{ opacity: 0, x: 24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-70px" }}
+                transition={{ duration: 0.7, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                className="grid gap-4 border-b border-[#121212]/25 py-9 sm:grid-cols-[7rem_1fr] md:py-12"
+              >
+                <div>
+                  <span className="font-serif text-3xl italic text-[#c8452b]">{moment.year}</span>
+                </div>
+                <div>
+                  <span className="font-mono text-[9px] uppercase tracking-[0.13em] text-[#121212]/45">
+                    {moment.kicker}
+                  </span>
+                  <h3 className="mt-3 max-w-2xl font-serif text-3xl leading-[0.98] md:text-5xl">
+                    {moment.title}
+                  </h3>
+                  <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#121212]/60">
+                    {moment.detail}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </div>
     </section>

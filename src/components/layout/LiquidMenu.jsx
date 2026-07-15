@@ -9,14 +9,13 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
   const prefersReduced = useReducedMotion();
   const { sensorRef, xSpring, ySpring, handleMouseMove, handleMouseLeave } = useMagneticEffect();
 
-  // Gentle idle drift + breathing so the blob genuinely floats at rest.
   const floatAnimation = prefersReduced
     ? undefined
     : {
-        y: [0, -5, 0, 4, 0],
-        x: [0, 3, 0, -3, 0],
-        rotate: [0, 3, 0, -2, 0],
-        scale: [1, 1.04, 1, 1.03, 1],
+        y: [0, -15, 5, 12, 0],
+        x: [0, 10, -5, -11, 0],
+        rotate: [0, 7, -3, -5, 0],
+        scale: [1, 1.15, 0.93, 1.1, 1],
       };
 
   return (
@@ -31,12 +30,10 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
         onMouseEnter={() => setIsHovered(true)}
         className="absolute w-[280px] h-[280px] flex items-center justify-center outline-none tap-highlight-transparent cursor-default"
       >
-        {/* Magnetic pull layer */}
         <motion.div style={{ x: xSpring, y: ySpring }} className="relative cursor-pointer">
-          {/* Floating layer */}
           <motion.div
             animate={floatAnimation}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           >
             <button
               onClick={toggle}
@@ -45,7 +42,7 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
               aria-label="Toggle menu"
             >
               <div className="absolute inset-0 pointer-events-none">
-                <LiquidBackground isHovered={isHovered} blobColor={blobColor} />
+                <LiquidBackground isHovered={isHovered} speed={0.0045} blobColor={blobColor} />
               </div>
 
               <div className="relative z-10 pointer-events-none scale-75 md:scale-90">

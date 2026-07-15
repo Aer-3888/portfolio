@@ -1,59 +1,39 @@
 import { memo } from "react";
-import { SOCIALS, EMAIL } from "../../../config/siteData";
+import { EMAIL, SOCIALS } from "../../../config/siteData";
 
 function Footer() {
   return (
-    <footer
-      id="contact"
-      className="relative w-full bg-paper py-24 md:py-32 border-t border-stone text-ink"
-    >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        <div className="flex flex-col gap-16 md:gap-20">
-          {/* Get in touch */}
-          <div className="flex flex-col gap-6">
-            <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">Get in touch</span>
-            <a
-              href={`mailto:${EMAIL}`}
-              className="text-xl md:text-3xl font-medium tracking-tight text-ink hover:text-sumi transition-colors break-all w-fit border-b border-transparent hover:border-stone pb-1"
-            >
-              {EMAIL}
-            </a>
-          </div>
+    <footer id="contact" className="bg-[#f1eee7] text-[#121212]">
+      <div className="mx-auto max-w-[1500px] px-5 py-16 sm:px-8 md:px-12 md:py-24">
+        <div className="grid gap-14 md:grid-cols-[minmax(0,1.5fr)_minmax(16rem,0.5fr)] md:items-end md:gap-24">
+          <a
+            href={"mailto:" + EMAIL}
+            className="group inline-flex w-fit max-w-full cursor-pointer items-center gap-3 font-serif text-[clamp(2rem,5vw,5.5rem)] leading-[0.9] tracking-[-0.045em] transition-colors hover:text-[#2356d8]"
+          >
+            <span className="break-all">{EMAIL}</span>
+            <span className="shrink-0 text-[0.55em] transition-transform group-hover:translate-x-1 group-hover:-translate-y-1">
+              ↗
+            </span>
+          </a>
 
-          {/* Meta row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-y-10 gap-x-6 border-t border-stone pt-12">
-            <div className="flex flex-col gap-2">
-              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">Location</span>
-              <span className="text-[13px] text-ash">Rennes, France</span>
+          <div className="space-y-8 text-sm leading-relaxed">
+            <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#121212]/55">
+              <p>Rennes, France</p>
+              <p>Summer 2027 internship</p>
             </div>
-
-            <div className="flex flex-col gap-2">
-              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">
-                Availability
-              </span>
-              <span className="text-[13px] text-ash">Summer 2026 internship</span>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">Elsewhere</span>
-              <div className="flex flex-col gap-1.5">
-                {SOCIALS.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[13px] text-ash hover:text-ink transition-colors w-fit"
-                  >
-                    {social.label}
-                  </a>
-                ))}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble">© 2026</span>
-              <span className="text-[13px] text-ash">Théo Phan · Portfolio</span>
+            <p>CS engineering @ INSA Rennes</p>
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              {SOCIALS.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="cursor-pointer underline decoration-[#121212]/30 underline-offset-4 transition-colors hover:decoration-[#121212]"
+                >
+                  {social.label}
+                </a>
+              ))}
             </div>
           </div>
         </div>

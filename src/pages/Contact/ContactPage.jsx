@@ -13,7 +13,7 @@ export default function ContactPage() {
   useSeo({
     title: "Contact | Théo Phan",
     description:
-      "Get in touch with Théo Phan, CS student at INSA Rennes, open to a summer 2026 internship.",
+      "Get in touch with Théo Phan, CS student at INSA Rennes, open to a summer 2027 internship.",
     path: "/contact",
   });
 
@@ -32,8 +32,8 @@ export default function ContactPage() {
       navigator.clipboard.writeText(EMAIL);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (_e) {
-      // clipboard write failed silently
+    } catch {
+      setCopied(false);
     }
   };
 
@@ -47,7 +47,6 @@ export default function ContactPage() {
         transition={prefersReduced ? { duration: 0 } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
         className="grid h-auto w-full max-w-7xl grid-cols-1 overflow-hidden rounded-2xl border border-white/5 bg-neutral-900 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.6)] lg:min-h-[75vh] lg:grid-cols-12 lg:rounded-sm"
       >
-        {/* Left: Communication & Details */}
         <div className="flex flex-col justify-between border-b border-white/5 bg-neutral-900 p-6 sm:p-8 md:p-16 lg:col-span-5 lg:border-b-0 lg:border-r">
           <div className="space-y-10 md:space-y-16">
             <div className="space-y-4">
@@ -62,7 +61,6 @@ export default function ContactPage() {
             </div>
 
             <div className="space-y-10">
-              {/* Email Link */}
               <div className="group cursor-pointer block" onClick={handleCopyEmail}>
                 <div className="flex justify-between items-center mb-2">
                   <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
@@ -79,7 +77,6 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              {/* Location & Time */}
               <div className="grid grid-cols-1 gap-6 pt-4 sm:grid-cols-2 sm:gap-12">
                 <div className="space-y-2">
                   <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
@@ -97,7 +94,6 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Socials */}
           <div className="pt-10 md:pt-12">
             <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest block font-bold mb-4">
               Social Channels
@@ -118,7 +114,6 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* Right: Arcade Game — desktop only */}
         <div className="hidden lg:flex lg:col-span-7 bg-neutral-950 flex-col">
           <div className="flex-1">
             <ArcadeMachine />

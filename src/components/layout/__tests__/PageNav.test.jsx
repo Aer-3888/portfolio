@@ -26,7 +26,7 @@ vi.mock("framer-motion", async () => {
   return {
     ...actual,
     useMotionValue: () => 0,
-    // Return scalar 0 — motion.div is also mocked as plain <div> so no subscription occurs
+    // Return scalar 0 because motion.div is mocked as a plain div.
     useTransform: () => 0,
     AnimatePresence: ({ children }) => children,
     motion: {

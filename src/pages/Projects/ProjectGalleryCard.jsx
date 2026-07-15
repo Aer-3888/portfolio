@@ -1,15 +1,11 @@
 import { memo, useRef, useCallback } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
-// One project as a full-width editorial row: large image frame on one side, meta on the
-// other, alternating left/right down the page. All motion is compositor-only (transform /
-// opacity) and disabled under prefers-reduced-motion.
 function ProjectGalleryCard({ project, index, onSelect }) {
   const ref = useRef(null);
   const prefersReduced = useReducedMotion();
   const handleClick = useCallback(() => onSelect(project), [onSelect, project]);
 
-  // Subtle parallax: the image drifts within its frame as the row crosses the viewport.
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -34,14 +30,11 @@ function ProjectGalleryCard({ project, index, onSelect }) {
       aria-label={`View ${project.title} details`}
       className="group relative grid w-full cursor-pointer grid-cols-1 items-center gap-6 text-left focus:outline-none focus-visible:ring-1 focus-visible:ring-white/40 focus-visible:ring-offset-4 focus-visible:ring-offset-neutral-950 md:grid-cols-2 md:gap-16"
     >
-      {/* Image frame */}
       <div
         className={`relative aspect-[4/3] w-full overflow-hidden border border-white/5 shadow-[0_20px_60px_rgba(0,0,0,0.5)] transition-colors duration-700 group-hover:border-white/20 ${
           imageFirst ? "md:order-1" : "md:order-2"
         }`}
       >
-        {/* Parallax layer carries the transform translateY, the img carries the hover scale,
-            so the two transforms never fight on the same element. */}
         <motion.div
           style={{ y: imageY }}
           className="absolute inset-x-0 -top-[10%] h-[120%] will-change-transform"
@@ -56,7 +49,6 @@ function ProjectGalleryCard({ project, index, onSelect }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
       </div>
 
-      {/* Meta */}
       <div
         className={`flex flex-col gap-4 md:gap-5 md:px-4 ${imageFirst ? "md:order-2" : "md:order-1"}`}
       >

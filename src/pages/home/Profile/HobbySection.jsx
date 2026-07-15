@@ -1,91 +1,126 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { hobbies } from "./hobbiesData";
+import { galleryFiles } from "../../About/galleryData";
 
-function HobbyCard({ hobby, index, onClick }) {
-  const [hovered, setHovered] = useState(false);
-
-  return (
-    <motion.button
-      type="button"
-      onClick={onClick}
-      onHoverStart={() => setHovered(true)}
-      onHoverEnd={() => setHovered(false)}
-      className="relative w-full h-full overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-1 focus-visible:ring-ink"
-    >
-      <motion.img
-        src={hobby.image}
-        alt={hobby.title}
-        className="absolute inset-0 w-full h-full object-cover"
-        animate={{ scale: hovered ? 1.04 : 1, opacity: hovered ? 1 : 0.95 }}
-        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-      />
-
-      {/* A soft footer wash, only enough to keep the small label legible */}
-      <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
-
-      <span className="absolute top-4 left-4 font-mono text-[11px] text-white/60 tracking-[0.1em] z-10">
-        0{index + 1}
-      </span>
-
-      {/* Description, fades in on hover */}
-      <motion.p
-        className="absolute bottom-12 left-0 right-0 px-5 text-[12px] text-white/85 leading-relaxed z-10"
-        animate={{ opacity: hovered ? 1 : 0, y: hovered ? 0 : 6 }}
-        transition={{ duration: 0.3, ease: "easeOut" }}
-      >
-        {hobby.description}
-      </motion.p>
-
-      <div className="absolute bottom-0 left-0 right-0 px-5 pb-4 z-10">
-        <h3 className="text-sm font-medium text-white tracking-tight">{hobby.title}</h3>
-      </div>
-    </motion.button>
-  );
-}
+const photoSet = [galleryFiles[20], galleryFiles[12], galleryFiles[10]];
 
 export default function HobbySection({ onGalleryOpen }) {
   return (
-    <section className="relative w-full bg-paper py-24 md:py-32 border-t border-stone z-10">
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 mb-10">
-        <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-pebble block mb-3">
-          Outside the code
-        </span>
-        <h2 className="font-serif text-4xl md:text-6xl font-normal text-ink tracking-[0] leading-[0.95]">
-          Things I spend time on
-        </h2>
-      </div>
+    <section className="relative overflow-hidden bg-[#ffca45] px-5 py-24 text-[#121212] sm:px-8 md:px-12 md:py-36">
+      <div className="absolute -left-24 top-20 h-64 w-64 rounded-full border border-[#121212]/20 md:h-[30rem] md:w-[30rem]" />
+      <div className="relative mx-auto max-w-[1500px]">
+        <div className="grid items-center gap-16 md:grid-cols-[0.8fr_1.2fr] md:gap-24">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#121212]/50">
+              Away from the keyboard
+            </span>
+            <h2 className="mt-6 max-w-[9ch] font-serif text-[clamp(4rem,7.5vw,8rem)] leading-[0.8] tracking-[-0.04em]">
+              I collect <span className="italic text-[#2356d8]">ways of seeing.</span>
+            </h2>
+            <p className="mt-8 max-w-lg text-base leading-relaxed text-[#121212]/65">
+              Photography makes me slow down and notice geometry, light, and the one detail that
+              changes the frame. It is the opposite of debugging, and somehow the same skill.
+            </p>
 
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-3">
-          <div className="h-[340px] sm:h-[420px] md:h-[540px]">
-            <HobbyCard hobby={hobbies[0]} index={0} onClick={onGalleryOpen} />
-          </div>
+            <div className="mt-10 grid gap-3 sm:grid-cols-2">
+              <div className="border-t border-[#121212] pt-4">
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-[#121212]/45">
+                  Bouldering
+                </span>
+                <p className="mt-3 text-sm leading-relaxed">
+                  A problem you solve with your whole body. Fall, adjust one move, try again.
+                </p>
+              </div>
+              <div className="border-t border-[#121212] pt-4">
+                <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-[#121212]/45">
+                  Escape games
+                </span>
+                <p className="mt-3 text-sm leading-relaxed">
+                  Pattern recognition, questionable theories, and a timer making every idea louder.
+                </p>
+              </div>
+            </div>
 
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-1">
-            <div className="h-[180px] sm:h-[200px] md:h-[265px]">
-              <HobbyCard hobby={hobbies[1]} index={1} onClick={onGalleryOpen} />
-            </div>
-            <div className="h-[180px] sm:h-[200px] md:h-[265px]">
-              <HobbyCard hobby={hobbies[2]} index={2} onClick={onGalleryOpen} />
-            </div>
+          </motion.div>
+
+          <div className="relative">
+            <button
+              type="button"
+              onClick={onGalleryOpen}
+              className="group relative mx-auto block h-[34rem] w-full max-w-[42rem] cursor-pointer text-left sm:h-[44rem] md:h-[48rem]"
+              aria-label="Open photography gallery"
+            >
+            <motion.figure
+              initial={{ opacity: 0, rotate: -6, x: -30 }}
+              whileInView={{ opacity: 1, rotate: -5, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute left-2 top-[8%] z-10 w-[55%] bg-[#f1eee7] p-2 pb-9 shadow-xl sm:p-3 sm:pb-12"
+            >
+              <img
+                src={photoSet[1].url}
+                alt="A photograph from Théo’s visual diary"
+                className="aspect-[4/5] w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
+              />
+              <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-[#121212]/55 sm:bottom-4 sm:left-4">
+                {photoSet[1].meta.loc} · © Théo Phan
+              </figcaption>
+            </motion.figure>
+
+            <motion.figure
+              initial={{ opacity: 0, rotate: 6, x: 30 }}
+              whileInView={{ opacity: 1, rotate: 5, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute right-0 top-0 w-[62%] bg-[#2356d8] p-2 pb-9 shadow-xl sm:p-3 sm:pb-12"
+            >
+              <img
+                src={photoSet[0].url}
+                alt="A sunset cityscape photographed by Théo"
+                className="aspect-[4/5] w-full object-cover"
+              />
+              <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-white/70 sm:bottom-4 sm:left-4">
+                {photoSet[0].meta.loc} · © Théo Phan
+              </figcaption>
+            </motion.figure>
+
+            <motion.figure
+              initial={{ opacity: 0, y: 35, rotate: -2 }}
+              whileInView={{ opacity: 1, y: 0, rotate: -1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute bottom-0 left-[16%] z-20 w-[66%] bg-[#f1eee7] p-2 pb-9 shadow-2xl sm:p-3 sm:pb-12"
+            >
+              <img
+                src={photoSet[2].url}
+                alt="A cultural scene photographed by Théo"
+                className="aspect-[4/3] w-full object-cover"
+              />
+              <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-[#121212]/55 sm:bottom-4 sm:left-4">
+                {photoSet[2].meta.loc} · © Théo Phan
+              </figcaption>
+            </motion.figure>
+            </button>
+
+            <button
+              type="button"
+              onClick={onGalleryOpen}
+              className="group absolute right-2 top-[56%] z-30 grid h-28 w-28 cursor-pointer place-items-center rounded-full bg-[#2356d8] p-4 font-mono text-[10px] uppercase leading-tight tracking-[0.1em] text-white shadow-xl transition duration-300 hover:-translate-y-1 hover:rotate-6 hover:scale-105 sm:h-32 sm:w-32"
+              aria-label="View photos"
+            >
+              <span>
+                View
+                <br />
+                photos
+              </span>
+              <span className="text-lg transition-transform group-hover:rotate-12">↗</span>
+            </button>
           </div>
         </div>
-      </div>
-
-      <div className="max-w-[1400px] mx-auto px-6 md:px-12 mt-10">
-        <button
-          type="button"
-          onClick={onGalleryOpen}
-          className="group inline-flex items-center gap-2 text-[13px] text-ink cursor-pointer"
-        >
-          <span className="border-b border-transparent group-hover:border-ink transition-colors duration-300 pb-0.5">
-            View visual diary
-          </span>
-          <span className="text-ash transition-transform duration-300 group-hover:translate-x-0.5">
-            →
-          </span>
-        </button>
       </div>
     </section>
   );

@@ -1,209 +1,195 @@
-import { useRef, useState, useCallback, useEffect } from "react";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import ProjectItem from "./ProjectItem";
 import ProjectDetails from "../../../components/ProjectDetails";
 import { PROJECTS } from "../../../config/siteData";
 
-// Black spotlight that trails the cursor, mix-blend inverts the names to white.
-// Positioned with a compositor-only transform (x/y) rather than left/top so the
-// browser skips layout/paint on every frame, which keeps the mix-blend repaint cheap.
-function Cursor({ mouseX, mouseY, isHovered }) {
-  const springConfig = { damping: 25, stiffness: 150, mass: 0.5 };
-  const xSpring = useSpring(mouseX, springConfig);
-  const ySpring = useSpring(mouseY, springConfig);
+const PROJECT_STORIES = [
+  {
+    id: "01",
+    question: "What if self-control had a physical shape?",
+    note: "I led three students from a stubborn idea to a product people now carry in their pockets.",
+    result: "Live on iOS + Android · 1,425+ units sold",
+    color: "#ffca45",
+  },
+  {
+    id: "09",
+    question: "Could a document quietly hijack an AI?",
+    note: "Reading about prompt injection felt too comfortable, so I built a vulnerable assistant and attacked it myself.",
+    color: "#f04d2f",
+  },
+  {
+    id: "10",
+    question: "What is a neural network hiding from me?",
+    note: "I built the DQN training loop in Rust and watched the agent slowly teach itself to survive.",
+    color: "#2356d8",
+  },
+  {
+    id: "03",
+    question: "Can a model cope with the mess outside a lab?",
+    note: "I compared vision models on imperfect plant photos to find the point where a benchmark becomes genuinely useful.",
+    result: "mAP@50 0.90 · 85.8% recall",
+    color: "#b9d878",
+  },
+];
+
+function StoryCard({ story, project, index, onSelect }) {
+  const imageFirst = index % 2 === 0;
+  const imageRef = useRef(null);
+  const [isImageHovered, setIsImageHovered] = useState(false);
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+  const spotlightX = useSpring(cursorX, { damping: 23, stiffness: 260, mass: 0.35 });
+  const spotlightY = useSpring(cursorY, { damping: 23, stiffness: 260, mass: 0.35 });
+  const spotlightMask = useMotionTemplate`circle(88px at ${spotlightX}px ${spotlightY}px)`;
+
+  const moveCursor = (event, immediately = false) => {
+    const rect = imageRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+    cursorX.set(x);
+    cursorY.set(y);
+
+    if (immediately) {
+      spotlightX.jump(x);
+      spotlightY.jump(y);
+    }
+  };
 
   return (
-    <motion.div
-      style={{ x: xSpring, y: ySpring }}
-      className="absolute left-0 top-0 z-0 pointer-events-none will-change-transform"
+    <motion.article
+      initial={{ opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+      className="grid gap-6 border-t border-white/20 py-12 md:grid-cols-12 md:gap-12 md:py-20"
     >
-      {/* Centering wrapper: static transform, kept separate so it never fights
-          the spring transform above or the scale transform below. */}
-      <div className="-translate-x-1/2 -translate-y-1/2">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.4 }}
-          animate={{ opacity: isHovered ? 1 : 0, scale: isHovered ? 1 : 0.4 }}
-          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-          className="w-[130px] h-[130px] md:w-[230px] md:h-[230px] bg-black rounded-full"
-        />
+      <div className={"relative md:col-span-7 " + (imageFirst ? "md:order-1" : "md:order-2")}>
+        <button
+          ref={imageRef}
+          type="button"
+          onClick={() => onSelect(project)}
+          onPointerEnter={(event) => {
+            moveCursor(event, true);
+            setIsImageHovered(true);
+          }}
+          onPointerMove={moveCursor}
+          onPointerLeave={() => setIsImageHovered(false)}
+          className="group relative block w-full cursor-pointer overflow-hidden text-left"
+          aria-label={"Open " + project.title + " case study"}
+        >
+          <div
+            className="absolute inset-0 translate-x-2 translate-y-2 md:translate-x-3 md:translate-y-3"
+            style={{ backgroundColor: story.color }}
+          />
+          <div className="relative aspect-[4/3] overflow-hidden bg-[#262626]">
+            <img
+              src={project.img}
+              alt=""
+              loading="lazy"
+              className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
+            />
+            <motion.img
+              src={project.img}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              animate={{ opacity: isImageHovered ? 1 : 0 }}
+              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              style={{ clipPath: spotlightMask }}
+              className="pointer-events-none absolute inset-0 hidden h-full w-full scale-[1.12] object-cover brightness-75 contrast-125 grayscale md:block"
+            />
+            <div className="absolute inset-0 bg-black/5 transition-colors group-hover:bg-transparent" />
+            <span className="absolute bottom-4 right-4 grid h-12 w-12 place-items-center rounded-full bg-white text-lg text-black transition-transform duration-300 group-hover:rotate-[-12deg] group-hover:scale-110">
+              ↗
+            </span>
+          </div>
+        </button>
       </div>
-    </motion.div>
-  );
-}
 
-// Scroll Reveal Component
-function ScrollReveal({ children, className }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 95%", "end 5%"],
-  });
-  const opacity = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [0, 1, 1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.15, 0.85, 1], [24, 0, 0, -24]);
-
-  return (
-    <motion.div ref={ref} style={{ opacity, y }} className={className}>
-      {children}
-    </motion.div>
+      <div
+        className={
+          "flex flex-col justify-center md:col-span-5 " +
+          (imageFirst ? "md:order-2 md:pl-5" : "md:order-1 md:pr-5")
+        }
+      >
+        <div className="mb-6 flex justify-end font-mono text-[10px] tracking-[0.12em] text-white/45">
+          <span>{project.year}</span>
+        </div>
+        <p className="mb-3 text-sm text-white/55">{project.type}</p>
+        <h3 className="font-serif text-[clamp(2.8rem,5vw,5.25rem)] leading-[0.88] tracking-[-0.025em] text-[#f1eee7]">
+          {story.question}
+        </h3>
+        <p className="mt-6 max-w-lg text-sm leading-relaxed text-white/60 md:text-base">
+          {story.note}
+        </p>
+        {story.result && (
+          <div className="mt-7 border-l-2 border-[#ffca45] pl-4">
+            <p className="text-sm text-white/85">{story.result}</p>
+          </div>
+        )}
+        <button
+          type="button"
+          onClick={() => onSelect(project)}
+          className="group mt-8 inline-flex w-fit cursor-pointer items-center gap-3 text-sm text-white"
+        >
+          Open {project.title}
+          <span className="transition-transform group-hover:translate-x-1">→</span>
+        </button>
+      </div>
+    </motion.article>
   );
 }
 
 export default function ProjectList({ selectedProject, setSelectedProject }) {
-  const containerRef = useRef(null);
-  const rectRef = useRef(null);
   const navigate = useNavigate();
-  const [isCoarsePointer, setIsCoarsePointer] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [entryPoint, setEntryPoint] = useState(null);
-
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const handleSelect = useCallback(
-    (project) => {
-      setSelectedProject(project);
-    },
-    [setSelectedProject]
-  );
-
-  useEffect(() => {
-    const coarseMq = window.matchMedia("(pointer: coarse)");
-    const hoverMq = window.matchMedia("(hover: none)");
-    const update = () => {
-      setIsCoarsePointer(
-        coarseMq.matches ||
-          hoverMq.matches ||
-          ("ontouchstart" in window && window.innerWidth < 1024)
-      );
-    };
-    update();
-    coarseMq.addEventListener("change", update);
-    hoverMq.addEventListener("change", update);
-    window.addEventListener("resize", update);
-    return () => {
-      coarseMq.removeEventListener("change", update);
-      hoverMq.removeEventListener("change", update);
-      window.removeEventListener("resize", update);
-    };
-  }, []);
-
-  // Cache the section's bounding rect so handleMouseMove never forces a
-  // synchronous reflow on every pointer event. Refresh it on scroll/resize,
-  // the only things that move the section relative to the viewport.
-  useEffect(() => {
-    const updateRect = () => {
-      if (containerRef.current) rectRef.current = containerRef.current.getBoundingClientRect();
-    };
-    updateRect();
-    window.addEventListener("scroll", updateRect, { passive: true });
-    window.addEventListener("resize", updateRect);
-    return () => {
-      window.removeEventListener("scroll", updateRect);
-      window.removeEventListener("resize", updateRect);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting && selectedProject !== null) {
-          setSelectedProject(null);
-        }
-      },
-      { threshold: 0 }
-    );
-
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, [selectedProject, setSelectedProject]);
-
-  const handleMouseMove = useCallback(
-    (e) => {
-      if (isCoarsePointer) return;
-      const rect = rectRef.current || e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      mouseX.set(x);
-      mouseY.set(y);
-      if (!isHovered) {
-        setEntryPoint({ x, y });
-        setIsHovered(true);
-      }
-    },
-    [mouseX, mouseY, isHovered, isCoarsePointer]
-  );
-
-  const handleTouchStart = useCallback(() => {
-    setIsHovered(false);
-  }, []);
+  const stories = PROJECT_STORIES.map((story) => ({
+    story,
+    project: PROJECTS.find((project) => project.id === story.id),
+  })).filter(({ project }) => project);
 
   return (
-    <section
-      id="projects"
-      ref={containerRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={() => setIsHovered(false)}
-      onTouchStart={handleTouchStart}
-      className="relative isolate w-full bg-paper py-24 md:py-32 flex flex-col justify-center border-t border-stone overflow-hidden cursor-default"
-    >
-      {!selectedProject && !isCoarsePointer && (
-        <Cursor
-          key={`${entryPoint?.x}-${entryPoint?.y}`}
-          mouseX={mouseX}
-          mouseY={mouseY}
-          isHovered={isHovered}
-        />
-      )}
-
-      {/* Header */}
-      <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 mb-12 md:mb-16">
-        <ScrollReveal>
-          <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-neutral-500 mix-blend-difference block mb-3">
-            Selected work
-          </span>
-          <h2 className="font-serif text-4xl md:text-6xl font-normal text-white mix-blend-difference tracking-[0] leading-[0.95]">
-            A few things I&apos;ve built
+    <section id="projects" className="relative overflow-hidden bg-[#121212] text-white">
+      <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-12 md:py-36">
+        <div className="pb-16 md:pb-24">
+          <h2 className="font-serif text-[clamp(3.8rem,8vw,8.5rem)] leading-[0.78] tracking-[-0.04em] text-[#f1eee7]">
+            A few things I’ve built.
           </h2>
-        </ScrollReveal>
-      </div>
+        </div>
 
-      {/* List */}
-      <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12">
-        {PROJECTS.slice(0, 5).map((project, i) => (
-          <ScrollReveal key={project.id || i} className="w-full">
-            <ProjectItem
+        <div>
+          {stories.map(({ story, project }, index) => (
+            <StoryCard
+              key={story.id}
+              story={story}
               project={project}
-              index={i}
-              isCoarsePointer={isCoarsePointer}
-              onSelect={handleSelect}
+              index={index}
+              onSelect={setSelectedProject}
             />
-          </ScrollReveal>
-        ))}
+          ))}
+        </div>
+
+        <div className="flex flex-col items-start justify-between gap-6 border-t border-white/20 pt-10 sm:flex-row sm:items-center">
+          <p className="max-w-md text-sm leading-relaxed text-white/45">
+            There are more experiments, useful tools, and ideas that got slightly out of hand.
+          </p>
+          <button
+            type="button"
+            onClick={() => navigate("/projects")}
+            className="group inline-flex min-h-12 cursor-pointer items-center gap-8 rounded-full bg-[#f1eee7] px-6 text-sm text-[#121212] transition-transform hover:-translate-y-0.5"
+          >
+            See the whole archive
+            <span className="transition-transform group-hover:translate-x-1">→</span>
+          </button>
+        </div>
       </div>
 
-      {/* Modal */}
       <ProjectDetails
         project={selectedProject}
         isOpen={!!selectedProject}
         onClose={() => setSelectedProject(null)}
       />
-
-      <div className="max-w-[1400px] w-full mx-auto px-6 md:px-12 mt-12">
-        <ScrollReveal>
-          <button
-            onClick={() => navigate("/projects")}
-            className="group inline-flex items-center gap-2 text-[13px] text-white mix-blend-difference cursor-pointer"
-          >
-            <span className="border-b border-transparent group-hover:border-white transition-colors duration-300 pb-0.5">
-              View all projects
-            </span>
-            <span className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-          </button>
-        </ScrollReveal>
-      </div>
     </section>
   );
 }

@@ -4,15 +4,12 @@ import { motion, useReducedMotion } from "framer-motion";
 import ProjectGalleryCard from "./ProjectGalleryCard";
 import { PROJECTS } from "../../config/siteData";
 
-// Vertical, dark, editorial gallery. Same engine on desktop and mobile: cards stack on
-// small screens and alternate left/right from md up. Natural scroll, no gate.
 function ProjectGallery({ onSelect }) {
   const navigate = useNavigate();
   const prefersReduced = useReducedMotion();
 
   return (
     <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 pb-24 pt-[calc(var(--safe-top)+var(--mobile-nav-height)+1.5rem)] sm:px-6 md:px-12 md:pb-32 md:pt-40">
-      {/* Header */}
       <motion.header
         initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
@@ -29,14 +26,12 @@ function ProjectGallery({ onSelect }) {
         </p>
       </motion.header>
 
-      {/* Cards */}
       <div className="flex flex-col gap-16 md:gap-44">
         {PROJECTS.map((project, i) => (
           <ProjectGalleryCard key={project.id} project={project} index={i} onSelect={onSelect} />
         ))}
       </div>
 
-      {/* Contact CTA */}
       <div className="mt-24 flex justify-center md:mt-48">
         <button
           onClick={() => navigate("/contact")}

@@ -12,7 +12,7 @@ const Branding = memo(function Branding({ className = "", onClick }) {
   return (
     <motion.button
       onClick={onClick}
-      className={`group flex flex-col items-start cursor-pointer ${className}`}
+      className={`group flex flex-col items-start cursor-pointer mix-blend-difference ${className}`}
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
     >
@@ -20,7 +20,7 @@ const Branding = memo(function Branding({ className = "", onClick }) {
         Théo Phan
       </span>
       <span className="text-[10px] uppercase tracking-[0.3em] leading-none transition-colors text-white/40 group-hover:text-white/60">
-        Portfolio
+        Making things
       </span>
     </motion.button>
   );
@@ -29,7 +29,6 @@ const Branding = memo(function Branding({ className = "", onClick }) {
 export default function PageNav({ currentPath, scrollYProgress, isHidden = false }) {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  // Home uses the light canvas, other routes stay dark.
   const isHomeLight = currentPath === "/";
   const mobileNavVisible = useMobileNavVisible();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -37,13 +36,11 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
   const staticProgress = useMotionValue(0);
   const progress = scrollYProgress ?? staticProgress;
 
-  // Desktop transforms
   const navOpacity = useTransform(progress, [0, 0.05], [1, 0]);
   const menuOpacity = useTransform(progress, [0.05, 0.1], [0, 1]);
   const navPointerEvents = useTransform(progress, (v) => (v > 0.05 ? "none" : "auto"));
   const menuPointerEvents = useTransform(progress, (v) => (v > 0.05 ? "auto" : "none"));
 
-  // Mobile bar background/blur transforms
   const barBackground = useTransform(progress, [0, 0.02], ["rgba(0,0,0,0)", "rgba(10,10,10,0.8)"]);
   const barBlur = useTransform(progress, [0, 0.02], ["blur(0px)", "blur(12px)"]);
   const barBorder = useTransform(
@@ -55,13 +52,11 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
   const handleNavigate = useCallback(
     (path, scrollToId) => {
       if (currentPath === "/" && scrollToId) {
-        // Scroll to anchor on home page
         const el = document.getElementById(scrollToId);
         if (el) {
           el.scrollIntoView({ behavior: "smooth", block: "start" });
         }
       } else {
-        // Navigate to dedicated route with scroll state
         navigate(path, { state: { scrollTo: scrollToId } });
       }
       setIsMenuOpen(false);
@@ -72,12 +67,12 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
   const navItems = useMemo(
     () => [
       {
-        label: "Projects",
+        label: "Work",
         path: "/projects",
         onClick: () => handleNavigate("/projects", "projects"),
       },
-      { label: "About", path: "/", onClick: () => handleNavigate("/", "about") },
-      { label: "Contact", path: "/contact", onClick: () => handleNavigate("/contact", "contact") },
+      { label: "Story", path: "/", onClick: () => handleNavigate("/", "about") },
+      { label: "Hello", path: "/contact", onClick: () => handleNavigate("/contact", "contact") },
     ],
     [handleNavigate]
   );
@@ -107,7 +102,6 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
     <>
       {isDesktop ? (
         <>
-          {/* Desktop branding, fades on scroll */}
           {currentPath && currentPath !== "/" && (
             <motion.div
               style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
@@ -116,9 +110,6 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
               <HomeButton />
             </motion.div>
           )}
-          {/* Home: wordmark dropped, the menu carries nav once scrolled */}
-
-          {/* Nav Links */}
           <NavButtons
             items={navItems}
             currentPath={currentPath}
@@ -127,7 +118,6 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
             className="fixed top-10 right-12 z-[1200] flex gap-10 items-center text-white mix-blend-difference"
           />
 
-          {/* Desktop menu, shown when scrolled */}
           {scrollYProgress && (
             <motion.div
               style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
@@ -164,7 +154,6 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
           )}
         </>
       ) : (
-        /* Mobile nav bar */
         <motion.div
           style={{
             backgroundColor: barBackground,
@@ -172,13 +161,15 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
             borderBottom: `1px solid`,
             borderColor: barBorder,
           }}
-          className={`fixed top-0 left-0 right-0 z-[1200] flex min-h-20 items-center justify-between px-5 pb-3 pt-[calc(var(--safe-top)+0.75rem)] sm:px-6 transition-all duration-500 ${
+          className={`fixed top-0 left-0 right-0 z-[1200] flex min-h-20 items-center px-5 pb-3 pt-[calc(var(--safe-top)+0.75rem)] sm:px-6 transition-all duration-500 ${
+            currentPath === "/" ? "justify-end" : "justify-between"
+          } ${
             mobileNavVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 pointer-events-none -translate-y-full"
           }`}
         >
-          <Branding onClick={handleNavigateHome} />
+          {currentPath !== "/" && <Branding onClick={handleNavigateHome} />}
 
           <div className="relative">
             <AnimatePresence mode="wait">

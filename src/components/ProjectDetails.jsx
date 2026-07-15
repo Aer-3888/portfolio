@@ -54,7 +54,6 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
     const previousFocus = document.activeElement;
     window.addEventListener("keydown", handleKeyDown);
 
-    // Set initial focus to the close button or first element
     setTimeout(() => {
       const firstFocusable = modalRef.current?.querySelector("button");
       firstFocusable?.focus();
@@ -77,7 +76,6 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
-      // Optional: add lenis-stopped class if manual management is needed
       document.documentElement.classList.add("lenis-stopped");
     } else {
       document.body.style.overflow = "";
@@ -91,8 +89,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
   if (!project) return null;
 
-  // Render in a portal on document.body so the fixed overlay always covers the
-  // full viewport, never trapped by a transformed or clipped ancestor section.
+  // Portal prevents clipping by transformed ancestors.
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -100,7 +97,6 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
           ref={modalRef}
           className="fixed inset-0 z-[2000] flex items-center justify-center p-0 md:p-12 overflow-hidden pointer-events-auto"
         >
-          {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -109,7 +105,6 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
             className="absolute inset-0 bg-black/90 backdrop-blur-xl"
           />
 
-          {/* Modal Container */}
           <motion.div
             initial={prefersReduced ? { opacity: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
             animate={prefersReduced ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
@@ -119,7 +114,6 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
             }
             className="relative flex h-full w-full flex-col overflow-hidden bg-neutral-900 shadow-[0_0_80px_rgba(0,0,0,0.7)] md:h-auto md:max-h-[85vh] md:max-w-[1300px] md:flex-row md:border md:border-white/10"
           >
-            {/* Close Button */}
             <button
               onClick={onClose}
               className="absolute right-4 top-[calc(var(--safe-top)+1rem)] z-50 flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-black/40 backdrop-blur-md transition-all group cursor-pointer hover:bg-white/10 md:right-6 md:top-6"
@@ -129,7 +123,6 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               </span>
             </button>
 
-            {/* Left side: Image/Media (Desktop) */}
             <div className="hidden md:block w-full md:w-[60%] h-64 md:h-auto overflow-hidden relative group/img">
               <img
                 src={project.img}
@@ -146,13 +139,11 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               )}
             </div>
 
-            {/* Right side: Content (Scrollable on mobile) */}
             <div
               ref={scrollRef}
               data-lenis-prevent
               className="flex min-h-0 w-full flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-6 pb-[calc(var(--safe-bottom)+1.5rem)] pt-5 custom-scrollbar md:w-[40%] md:gap-8 md:p-12"
             >
-              {/* Mobile Image (Visible only on mobile, inside scrollable area) */}
               <div className="relative -mx-6 -mt-5 h-[38svh] min-h-[16rem] max-h-[22rem] shrink-0 overflow-hidden group/img md:hidden">
                 <img
                   src={project.img}
@@ -288,7 +279,6 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 </div>
               </div>
 
-              {/* Action Buttons */}
               <div className="mt-2 flex flex-col gap-3 pt-6 sm:flex-row md:mt-auto md:gap-4 md:pt-8">
                 {project.isClosedSource ? (
                   <div className="flex min-h-14 flex-1 items-center justify-center gap-3 border border-white/5 bg-neutral-800 py-4 text-center font-mono text-xs font-bold uppercase tracking-widest text-neutral-500 cursor-not-allowed">

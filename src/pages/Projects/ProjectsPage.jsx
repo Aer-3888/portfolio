@@ -17,12 +17,10 @@ export default function ProjectsPage() {
     path: "/projects",
   });
 
-  // Land at the top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Deep linking via #<id> (e.g. /projects#09)
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace("#", "");
@@ -39,7 +37,6 @@ export default function ProjectsPage() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
-  // Keep the URL hash in sync with the open project
   useEffect(() => {
     if (selectedProject) {
       window.history.replaceState(null, "", `#${selectedProject.id}`);
@@ -54,15 +51,12 @@ export default function ProjectsPage() {
 
       <ProjectGallery onSelect={setSelectedProject} />
 
-      {/* Project Details Modal (handles its own body-scroll lock) */}
       <ProjectDetails
         project={selectedProject}
         isOpen={!!selectedProject}
         onClose={() => setSelectedProject(null)}
       />
 
-      {/* Atmospheric texture: grain sits above the background, below the content, so text
-          stays crisp. pointer-events-none so it never blocks clicks. */}
       <div
         className="pointer-events-none fixed inset-0 z-[1] opacity-[0.03]"
         aria-hidden="true"

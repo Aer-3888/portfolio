@@ -32,6 +32,7 @@ html.lenis body {
   --color-sumi: #030302; /* filled buttons / highest emphasis */
   --color-ash: #686867; /* secondary text, captions */
   --color-pebble: #acacac; /* quietest separators, disabled */
+
 }
 
 body {
@@ -82,7 +83,12 @@ a,
   touch-action: manipulation;
 }
 
-/* Global selection color — warm stone, in keeping with the quiet palette */
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* Global selection color, warm stone, in keeping with the quiet palette */
 ::selection {
   background-color: rgba(211, 206, 197, 0.6); /* stone */
   color: #030302;

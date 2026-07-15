@@ -1,201 +1,163 @@
 import { memo, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
+const ease = [0.22, 1, 0.36, 1];
+
+function Barcode({ vertical, className }) {
+  const dir = vertical ? "to bottom" : "to right";
+  return (
+    <span
+      aria-hidden="true"
+      className={className}
+      style={{
+        backgroundImage: `repeating-linear-gradient(${dir}, #1b1b1b 0 2px, transparent 2px 5px, #1b1b1b 5px 6px, transparent 6px 10px, #1b1b1b 10px 13px, transparent 13px 15px, #1b1b1b 15px 16px, transparent 16px 21px, #1b1b1b 21px 24px, transparent 24px 26px)`,
+      }}
+    />
+  );
+}
+
+function Field({ label, value, accent }) {
+  return (
+    <div className="py-3">
+      <div className="text-[9px] tracking-[0.14em] text-[#121212]/40">{label}</div>
+      <div
+        className="mt-1 text-[11px] tracking-[0.06em]"
+        style={accent ? { color: "#c8452b" } : undefined}
+      >
+        {value}
+      </div>
+    </div>
+  );
+}
+
 function Hero({ onCvToggle }) {
   const containerRef = useRef(null);
-
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"],
   });
 
-  // Subtle scroll motion only.
-  const textY = useTransform(scrollYProgress, [0, 1], [0, -28]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const photoY = useTransform(scrollYProgress, [0, 1], [0, -44]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const copyY = useTransform(scrollYProgress, [0, 1], [0, -30]);
 
-  const ease = [0.22, 1, 0.36, 1];
+  const goToProjects = () => {
+    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
-    <div ref={containerRef} className="relative w-full bg-paper">
-      <div className="relative min-h-[100svh] w-full overflow-hidden">
-        {/* Mobile: gallery-plate layout */}
-        <div className="relative z-20 flex min-h-[100svh] flex-col px-6 pb-[calc(var(--safe-bottom)+2rem)] pt-[calc(var(--safe-top)+var(--mobile-nav-height)+2rem)] md:hidden">
-          {/* Wall-label */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease, delay: 0.1 }}
-            className="max-w-fit"
-          >
-            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-ash leading-relaxed">
-              {"Portfolio · 2026"}
-            </p>
-            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-pebble leading-relaxed">
-              Rennes, France
-            </p>
-          </motion.div>
-
-          {/* Name: large editorial anchor, two lines */}
-          <motion.h1
-            style={{ y: textY, opacity: textOpacity }}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease, delay: 0.25 }}
-            className="mt-10 font-serif text-[clamp(4rem,18vw,6rem)] font-normal tracking-[-0.005em] text-ink leading-[0.88]"
-          >
-            {"Théo"}
-            <br />
-            Phan
-          </motion.h1>
-
-          {/* Framed portrait plate */}
-          <motion.figure
-            style={{ y: photoY }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.1, ease, delay: 0.4 }}
-            className="mt-10"
-          >
-            <div className="relative mx-auto aspect-[3/4] w-full max-w-[19rem] overflow-hidden border border-stone bg-paper">
-              <img
-                src={`${import.meta.env.BASE_URL}images/optimized/me_.webp`}
-                alt={"Théo Phan"}
-                loading="eager"
-                fetchPriority="high"
-                className="absolute inset-0 h-full w-full object-contain object-bottom select-none"
-              />
-            </div>
-          </motion.figure>
-
-          {/* Bio, below the plate */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease, delay: 0.55 }}
-            className="mt-10 max-w-sm"
-          >
-            <p className="text-sm text-ash leading-relaxed">
-              Half engineer, half pixel-pusher. A computer-science student at INSA Rennes,
-              building in AI and full-stack.
-            </p>
-
-            <div className="mt-6 h-px w-10 bg-stone" />
-
-            <p className="mt-5 text-[13px] text-ash leading-relaxed">
-              Open to a summer 2026 internship.
-            </p>
-
-            <button
-              onClick={() => onCvToggle(true)}
-              className="group mt-6 inline-flex items-center gap-2 text-[13px] text-ink cursor-pointer"
-            >
-              <span className="border-b border-transparent pb-0.5 transition-colors duration-300 group-hover:border-ink">
-                View curriculum vitae
-              </span>
-              <span className="text-ash transition-transform duration-300 group-hover:translate-x-0.5">
-                {"→"}
-              </span>
-            </button>
-          </motion.div>
-        </div>
-
-        {/* Desktop: original layout, unchanged */}
-        <div className="relative z-20 hidden min-h-[100svh] md:block">
-          {/* Gallery wall-label, top-left */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease, delay: 0.1 }}
-            className="relative max-w-fit md:absolute md:left-12 md:top-28"
-          >
-            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-ash leading-relaxed">
-              {"Portfolio \u00B7 2026"}
-            </p>
-            <p className="font-mono text-[11px] tracking-[0.12em] uppercase text-pebble leading-relaxed">
-              Rennes, France
-            </p>
-          </motion.div>
-
-          {/* Name: the large editorial anchor */}
-          <motion.div
-            style={{ y: textY, opacity: textOpacity }}
-            className="relative mt-10 max-w-[20rem] md:absolute md:left-12 md:right-auto md:top-1/2 md:mt-0 md:max-w-[42rem] md:-translate-y-1/2"
-          >
-            <motion.h1
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, ease, delay: 0.25 }}
-              className="font-serif text-[clamp(3.25rem,15vw,5rem)] font-normal tracking-[-0.005em] text-ink leading-[0.9] md:text-[clamp(5.5rem,10vw,9.5rem)]"
-            >
-              {"Th\u00E9o Phan"}
-            </motion.h1>
-
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease, delay: 0.45 }}
-              className="mt-6 max-w-sm md:mt-8"
-            >
-              <p className="text-sm text-ash leading-relaxed md:text-base">
-                Half engineer, half pixel-pusher. A computer-science student at INSA Rennes,
-                building in AI and full-stack.
-              </p>
-
-              <div className="mt-6 h-px w-10 bg-stone" />
-
-              <p className="mt-5 text-[13px] text-ash leading-relaxed">
-                Open to a summer 2026 internship.
-              </p>
-
-              <button
-                onClick={() => onCvToggle(true)}
-                className="group mt-6 inline-flex items-center gap-2 text-[13px] text-ink cursor-pointer"
-              >
-                <span className="border-b border-transparent pb-0.5 transition-colors duration-300 group-hover:border-ink">
-                  View curriculum vitae
-                </span>
-                <span className="text-ash transition-transform duration-300 group-hover:translate-x-0.5">
-                  {"\u2192"}
-                </span>
-              </button>
-            </motion.div>
-          </motion.div>
-
-          {/* Photo cutout */}
-          <motion.div
-            style={{ y: photoY }}
-            initial={{ opacity: 0, scale: 1.02 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.4, ease }}
-            className="relative z-10 mt-12 flex flex-1 items-end md:absolute md:inset-x-0 md:bottom-0 md:mt-0 md:justify-end md:right-[4%] pointer-events-none"
-          >
-            <div className="relative -mx-6 flex w-[calc(100%+3rem)] min-h-[20rem] items-end justify-end overflow-hidden border-t border-stone/70 bg-[linear-gradient(180deg,rgba(255,255,255,0)_0%,rgba(211,206,197,0.34)_100%)] px-4 pb-[calc(var(--safe-bottom)+0.75rem)] pt-8 md:mx-0 md:w-auto md:min-h-0 md:border-t-0 md:bg-none md:px-0 md:pb-0 md:pt-0">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_55%_18%,rgba(211,206,197,0.5),transparent_58%)] md:hidden" />
-              <div className="absolute inset-x-0 top-0 h-20 bg-[linear-gradient(180deg,#ffffff_0%,rgba(255,255,255,0)_100%)] md:hidden" />
-              <img
-                src={`${import.meta.env.BASE_URL}images/optimized/me_.webp`}
-                alt={"Th\u00E9o Phan"}
-                loading="eager"
-                fetchPriority="high"
-                className="relative h-[40svh] min-h-[17rem] max-h-[25rem] w-auto max-w-none translate-x-[8%] object-contain object-bottom select-none sm:translate-x-[12%] md:h-[88svh] md:min-h-0 md:max-h-none md:translate-x-0 md:max-w-full"
-              />
-            </div>
-          </motion.div>
-        </div>
-
-        {/* Scroll cue */}
-        <motion.div
+    <header
+      ref={containerRef}
+      className="relative min-h-[100svh] overflow-hidden bg-[#f1eee7] text-[#121212]"
+    >
+      <div className="relative mx-auto flex min-h-[100svh] max-w-[1880px] px-5 pb-8 pt-[calc(var(--safe-top)+6.5rem)] sm:px-8 md:px-4 md:pb-10 md:pt-28 lg:px-5 xl:px-6">
+        <motion.aside
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, ease, delay: 0.9 }}
-          className="absolute bottom-10 left-6 md:left-12 z-20 hidden md:flex items-center gap-3"
+          transition={{ duration: 0.9, delay: 0.3, ease }}
+          className="mr-4 hidden shrink-0 flex-col items-center justify-end border-r border-dashed border-[#121212]/30 pr-4 md:flex lg:mr-6 lg:pr-6"
         >
-          <span className="h-8 w-px bg-stone" />
-          <span className="font-mono text-[11px] tracking-[0.12em] uppercase text-pebble">Scroll</span>
-        </motion.div>
+          <Barcode vertical className="h-32 w-5 shrink-0" />
+        </motion.aside>
+
+        <div className="flex flex-1 flex-col">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease }}
+            className="relative flex items-center border-t border-[#121212] pt-3 font-mono text-[10px] uppercase tracking-[0.14em] md:text-[11px]"
+          >
+            <span className="flex items-center gap-2">
+              <span aria-hidden="true">✈</span> Boarding pass / Théo Phan
+            </span>
+            <span className="absolute left-1/2 hidden -translate-x-1/2 text-[#121212]/55 sm:block">
+              Rennes → ANY
+            </span>
+          </motion.div>
+
+          <div className="grid flex-1 items-center gap-12 py-10 md:grid-cols-[minmax(0,1fr)_minmax(320px,.74fr)] md:gap-14 md:py-12 lg:gap-24">
+            <motion.div style={{ y: copyY }} className="relative z-20">
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease }}
+                className="mb-5 max-w-md text-sm leading-relaxed text-[#121212]/60 md:mb-8"
+              >
+                Engineer, photographer, and compulsive tinkerer. I like software most when it touches
+                something real.
+              </motion.p>
+
+              <motion.h1
+                initial={{ opacity: 0, y: 28 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.16, ease }}
+                className="max-w-[16ch] font-serif text-[clamp(4rem,10vw,9.5rem)] leading-[0.78] tracking-[-0.045em]"
+              >
+                I build software that{" "}
+                <span className="italic text-[#c8452b] underline decoration-[#c8452b]/30 decoration-[3px] underline-offset-[8px]">
+                  escapes
+                </span>{" "}
+                the screen.
+              </motion.h1>
+
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.75 }}
+                className="mt-8 flex flex-wrap items-center gap-5 md:mt-10"
+              >
+                <button
+                  type="button"
+                  onClick={goToProjects}
+                  className="group inline-flex min-h-12 items-center gap-6 bg-[#121212] px-6 font-mono text-[11px] uppercase tracking-[0.12em] text-white transition-transform hover:-translate-y-0.5"
+                >
+                  Read the stories
+                  <span className="transition-transform group-hover:translate-y-0.5">↓</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => onCvToggle(true)}
+                  className="inline-flex min-h-12 items-center border-b border-[#121212]/35 px-1 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors hover:border-[#121212]"
+                >
+                  The practical CV
+                </button>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              style={{ y: portraitY }}
+              initial={{ opacity: 0, y: 26 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.25, ease }}
+              className="relative z-10 mx-auto w-[min(84vw,24rem)] md:ml-auto md:mr-0 md:w-full md:max-w-[28rem] lg:max-w-[30rem]"
+            >
+              <figure className="relative aspect-[4/5] overflow-hidden bg-[#e7e2d8]">
+                <img
+                  src={import.meta.env.BASE_URL + "images/optimized/me_.webp"}
+                  alt="Théo Phan"
+                  loading="eager"
+                  fetchPriority="high"
+                  className="absolute inset-x-0 bottom-0 h-[96%] w-full object-contain object-bottom grayscale"
+                />
+              </figure>
+              <div className="mt-3 grid grid-cols-3 gap-5 border-t border-[#121212]/30 font-mono uppercase">
+                <Field label="Class" value="Engineer" />
+                <Field label="Seat" value="3INFO" accent />
+                <Field label="Boarding" value="Summer ’27" />
+              </div>
+            </motion.div>
+          </div>
+
+          <div className="mb-8 flex items-end border-t border-dashed border-[#121212]/35 pt-5 md:hidden">
+            <Barcode className="h-8 w-28 shrink-0" />
+          </div>
+
+          <div className="flex items-end justify-between border-b border-[#121212] pb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#121212]/50">
+            <span className="sm:hidden">Rennes → ANY</span>
+            <span className="ml-auto" aria-hidden="true">( Scroll to begin )</span>
+          </div>
+        </div>
       </div>
-    </div>
+    </header>
   );
 }
 

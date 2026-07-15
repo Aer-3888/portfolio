@@ -13,7 +13,7 @@ export const STATUS_ITEMS = [
   },
   {
     label: "Availability",
-    value: "Summer Internship 2026",
+    value: "Summer Internship 2027",
     sub: "Open for Global Opportunities",
   },
 ];
@@ -201,28 +201,28 @@ export const PROJECTS = [
     id: "10",
     title: "IAJ Evades",
     year: "2026",
-    metric: "Hand-written DQN in Rust · no ML framework",
+    metric: "DQN",
     type: "Reinforcement Learning",
     category: "Personal",
     services: "Reinforcement Learning - Rust - Neural Networks",
-    img: `${import.meta.env.BASE_URL}images/optimized/iaj_evades.webp`,
+    img: `${import.meta.env.BASE_URL}images/optimized/iaj_evades-gameplay.webp`,
     url: "https://github.com/Aer-3888/iaj_evades",
     linkText: "View Repository",
     logoType: "github",
     offset: 0,
     description:
-      "A **reinforcement-learning** agent that teaches itself to survive an Evades-style dodging arena. The neural network and **Deep Q-Network** training loop are hand-written in **Rust** with no ML framework, alongside a live web dashboard to control and watch training in real time.",
+      "A **reinforcement-learning** agent that teaches itself to survive an Evades-style dodging arena. The **DQN** runs in **Rust**, with a live web dashboard to control and watch training in real time.",
     problem:
-      "Most reinforcement-learning projects lean on a big ML framework that hides how the learning actually works. I wanted to build the whole thing from scratch to genuinely understand it, the game, the neural network, and the training loop.",
+      "I wanted to understand what was happening inside the learning process: how the game state becomes an action, how experience changes the network, and how the agent improves over time.",
     approach:
-      "Reimplemented the **Evades** dodging game as a fast **Rust** engine, then wrote a **Deep Q-Network** agent by hand, neural net, replay buffer and training loop included. The agent sees the arena through raycast vision and trains in a headless mode for speed, all driven from a live web dashboard.",
+      "Reimplemented the **Evades** dodging game as a fast **Rust** engine, then built a **Deep Q-Network** agent with its neural net, replay buffer and training loop. The agent sees the arena through raycast vision and trains in a headless mode for speed, all driven from a live web dashboard.",
     result:
       "A trained agent that dodges a moving arena of enemies on its own, plus a real-time dashboard (React and WebSockets) to start, tune and watch training, with survival-time and loss charts updating live.",
     role: "Solo Project",
     tags: ["Rust", "Deep Q-Network", "Reinforcement Learning", "Neural Networks", "Rayon", "WebSockets"],
     tools: ["Cargo", "Axum", "React", "Recharts"],
     architecture: [
-      "Hand-written DQN (No ML Framework)",
+      "DQN",
       "Headless Parallel Training (Rayon)",
       "Live Dashboard over WebSockets",
     ],

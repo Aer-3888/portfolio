@@ -1,8 +1,6 @@
 import { useEffect } from "react";
 
-// Per-route document metadata. The static tags in index.html cover the home route for
-// crawlers that do not run JS; this hook updates title/description/canonical/og as the
-// SPA navigates. Tags are created if missing, otherwise reused.
+// Update document metadata for each route.
 const SITE_URL = "https://portfolio-theo.pages.dev";
 
 function upsertMeta(attr, key, content) {

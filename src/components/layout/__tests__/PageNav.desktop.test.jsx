@@ -78,9 +78,9 @@ describe("PageNav — desktop", () => {
 
   it("renders nav links on desktop", () => {
     renderNav();
-    expect(screen.getByText("Projects")).toBeInTheDocument();
-    expect(screen.getByText("About")).toBeInTheDocument();
-    expect(screen.getByText("Contact")).toBeInTheDocument();
+    expect(screen.getByText("Work")).toBeInTheDocument();
+    expect(screen.getByText("Story")).toBeInTheDocument();
+    expect(screen.getByText("Hello")).toBeInTheDocument();
   });
 
   it("does not render the wordmark when scrollYProgress is not provided", () => {

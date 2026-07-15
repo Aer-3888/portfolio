@@ -1,7 +1,6 @@
 const base = import.meta.env.BASE_URL;
 
-// Photos are served as resized WebP derivatives (see scripts/optimize-images.mjs); the
-// full-res JPG originals are retained under images/Gallery for any future full-res use.
+// Gallery images use optimized WebP files.
 export const galleryFiles = [
   {
     name: "IMG_3006.jpg",

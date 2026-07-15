@@ -5,7 +5,7 @@ export default function useMagneticEffect() {
   const sensorRef = useRef(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springConfig = { stiffness: 120, damping: 20, mass: 0.5 };
+  const springConfig = { stiffness: 105, damping: 17, mass: 0.55 };
   const xSpring = useSpring(x, springConfig);
   const ySpring = useSpring(y, springConfig);
 
@@ -18,9 +18,9 @@ export default function useMagneticEffect() {
     const distanceX = clientX - centerX;
     const distanceY = clientY - centerY;
 
-    const maxMove = 50;
-    const moveX = Math.max(-maxMove, Math.min(maxMove, distanceX * 0.35));
-    const moveY = Math.max(-maxMove, Math.min(maxMove, distanceY * 0.35));
+    const maxMove = 82;
+    const moveX = Math.max(-maxMove, Math.min(maxMove, distanceX * 0.56));
+    const moveY = Math.max(-maxMove, Math.min(maxMove, distanceY * 0.56));
 
     x.set(moveX);
     y.set(moveY);

@@ -2,7 +2,6 @@ import { useAnimationFrame, useReducedMotion } from "framer-motion";
 import { useMemo, useRef } from "react";
 import * as flubber from "flubber";
 
-// Organic blob silhouettes, morphed continuously by flubber.
 const blobShapes = [
   "M48,8 C68,5 85,16 91,37 C97,57 92,75 73,86 C57,95 33,94 17,82 C3,71 4,47 12,29 C20,14 33,10 48,8 Z",
   "M53,6 C73,9 87,25 88,45 C90,67 83,82 61,90 C41,97 21,89 11,71 C2,54 9,33 23,19 C34,9 41,4 53,6 Z",
@@ -14,7 +13,7 @@ const blobShapes = [
 const interpolate =
   flubber.interpolate || (flubber.default && flubber.default.interpolate) || flubber.default;
 
-export default function LiquidBackground({ isHovered, speed = 0.0018, blobColor = "white" }) {
+export default function LiquidBackground({ isHovered, speed = 0.0045, blobColor = "white" }) {
   const prefersReduced = useReducedMotion();
 
   const morphers = useMemo(() => {
@@ -32,9 +31,8 @@ export default function LiquidBackground({ isHovered, speed = 0.0018, blobColor 
   useAnimationFrame((_t, delta) => {
     if (prefersReduced || !morphers.length) return;
 
-    // Keep morphing even while hovered.
     const total = morphers.length;
-    const next = progressRef.current + delta * speed * (isHovered ? 1.6 : 1);
+    const next = progressRef.current + delta * speed * (isHovered ? 2.5 : 1);
     const wrapped = next % total;
     progressRef.current = wrapped;
 
