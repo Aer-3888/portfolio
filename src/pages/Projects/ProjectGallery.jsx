@@ -1,58 +1,44 @@
 import { memo } from "react";
-import { useNavigate } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import ProjectGalleryCard from "./ProjectGalleryCard";
 import { PROJECTS } from "../../config/siteData";
 
 function ProjectGallery({ onSelect }) {
-  const navigate = useNavigate();
   const prefersReduced = useReducedMotion();
 
   return (
-    <div className="relative z-10 mx-auto w-full max-w-[1400px] px-5 pb-24 pt-[calc(var(--safe-top)+var(--mobile-nav-height)+1.5rem)] sm:px-6 md:px-12 md:pb-32 md:pt-40">
+    <main className="relative z-10 mx-auto w-full max-w-[1500px] px-5 pb-24 pt-[calc(var(--safe-top)+var(--mobile-nav-height)+2.5rem)] sm:px-8 md:px-12 md:pb-36 md:pt-48">
       <motion.header
         initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={prefersReduced ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="mb-16 md:mb-36"
+        className="mb-20 grid gap-10 border-b border-black/20 pb-14 md:mb-28 md:grid-cols-12 md:items-end md:pb-20"
       >
-        <h1 className="font-serif text-6xl font-normal tracking-[-0.01em] leading-[0.9] sm:text-7xl md:text-8xl">
-          Selected
-          <br />
-          <span className="text-neutral-600">projects</span>
+        <h1 className="max-w-5xl font-serif text-[clamp(4.5rem,10vw,10rem)] leading-[0.76] tracking-[-0.045em] md:col-span-9">
+          Things I’ve
+          <br /> built.
         </h1>
-        <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">
-          2024 - 2026
-        </p>
+        <div className="md:col-span-3 md:pb-2">
+          <p className="max-w-sm text-sm leading-relaxed text-black/60 md:text-base">
+            Some are in people’s pockets. Others only exist because I wanted to know how they
+            worked.
+          </p>
+          <p className="mt-5 text-xs text-black/40">
+            {PROJECTS.length} projects, 2024—2026
+          </p>
+        </div>
       </motion.header>
 
-      <div className="flex flex-col gap-16 md:gap-44">
+      <div className="grid grid-cols-1 gap-x-8 gap-y-20 md:grid-cols-12 md:gap-y-28">
         {PROJECTS.map((project, i) => (
           <ProjectGalleryCard key={project.id} project={project} index={i} onSelect={onSelect} />
         ))}
       </div>
 
-      <div className="mt-24 flex justify-center md:mt-48">
-        <button
-          onClick={() => navigate("/contact")}
-          className="group flex cursor-pointer flex-col items-center gap-6"
-        >
-          <div className="flex h-20 w-20 items-center justify-center rounded-full border border-white/10 transition-all duration-500 group-hover:border-white group-hover:bg-white group-hover:text-black md:h-24 md:w-24">
-            <span className="text-2xl transition-transform duration-500 group-hover:translate-x-2">
-              →
-            </span>
-          </div>
-          <div className="flex flex-col items-center gap-1">
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-500 transition-colors duration-500 group-hover:text-white">
-              Let&apos;s build
-            </span>
-            <span className="font-serif text-2xl font-normal tracking-[-0.005em] text-white/40 transition-colors duration-500 group-hover:text-white">
-              Something together
-            </span>
-          </div>
-        </button>
-      </div>
-    </div>
+      <p className="mt-28 border-t border-black/20 pt-8 text-sm text-black/45 md:mt-40">
+        That’s everything for now.
+      </p>
+    </main>
   );
 }
 
