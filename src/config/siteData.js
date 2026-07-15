@@ -115,7 +115,7 @@ export const PROJECTS = [
     category: "Freelance",
     services: "Flutter - NFC Auth - DNS Filtering",
     img: `${import.meta.env.BASE_URL}images/optimized/waiki.webp`,
-    imageCredit: "Fun fact: I took this photo myself",
+    imageCredit: "Photo: Théo Phan",
     url: "https://waikiup.com/",
     linkText: "View Project Website",
     logoType: "website",
