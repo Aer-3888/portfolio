@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { SOCIALS, EMAIL } from "../../config/siteData";
 import ArcadeMachine from "./ArcadeMachine";
@@ -8,6 +8,7 @@ import useSeo from "../../hooks/useSeo";
 export default function ContactPage() {
   const [time, setTime] = useState("");
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
   const prefersReduced = useReducedMotion();
 
   useSeo({
@@ -20,106 +21,127 @@ export default function ContactPage() {
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      setTime(now.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" }));
+      setTime(
+        now.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          timeZone: "Europe/Paris",
+        })
+      );
     };
+
     updateTime();
-    const interval = setInterval(updateTime, 1000 * 60);
-    return () => clearInterval(interval);
+    const interval = window.setInterval(updateTime, 60_000);
+
+    return () => window.clearInterval(interval);
   }, []);
 
-  const handleCopyEmail = () => {
+  useEffect(() => () => window.clearTimeout(copyTimerRef.current), []);
+
+  const handleCopyEmail = async () => {
     try {
-      navigator.clipboard.writeText(EMAIL);
+      await navigator.clipboard.writeText(EMAIL);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      window.clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = window.setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
     }
   };
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col items-center overflow-y-auto bg-neutral-950 px-5 pb-[calc(var(--safe-bottom)+3rem)] pt-[calc(var(--safe-top)+var(--mobile-nav-height)+1.5rem)] font-sans text-white sm:px-6 md:px-12 md:py-24">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#f1eee7] font-sans text-[#171717]">
       <PageNav currentPath="/contact" />
 
-      <motion.div
+      <motion.main
         initial={prefersReduced ? false : { opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={prefersReduced ? { duration: 0 } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="grid h-auto w-full max-w-7xl grid-cols-1 overflow-hidden rounded-2xl border border-white/5 bg-neutral-900 shadow-[0_24px_60px_-28px_rgba(0,0,0,0.6)] lg:min-h-[75vh] lg:grid-cols-12 lg:rounded-sm"
+        transition={
+          prefersReduced ? { duration: 0 } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
+        }
+        className="mx-auto w-full max-w-[1600px] px-5 pb-[calc(var(--safe-bottom)+2.5rem)] pt-[calc(var(--safe-top)+var(--mobile-nav-height)+3rem)] sm:px-8 md:px-12 md:pb-12 md:pt-44"
       >
-        <div className="flex flex-col justify-between border-b border-white/5 bg-neutral-900 p-6 sm:p-8 md:p-16 lg:col-span-5 lg:border-b-0 lg:border-r">
-          <div className="space-y-10 md:space-y-16">
-            <div className="space-y-4">
-              <span className="text-neutral-500 font-mono text-[10px] tracking-[0.3em] block">
-                Inquiries
-              </span>
-              <h1 className="font-serif text-6xl font-normal leading-[0.92] tracking-[-0.01em] sm:text-7xl md:text-8xl">
-                Get in
-                <br />
-                <span className="text-neutral-600">touch.</span>
-              </h1>
-            </div>
+        <header className="border-b border-black/20 pb-16 md:pb-24">
+          <h1 className="font-serif text-[clamp(4.7rem,10vw,10rem)] leading-[0.76] tracking-[-0.045em]">
+            No contact form.
+            <br />
+            Just email me.
+          </h1>
+        </header>
 
-            <div className="space-y-10">
-              <div className="group cursor-pointer block" onClick={handleCopyEmail}>
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
-                    Email
-                  </span>
-                  <span
-                    className={`text-[9px] font-mono text-slate-400 transition-opacity duration-300 ${copied ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
-                  >
-                    {copied ? "Copied" : "Copy"}
-                  </span>
-                </div>
-                <div className="break-all text-xl font-bold tracking-tight transition-colors group-hover:text-slate-400 sm:text-2xl md:text-3xl">
-                  {EMAIL}
-                </div>
-              </div>
+        <div className="grid border-b border-black/20 md:grid-cols-12">
+          <section className="flex flex-col justify-between py-14 md:col-span-7 md:min-h-[34rem] md:py-20 md:pr-12 lg:pr-20">
+            <p className="max-w-md text-sm leading-relaxed text-black/55 md:text-base">
+              For work, an idea, or a question. If it needs more than an email, we can figure that
+              out after.
+            </p>
 
-              <div className="grid grid-cols-1 gap-6 pt-4 sm:grid-cols-2 sm:gap-12">
-                <div className="space-y-2">
-                  <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
-                    Location
-                  </span>
-                  <div className="text-sm tracking-wide text-neutral-300">Rennes, France</div>
-                </div>
-                <div className="space-y-2">
-                  <span className="text-neutral-500 font-mono text-[9px] tracking-widest">
-                    Local Time
-                  </span>
-                  <div className="text-sm font-mono tracking-tight text-slate-400">{time}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="pt-10 md:pt-12">
-            <span className="text-neutral-500 font-mono text-[9px] uppercase tracking-widest block font-bold mb-4">
-              Social Channels
-            </span>
-            <div className="flex flex-wrap gap-x-8 gap-y-4">
-              {SOCIALS.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[10px] font-mono tracking-[0.2em] text-neutral-500 hover:text-slate-400 transition-colors"
+            <div className="mt-20 md:mt-24">
+              <a
+                href={`mailto:${EMAIL}`}
+                className="inline-block break-all text-[clamp(1.35rem,3.2vw,3.8rem)] leading-tight tracking-[-0.035em] text-black transition-colors hover:text-[#2356d8]"
+              >
+                {EMAIL}
+              </a>
+              <div className="mt-7 flex items-center gap-5">
+                <button
+                  type="button"
+                  onClick={handleCopyEmail}
+                  className="min-h-11 cursor-pointer bg-[#ffca45] px-5 text-sm text-black transition-transform hover:-translate-y-0.5"
                 >
-                  {social.label}
-                </a>
-              ))}
+                  {copied ? "Copied" : "Copy email"}
+                </button>
+                <span aria-live="polite" className="text-xs text-black/40">
+                  {copied ? "Ready to paste." : "Or click the address to open your mail app."}
+                </span>
+              </div>
             </div>
-          </div>
+          </section>
+
+          <aside className="border-t border-black/20 py-8 md:col-span-5 md:border-l md:border-t-0 md:p-8 lg:p-12">
+            <div className="h-[24rem] overflow-hidden md:h-full md:min-h-[30rem]">
+              <ArcadeMachine />
+            </div>
+          </aside>
         </div>
 
-        <div className="hidden lg:flex lg:col-span-7 bg-neutral-950 flex-col">
-          <div className="flex-1">
-            <ArcadeMachine />
+        <div className="grid gap-10 py-10 text-sm text-black/55 sm:grid-cols-2 md:grid-cols-12 md:items-end">
+          <div className="md:col-span-3">
+            <p>Rennes, France</p>
+            <p className="mt-1 text-black/35">{time} local time</p>
           </div>
+          <p className="max-w-xs md:col-span-4">Looking for a summer 2027 internship.</p>
+          <nav
+            aria-label="Social links"
+            className="flex flex-wrap gap-x-7 gap-y-3 sm:justify-end md:col-span-5"
+          >
+            {SOCIALS.map((social) => (
+              <a
+                key={social.label}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex cursor-pointer items-center gap-2 text-black transition-colors hover:text-[#2356d8]"
+              >
+                {social.label}
+                <span className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                  ↗
+                </span>
+              </a>
+            ))}
+          </nav>
         </div>
-      </motion.div>
+      </motion.main>
+
+      <div
+        className="pointer-events-none fixed inset-0 opacity-[0.025] mix-blend-multiply"
+        aria-hidden="true"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
+          backgroundRepeat: "repeat",
+          backgroundSize: "256px 256px",
+        }}
+      />
     </div>
   );
 }
