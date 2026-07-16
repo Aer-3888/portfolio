@@ -51,7 +51,16 @@ async function run() {
   }
 
   console.log("Project cards -> WebP:");
-  const cards = ["waiki.png", "portfolio.png", "plant_detection.png", "accountant.png", "eda_housing.png"];
+  const cards = [
+    "waiki.png",
+    "portfolio.png",
+    "plant_detection.png",
+    "accountant.png",
+    "eda_housing.png",
+    "gardefou-hero.png",
+    "t1-injection-demo.png",
+    "notes-insa-collage.png",
+  ];
   for (const f of cards) {
     const dest = path.join(outDir, f.replace(/\.png$/i, ".webp"));
     add(await toWebp(path.join(imagesDir, f), dest, CARD_MAX, 80));

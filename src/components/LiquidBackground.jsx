@@ -1,6 +1,6 @@
 import { useAnimationFrame, useReducedMotion } from "framer-motion";
 import { useMemo, useRef } from "react";
-import * as flubber from "flubber";
+import { interpolate } from "flubber";
 
 const blobShapes = [
   "M48,8 C68,5 85,16 91,37 C97,57 92,75 73,86 C57,95 33,94 17,82 C3,71 4,47 12,29 C20,14 33,10 48,8 Z",
@@ -9,9 +9,6 @@ const blobShapes = [
   "M45,8 C68,3 87,17 93,40 C98,61 89,81 67,90 C45,98 25,91 13,75 C2,59 6,35 19,21 C29,11 33,11 45,8 Z",
   "M48,8 C68,5 85,16 91,37 C97,57 92,75 73,86 C57,95 33,94 17,82 C3,71 4,47 12,29 C20,14 33,10 48,8 Z",
 ];
-
-const interpolate =
-  flubber.interpolate || (flubber.default && flubber.default.interpolate) || flubber.default;
 
 export default function LiquidBackground({ isHovered, speed = 0.0045, blobColor = "white" }) {
   const prefersReduced = useReducedMotion();

@@ -216,7 +216,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 >
                   <div className="relative h-full min-h-[50svh] overflow-hidden bg-[#171717] md:min-h-0">
                     <img
-                      src={project.img}
+                      src={project.detailImg || project.img}
                       alt={project.title}
                       loading="eager"
                       fetchPriority="high"

@@ -90,16 +90,30 @@ function StoryCard({ story, project, index, onSelect }) {
               loading="lazy"
               className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
             />
-            <motion.img
-              src={project.img}
-              alt=""
-              aria-hidden="true"
-              loading="lazy"
-              animate={{ opacity: isImageHovered ? 1 : 0 }}
-              transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              style={{ clipPath: spotlightMask }}
-              className="pointer-events-none absolute inset-0 hidden h-full w-full scale-[1.12] object-cover brightness-75 contrast-125 grayscale md:block"
-            />
+            {project.detailImg ? (
+              isImageHovered && (
+                <motion.img
+                  src={project.detailImg}
+                  alt=""
+                  aria-hidden="true"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+                />
+              )
+            ) : (
+              <motion.img
+                src={project.img}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                animate={{ opacity: isImageHovered ? 1 : 0 }}
+                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                style={{ clipPath: spotlightMask }}
+                className="pointer-events-none absolute inset-0 hidden h-full w-full scale-[1.12] object-cover brightness-75 contrast-125 grayscale md:block"
+              />
+            )}
             <div className="absolute inset-0 bg-black/5 transition-colors group-hover:bg-transparent" />
             <span className="absolute bottom-4 right-4 grid h-12 w-12 place-items-center rounded-full bg-white text-lg text-black transition-transform duration-300 group-hover:rotate-[-12deg] group-hover:scale-110">
               ↗

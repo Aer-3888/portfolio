@@ -1,4 +1,4 @@
-import { memo, useRef, useCallback } from "react";
+import { memo, useRef, useState, useCallback } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
 const CARD_LAYOUTS = [
@@ -30,6 +30,7 @@ const CARD_COLORS = [
 function ProjectGalleryCard({ project, index, onSelect }) {
   const ref = useRef(null);
   const prefersReduced = useReducedMotion();
+  const [isHovered, setIsHovered] = useState(false);
   const handleClick = useCallback(() => onSelect(project), [onSelect, project]);
 
   const { scrollYProgress } = useScroll({
@@ -47,6 +48,8 @@ function ProjectGalleryCard({ project, index, onSelect }) {
       ref={ref}
       type="button"
       onClick={handleClick}
+      onPointerEnter={() => setIsHovered(true)}
+      onPointerLeave={() => setIsHovered(false)}
       initial={prefersReduced ? false : { opacity: 0, y: 24 }}
       whileInView={prefersReduced ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -10% 0px" }}
@@ -70,6 +73,17 @@ function ProjectGalleryCard({ project, index, onSelect }) {
               loading="lazy"
               className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.035]"
             />
+            {project.detailImg && isHovered && (
+              <motion.img
+                src={project.detailImg}
+                alt=""
+                aria-hidden="true"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            )}
           </motion.div>
           <div className="absolute inset-0 bg-black/[0.04] transition-colors duration-500 group-hover:bg-transparent" />
           <span className="absolute bottom-4 right-4 grid h-11 w-11 translate-y-2 place-items-center rounded-full bg-[#f1eee7] text-lg text-black opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:rotate-[-10deg] group-hover:opacity-100">

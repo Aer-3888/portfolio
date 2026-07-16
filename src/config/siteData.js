@@ -121,13 +121,13 @@ export const PROJECTS = [
     logoType: "website",
     offset: 120,
     description:
-      "A mobile app that helps people break **social-media addiction**. It blocks distracting apps across the whole phone and only unlocks them when you tap a small **NFC tag**, a physical key that can't be copied, so the barrier feels real instead of a setting you can switch off. Built in **Flutter** for iPhone and Android while leading a small student team.",
+      "A mobile app that helps people break out of compulsive scrolling. It blocks distracting apps across the whole phone, and you unlock them by tapping a physical NFC tag rather than flipping a setting. I built it in Flutter for iPhone and Android while leading a small student team.",
     problem:
-      "People know they scroll too much, but app blockers are too easy to switch off. The barrier had to feel real, not just a setting you can tap away.",
+      "People already know they scroll too much. The trouble is that most app blockers are one tap away from being switched off, so the moment the itch hits, they give in. The barrier needed to cost something.",
     approach:
-      "We paired phone-wide content filtering with a physical key: to unlock a distracting app, you tap a small **NFC tag** with your phone. The tag can't be copied, so the friction is genuine. Built once in **Flutter** for both iPhone and Android.",
+      "We paired phone-wide content filtering with a physical key. To open a blocked app you tap an NFC tag, and since the tag can't be cloned, there is no shortcut buried in the settings. We built it once in Flutter so iPhone and Android shipped from one codebase.",
     result:
-      "Launched on the **App Store and Google Play**, now live with **1,425+ units sold**. The app keeps running reliably in the background, even on phones that aggressively close apps. I led a team of 3 from first idea to release.",
+      "It launched on the App Store and Google Play and has sold 1,425+ units. The hard part was staying alive in the background on phones that aggressively kill apps, which it now does reliably. I led a team of three from the first sketch to release.",
     role: "Founding Engineer & Tech Lead, Freelance",
     tags: ["Flutter", "Dart", "Kotlin/Swift", "Firebase", "NFC"],
     tools: ["Android Studio", "Git", "GitHub Issues", "Kanban"],
@@ -145,19 +145,20 @@ export const PROJECTS = [
     type: "AI Security",
     category: "Personal",
     services: "LLM Security - RAG - Python",
-    img: `${import.meta.env.BASE_URL}images/ph-gardefou.svg`, // Placeholder
+    img: `${import.meta.env.BASE_URL}images/optimized/t1-injection-demo.webp`,
+    detailImg: `${import.meta.env.BASE_URL}images/optimized/gardefou-hero.webp`,
     url: "https://github.com/Aer-3888/GardeFou",
     linkText: "View Repository",
     logoType: "github",
     offset: 0,
     description:
-      "An **AI security** lab built around a deliberately vulnerable **RAG** assistant that answers questions over financial documents. It is a hands-on target for learning how to attack large language model apps and then harden them, because with an LLM the prompt is also the data.",
+      "A security lab built around a deliberately vulnerable AI assistant that answers questions over financial documents. It is a hands-on target for learning how to attack large language model apps and then harden them.",
     problem:
-      "LLM apps have a new attack surface. The prompt is also the data, so a malicious instruction hidden inside a document can quietly hijack the model. I wanted to study that hands-on instead of just reading about it.",
+      "LLM apps open a new kind of hole. Because the model reads instructions and data in the same breath, a command hidden inside an ordinary document can quietly take it over. I wanted to see that happen with my own hands rather than just read about it.",
     approach:
-      "Built a small **RAG** Q&A assistant over synthetic financial documents in **Python**, then worked it in phases. First red team it to leak data and follow hidden instructions, then blue team it with guardrails, and finally measure that the same attacks now fail and map each finding to industry frameworks.",
+      "I built a small retrieval assistant over synthetic financial documents in Python, then attacked my own work in stages. First I red-teamed it to leak data and obey hidden instructions, then I added guardrails as the blue team, and finally I reran every attack to confirm it now fails and mapped each finding to a known security framework.",
     result:
-      "A working lab that demonstrates real prompt-injection attacks and the guardrails that stop them, with before and after evidence for each finding. A clear, repeatable way to show how LLM apps break and how to defend them.",
+      "The same injections that used to walk straight through are now caught, each one documented with its before and after. It ended up being a repeatable way to show exactly how an LLM app breaks and what actually stops it.",
     role: "Solo Project",
     tags: ["Python", "RAG", "LLM Security", "Prompt Injection", "Chroma", "Ollama"],
     tools: ["FastAPI", "Streamlit", "sentence-transformers"],
@@ -181,13 +182,13 @@ export const PROJECTS = [
     logoType: "github",
     offset: 0,
     description:
-      "An **AI computer-vision** project that detects plant disease from photos. It compares several leading image-recognition models (including YOLO and Faster R-CNN) to find which performs best on real, messy field images.",
+      "A computer-vision project that spots plant disease from photos. It puts several image-recognition models side by side, including YOLO and Faster R-CNN, to see which one holds up on real field images rather than clean lab shots.",
     problem:
-      "Spotting crop disease early is hard to do by eye at scale. I wanted to know how well today's ready-made AI vision models cope with messy, real-world photos of plants.",
+      "Catching crop disease early is hard to do by eye once you are looking at whole fields. I wanted to know how well off-the-shelf vision models cope with the awkward photos you actually get outdoors, with odd light and cluttered backgrounds.",
     approach:
-      "Trained and compared several leading image-recognition models on public plant-disease datasets, then improved their accuracy by varying the training images to mimic real conditions like odd lighting and busy backgrounds.",
+      "I trained and compared the models on public plant-disease datasets, then pushed their accuracy up by augmenting the training images to imitate those field conditions on purpose.",
     result:
-      "The strongest model (**Faster R-CNN**) correctly located diseased areas around **90% of the time** (mAP@50 0.90, 85.8% recall), showing which approach is genuinely worth using in the field.",
+      "Faster R-CNN came out on top, locating diseased areas around 90% of the time (mAP@50 0.90, 85.8% recall). That gave a clear answer on which approach is worth taking out of the notebook and into a real field.",
     role: "Solo Project",
     tags: ["Python", "PyTorch", "EfficientNet", "YOLOv8", "Faster R-CNN", "OpenCV"],
     tools: ["Jupyter Notebook", "Kaggle API"],
@@ -206,18 +207,19 @@ export const PROJECTS = [
     category: "Personal",
     services: "Reinforcement Learning - Rust - Neural Networks",
     img: `${import.meta.env.BASE_URL}images/optimized/iaj_evades-gameplay.webp`,
+    detailImg: `${import.meta.env.BASE_URL}images/optimized/iaj_evades-gameplay.gif`,
     url: "https://github.com/Aer-3888/iaj_evades",
     linkText: "View Repository",
     logoType: "github",
     offset: 0,
     description:
-      "A **reinforcement-learning** agent that teaches itself to survive an Evades-style dodging arena. The **DQN** runs in **Rust**, with a live web dashboard to control and watch training in real time.",
+      "A reinforcement-learning agent that teaches itself to survive an Evades-style dodging arena. The Deep Q-Network runs in Rust, with a live web dashboard to steer and watch training as it happens.",
     problem:
-      "I wanted to understand what was happening inside the learning process: how the game state becomes an action, how experience changes the network, and how the agent improves over time.",
+      "I wanted to see inside the learning process for myself. How a frame of the game turns into a move, how each bit of experience nudges the network, and how the agent slowly gets better at staying alive.",
     approach:
-      "Reimplemented the **Evades** dodging game as a fast **Rust** engine, then built a **Deep Q-Network** agent with its neural net, replay buffer and training loop. The agent sees the arena through raycast vision and trains in a headless mode for speed, all driven from a live web dashboard.",
+      "I rebuilt the Evades dodging game as a fast Rust engine, then wrote the Deep Q-Network from the parts up, its neural net, replay buffer and training loop. The agent reads the arena through raycast vision and trains headless for speed, all driven from a live dashboard.",
     result:
-      "A trained agent that dodges a moving arena of enemies on its own, plus a real-time dashboard (React and WebSockets) to start, tune and watch training, with survival-time and loss charts updating live.",
+      "The agent learns to weave through a moving crowd of enemies on its own. Alongside it, a React and WebSockets dashboard lets me start, tune and watch a run, with survival-time and loss charts updating live.",
     role: "Solo Project",
     tags: ["Rust", "Deep Q-Network", "Reinforcement Learning", "Neural Networks", "Rayon", "WebSockets"],
     tools: ["Cargo", "Axum", "React", "Recharts"],
@@ -235,19 +237,19 @@ export const PROJECTS = [
     type: "Mobile Development",
     category: "Personal",
     services: "Flutter - Cloudflare Workers - D1 Database",
-    img: `${import.meta.env.BASE_URL}images/ph-notes-insa.svg`, // Placeholder
+    img: `${import.meta.env.BASE_URL}images/optimized/notes-insa-collage.webp`,
     url: "https://codeberg.org/AerLight/Notes_insa",
     linkText: "View Source Code",
     logoType: "codeberg",
     offset: -50,
     description:
-      "A mobile app for INSA Rennes students that pulls your grades from the school portal and lets the class pool their results **anonymously**, so you can see where you stand. The rankings are worked out on your own phone, so the server never stores anything personal.",
+      "A mobile app for INSA Rennes students that pulls your grades from the school portal and lets a class pool their results anonymously, so everyone can see where they stand.",
     problem:
-      "The school portal only shows your own grades, so there's no way to tell whether a 12/20 is below or above the class. Students wanted that context without exposing anyone's marks.",
+      "The portal only ever shows you your own grades. There is no way to tell whether a 12 out of 20 sits above or below the class, and students wanted that context without putting anyone's marks on display.",
     approach:
-      "Built a mobile app that pulls your grades from the portal and lets students anonymously pool their results. The class averages and rankings are worked out **on your own phone**, so the server never holds anything identifiable.",
+      "We built an app that reads your grades from the portal and pools them with the rest of the class. The averages and rankings are computed on your own phone, so the server never holds anything that could identify a person.",
     result:
-      "A live app that shows, in real time, how your results compare to the rest of the class, while keeping every submission anonymous.",
+      "The result is a live app that tells you, at a glance, how your marks land against the rest of the class, while keeping every submission anonymous.",
     role: "Team of 2",
     tags: ["Flutter", "Cloudflare Workers", "D1 Database", "Riverpod", "SQL"],
     tools: ["Android Studio", "Wrangler", "VS Code", "Git"],
@@ -271,13 +273,13 @@ export const PROJECTS = [
     logoType: "github",
     offset: -30,
     description:
-      "A **desktop app** (built in C# / .NET) that lets you search your text and image files by meaning instead of exact filenames, the way you would describe them to a person. Backed by a comparison of several AI models to find the best mix of accuracy and speed.",
+      "A desktop app, built in C# and .NET, that searches your text and image files by meaning instead of exact filenames. Ask for what you remember about a file and it finds it, even pulling up a photo from a written description.",
     problem:
-      "Finding a file usually means remembering its exact name or which folder you buried it in. I wanted to search by meaning instead, the way you'd describe it to a person.",
+      "Finding a file usually means recalling its exact name or the folder you buried it in. I wanted to search the way you would describe something to a friend, by what it is rather than what it is called.",
     approach:
-      "Built a **desktop app** (C# / .NET) that understands what's inside your text and image files, so you can search with plain descriptions. I compared several AI text and image models to find the best balance of accuracy and speed.",
+      "I built the app around models that read what is actually inside your files, so plain-language search works across both text and images. Along the way I compared several text and image models to find the best trade-off between accuracy and speed.",
     result:
-      "A working desktop app that finds files by meaning, including pulling up images from a text description, backed by a clear comparison of which AI models work best for the task.",
+      "It finds files by meaning across a folder, and behind it sits a clear comparison of the models I tested to decide which ones earned their place.",
     role: "Solo Project",
     tags: ["C#", ".NET 10", "Avalonia", "SBERT", "CLIP", "Machine Learning"],
     tools: ["Avalonia", "Skia", "JetBrains Rider"],
@@ -291,19 +293,19 @@ export const PROJECTS = [
     type: "Mobile Security",
     category: "Personal",
     services: "Android - Geolocation - Security",
-    img: `${import.meta.env.BASE_URL}images/ph-safewalk.svg`, // Placeholder
+    img: `${import.meta.env.BASE_URL}images/safewalk-collage.png`,
     url: "https://github.com/Aer-3888/SafeWalk",
     linkText: "View Repository",
     logoType: "github",
     offset: 0,
     description:
-      "A native **Android** safety app that keeps tracking your location reliably, even when the phone tries to shut it down to save battery, and protects every safety message so it can't be tampered with.",
+      "A native Android safety app for walking alone. It keeps tracking your location even when the phone tries to kill it to save battery, and it signs every check-in so no one can forge one.",
     problem:
-      "If something happens while you're walking alone, a safety app is only useful if it never silently stops tracking you. Phones love to shut background apps down to save battery.",
+      "A safety app is only worth having if it never quietly stops. The catch is that phones are built to shut background apps down the moment they want to save power, which is exactly when you would need it running.",
     approach:
-      "Built an **Android** app whose location tracking keeps running even when the system tries to close it, and that signs every safety message so it can't be tampered with. It can also check you in automatically near trusted **Bluetooth beacons**.",
+      "I built the tracking as a service the system struggles to kill, so it survives low-power modes and restarts. Each safety message is cryptographically signed, and the app can check you in on its own when it detects a trusted Bluetooth beacon nearby.",
     result:
-      "A dependable safety companion that keeps tracking through restarts and low-power modes, with tamper-proof check-ins. Built for situations where reliability genuinely matters.",
+      "It holds a reliable trail through the exact conditions that usually break these apps, restarts, battery savers and background limits. Reliability was the whole point, so that is where the effort went.",
     role: "Solo Project",
     tags: ["Android Native", "Kotlin", "Cryptography", "BLE", "Foreground Services"],
     tools: ["Android Studio", "Android Keystore API"],
@@ -316,7 +318,7 @@ export const PROJECTS = [
   {
     id: "06",
     title: "Accountant Aut",
-    year: "2024",
+    year: "2026",
     metric: "~2-3h/week of manual entry, automated",
     type: "Automation Tool",
     category: "Personal",
@@ -328,13 +330,13 @@ export const PROJECTS = [
     logoType: "github",
     offset: 0,
     description:
-      "A desktop tool that automatically syncs accounting entries between **Google Sheets** and the **Sage 50** accounting software, and matches each entry to the right code. A **local AI model** handles the tricky cases that don't fit a simple rule.",
+      "A desktop tool that keeps the accounting entries in Google Sheets and Sage 50 in sync, and files each one under the right code on its own. A local AI model steps in for the awkward entries that no simple rule covers.",
     problem:
-      "As treasurer of my school's junior enterprise, I re-typed accounting entries between **Google Sheets** and the accounting software by hand every week. It was slow, and a single wrong code could throw off the books.",
+      "As the accountant of my school's junior enterprise, I retyped entries between Google Sheets and the accounting software by hand every week. It was slow, and one wrong code was enough to throw the books off.",
     approach:
-      "Built a small desktop tool that syncs the two systems automatically and matches each entry to the right accounting code. For the tricky cases that don't fit a clear rule, a **local AI model** suggests the right one.",
+      "I built a small tool that moves entries between the two systems automatically and assigns each one a code. Where a clear rule runs out, a local AI model reads the entry and suggests where it belongs, so I only weigh in on the outliers.",
     result:
-      "What used to take a few hours a week is now a single click, with far fewer mistakes and a safety check that flags anything suspicious before it's saved.",
+      "A few hours of weekly retyping collapsed into a single click, with far fewer slips and a check that flags anything odd before it is saved.",
     role: "Solo Project",
     tags: ["C++", "Qt", "Google API", "OpenXLSX", "Ollama"],
     tools: ["CMake", "Git"],
@@ -358,13 +360,13 @@ export const PROJECTS = [
     logoType: "github",
     offset: 0,
     description:
-      "A data analysis of **10 years** of French real estate sales (**~12,000 records**) in the Pays de la Loire region, comparing prices before, during and after COVID across five areas.",
+      "A study of ten years of French property sales in the Pays de la Loire region, around 12,000 transactions, asking what COVID actually did to prices across five areas.",
     problem:
-      "COVID landed in the middle of a decade of housing data, making it hard to separate the pandemic's real effect on prices from trends that were already underway.",
+      "COVID landed right in the middle of the decade I was looking at, which made it hard to tell the pandemic's real effect on prices apart from trends that were already running.",
     approach:
-      "Cleaned and analysed about **12,000** property transactions across a French region, split into before, during and after COVID, then mapped the differences area by area on interactive maps.",
+      "I cleaned the transactions and split them into before, during and after COVID, then mapped the differences area by area so the patterns were something you could see rather than just read in a table.",
     result:
-      "Found that prices per square metre **rose 27%** after COVID while the number of sales stayed steady, with clear differences between areas shown on the maps.",
+      "Prices per square metre rose 27% after COVID while the number of sales barely moved, and the maps made clear that some areas carried far more of that jump than others.",
     role: "Solo Project",
     tags: ["Python", "Pandas", "Matplotlib", "Seaborn", "Folium"],
     tools: ["Jupyter Notebook", "Anaconda"],
@@ -388,13 +390,13 @@ export const PROJECTS = [
     logoType: "github",
     offset: 0,
     description:
-      "My personal portfolio website, focused on **animations** and an **immersive user experience** using modern web technologies.",
+      "The site you are reading. I treated my own portfolio as a front-end project in its own right, built around scroll-driven motion rather than a plain list of links.",
     problem:
-      "Most developer portfolios look the same and just list tools. I wanted mine to actually demonstrate what I can build on the front end.",
+      "Most developer portfolios look identical and just list tools. I wanted mine to show what I can actually build on the front end, not simply claim it.",
     approach:
-      "Designed the site so projects move with your scroll for a sense of depth, while staying fast and fully usable on phones, and respecting accessibility settings for people who prefer less motion.",
+      "I designed the site so the projects move with your scroll to give a sense of depth, while keeping it quick to load, comfortable on a phone, and calm for anyone who prefers reduced motion.",
     result:
-      "A fast, responsive site with smooth motion on desktop and a clean layout on mobile, built to stand as a project in its own right.",
+      "A fast, responsive site where the motion carries the story on desktop and gives way to a clean layout on mobile. If it makes you curious how it was built, it is doing its job.",
     role: "Solo Project",
     tags: ["React", "JavaScript", "Tailwind CSS", "Framer Motion", "Lenis Scroll"],
     tools: ["Vite", "VS Code"],
