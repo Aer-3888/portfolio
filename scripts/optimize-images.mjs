@@ -57,7 +57,6 @@ async function run() {
     "plant_detection.png",
     "accountant.png",
     "eda_housing.png",
-    "gardefou-hero.png",
     "t1-injection-demo.png",
     "notes-insa-collage.png",
   ];

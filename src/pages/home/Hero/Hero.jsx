@@ -140,8 +140,8 @@ function Hero({ onCvToggle }) {
                 />
               </figure>
               <div className="mt-3 grid grid-cols-3 gap-5 border-t border-[#121212]/30 font-mono uppercase">
-                <Field label="Class" value="Engineer" />
-                <Field label="Seat" value="3INFO" accent />
+                <Field label="Class" value="CS Student" />
+                <Field label="Seat" value="4INFO" accent />
                 <Field label="Boarding" value="Summer ’27" />
               </div>
             </motion.div>

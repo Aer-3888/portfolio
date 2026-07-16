@@ -146,7 +146,6 @@ export const PROJECTS = [
     category: "Personal",
     services: "LLM Security - RAG - Python",
     img: `${import.meta.env.BASE_URL}images/optimized/t1-injection-demo.webp`,
-    detailImg: `${import.meta.env.BASE_URL}images/optimized/gardefou-hero.webp`,
     url: "https://github.com/Aer-3888/GardeFou",
     linkText: "View Repository",
     logoType: "github",

@@ -4,35 +4,30 @@ import { motion } from "framer-motion";
 const moments = [
   {
     year: "2023",
-    kicker: "The foundation",
     title: "Learned to make applications hold together.",
     detail:
       "At IUT Nantes, full-stack projects taught me the full path from an idea and a data model to something another person can actually use.",
   },
   {
     year: "2025",
-    kicker: "The real world",
     title: "Pointed computer vision at fiber-optic defects.",
     detail:
       "At FPT Telecom, accuracy was only one part of the job. Latency, messy images, documentation, and leaving a maintainable pipeline behind mattered too.",
   },
   {
     year: "2025",
-    kicker: "The leap",
     title: "Helped turn an NFC tag into a shipped product.",
     detail:
       "Waiki was the first time I led a team from a blank page to both app stores. It taught me that background reliability and team clarity are product features.",
   },
   {
     year: "2026",
-    kicker: "The sharp edges",
     title: "Started breaking systems to understand them.",
     detail:
       "CTFs pulled me into cryptography, forensics, and OSINT. GardeFou brought that mindset to AI: build the vulnerable thing, attack it, then prove the defense works.",
   },
   {
     year: "Now",
-    kicker: "The next chapter",
     title: "Studying AI, while keeping one foot outside the model.",
     detail:
       "I’m at INSA Rennes, building backend tools for an accessibility association and looking for a summer 2027 internship where software meets a hard, real problem.",
@@ -74,10 +69,7 @@ function ExperienceSection() {
                   <span className="font-serif text-3xl italic text-[#c8452b]">{moment.year}</span>
                 </div>
                 <div>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.13em] text-[#121212]/45">
-                    {moment.kicker}
-                  </span>
-                  <h3 className="mt-3 max-w-2xl font-serif text-3xl leading-[0.98] md:text-5xl">
+                  <h3 className="max-w-2xl font-serif text-3xl leading-[0.98] md:text-5xl">
                     {moment.title}
                   </h3>
                   <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#121212]/60">
