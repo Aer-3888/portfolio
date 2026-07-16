@@ -1,159 +1,171 @@
-\documentclass[10pt,a4paper]{article}
+\documentclass[a4paper,10pt]{article}
 
-% --- PACKAGES ---
-\usepackage[utf8]{inputenc}
+\usepackage{latexsym}
 \usepackage[T1]{fontenc}
-\usepackage[french]{babel}
-\usepackage[left=1.2cm,right=1.2cm,top=1.0cm,bottom=1.0cm]{geometry}
-\usepackage{hyperref}
-\usepackage{enumitem}
+\usepackage[utf8]{inputenc}
+\usepackage[empty]{fullpage}
 \usepackage{titlesec}
-\usepackage{xcolor}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[french]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
 
-% --- COLORS ---
-\definecolor{accent}{HTML}{1E3A5F}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
 
-\hypersetup{
-    colorlinks=true,
-    linkcolor=black,
-    urlcolor=accent,
-    pdftitle={CV - Ingénieur Informatique}
-}
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
 
-% --- TITLE FORMATTING ---
-\titleformat{\section}{\Large\bfseries\color{accent}}{}{0em}{\uppercase}[\color{accent}\titlerule]
-\titlespacing*{\section}{0pt}{5pt}{2pt}
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-8pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
 
 % --- CUSTOM COMMANDS ---
-\newcommand{\job}[4]{
-    \noindent \textbf{#1} \hfill \textbf{#3}\\
-    \textit{#2}
-    \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
-        #4
-    \end{itemize}
-    \vspace{0pt}
+\newcommand{\resumeItem}[1]{
+  \item\small{#1 \vspace{0pt}}
 }
 
-\newcommand{\shortjob}[3]{
-    \noindent \textbf{#1} \hfill \textbf{#3}\\
-    \textit{#2}\vspace{0.2em}
+\newcommand{\resumeSubheading}[4]{
+  \vspace{0pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
 }
 
-\newcommand{\degree}[4]{
-    \noindent \textbf{#1} \hfill \textbf{#3}\\
-    \textit{#2}
-    \begin{itemize}[nosep,leftmargin=1.2em, label={\small\textbullet}]
-        #4
-    \end{itemize}
-    \vspace{0pt}
+\newcommand{\resumeProjectHeading}[2]{
+    \vspace{1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-3pt}
 }
 
-\pagestyle{empty}
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-2pt}}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[label=\textbullet]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-4pt}}
 
 \begin{document}
 
-% --- HEADER ---
+%----------EN-TÊTE----------
 \begin{center}
-    {\LARGE \textbf{Théo PHAN}}\\[0.2em]
+    \textbf{\Huge \scshape Théo Phan} \\ \vspace{2pt}
+    \large Stagiaire Ingénieur Logiciel \quad $|$ \quad Disponible été 2027 \\ \vspace{2pt}
     \small
-    \href{mailto:theo.phan.quoc.huy@gmail.com}{theo.phan.quoc.huy@gmail.com} $\mid$ +33 6 xx xx xx xx xx $\mid$ Rennes, France\\
-    \href{https://linkedin.com/in/theophanquochuy/}{linkedin.com/in/theophanquochuy/} $\mid$ \href{https://github.com/Aer-3888}{github.com/Aer-3888} $\mid$ \href{https://portfolio-theo.pages.dev/}{portfolio-theo.pages.dev}
+    \href{mailto:theo.phan.quoc.huy@gmail.com}{\underline{theo.phan.quoc.huy@gmail.com}} $|$
+    \href{tel:+33613620366}{\underline{+33 6 13 62 03 66}} $|$
+    \href{https://linkedin.com/in/theophanquochuy/}{\underline{LinkedIn}} $|$
+    \href{https://github.com/Aer-3888}{\underline{GitHub}} $|$
+    \href{https://portfolio-theo.pages.dev/}{\underline{Portfolio}} $|$
+    ouvert à la mobilité
 \end{center}
 
-% --- PROFIL ---
-\section*{Profil}
-Étudiant ingénieur IA/Data à l'INSA Rennes avec un stage en Computer Vision chez FPT Telecom Vietnam, où j'ai entraîné \textbf{YOLOv8} pour la détection de défauts industriels sur câblage fibre optique. Stack ML solide (PyTorch, OpenCV, Scikit-learn). \textbf{Disponible de juin à août 2026} pour un stage en IA/ML ou Data Science.
+%-----------EXPÉRIENCE-----------
+\section{Expérience}
+  \resumeSubHeadingListStart
 
-% --- COMPÉTENCES ---
-\section*{Compétences}
-\begin{itemize}[nosep,leftmargin=1.5em]
-    \item \textbf{IA \& Data :} PyTorch, YOLOv8, OpenCV, Pandas, Matplotlib, Seaborn, Scikit-learn, Jupyter, R.
-    \item \textbf{Langages de programmation :} Python, C++, Go, Java, SQL, JavaScript/TypeScript, Dart.
-    \item \textbf{Frameworks \& Outils :} React, Flutter, Firebase, Cloudflare Workers, AWS Bedrock, Docker, Git, GitHub Actions, Linux.
-    \item \textbf{Langues :} Français (Natif), Vietnamien (Natif), Anglais (Professionnel courant).
+    \resumeSubheading
+      {Stagiaire Ingénieur Logiciel, Machine Learning appliqué}{Avril -- Juin 2025}
+      {FPT Telecom -- détection de défauts en temps réel sur câblage fibre optique}{Hanoï, Vietnam}
+      \resumeItemListStart
+        \resumeItem{Conception et livraison d'un \textbf{pipeline Python de bout en bout} (collecte, annotation, augmentation, entraînement, inférence avec \textbf{PyTorch / YOLOv8}) transformant une inspection visuelle manuelle en un workflow de \textbf{détection en temps réel} automatisé, déployé dans un outil mobile interne utilisé sur site par les techniciens}
+        \resumeItem{Comparaison de deux architectures de modèles sur des métriques objectives (mAP, précision/rappel, latence) pour guider la décision de production, et mise en place de \textbf{contrôles qualité des données} détectant lacunes et déséquilibre de classes avant chaque entraînement}
+        \resumeItem{Rédaction d'une \textbf{documentation technique} complète pour une passation propre aux équipes d'ingénierie internes}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Founding Engineer \& Tech Lead, Waiki}{2025 -- Présent}
+      {Startup en amorçage -- matériel NFC en chambre et application compagnon multiplateforme}{Hybride}
+      \resumeItemListStart
+          \resumeItem{Conception et \textbf{mise en production} (iOS/Android) de l'application compagnon, aujourd'hui \textbf{1{,}425+ unités vendues}, avec le backend et la couche de données (Firebase, SQLite, \textbf{MVVM}) pour un état appareil/utilisateur fiable et synchronisé}
+          \resumeItem{Pilotage de la livraison, de besoins ambigus aux fonctionnalités livrées, en dirigeant une équipe de 3 en \textbf{Agile/Scrum} (user stories, Kanban, sprint planning) avec des résultats mesurables à chaque sprint}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Développeur Backend (Bénévole), Gnut06}{2026 -- Présent}
+      {Association utilisant la VR/AR pour l'inclusion des personnes en situation de handicap}{À distance}
+      \resumeItemListStart
+        \resumeItem{Développement de nouvelles fonctionnalités et de la couche de données \textbf{Doctrine / MySQL} d'une plateforme web \textbf{Symfony 7.1 / PHP} (\textbf{Docker}, Webpack Encore), dans un workflow Git avec revues de code}
+        \resumeItem{\textbf{Refactorisation de code legacy} vers une base plus propre, plus sûre et plus maintenable, réduisant la dette technique}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------PROJETS-----------
+\section{Projets \& Open Source}
+  \resumeSubHeadingListStart
+
+    \resumeProjectHeading
+      {\textbf{\href{https://github.com/Aer-3888/Notes_insa}{\underline{Notes INSA, Analytics Étudiant Distribué}}}}{\emph{TypeScript, Cloudflare Workers, D1 (SQL), Flutter}}
+      \resumeItemListStart
+        \resumeItem{Développement et publication d'une app mobile \textbf{Flutter} permettant aux étudiants de \textbf{se situer} par rapport aux statistiques de la promotion en direct (percentile, moyenne, médiane), calculées côté client pour la confidentialité et utilisées par de vrais étudiants}
+        \resumeItem{Conception du \textbf{backend serverless edge} (\textbf{TypeScript} sur \textbf{Cloudflare Workers}, SQL sur \textbf{D1}) ingérant, dédupliquant et agrégeant en temps réel les soumissions de toute une promotion, un système \textbf{distribué et scalable} de stockage et de requêtes}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{\href{https://github.com/Aer-3888/iaj_evades}{\underline{IAJ Evades, Agent d'Apprentissage par Renforcement}}}}{\emph{Rust, TypeScript, DQN, WebSockets}}
+      \resumeItemListStart
+        \resumeItem{Développement d'un moteur de jeu en \textbf{Rust} et d'un framework d'entraînement \textbf{Deep Q-Network} avec \textbf{entraînement par batch multi-threadé} et focalisation sur les mauvais seeds pour la robustesse de l'agent}
+        \resumeItem{Réalisation d'un dashboard \textbf{TypeScript} diffusant les \textbf{métriques d'entraînement en temps réel via WebSockets}, avec réglage des paramètres à la volée et checkpointing JSON pour des runs reprenables et tolérants aux pannes}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{\href{https://github.com/Aer-3888/GardeFou}{\underline{GardeFou, Laboratoire de Sécurité LLM}}}}{\emph{Python, RAG, Prompt Injection, Ollama, Chroma}}
+      \resumeItemListStart
+        \resumeItem{Construction d'un assistant \textbf{RAG} volontairement vulnérable sur des documents financiers, puis cycle \textbf{red team / blue team} pour démontrer les attaques par \textbf{prompt injection} et les garde-fous qui les stoppent}
+        \resumeItem{Vérification que chaque attaque échoue après durcissement et mapping de chaque découverte à un \textbf{référentiel de sécurité LLM} reconnu, avec preuves avant/après}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------COMPÉTENCES-----------
+\section{Compétences}
+\begin{itemize}[nosep,leftmargin=0.15in,label=\textbullet]
+    \resumeItem{\textbf{Langages de programmation :} Java, Python, C++, C\#, TypeScript/JavaScript, Rust, SQL.}
+    \resumeItem{\textbf{Fondamentaux CS :} conception orientée objet, structures de données \& algorithmes, analyse de complexité, concurrence \& multithreading, systèmes d'exploitation, systèmes distribués.}
+    \resumeItem{\textbf{IA / ML :} PyTorch, TensorFlow, réseaux de neurones (CNN, DQN), vision par ordinateur (YOLOv8, OpenCV), Scikit-learn, ONNX Runtime.}
+    \resumeItem{\textbf{Backend \& Data :} API REST, WebSockets, serverless (Cloudflare Workers), Node.js, bases relationnelles (SQL, MySQL, D1), MongoDB.}
+    \resumeItem{\textbf{Outils :} Docker, CI/CD (GitHub Actions), Git/GitLab, Linux.}
+    \resumeItem{\textbf{Langues :} Français (natif), Vietnamien (natif), Anglais (professionnel, C1).}
 \end{itemize}
 
-% --- EXPÉRIENCE ---
-\section*{Expérience}
+%-----------FORMATION-----------
+\section{Formation}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {INSA Rennes, Diplôme d'Ingénieur (niveau Master) en Informatique}{2025 -- 2028}
+      {Spécialisation IA. Cours : algorithmes \& structures de données, systèmes d'exploitation, probabilités}{Rennes, France}
+    \resumeSubheading
+      {IUT de Nantes, BUT Informatique}{2023 -- 2025}
+      {Parcours : Réalisation d'Applications, Conception et Validation}{Nantes, France}
+  \resumeSubHeadingListEnd
 
-\job{Stagiaire Ingénieur IA -- Vision par Ordinateur}
-    {FPT Telecom, Hanoï (Vietnam)}
-    {Avril 2025 -- Juin 2025}
-    {
-    \item Entraînement et optimisation de modèles \textbf{YOLOv8} avec \textbf{PyTorch} pour la détection de défauts sur câblage fibre optique.
-    \item Mise en place d'un pipeline d'annotation et d'augmentation de données pour améliorer la robustesse du modèle.
-    \item Automatisation du pipeline d'identification d'anomalies, réduisant le temps d'inspection manuelle.
-    }
-
-\job{Waiki -- Application Mobile (Flutter)}
-    {Freelance, Remote}
-    {2025 -- Présent}
-    {
-    \item Direction d'une équipe de 3 ingénieurs sur une app Flutter \textbf{MVVM} (\textbf{Firebase/SQLite}), filtrage DNS système et déverrouillage \textbf{NFC}.
-    \item Gestion de projet en Agile/Scrum avec Kanban et issue-driven development.
-    }
-
-\shortjob{Comptable}
-    {Junior Entreprise Ouest INSA, Rennes}
-    {2025 -- Présent}
-
-% --- PROJETS ---
-\section*{Projets}
-
-\job{Détection de Maladies des Plantes par IA}
-    {Python, PyTorch, OpenCV}
-    {2025}
-    {
-    \item Étude comparative \textbf{YOLOv8} vs \textbf{Faster R-CNN} (backbone \textbf{ResNet-50}) sur les datasets PlantDoc et PlantVillage.
-    \item Gestion du déséquilibre de classes et de conditions d'éclairage variables via augmentation de données.
-    \item Analyse des compromis vitesse de détection temps réel vs précision de classification.
-    }
-
-\job{Notes INSA -- Dashboard Étudiant}
-    {Cloudflare Workers, D1 (SQLite), SQL, Flutter}
-    {2026}
-    {
-    \item Backend serverless \textbf{Cloudflare Workers + D1} (base \textbf{SQL} edge) stockant les soumissions de notes anonymisées des étudiants.
-    \item Application mobile \textbf{Flutter} permettant aux étudiants de consulter leurs notes et de se situer par rapport à la promotion.
-    }
-
-\job{Analyse Exploratoire de Données du Marché Immobilier}
-    {Python, Pandas, Matplotlib, Seaborn, Folium}
-    {2025}
-    {
-    \item Analyse de \textbf{10 ans} de transactions immobilières (\textbf{$\sim$12 000 entrées}), comparaison pré/post-COVID révélant \textbf{+32\%} sur les prix au m².
-    }
-
-\job{Outil d'Automatisation Comptable}
-    {C++, Qt, Google API, Ollama}
-    {2024}
-    {
-    \item Dashboard \textbf{C++20/Qt} synchronisant \textbf{Google Sheets} et \textbf{Sage 50}, avec un \textbf{LLM local} (Ollama) pour le mapping automatique de codes comptables.
-    }
-
-% --- FORMATION ---
-\section*{Formation}
-
-\degree{Diplôme d'Ingénieur en Informatique}
-    {INSA Rennes, Rennes}
-    {2025 -- Présent}
-    {
-    \item Spécialisation Intelligence Artificielle et Data Engineering.
-    }
-
-\degree{BUT Informatique (Parcours Réalisation d'Applications)}
-    {IUT Nantes, Nantes}
-    {2023 -- 2025}
-    {
-    \item Développement applicatif Full-stack, bases de données, projets en Go et React.
-    }
-
-% --- COMPÉTITIONS ---
-\section*{Compétitions}
-\begin{itemize}[nosep,leftmargin=1.5em]
-    \item \textbf{CTF} (Équipe Crabe) : 2\textsuperscript{e} place IUT CTF, 71\textsuperscript{e}/757 au classement mondial du \href{https://ctftime.org/event/3105}{Midnight Flag CTF 2026}.
-    \item \textbf{AI for Business Hackathon 2026} : Participation à un projet en équipe appliquant des solutions IA à des problématiques business.
-    \item \textbf{Code Game Jam 2025} : \href{https://afissard.itch.io/lode-aux-etoiles}{L'Ode aux Étoiles} (Thème : «~Mélodie à l'Infini~»).
+%-----------ACTIVITÉS-----------
+\section{Activités}
+\begin{itemize}[nosep,leftmargin=0.15in,label=\textbullet]
+    \resumeItem{\textbf{CTF} (Équipe Crabe) : 2\textsuperscript{e} place IUT CTF, 71\textsuperscript{e}/757 au classement mondial du \href{https://ctftime.org/event/3105}{\underline{Midnight Flag CTF 2026}}.}
+    \resumeItem{\textbf{AI for Business Hackathon 2026} : projet en équipe appliquant des solutions IA à des problématiques business.}
+    \resumeItem{\textbf{Photographie \& guitare} : pratique personnelle autodidacte depuis 2 ans.}
 \end{itemize}
 
 \end{document}
