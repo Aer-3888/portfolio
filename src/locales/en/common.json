@@ -1,0 +1,4 @@
+{
+  "nav": { "work": "Work", "story": "Story", "hello": "Hello", "home": "Home" },
+  "language": { "label": "Language", "en": "EN", "fr": "FR", "switchTo": "Switch to English" }
+}

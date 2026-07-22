@@ -18,9 +18,11 @@
     "clsx": "^2.1.0",
     "flubber": "^0.4.2",
     "framer-motion": "^12.0.0",
+    "i18next": "^26.3.6",
     "lenis": "^1.1.18",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^17.0.10",
     "react-router-dom": "^7.13.0",
     "tailwind-merge": "^2.2.0"
   },

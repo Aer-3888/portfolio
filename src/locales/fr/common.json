@@ -1,0 +1,4 @@
+{
+  "nav": { "work": "Projets", "story": "Parcours", "hello": "Contact", "home": "Accueil" },
+  "language": { "label": "Langue", "en": "EN", "fr": "FR", "switchTo": "Passer en français" }
+}
