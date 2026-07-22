@@ -1,5 +1,6 @@
 import { memo, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const ease = [0.22, 1, 0.36, 1];
 
@@ -31,6 +32,7 @@ function Field({ label, value, accent }) {
 }
 
 function Hero({ onCvToggle }) {
+  const { t } = useTranslation("home");
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -67,10 +69,10 @@ function Hero({ onCvToggle }) {
             className="relative flex items-center border-t border-[#121212] pt-3 font-mono text-[10px] uppercase tracking-[0.14em] md:text-[11px]"
           >
             <span className="flex items-center gap-2">
-              <span aria-hidden="true">✈</span> Boarding pass / Théo Phan
+              <span aria-hidden="true">✈</span> {t("hero.boardingPass")}
             </span>
             <span className="absolute left-1/2 hidden -translate-x-1/2 text-[#121212]/55 sm:block">
-              Rennes → ANY
+              {t("hero.route")}
             </span>
           </motion.div>
 
@@ -82,8 +84,7 @@ function Hero({ onCvToggle }) {
                 transition={{ duration: 0.8, delay: 0.1, ease }}
                 className="mb-5 max-w-md text-sm leading-relaxed text-[#121212]/60 md:mb-8"
               >
-                Engineer, photographer, and compulsive tinkerer. I like software most when it touches
-                something real.
+                {t("hero.intro")}
               </motion.p>
 
               <motion.h1
@@ -92,11 +93,11 @@ function Hero({ onCvToggle }) {
                 transition={{ duration: 1, delay: 0.16, ease }}
                 className="max-w-[16ch] font-serif text-[clamp(4rem,10vw,9.5rem)] leading-[0.78] tracking-[-0.045em]"
               >
-                I build software that{" "}
+                {t("hero.headlinePre")}{" "}
                 <span className="italic text-[#c8452b] underline decoration-[#c8452b]/30 decoration-[3px] underline-offset-[8px]">
-                  escapes
+                  {t("hero.headlineAccent")}
                 </span>{" "}
-                the screen.
+                {t("hero.headlinePost")}
               </motion.h1>
 
               <motion.div
@@ -110,7 +111,7 @@ function Hero({ onCvToggle }) {
                   onClick={goToProjects}
                   className="group inline-flex min-h-12 items-center gap-6 bg-[#121212] px-6 font-mono text-[11px] uppercase tracking-[0.12em] text-white transition-transform hover:-translate-y-0.5"
                 >
-                  Read the stories
+                  {t("hero.ctaProjects")}
                   <span className="transition-transform group-hover:translate-y-0.5">↓</span>
                 </button>
                 <button
@@ -118,7 +119,7 @@ function Hero({ onCvToggle }) {
                   onClick={() => onCvToggle(true)}
                   className="inline-flex min-h-12 items-center border-b border-[#121212]/35 px-1 font-mono text-[11px] uppercase tracking-[0.12em] transition-colors hover:border-[#121212]"
                 >
-                  The practical CV
+                  {t("hero.ctaCv")}
                 </button>
               </motion.div>
             </motion.div>
@@ -140,9 +141,9 @@ function Hero({ onCvToggle }) {
                 />
               </figure>
               <div className="mt-3 grid grid-cols-3 gap-5 border-t border-[#121212]/30 font-mono uppercase">
-                <Field label="Class" value="CS Student" />
-                <Field label="Seat" value="4INFO" accent />
-                <Field label="Boarding" value="Summer ’27" />
+                <Field label={t("hero.classLabel")} value={t("hero.classValue")} />
+                <Field label={t("hero.seatLabel")} value={t("hero.seatValue")} accent />
+                <Field label={t("hero.boardingLabel")} value={t("hero.boardingValue")} />
               </div>
             </motion.div>
           </div>
@@ -152,8 +153,8 @@ function Hero({ onCvToggle }) {
           </div>
 
           <div className="flex items-end justify-between border-b border-[#121212] pb-3 font-mono text-[10px] uppercase tracking-[0.12em] text-[#121212]/50">
-            <span className="sm:hidden">Rennes → ANY</span>
-            <span className="ml-auto" aria-hidden="true">( Scroll to begin )</span>
+            <span className="sm:hidden">{t("hero.route")}</span>
+            <span className="ml-auto" aria-hidden="true">{t("hero.scroll")}</span>
           </div>
         </div>
       </div>

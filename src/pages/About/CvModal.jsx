@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const CV_URLS = {
   fr: `${import.meta.env.BASE_URL}cv.pdf#toolbar=0&navpanes=0`,
@@ -8,8 +9,14 @@ const CV_URLS = {
 };
 
 export default function CvModal({ isOpen, onClose }) {
-  const [lang, setLang] = useState("en");
+  const { t, i18n } = useTranslation("home");
+  const [lang, setLang] = useState(i18n.language === "fr" ? "fr" : "en");
   const modalRef = useRef(null);
+
+  // Default the CV to the site language, still overridable via the toggle.
+  useEffect(() => {
+    setLang(i18n.language === "fr" ? "fr" : "en");
+  }, [i18n.language]);
 
   // Lock body scroll
   useEffect(() => {
@@ -116,7 +123,7 @@ export default function CvModal({ isOpen, onClose }) {
                   download
                   className="px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider bg-neutral-800 text-white hover:bg-slate-600 transition-colors"
                 >
-                  Download
+                  {t("cv.download")}
                 </a>
                 <button
                   onClick={onClose}

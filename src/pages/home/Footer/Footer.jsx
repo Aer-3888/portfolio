@@ -1,7 +1,9 @@
 import { memo } from "react";
+import { useTranslation } from "react-i18next";
 import { EMAIL, SOCIALS } from "../../../config/siteData";
 
 function Footer() {
+  const { t } = useTranslation("home");
   return (
     <footer id="contact" className="bg-[#f1eee7] text-[#121212]">
       <div className="mx-auto max-w-[1500px] px-5 py-16 sm:px-8 md:px-12 md:py-24">
@@ -18,10 +20,10 @@ function Footer() {
 
           <div className="space-y-8 text-sm leading-relaxed">
             <div className="font-mono text-[10px] uppercase tracking-[0.12em] text-[#121212]/55">
-              <p>Rennes, France</p>
-              <p>Summer 2027 internship</p>
+              <p>{t("footer.location")}</p>
+              <p>{t("footer.availability")}</p>
             </div>
-            <p>CS engineering @ INSA Rennes</p>
+            <p>{t("footer.role")}</p>
             <div className="flex flex-wrap gap-x-4 gap-y-2">
               {SOCIALS.map((social) => (
                 <a

@@ -1,1 +1,124 @@
-{}
+{
+  "hero": {
+    "intro": "Ingénieur, photographe et bricoleur compulsif. J’aime le logiciel surtout quand il touche à quelque chose de réel.",
+    "headlinePre": "Je construis des logiciels qui",
+    "headlineAccent": "s’échappent",
+    "headlinePost": "de l’écran.",
+    "boardingPass": "Carte d’embarquement / Théo Phan",
+    "route": "Rennes → PARTOUT",
+    "ctaProjects": "Lire les histoires",
+    "ctaCv": "Le CV pratique",
+    "classLabel": "Classe",
+    "classValue": "Étudiant en info",
+    "seatLabel": "Siège",
+    "seatValue": "4INFO",
+    "boardingLabel": "Embarquement",
+    "boardingValue": "Été ’27",
+    "scroll": "( Défiler pour commencer )"
+  },
+  "status": {
+    "eyebrow": "Ma façon de travailler",
+    "headlinePre": "J’aime comprendre ",
+    "headlineAccent": "pourquoi quelque chose casse",
+    "headlinePost": ", puis essayer de le faire marcher.",
+    "body": "C’est comme ça que j’ai fini par travailler avec des services Android en arrière-plan, des tags NFC, la vision par ordinateur, des CTF et des modèles d’IA locaux. J’apprends le plus vite quand je peux tester l’idée moi-même.",
+    "principles": [
+      {
+        "title": "Je commence petit",
+        "text": "Je construis d’abord la plus petite version utile. Ça me donne quelque chose de réel à tester plutôt qu’un plan que je ne peux que deviner."
+      },
+      {
+        "title": "Je suis le problème",
+        "text": "Si le bug mène à un service Android, un modèle, un message signé ou un tag NFC, j’y vais et j’apprends ce qu’il faut."
+      },
+      {
+        "title": "Je teste moi-même",
+        "text": "J’utilise de vrais téléphones, des images imparfaites et des attaques reproductibles. Je veux trouver le point faible avant que quelqu’un d’autre ait à le faire."
+      }
+    ]
+  },
+  "experience": {
+    "eyebrow": "Comment j’en suis arrivé là",
+    "headline": "Un chemin, pas une liste à cocher.",
+    "intro": "Chaque étape a rendu la question suivante un peu plus ambitieuse, et un peu plus proche du monde physique.",
+    "moments": [
+      {
+        "year": "2023",
+        "title": "Appris à faire tenir des applications.",
+        "detail": "À l’IUT de Nantes, les projets full-stack m’ont appris tout le chemin, d’une idée et d’un modèle de données jusqu’à quelque chose qu’une autre personne peut vraiment utiliser."
+      },
+      {
+        "year": "2025",
+        "title": "Pointé la vision par ordinateur sur des défauts de fibre optique.",
+        "detail": "Chez FPT Telecom, la précision n’était qu’une partie du travail. La latence, les images désordonnées, la documentation et le fait de laisser un pipeline maintenable comptaient aussi."
+      },
+      {
+        "year": "2025",
+        "title": "Aidé à transformer un tag NFC en produit livré.",
+        "detail": "Waiki a été la première fois où j’ai mené une équipe d’une page blanche jusqu’aux deux stores. Ça m’a appris que la fiabilité en arrière-plan et la clarté d’équipe sont des fonctionnalités du produit."
+      },
+      {
+        "year": "2026",
+        "title": "Commencé à casser des systèmes pour les comprendre.",
+        "detail": "Les CTF m’ont attiré vers la cryptographie, le forensic et l’OSINT. GardeFou a amené cet état d’esprit à l’IA, construire la chose vulnérable, l’attaquer, puis prouver que la défense marche."
+      },
+      {
+        "year": "Aujourd’hui",
+        "title": "J’étudie l’IA, tout en gardant un pied hors du modèle.",
+        "detail": "Je suis à l’INSA Rennes, je construis des outils backend pour une association d’accessibilité et je cherche un stage d’été 2027 où le logiciel rencontre un vrai problème difficile."
+      }
+    ]
+  },
+  "projects": {
+    "heading": "Quelques trucs que j’ai construits.",
+    "outro": "Il y a d’autres expériences, des outils utiles et des idées qui ont un peu dérapé.",
+    "cta": "Voir toute l’archive",
+    "open": "Ouvrir {{title}}",
+    "stories": {
+      "01": {
+        "question": "Et si la maîtrise de soi avait une forme physique ?",
+        "note": "J’ai mené trois étudiants d’une idée têtue jusqu’à un produit que les gens portent maintenant dans leur poche.",
+        "result": "En ligne sur iOS + Android · 1 425+ ventes"
+      },
+      "09": {
+        "question": "Un document pourrait-il détourner discrètement une IA ?",
+        "note": "Lire sur l’injection de prompt était trop confortable, alors j’ai construit un assistant vulnérable et je l’ai attaqué moi-même."
+      },
+      "10": {
+        "question": "Qu’est-ce qu’un réseau de neurones me cache ?",
+        "note": "J’ai construit la boucle d’entraînement du DQN en Rust et j’ai regardé l’agent apprendre peu à peu à survivre."
+      },
+      "03": {
+        "question": "Un modèle peut-il gérer le désordre hors du labo ?",
+        "note": "J’ai comparé des modèles de vision sur des photos de plantes imparfaites pour trouver le point où un benchmark devient vraiment utile.",
+        "result": "mAP@50 0,90 · 85,8% de rappel"
+      }
+    }
+  },
+  "hobbies": {
+    "eyebrow": "Loin du clavier",
+    "headlinePre": "Je collectionne ",
+    "headlineAccent": "des façons de voir.",
+    "body": "La photographie me fait ralentir et remarquer la géométrie, la lumière et le seul détail qui change le cadre. C’est l’opposé du débogage, et pourtant un peu la même compétence.",
+    "boulderingLabel": "Escalade de bloc",
+    "boulderingText": "Un problème qu’on résout avec tout le corps. Tomber, ajuster un mouvement, réessayer.",
+    "escapeLabel": "Escape games",
+    "escapeText": "Reconnaissance de motifs, théories douteuses, et un chronomètre qui rend chaque idée plus forte.",
+    "viewPhotos": "Voir les photos",
+    "galleryAria": "Ouvrir la galerie photo",
+    "alt1": "Une photographie du journal visuel de Théo",
+    "alt2": "Un paysage urbain au coucher du soleil photographié par Théo",
+    "alt3": "Une scène culturelle photographiée par Théo"
+  },
+  "footer": {
+    "location": "Rennes, France",
+    "availability": "Stage d’été 2027",
+    "role": "Ingénierie info @ INSA Rennes"
+  },
+  "gallery": {
+    "counter": "Journal visuel · {{index}} sur {{total}}"
+  },
+  "cv": {
+    "download": "Télécharger"
+  }
+}

@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef, useCallback, memo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
+import { useTranslation } from "react-i18next";
 import { galleryFiles } from "./galleryData";
 
 const GalleryModal = ({ isOpen, onClose }) => {
+  const { t } = useTranslation("home");
   const [activeFile, setActiveFile] = useState(galleryFiles[0]);
   const [isImageLoading, setIsImageLoading] = useState(true);
   const modalRef = useRef(null);
@@ -113,7 +115,10 @@ const GalleryModal = ({ isOpen, onClose }) => {
         {/* Header Metadata */}
         <div className="absolute top-8 left-1/2 -translate-x-1/2 z-50 flex flex-col items-center gap-2 pointer-events-none">
           <span className="text-slate-400 font-mono text-[10px] tracking-[0.3em]">
-            Visual Diary · {galleryFiles.indexOf(activeFile) + 1} of {galleryFiles.length}
+            {t("gallery.counter", {
+              index: galleryFiles.indexOf(activeFile) + 1,
+              total: galleryFiles.length,
+            })}
           </span>
           <div className="flex gap-4 items-center bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
             <span className="text-white font-mono text-[9px] font-bold uppercase tracking-widest">

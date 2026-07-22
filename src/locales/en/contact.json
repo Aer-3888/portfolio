@@ -1,1 +1,34 @@
-{}
+{
+  "headlineLine1": "No contact form.",
+  "headlineLine2": "Just email me.",
+  "intro": "For work, an idea, or a question. If it needs more than an email, we can figure that out after.",
+  "copy": "Copy email",
+  "copied": "Copied",
+  "copiedHint": "Ready to paste.",
+  "copyHint": "Or click the address to open your mail app.",
+  "location": "Rennes, France",
+  "localTime": "{{time}} local time",
+  "availability": "Looking for a summer 2027 internship.",
+  "socialAria": "Social links",
+  "arcade": {
+    "title": "Reaction test",
+    "best": "Best {{ms}}ms",
+    "distraction": "A small distraction",
+    "idleHeadline": "Test your reflexes.",
+    "idleHint": "Click anywhere to begin.",
+    "waiting": "Not yet.",
+    "active": "Now.",
+    "earlyHeadline": "Too soon.",
+    "earlyHint": "Click to try again.",
+    "resultHint": "Click to try again.",
+    "ariaLabel": "Reaction test. Click to play.",
+    "ratings": {
+      "inhuman": "Inhuman",
+      "excellent": "Excellent",
+      "great": "Great",
+      "good": "Good",
+      "average": "Average",
+      "keepTraining": "Keep training"
+    }
+  }
+}

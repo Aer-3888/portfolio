@@ -1,1 +1,34 @@
-{}
+{
+  "headlineLine1": "Pas de formulaire.",
+  "headlineLine2": "Écris-moi, c’est tout.",
+  "intro": "Pour un projet, une idée ou une question. Si ça demande plus qu’un email, on verra ça après.",
+  "copy": "Copier l’email",
+  "copied": "Copié",
+  "copiedHint": "Prêt à coller.",
+  "copyHint": "Ou clique sur l’adresse pour ouvrir ton application mail.",
+  "location": "Rennes, France",
+  "localTime": "{{time}} heure locale",
+  "availability": "À la recherche d’un stage d’été 2027.",
+  "socialAria": "Liens sociaux",
+  "arcade": {
+    "title": "Test de réflexes",
+    "best": "Record {{ms}}ms",
+    "distraction": "Une petite distraction",
+    "idleHeadline": "Teste tes réflexes.",
+    "idleHint": "Clique n’importe où pour commencer.",
+    "waiting": "Pas encore.",
+    "active": "Maintenant.",
+    "earlyHeadline": "Trop tôt.",
+    "earlyHint": "Clique pour réessayer.",
+    "resultHint": "Clique pour réessayer.",
+    "ariaLabel": "Test de réflexes. Clique pour jouer.",
+    "ratings": {
+      "inhuman": "Surhumain",
+      "excellent": "Excellent",
+      "great": "Super",
+      "good": "Bien",
+      "average": "Moyen",
+      "keepTraining": "Continue à t’entraîner"
+    }
+  }
+}

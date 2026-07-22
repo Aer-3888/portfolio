@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { galleryFiles } from "../../About/galleryData";
 
 const photoSet = [galleryFiles[20], galleryFiles[12], galleryFiles[10]];
 
 export default function HobbySection({ onGalleryOpen }) {
+  const { t } = useTranslation("home");
   return (
     <section className="relative overflow-hidden bg-[#ffca45] px-5 py-24 text-[#121212] sm:px-8 md:px-12 md:py-36">
       <div className="absolute -left-24 top-20 h-64 w-64 rounded-full border border-[#121212]/20 md:h-[30rem] md:w-[30rem]" />
@@ -16,31 +18,31 @@ export default function HobbySection({ onGalleryOpen }) {
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
             <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-[#121212]/50">
-              Away from the keyboard
+              {t("hobbies.eyebrow")}
             </span>
             <h2 className="mt-6 max-w-[9ch] font-serif text-[clamp(4rem,7.5vw,8rem)] leading-[0.8] tracking-[-0.04em]">
-              I collect <span className="italic text-[#2356d8]">ways of seeing.</span>
+              {t("hobbies.headlinePre")}
+              <span className="italic text-[#2356d8]">{t("hobbies.headlineAccent")}</span>
             </h2>
             <p className="mt-8 max-w-lg text-base leading-relaxed text-[#121212]/65">
-              Photography makes me slow down and notice geometry, light, and the one detail that
-              changes the frame. It is the opposite of debugging, and somehow the same skill.
+              {t("hobbies.body")}
             </p>
 
             <div className="mt-10 grid gap-3 sm:grid-cols-2">
               <div className="border-t border-[#121212] pt-4">
                 <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-[#121212]/45">
-                  Bouldering
+                  {t("hobbies.boulderingLabel")}
                 </span>
                 <p className="mt-3 text-sm leading-relaxed">
-                  A problem you solve with your whole body. Fall, adjust one move, try again.
+                  {t("hobbies.boulderingText")}
                 </p>
               </div>
               <div className="border-t border-[#121212] pt-4">
                 <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-[#121212]/45">
-                  Escape games
+                  {t("hobbies.escapeLabel")}
                 </span>
                 <p className="mt-3 text-sm leading-relaxed">
-                  Pattern recognition, questionable theories, and a timer making every idea louder.
+                  {t("hobbies.escapeText")}
                 </p>
               </div>
             </div>
@@ -52,7 +54,7 @@ export default function HobbySection({ onGalleryOpen }) {
               type="button"
               onClick={onGalleryOpen}
               className="group relative mx-auto block h-[34rem] w-full max-w-[42rem] cursor-pointer text-left sm:h-[44rem] md:h-[48rem]"
-              aria-label="Open photography gallery"
+              aria-label={t("hobbies.galleryAria")}
             >
             <motion.figure
               initial={{ opacity: 0, rotate: -6, x: -30 }}
@@ -63,7 +65,7 @@ export default function HobbySection({ onGalleryOpen }) {
             >
               <img
                 src={photoSet[1].url}
-                alt="A photograph from Théo’s visual diary"
+                alt={t("hobbies.alt1")}
                 className="aspect-[4/5] w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
               />
               <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-[#121212]/55 sm:bottom-4 sm:left-4">
@@ -80,7 +82,7 @@ export default function HobbySection({ onGalleryOpen }) {
             >
               <img
                 src={photoSet[0].url}
-                alt="A sunset cityscape photographed by Théo"
+                alt={t("hobbies.alt2")}
                 className="aspect-[4/5] w-full object-cover"
               />
               <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-white/70 sm:bottom-4 sm:left-4">
@@ -97,7 +99,7 @@ export default function HobbySection({ onGalleryOpen }) {
             >
               <img
                 src={photoSet[2].url}
-                alt="A cultural scene photographed by Théo"
+                alt={t("hobbies.alt3")}
                 className="aspect-[4/3] w-full object-cover"
               />
               <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-[#121212]/55 sm:bottom-4 sm:left-4">
@@ -109,14 +111,10 @@ export default function HobbySection({ onGalleryOpen }) {
             <button
               type="button"
               onClick={onGalleryOpen}
-              className="group absolute right-2 top-[56%] z-30 grid h-28 w-28 cursor-pointer place-items-center rounded-full bg-[#2356d8] p-4 font-mono text-[10px] uppercase leading-tight tracking-[0.1em] text-white shadow-xl transition duration-300 hover:-translate-y-1 hover:rotate-6 hover:scale-105 sm:h-32 sm:w-32"
-              aria-label="View photos"
+              className="group absolute right-2 top-[56%] z-30 grid h-28 w-28 cursor-pointer place-items-center rounded-full bg-[#2356d8] p-4 text-center font-mono text-[10px] uppercase leading-tight tracking-[0.1em] text-white shadow-xl transition duration-300 hover:-translate-y-1 hover:rotate-6 hover:scale-105 sm:h-32 sm:w-32"
+              aria-label={t("hobbies.viewPhotos")}
             >
-              <span>
-                View
-                <br />
-                photos
-              </span>
+              <span>{t("hobbies.viewPhotos")}</span>
               <span className="text-lg transition-transform group-hover:rotate-12">↗</span>
             </button>
           </div>

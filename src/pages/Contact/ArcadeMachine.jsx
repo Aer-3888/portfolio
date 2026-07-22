@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const RATINGS = [
-  { max: 150, label: "Inhuman" },
-  { max: 200, label: "Excellent" },
-  { max: 250, label: "Great" },
-  { max: 300, label: "Good" },
-  { max: 400, label: "Average" },
-  { max: Infinity, label: "Keep training" },
+  { max: 150, key: "inhuman" },
+  { max: 200, key: "excellent" },
+  { max: 250, key: "great" },
+  { max: 300, key: "good" },
+  { max: 400, key: "average" },
+  { max: Infinity, key: "keepTraining" },
 ];
 
 const COLORS = {
@@ -18,11 +19,12 @@ const COLORS = {
   result: "#171717",
 };
 
-function getRating(milliseconds) {
-  return RATINGS.find((rating) => milliseconds < rating.max)?.label ?? "Keep training";
+function getRatingKey(milliseconds) {
+  return RATINGS.find((rating) => milliseconds < rating.max)?.key ?? "keepTraining";
 }
 
 export default function ArcadeMachine() {
+  const { t } = useTranslation("contact");
   const [state, setState] = useState("idle");
   const [score, setScore] = useState(null);
   const [best, setBest] = useState(null);
@@ -73,11 +75,11 @@ export default function ArcadeMachine() {
       onClick={handleClick}
       className="flex h-full w-full cursor-pointer select-none flex-col text-left transition-colors duration-300 focus-visible:outline-offset-[-4px]"
       style={{ backgroundColor: COLORS[state], color: textColor }}
-      aria-label="Reaction test. Click to play."
+      aria-label={t("arcade.ariaLabel")}
     >
       <div className="flex shrink-0 items-center justify-between border-b border-current/20 px-5 py-4 text-[10px]">
-        <span>Reaction test</span>
-        <span>{best === null ? "A small distraction" : `Best ${best}ms`}</span>
+        <span>{t("arcade.title")}</span>
+        <span>{best === null ? t("arcade.distraction") : t("arcade.best", { ms: best })}</span>
       </div>
 
       <div aria-live="polite" className="relative flex-1">
@@ -91,9 +93,9 @@ export default function ArcadeMachine() {
               className="absolute inset-0 flex flex-col justify-between p-5 sm:p-8"
             >
               <p className="max-w-sm font-serif text-5xl leading-[0.82] tracking-[-0.03em] sm:text-6xl">
-                Test your reflexes.
+                {t("arcade.idleHeadline")}
               </p>
-              <p className="text-xs opacity-60">Click anywhere to begin.</p>
+              <p className="text-xs opacity-60">{t("arcade.idleHint")}</p>
             </motion.div>
           )}
 
@@ -105,7 +107,7 @@ export default function ArcadeMachine() {
               exit={{ opacity: 0 }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <p className="font-serif text-5xl animate-pulse">Not yet.</p>
+              <p className="font-serif text-5xl animate-pulse">{t("arcade.waiting")}</p>
             </motion.div>
           )}
 
@@ -118,7 +120,7 @@ export default function ArcadeMachine() {
               transition={{ duration: 0.05 }}
               className="absolute inset-0 flex items-center justify-center"
             >
-              <p className="font-serif text-8xl leading-none">Now.</p>
+              <p className="font-serif text-8xl leading-none">{t("arcade.active")}</p>
             </motion.div>
           )}
 
@@ -130,8 +132,8 @@ export default function ArcadeMachine() {
               exit={{ opacity: 0 }}
               className="absolute inset-0 flex flex-col items-center justify-center gap-4"
             >
-              <p className="font-serif text-6xl">Too soon.</p>
-              <p className="text-xs opacity-60">Click to try again.</p>
+              <p className="font-serif text-6xl">{t("arcade.earlyHeadline")}</p>
+              <p className="text-xs opacity-60">{t("arcade.earlyHint")}</p>
             </motion.div>
           )}
 
@@ -144,8 +146,8 @@ export default function ArcadeMachine() {
               className="absolute inset-0 flex flex-col items-center justify-center gap-3"
             >
               <p className="font-serif text-7xl leading-none sm:text-8xl">{score}ms</p>
-              <p className="text-sm opacity-60">{getRating(score)}</p>
-              <p className="mt-5 text-xs opacity-35">Click to try again.</p>
+              <p className="text-sm opacity-60">{t(`arcade.ratings.${getRatingKey(score)}`)}</p>
+              <p className="mt-5 text-xs opacity-35">{t("arcade.resultHint")}</p>
             </motion.div>
           )}
         </AnimatePresence>

@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import { SOCIALS, EMAIL } from "../../config/siteData";
 import ArcadeMachine from "./ArcadeMachine";
 import PageNav from "../../components/layout/PageNav";
 import useSeo from "../../hooks/useSeo";
 
 export default function ContactPage() {
+  const { t } = useTranslation("contact");
   const [time, setTime] = useState("");
   const [copied, setCopied] = useState(false);
   const copyTimerRef = useRef(null);
@@ -63,17 +65,16 @@ export default function ContactPage() {
       >
         <header className="border-b border-black/20 pb-16 md:pb-24">
           <h1 className="font-serif text-[clamp(4.7rem,10vw,10rem)] leading-[0.76] tracking-[-0.045em]">
-            No contact form.
+            {t("headlineLine1")}
             <br />
-            Just email me.
+            {t("headlineLine2")}
           </h1>
         </header>
 
         <div className="grid border-b border-black/20 md:grid-cols-12">
           <section className="flex flex-col justify-between py-14 md:col-span-7 md:min-h-[34rem] md:py-20 md:pr-12 lg:pr-20">
             <p className="max-w-md text-sm leading-relaxed text-black/55 md:text-base">
-              For work, an idea, or a question. If it needs more than an email, we can figure that
-              out after.
+              {t("intro")}
             </p>
 
             <div className="mt-20 md:mt-24">
@@ -89,10 +90,10 @@ export default function ContactPage() {
                   onClick={handleCopyEmail}
                   className="min-h-11 cursor-pointer bg-[#ffca45] px-5 text-sm text-black transition-transform hover:-translate-y-0.5"
                 >
-                  {copied ? "Copied" : "Copy email"}
+                  {copied ? t("copied") : t("copy")}
                 </button>
                 <span aria-live="polite" className="text-xs text-black/40">
-                  {copied ? "Ready to paste." : "Or click the address to open your mail app."}
+                  {copied ? t("copiedHint") : t("copyHint")}
                 </span>
               </div>
             </div>
@@ -107,12 +108,12 @@ export default function ContactPage() {
 
         <div className="grid gap-10 py-10 text-sm text-black/55 sm:grid-cols-2 md:grid-cols-12 md:items-end">
           <div className="md:col-span-3">
-            <p>Rennes, France</p>
-            <p className="mt-1 text-black/35">{time} local time</p>
+            <p>{t("location")}</p>
+            <p className="mt-1 text-black/35">{t("localTime", { time })}</p>
           </div>
-          <p className="max-w-xs md:col-span-4">Looking for a summer 2027 internship.</p>
+          <p className="max-w-xs md:col-span-4">{t("availability")}</p>
           <nav
-            aria-label="Social links"
+            aria-label={t("socialAria")}
             className="flex flex-wrap gap-x-7 gap-y-3 sm:justify-end md:col-span-5"
           >
             {SOCIALS.map((social) => (

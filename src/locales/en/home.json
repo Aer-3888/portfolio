@@ -1,1 +1,124 @@
-{}
+{
+  "hero": {
+    "intro": "Engineer, photographer, and compulsive tinkerer. I like software most when it touches something real.",
+    "headlinePre": "I build software that",
+    "headlineAccent": "escapes",
+    "headlinePost": "the screen.",
+    "boardingPass": "Boarding pass / Théo Phan",
+    "route": "Rennes → ANY",
+    "ctaProjects": "Read the stories",
+    "ctaCv": "The practical CV",
+    "classLabel": "Class",
+    "classValue": "CS Student",
+    "seatLabel": "Seat",
+    "seatValue": "4INFO",
+    "boardingLabel": "Boarding",
+    "boardingValue": "Summer ’27",
+    "scroll": "( Scroll to begin )"
+  },
+  "status": {
+    "eyebrow": "How I work",
+    "headlinePre": "I like figuring out ",
+    "headlineAccent": "why something fails",
+    "headlinePost": ", then trying to make it work.",
+    "body": "That is how I ended up working with Android background services, NFC tags, computer vision, CTFs, and local AI models. I learn fastest when I can test the idea myself.",
+    "principles": [
+      {
+        "title": "I start small",
+        "text": "I usually build the smallest useful version first. It gives me something real to test instead of a plan I can only guess about."
+      },
+      {
+        "title": "I follow the problem",
+        "text": "If the bug leads into an Android service, a model, a signed message, or an NFC tag, I go there and learn what I need."
+      },
+      {
+        "title": "I test it myself",
+        "text": "I use real phones, imperfect images, and repeatable attacks. I want to find the weak part before someone else has to."
+      }
+    ]
+  },
+  "experience": {
+    "eyebrow": "How I got here",
+    "headline": "A path, not a checklist.",
+    "intro": "Each step made the next question a little more ambitious, and a little closer to the physical world.",
+    "moments": [
+      {
+        "year": "2023",
+        "title": "Learned to make applications hold together.",
+        "detail": "At IUT Nantes, full-stack projects taught me the full path from an idea and a data model to something another person can actually use."
+      },
+      {
+        "year": "2025",
+        "title": "Pointed computer vision at fiber-optic defects.",
+        "detail": "At FPT Telecom, accuracy was only one part of the job. Latency, messy images, documentation, and leaving a maintainable pipeline behind mattered too."
+      },
+      {
+        "year": "2025",
+        "title": "Helped turn an NFC tag into a shipped product.",
+        "detail": "Waiki was the first time I led a team from a blank page to both app stores. It taught me that background reliability and team clarity are product features."
+      },
+      {
+        "year": "2026",
+        "title": "Started breaking systems to understand them.",
+        "detail": "CTFs pulled me into cryptography, forensics, and OSINT. GardeFou brought that mindset to AI: build the vulnerable thing, attack it, then prove the defense works."
+      },
+      {
+        "year": "Now",
+        "title": "Studying AI, while keeping one foot outside the model.",
+        "detail": "I’m at INSA Rennes, building backend tools for an accessibility association and looking for a summer 2027 internship where software meets a hard, real problem."
+      }
+    ]
+  },
+  "projects": {
+    "heading": "A few things I’ve built.",
+    "outro": "There are more experiments, useful tools, and ideas that got slightly out of hand.",
+    "cta": "See the whole archive",
+    "open": "Open {{title}}",
+    "stories": {
+      "01": {
+        "question": "What if self-control had a physical shape?",
+        "note": "I led three students from a stubborn idea to a product people now carry in their pockets.",
+        "result": "Live on iOS + Android · 1,425+ units sold"
+      },
+      "09": {
+        "question": "Could a document quietly hijack an AI?",
+        "note": "Reading about prompt injection felt too comfortable, so I built a vulnerable assistant and attacked it myself."
+      },
+      "10": {
+        "question": "What is a neural network hiding from me?",
+        "note": "I built the DQN training loop in Rust and watched the agent slowly teach itself to survive."
+      },
+      "03": {
+        "question": "Can a model cope with the mess outside a lab?",
+        "note": "I compared vision models on imperfect plant photos to find the point where a benchmark becomes genuinely useful.",
+        "result": "mAP@50 0.90 · 85.8% recall"
+      }
+    }
+  },
+  "hobbies": {
+    "eyebrow": "Away from the keyboard",
+    "headlinePre": "I collect ",
+    "headlineAccent": "ways of seeing.",
+    "body": "Photography makes me slow down and notice geometry, light, and the one detail that changes the frame. It is the opposite of debugging, and somehow the same skill.",
+    "boulderingLabel": "Bouldering",
+    "boulderingText": "A problem you solve with your whole body. Fall, adjust one move, try again.",
+    "escapeLabel": "Escape games",
+    "escapeText": "Pattern recognition, questionable theories, and a timer making every idea louder.",
+    "viewPhotos": "View photos",
+    "galleryAria": "Open photography gallery",
+    "alt1": "A photograph from Théo’s visual diary",
+    "alt2": "A sunset cityscape photographed by Théo",
+    "alt3": "A cultural scene photographed by Théo"
+  },
+  "footer": {
+    "location": "Rennes, France",
+    "availability": "Summer 2027 internship",
+    "role": "CS engineering @ INSA Rennes"
+  },
+  "gallery": {
+    "counter": "Visual Diary · {{index}} of {{total}}"
+  },
+  "cv": {
+    "download": "Download"
+  }
+}

@@ -1,39 +1,19 @@
 import { useRef, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import ProjectDetails from "../../../components/ProjectDetails";
 import useProjects from "../../../hooks/useProjects";
 import useLocalizedNavigate from "../../../i18n/useLocalizedNavigate";
 
-const PROJECT_STORIES = [
-  {
-    id: "01",
-    question: "What if self-control had a physical shape?",
-    note: "I led three students from a stubborn idea to a product people now carry in their pockets.",
-    result: "Live on iOS + Android · 1,425+ units sold",
-    color: "#ffca45",
-  },
-  {
-    id: "09",
-    question: "Could a document quietly hijack an AI?",
-    note: "Reading about prompt injection felt too comfortable, so I built a vulnerable assistant and attacked it myself.",
-    color: "#f04d2f",
-  },
-  {
-    id: "10",
-    question: "What is a neural network hiding from me?",
-    note: "I built the DQN training loop in Rust and watched the agent slowly teach itself to survive.",
-    color: "#2356d8",
-  },
-  {
-    id: "03",
-    question: "Can a model cope with the mess outside a lab?",
-    note: "I compared vision models on imperfect plant photos to find the point where a benchmark becomes genuinely useful.",
-    result: "mAP@50 0.90 · 85.8% recall",
-    color: "#b9d878",
-  },
+const STORY_META = [
+  { id: "01", color: "#ffca45" },
+  { id: "09", color: "#f04d2f" },
+  { id: "10", color: "#2356d8" },
+  { id: "03", color: "#b9d878" },
 ];
 
 function StoryCard({ story, project, index, onSelect }) {
+  const { t } = useTranslation("home");
   const imageFirst = index % 2 === 0;
   const imageRef = useRef(null);
   const [isImageHovered, setIsImageHovered] = useState(false);
@@ -148,7 +128,7 @@ function StoryCard({ story, project, index, onSelect }) {
           onClick={() => onSelect(project)}
           className="group mt-8 inline-flex w-fit cursor-pointer items-center gap-3 text-sm text-white"
         >
-          Open {project.title}
+          {t("projects.open", { title: project.title })}
           <span className="transition-transform group-hover:translate-x-1">→</span>
         </button>
       </div>
@@ -158,10 +138,11 @@ function StoryCard({ story, project, index, onSelect }) {
 
 export default function ProjectList({ selectedProject, setSelectedProject }) {
   const navigate = useLocalizedNavigate();
+  const { t } = useTranslation("home");
   const projects = useProjects();
-  const stories = PROJECT_STORIES.map((story) => ({
-    story,
-    project: projects.find((project) => project.id === story.id),
+  const stories = STORY_META.map((meta) => ({
+    story: { ...meta, ...t(`projects.stories.${meta.id}`, { returnObjects: true }) },
+    project: projects.find((project) => project.id === meta.id),
   })).filter(({ project }) => project);
 
   return (
@@ -169,7 +150,7 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
       <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-12 md:py-36">
         <div className="pb-16 md:pb-24">
           <h2 className="font-serif text-[clamp(3.8rem,8vw,8.5rem)] leading-[0.78] tracking-[-0.04em] text-[#f1eee7]">
-            A few things I’ve built.
+            {t("projects.heading")}
           </h2>
         </div>
 
@@ -187,14 +168,14 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
 
         <div className="flex flex-col items-start justify-between gap-6 border-t border-white/20 pt-10 sm:flex-row sm:items-center">
           <p className="max-w-md text-sm leading-relaxed text-white/45">
-            There are more experiments, useful tools, and ideas that got slightly out of hand.
+            {t("projects.outro")}
           </p>
           <button
             type="button"
             onClick={() => navigate("/projects")}
             className="group inline-flex min-h-12 cursor-pointer items-center gap-8 rounded-full bg-[#f1eee7] px-6 text-sm text-[#121212] transition-transform hover:-translate-y-0.5"
           >
-            See the whole archive
+            {t("projects.cta")}
             <span className="transition-transform group-hover:translate-x-1">→</span>
           </button>
         </div>
