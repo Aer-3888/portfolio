@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { localizePath } from "../i18n/localizePath";
 
 // Update document metadata for each route.
 const SITE_URL = "https://portfolio-theo.pages.dev";
@@ -23,9 +24,20 @@ function upsertLink(rel, href) {
   el.setAttribute("href", href);
 }
 
-export default function useSeo({ title, description, path = "/" }) {
+function upsertAlternate(hreflang, href) {
+  let el = document.head.querySelector(`link[rel="alternate"][hreflang="${hreflang}"]`);
+  if (!el) {
+    el = document.createElement("link");
+    el.setAttribute("rel", "alternate");
+    el.setAttribute("hreflang", hreflang);
+    document.head.appendChild(el);
+  }
+  el.setAttribute("href", href);
+}
+
+export default function useSeo({ title, description, path = "/", lang = "en" }) {
   useEffect(() => {
-    const url = SITE_URL + path;
+    const canonical = SITE_URL + localizePath(path, lang);
     if (title) {
       document.title = title;
       upsertMeta("property", "og:title", title);
@@ -36,7 +48,11 @@ export default function useSeo({ title, description, path = "/" }) {
       upsertMeta("property", "og:description", description);
       upsertMeta("name", "twitter:description", description);
     }
-    upsertLink("canonical", url);
-    upsertMeta("property", "og:url", url);
-  }, [title, description, path]);
+    upsertMeta("property", "og:locale", lang === "fr" ? "fr_FR" : "en_US");
+    upsertLink("canonical", canonical);
+    upsertMeta("property", "og:url", canonical);
+    upsertAlternate("en", SITE_URL + localizePath(path, "en"));
+    upsertAlternate("fr", SITE_URL + localizePath(path, "fr"));
+    upsertAlternate("x-default", SITE_URL + localizePath(path, "en"));
+  }, [title, description, path, lang]);
 }

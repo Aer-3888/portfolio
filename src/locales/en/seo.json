@@ -1,1 +1,14 @@
-{}
+{
+  "home": {
+    "title": "Théo Phan | Software that escapes the screen",
+    "description": "Théo Phan is a computer-science engineer building at the intersection of AI, mobile, security, hardware, and the real world."
+  },
+  "projects": {
+    "title": "Projects | Théo Phan",
+    "description": "Selected projects by Théo Phan across mobile, AI, computer vision, security, and web development."
+  },
+  "contact": {
+    "title": "Contact | Théo Phan",
+    "description": "Get in touch with Théo Phan, CS student at INSA Rennes, open to a summer 2027 internship."
+  }
+}

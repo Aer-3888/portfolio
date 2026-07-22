@@ -1,23 +1,27 @@
 import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { SOCIALS, EMAIL } from "../../config/siteData";
+import { getLangFromPath } from "../../i18n/localizePath";
 import ArcadeMachine from "./ArcadeMachine";
 import PageNav from "../../components/layout/PageNav";
 import useSeo from "../../hooks/useSeo";
 
 export default function ContactPage() {
   const { t } = useTranslation("contact");
+  const { t: tSeo } = useTranslation("seo");
+  const location = useLocation();
   const [time, setTime] = useState("");
   const [copied, setCopied] = useState(false);
   const copyTimerRef = useRef(null);
   const prefersReduced = useReducedMotion();
 
   useSeo({
-    title: "Contact | Théo Phan",
-    description:
-      "Get in touch with Théo Phan, CS student at INSA Rennes, open to a summer 2027 internship.",
+    title: tSeo("contact.title"),
+    description: tSeo("contact.description"),
     path: "/contact",
+    lang: getLangFromPath(location.pathname),
   });
 
   useEffect(() => {

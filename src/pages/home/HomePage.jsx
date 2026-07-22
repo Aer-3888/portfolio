@@ -1,6 +1,8 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion, useScroll } from "framer-motion";
+import { getLangFromPath } from "../../i18n/localizePath";
 import Hero from "./Hero/Hero";
 import StatusSection from "./Profile/StatusSection";
 import ExperienceSection from "./Profile/ExperienceSection";
@@ -15,16 +17,17 @@ const GalleryModal = lazy(() => import("../About/GalleryInspector"));
 
 export default function HomePage() {
   const location = useLocation();
+  const { t } = useTranslation("seo");
   const { scrollYProgress } = useScroll();
   const [selectedProject, setSelectedProject] = useState(null);
   const [isCvModalOpen, setIsCvModalOpen] = useState(false);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   useSeo({
-    title: "Th\u00E9o Phan | Software that escapes the screen",
-    description:
-      "Th\u00E9o Phan is a computer-science engineer building at the intersection of AI, mobile, security, hardware, and the real world.",
+    title: t("home.title"),
+    description: t("home.description"),
     path: "/",
+    lang: getLangFromPath(location.pathname),
   });
 
   useEffect(() => {

@@ -1,1 +1,14 @@
-{}
+{
+  "home": {
+    "title": "Théo Phan | Des logiciels qui s’échappent de l’écran",
+    "description": "Théo Phan est un ingénieur en informatique qui construit au croisement de l’IA, du mobile, de la sécurité, du matériel et du monde réel."
+  },
+  "projects": {
+    "title": "Projets | Théo Phan",
+    "description": "Une sélection de projets de Théo Phan en mobile, IA, vision par ordinateur, sécurité et développement web."
+  },
+  "contact": {
+    "title": "Contact | Théo Phan",
+    "description": "Contacte Théo Phan, étudiant en informatique à l’INSA Rennes, ouvert à un stage d’été 2027."
+  }
+}

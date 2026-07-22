@@ -1,22 +1,27 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useScroll } from "framer-motion";
 import PageNav from "../../components/layout/PageNav";
 import ProjectDetails from "../../components/ProjectDetails";
 import ProjectGallery from "./ProjectGallery";
 import useProjects from "../../hooks/useProjects";
+import { getLangFromPath } from "../../i18n/localizePath";
 import useSeo from "../../hooks/useSeo";
 
 export default function ProjectsPage() {
   const { scrollYProgress } = useScroll();
+  const { t: tSeo } = useTranslation("seo");
+  const location = useLocation();
   const projects = useProjects();
   const [selectedId, setSelectedId] = useState(null);
   const selectedProject = selectedId ? projects.find((p) => p.id === selectedId) ?? null : null;
 
   useSeo({
-    title: "Projects | Théo Phan",
-    description:
-      "Selected projects by Théo Phan across mobile, AI, computer vision, security, and web development.",
+    title: tSeo("projects.title"),
+    description: tSeo("projects.description"),
     path: "/projects",
+    lang: getLangFromPath(location.pathname),
   });
 
   useEffect(() => {
