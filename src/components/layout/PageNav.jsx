@@ -1,6 +1,7 @@
 import { useState, useMemo, useCallback, memo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { motion, useTransform, useMotionValue, AnimatePresence } from "framer-motion";
+import useLocalizedNavigate from "../../i18n/useLocalizedNavigate";
 import HomeButton from "../HomeButton";
 import NavButtons from "../NavButtons";
 import LiquidMenu from "./LiquidMenu";
@@ -28,7 +29,8 @@ const Branding = memo(function Branding({ className = "", onClick }) {
 });
 
 export default function PageNav({ currentPath, scrollYProgress, isHidden = false }) {
-  const navigate = useNavigate();
+  const navigate = useLocalizedNavigate();
+  const { t } = useTranslation();
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const isHomeLight = currentPath === "/";
   const mobileNavVisible = useMobileNavVisible();
@@ -68,20 +70,20 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
   const navItems = useMemo(
     () => [
       {
-        label: "Work",
+        label: t("nav.work"),
         path: "/projects",
         onClick: () => handleNavigate("/projects", "projects"),
       },
-      { label: "Story", path: "/", onClick: () => handleNavigate("/", "about") },
-      { label: "Hello", path: "/contact", onClick: () => handleNavigate("/contact", "contact") },
+      { label: t("nav.story"), path: "/", onClick: () => handleNavigate("/", "about") },
+      { label: t("nav.hello"), path: "/contact", onClick: () => handleNavigate("/contact", "contact") },
     ],
-    [handleNavigate]
+    [handleNavigate, t]
   );
 
   const menuItems = useMemo(() => {
     const items =
       !isDesktop && currentPath !== "/"
-        ? [{ label: "Home", path: "/", onClick: () => navigate("/") }]
+        ? [{ label: t("nav.home"), path: "/", onClick: () => navigate("/") }]
         : [];
     return [
       ...items,
@@ -93,7 +95,7 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
       ...item,
       isActive: item.isActive ?? currentPath === item.path,
     }));
-  }, [isDesktop, currentPath, navItems, navigate]);
+  }, [isDesktop, currentPath, navItems, navigate, t]);
 
   const handleNavigateHome = useCallback(() => navigate("/"), [navigate]);
 

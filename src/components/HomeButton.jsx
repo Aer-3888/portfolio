@@ -1,7 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import useLocalizedNavigate from "../i18n/useLocalizedNavigate";
 
 export default function HomeButton({ className = "", label = null, onClick }) {
-  const navigate = useNavigate();
+  const navigate = useLocalizedNavigate();
+  const { t } = useTranslation();
   const handle = onClick ?? (() => navigate("/"));
 
   const defaultClass =
@@ -14,7 +16,7 @@ export default function HomeButton({ className = "", label = null, onClick }) {
       ) : (
         <>
           <span className="text-lg">←</span>
-          <span className="hidden sm:inline">Home</span>
+          <span className="hidden sm:inline">{t("nav.home")}</span>
         </>
       )}
     </button>
