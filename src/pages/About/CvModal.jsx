@@ -10,6 +10,7 @@ const CV_URLS = {
 
 export default function CvModal({ isOpen, onClose }) {
   const { t, i18n } = useTranslation("home");
+  const { t: tc } = useTranslation("common");
   const [lang, setLang] = useState(i18n.language === "fr" ? "fr" : "en");
   const modalRef = useRef(null);
 
@@ -127,7 +128,7 @@ export default function CvModal({ isOpen, onClose }) {
                 </a>
                 <button
                   onClick={onClose}
-                  aria-label="Close CV preview"
+                  aria-label={tc("cv.closeAria")}
                   className="p-1.5 rounded-md text-neutral-500 hover:text-white hover:bg-neutral-800 transition-colors"
                 >
                   <svg

@@ -17,7 +17,8 @@
     "architecture": "Architecture",
     "openProject": "Open project",
     "personalProject": "Personal project",
-    "close": "Close project"
+    "close": "Close project",
+    "viewCardAria": "View {{title}} details"
   },
   "items": {
     "01": {

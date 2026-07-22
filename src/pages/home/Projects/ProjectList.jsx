@@ -57,7 +57,7 @@ function StoryCard({ story, project, index, onSelect }) {
           onPointerMove={moveCursor}
           onPointerLeave={() => setIsImageHovered(false)}
           className="group relative block w-full cursor-pointer overflow-hidden text-left"
-          aria-label={"Open " + project.title + " case study"}
+          aria-label={t("projects.storyAria", { title: project.title })}
         >
           <div
             className="absolute inset-0 translate-x-2 translate-y-2 md:translate-x-3 md:translate-y-3"

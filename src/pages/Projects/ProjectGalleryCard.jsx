@@ -1,5 +1,6 @@
 import { memo, useRef, useState, useCallback } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const CARD_LAYOUTS = [
   "md:col-span-7",
@@ -28,6 +29,7 @@ const CARD_COLORS = [
 ];
 
 function ProjectGalleryCard({ project, index, onSelect }) {
+  const { t } = useTranslation("projects");
   const ref = useRef(null);
   const prefersReduced = useReducedMotion();
   const [isHovered, setIsHovered] = useState(false);
@@ -54,7 +56,7 @@ function ProjectGalleryCard({ project, index, onSelect }) {
       whileInView={prefersReduced ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "0px 0px -10% 0px" }}
       transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-      aria-label={`View ${project.title} details`}
+      aria-label={t("detail.viewCardAria", { title: project.title })}
       className={`group relative w-full cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-black/60 focus-visible:ring-offset-4 focus-visible:ring-offset-[#f1eee7] ${CARD_LAYOUTS[index] ?? "md:col-span-6"}`}
     >
       <div className="relative mb-6">

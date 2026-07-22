@@ -74,6 +74,7 @@
     "outro": "There are more experiments, useful tools, and ideas that got slightly out of hand.",
     "cta": "See the whole archive",
     "open": "Open {{title}}",
+    "storyAria": "Open {{title}} case study",
     "stories": {
       "01": {
         "question": "What if self-control had a physical shape?",

@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import useMagneticEffect from "../../hooks/useMagneticEffect";
 import BurgerLines from "../BurgerLines";
 import LiquidBackground from "../LiquidBackground";
 
 export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineColor = "#000000" }) {
+  const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const prefersReduced = useReducedMotion();
   const { sensorRef, xSpring, ySpring, handleMouseMove, handleMouseLeave } = useMagneticEffect();
@@ -39,7 +41,7 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
               onClick={toggle}
               type="button"
               className="relative h-12 w-12 md:h-16 md:w-16 flex items-center justify-center cursor-pointer"
-              aria-label="Toggle menu"
+              aria-label={t("menu.toggle")}
             >
               <div className="absolute inset-0 pointer-events-none">
                 <LiquidBackground isHovered={isHovered} speed={0.0045} blobColor={blobColor} />

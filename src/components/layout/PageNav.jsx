@@ -11,6 +11,7 @@ import useMediaQuery from "../../hooks/useMediaQuery";
 import useMobileNavVisible from "../../hooks/useMobileNavVisible";
 
 const Branding = memo(function Branding({ className = "", onClick }) {
+  const { t } = useTranslation();
   return (
     <motion.button
       onClick={onClick}
@@ -22,7 +23,7 @@ const Branding = memo(function Branding({ className = "", onClick }) {
         Théo Phan
       </span>
       <span className="text-[10px] uppercase tracking-[0.3em] leading-none transition-colors text-white/40 group-hover:text-white/60">
-        Making things
+        {t("branding.tagline")}
       </span>
     </motion.button>
   );

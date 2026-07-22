@@ -74,6 +74,7 @@
     "outro": "Il y a d’autres expériences, des outils utiles et des idées qui ont un peu dérapé.",
     "cta": "Voir toute l’archive",
     "open": "Ouvrir {{title}}",
+    "storyAria": "Ouvrir l’étude de cas {{title}}",
     "stories": {
       "01": {
         "question": "Et si la maîtrise de soi avait une forme physique ?",

@@ -1,7 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "./layout/LanguageSwitcher";
 
 export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
+  const { t } = useTranslation();
   return (
     <AnimatePresence>
       {isOpen && (
@@ -27,14 +29,14 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
             <div className="flex flex-col gap-10 sm:gap-12">
               <div className="flex items-center justify-between">
                 <span className="text-[10px] uppercase tracking-[0.5em] text-white/30 font-mono">
-                  Navigation
+                  {t("menu.heading")}
                 </span>
                 <button
                   type="button"
                   className="group flex items-center gap-2 text-white/40 hover:text-white transition-colors cursor-pointer"
                   onClick={onClose}
                 >
-                  <span className="text-[10px] uppercase tracking-[0.3em] font-mono">Close</span>
+                  <span className="text-[10px] uppercase tracking-[0.3em] font-mono">{t("menu.close")}</span>
                   <span className="text-lg group-hover:rotate-90 transition-transform duration-300">
                     ×
                   </span>
@@ -75,7 +77,7 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
             <div className="flex flex-col gap-4 border-t border-white/5 pt-8">
               <LanguageSwitcher className="text-white/70" />
               <p className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-mono">
-                Get in touch
+                {t("menu.getInTouch")}
               </p>
               <a
                 href="mailto:theo.phan.quoc.huy@gmail.com"
