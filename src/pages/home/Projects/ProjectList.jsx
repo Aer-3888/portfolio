@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import ProjectDetails from "../../../components/ProjectDetails";
-import { PROJECTS } from "../../../config/siteData";
+import useProjects from "../../../hooks/useProjects";
 import useLocalizedNavigate from "../../../i18n/useLocalizedNavigate";
 
 const PROJECT_STORIES = [
@@ -158,9 +158,10 @@ function StoryCard({ story, project, index, onSelect }) {
 
 export default function ProjectList({ selectedProject, setSelectedProject }) {
   const navigate = useLocalizedNavigate();
+  const projects = useProjects();
   const stories = PROJECT_STORIES.map((story) => ({
     story,
-    project: PROJECTS.find((project) => project.id === story.id),
+    project: projects.find((project) => project.id === story.id),
   })).filter(({ project }) => project);
 
   return (

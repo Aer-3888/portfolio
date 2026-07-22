@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { render, screen, cleanup } from "@testing-library/react";
+import { screen, cleanup } from "@testing-library/react";
+import { renderWithI18n } from "../../../test-utils";
 import ProjectDetails from "../../../components/ProjectDetails";
 const mockProject = {
   id: "01",
@@ -30,36 +31,36 @@ describe("ProjectDetails", () => {
   });
 
   it("renders project title when open", () => {
-    render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
+    renderWithI18n(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
     expect(screen.getByText("Waiki")).toBeInTheDocument();
   });
 
   it("renders description text", () => {
-    render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
+    renderWithI18n(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
     expect(screen.getByText("Test description text.")).toBeInTheDocument();
   });
 
   it("renders all tech tags", () => {
-    render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
+    renderWithI18n(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
     expect(screen.getByText("Flutter")).toBeInTheDocument();
     expect(screen.getByText("Dart")).toBeInTheDocument();
   });
 
   it("renders nothing when project is null", () => {
-    const { container } = render(
+    const { container } = renderWithI18n(
       <ProjectDetails project={null} isOpen={false} onClose={vi.fn()} />
     );
     expect(container.firstChild).toBeNull();
   });
 
   it("locks body scroll when modal is open", () => {
-    render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
+    renderWithI18n(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
     expect(document.body.style.overflow).toBe("hidden");
     expect(document.documentElement.classList.contains("lenis-stopped")).toBe(true);
   });
 
   it("unlocks body scroll when modal is closed", () => {
-    const { unmount } = render(
+    const { unmount } = renderWithI18n(
       <ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />
     );
     expect(document.body.style.overflow).toBe("hidden");
@@ -69,7 +70,7 @@ describe("ProjectDetails", () => {
   });
 
   it("has data-lenis-prevent attribute on scrollable container", () => {
-    render(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
+    renderWithI18n(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
     const description = screen.getByText("Test description text.");
     const scrollContainer = description.closest("[data-lenis-prevent]");
     expect(scrollContainer).toBeInTheDocument();

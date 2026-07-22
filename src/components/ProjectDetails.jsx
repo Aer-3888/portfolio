@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const PROJECT_ACCENTS = {
   "01": "#ffca45",
@@ -61,6 +62,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
   const modalRef = useRef(null);
   const scrollRef = useRef(null);
   const prefersReduced = useReducedMotion();
+  const { t } = useTranslation("projects");
 
   useEffect(() => {
     if (!isOpen) return;
@@ -129,9 +131,9 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
   const accent = PROJECT_ACCENTS[project.id] ?? "#c9c1b5";
   const hasExternalLink = project.url && project.url !== "#" && !project.isClosedSource;
   const storySections = [
-    { label: "Problem", text: project.problem },
-    { label: "Approach", text: project.approach },
-    { label: "Result", text: project.result },
+    { label: t("detail.problem"), text: project.problem },
+    { label: t("detail.approach"), text: project.approach },
+    { label: t("detail.result"), text: project.result },
   ].filter(({ text }) => text);
 
   return createPortal(
@@ -151,7 +153,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            aria-label="Close project"
+            aria-label={t("detail.close")}
             className="group fixed right-4 top-[calc(var(--safe-top)+1rem)] z-50 grid h-12 w-12 cursor-pointer place-items-center rounded-full bg-[#f1eee7] text-2xl text-black shadow-[0_4px_24px_rgba(0,0,0,0.16)] transition-transform duration-300 hover:rotate-[-8deg] hover:scale-105 md:right-8 md:top-8"
           >
             <span className="transition-transform duration-300 group-hover:rotate-90">×</span>
@@ -184,7 +186,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
                   {project.role && (
                     <div className="mt-10 border-t border-black/20 pt-4">
-                      <p className="text-xs text-black/40">Role</p>
+                      <p className="text-xs text-black/40">{t("detail.role")}</p>
                       <p className="mt-2 text-sm text-black/75">{project.role}</p>
                     </div>
                   )}
@@ -197,14 +199,14 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                         rel="noopener noreferrer"
                         className="group inline-flex cursor-pointer items-center gap-4 border-b border-black pb-1 text-sm text-black"
                       >
-                        {project.linkText || "Open project"}
+                        {project.linkText || t("detail.openProject")}
                         <span className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
                           ↗
                         </span>
                       </a>
                     ) : (
                       <p className="text-sm text-black/45">
-                        {project.linkText || "Personal project"}
+                        {project.linkText || t("detail.personalProject")}
                       </p>
                     )}
                   </div>
@@ -253,12 +255,12 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               <section className="bg-[#171717] px-5 py-20 text-[#f1eee7] sm:px-8 md:px-12 md:py-28 lg:px-16">
                 <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-12 md:gap-10">
                   <h3 className="font-serif text-5xl leading-[0.86] tracking-[-0.025em] md:col-span-4 md:text-7xl">
-                    The technical bits.
+                    {t("detail.techHeading")}
                   </h3>
                   <div className="grid gap-10 md:col-span-8 md:grid-cols-2">
-                    <DetailList label="Built with" items={project.tags} />
-                    <DetailList label="Tools" items={project.tools} />
-                    <DetailList label="Architecture" items={project.architecture} />
+                    <DetailList label={t("detail.builtWith")} items={project.tags} />
+                    <DetailList label={t("detail.tools")} items={project.tools} />
+                    <DetailList label={t("detail.architecture")} items={project.architecture} />
                   </div>
                 </div>
               </section>

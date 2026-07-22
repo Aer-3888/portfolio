@@ -1,1 +1,154 @@
-{}
+{
+  "page": {
+    "heading1": "Ce que j’ai",
+    "heading2": "construit.",
+    "intro": "Certains sont dans la poche des gens. D’autres existent seulement parce que je voulais comprendre comment ça marche.",
+    "count": "{{count}} projets, 2024-2026",
+    "footer": "C’est tout pour l’instant."
+  },
+  "detail": {
+    "problem": "Problème",
+    "approach": "Approche",
+    "result": "Résultat",
+    "role": "Rôle",
+    "techHeading": "Le côté technique.",
+    "builtWith": "Réalisé avec",
+    "tools": "Outils",
+    "architecture": "Architecture",
+    "openProject": "Ouvrir le projet",
+    "personalProject": "Projet personnel",
+    "close": "Fermer le projet"
+  },
+  "items": {
+    "01": {
+      "metric": "En ligne sur iOS + Android · 1 425+ ventes",
+      "type": "Développement mobile",
+      "category": "Freelance",
+      "services": "Flutter - Auth NFC - Filtrage DNS",
+      "linkText": "Voir le site du projet",
+      "role": "Ingénieur fondateur et responsable technique, Freelance",
+      "description": "Une application mobile qui aide à sortir du scroll compulsif. Elle bloque les applications distrayantes sur tout le téléphone, et on les débloque en approchant un tag NFC physique plutôt qu’en changeant un réglage. Je l’ai construite en Flutter pour iPhone et Android en dirigeant une petite équipe d’étudiants.",
+      "problem": "Les gens savent déjà qu’ils scrollent trop. Le souci, c’est que la plupart des bloqueurs sont à un tap d’être désactivés, donc dès que l’envie arrive, on cède. Il fallait que la barrière coûte quelque chose.",
+      "approach": "Nous avons associé un filtrage de contenu sur tout le téléphone à une clé physique. Pour ouvrir une application bloquée, on approche un tag NFC, et comme le tag ne peut pas être cloné, il n’y a aucun raccourci caché dans les réglages. Nous l’avons construite une seule fois en Flutter, donc iPhone et Android sont sortis d’une même base de code.",
+      "result": "Elle est sortie sur l’App Store et Google Play et s’est vendue à plus de 1 425 exemplaires. Le plus dur était de rester active en arrière-plan sur les téléphones qui ferment agressivement les applications, ce qu’elle fait maintenant de façon fiable. J’ai dirigé une équipe de trois personnes du premier croquis jusqu’à la sortie.",
+      "architecture": ["MethodChannels pour les ponts natifs", "Méthodologie Agile/Scrum", "Auth matérielle"]
+    },
+    "09": {
+      "metric": "Labo d’injection de prompt · red team puis blue team",
+      "type": "Sécurité IA",
+      "category": "Personnel",
+      "services": "Sécurité LLM - RAG - Python",
+      "linkText": "Voir le dépôt",
+      "role": "Projet solo",
+      "description": "Un labo de sécurité construit autour d’un assistant IA volontairement vulnérable qui répond à des questions sur des documents financiers. C’est une cible concrète pour apprendre à attaquer les applications de grands modèles de langage puis à les durcir.",
+      "problem": "Les applications LLM ouvrent un nouveau type de faille. Comme le modèle lit les instructions et les données d’un même souffle, une commande cachée dans un document ordinaire peut discrètement en prendre le contrôle. Je voulais voir ça de mes propres mains plutôt que juste en lire la théorie.",
+      "approach": "J’ai construit un petit assistant de recherche sur des documents financiers synthétiques en Python, puis j’ai attaqué mon propre travail par étapes. D’abord en red team pour faire fuiter des données et suivre des instructions cachées, ensuite j’ai ajouté des garde-fous en blue team, et enfin j’ai rejoué chaque attaque pour confirmer qu’elle échoue désormais, en reliant chaque constat à un référentiel de sécurité connu.",
+      "result": "Les mêmes injections qui passaient tout droit sont maintenant bloquées, chacune documentée avec son avant et son après. C’est devenu une manière reproductible de montrer exactement comment une application LLM casse et ce qui l’arrête vraiment.",
+      "architecture": ["Pipeline RAG local", "Red Team / Blue Team", "Constats reliés à un référentiel"]
+    },
+    "03": {
+      "metric": "mAP@50 0,90 · 85,8% de rappel",
+      "type": "Vision par ordinateur",
+      "category": "Personnel",
+      "services": "Vision par ordinateur - Python",
+      "linkText": "Voir le dépôt",
+      "role": "Projet solo",
+      "description": "Un projet de vision par ordinateur qui repère les maladies des plantes à partir de photos. Il met plusieurs modèles de reconnaissance d’images côte à côte, dont YOLO et Faster R-CNN, pour voir lequel tient la route sur de vraies images de terrain plutôt que sur des clichés propres de laboratoire.",
+      "problem": "Repérer tôt une maladie des cultures est difficile à l’œil dès qu’on regarde des champs entiers. Je voulais savoir à quel point les modèles de vision prêts à l’emploi s’en sortent avec les photos peu idéales qu’on obtient réellement en extérieur, avec une lumière étrange et des arrière-plans chargés.",
+      "approach": "J’ai entraîné et comparé les modèles sur des jeux de données publics de maladies des plantes, puis j’ai amélioré leur précision en augmentant les images d’entraînement pour imiter volontairement ces conditions de terrain.",
+      "result": "Faster R-CNN est arrivé en tête, localisant les zones malades environ 90% du temps (mAP@50 0,90, 85,8% de rappel). Cela a donné une réponse claire sur l’approche qui vaut la peine de sortir du notebook pour aller sur le terrain.",
+      "architecture": ["Pipeline d’apprentissage par transfert", "Analyse comparative multi-modèles", "Augmentation sur mesure"]
+    },
+    "10": {
+      "metric": "DQN",
+      "type": "Apprentissage par renforcement",
+      "category": "Personnel",
+      "services": "Apprentissage par renforcement - Rust - Réseaux de neurones",
+      "linkText": "Voir le dépôt",
+      "role": "Projet solo",
+      "description": "Un agent d’apprentissage par renforcement qui apprend tout seul à survivre dans une arène d’esquive façon Evades. Le Deep Q-Network tourne en Rust, avec un tableau de bord web en direct pour piloter et observer l’entraînement pendant qu’il se déroule.",
+      "problem": "Je voulais voir de l’intérieur le processus d’apprentissage. Comment une image du jeu devient une action, comment chaque bribe d’expérience ajuste le réseau, et comment l’agent s’améliore peu à peu pour rester en vie.",
+      "approach": "J’ai reconstruit le jeu d’esquive Evades sous forme d’un moteur Rust rapide, puis j’ai écrit le Deep Q-Network de zéro, son réseau de neurones, sa mémoire de rejeu et sa boucle d’entraînement. L’agent perçoit l’arène par une vision en lancer de rayons et s’entraîne sans affichage pour la vitesse, le tout piloté depuis un tableau de bord en direct.",
+      "result": "L’agent apprend à se faufiler seul à travers une foule d’ennemis en mouvement. À côté, un tableau de bord React et WebSockets me permet de lancer, régler et observer une session, avec des courbes de temps de survie et de perte qui se mettent à jour en direct.",
+      "architecture": ["DQN", "Entraînement parallèle sans affichage (Rayon)", "Tableau de bord en direct via WebSockets"]
+    },
+    "04": {
+      "metric": "Cloudflare Workers + D1 · stats côté client",
+      "type": "Développement mobile",
+      "category": "Personnel",
+      "services": "Flutter - Cloudflare Workers - Base D1",
+      "linkText": "Voir le code source",
+      "role": "Équipe de 2",
+      "description": "Une application mobile pour les étudiants de l’INSA Rennes qui récupère tes notes depuis le portail de l’école et permet à une classe de mettre ses résultats en commun de façon anonyme, pour que chacun voie où il se situe.",
+      "problem": "Le portail ne montre jamais que tes propres notes. Impossible de savoir si un 12 sur 20 est au-dessus ou en dessous de la classe, et les étudiants voulaient ce repère sans exposer les notes de personne.",
+      "approach": "Nous avons construit une application qui lit tes notes depuis le portail et les met en commun avec le reste de la classe. Les moyennes et les classements sont calculés sur ton propre téléphone, donc le serveur ne détient jamais rien qui puisse identifier une personne.",
+      "result": "Le résultat est une application en direct qui te dit, d’un coup d’œil, comment tes notes se situent par rapport au reste de la classe, tout en gardant chaque envoi anonyme.",
+      "architecture": ["Riverpod (gestion d’état)", "Edge Computing (serverless)", "Architecture orientée fonctionnalités"]
+    },
+    "05": {
+      "metric": "Recherche sémantique de bureau · SBERT + CLIP",
+      "type": "Application IA de bureau",
+      "category": "Personnel",
+      "services": "C# / .NET 10 - Avalonia - Recherche sémantique",
+      "linkText": "Projet personnel",
+      "role": "Projet solo",
+      "description": "Une application de bureau, construite en C# et .NET, qui cherche dans tes fichiers texte et image par le sens plutôt que par le nom exact. Demande ce dont tu te souviens à propos d’un fichier et elle le retrouve, jusqu’à faire remonter une photo à partir d’une description écrite.",
+      "problem": "Retrouver un fichier revient d’habitude à se rappeler son nom exact ou le dossier où on l’a enfoui. Je voulais chercher comme on décrirait quelque chose à un ami, par ce que c’est plutôt que par son nom.",
+      "approach": "J’ai bâti l’application autour de modèles qui lisent réellement le contenu de tes fichiers, pour que la recherche en langage courant marche à la fois sur le texte et sur les images. En chemin, j’ai comparé plusieurs modèles de texte et d’image pour trouver le meilleur compromis entre précision et rapidité.",
+      "result": "Elle retrouve les fichiers par le sens dans un dossier, et derrière se trouve une comparaison claire des modèles que j’ai testés pour décider lesquels méritaient leur place.",
+      "architecture": ["Plongements vectoriels", "Recherche cross-modale", "Bureau MVVM"]
+    },
+    "02": {
+      "metric": "Suivi permanent · check-ins infalsifiables",
+      "type": "Sécurité mobile",
+      "category": "Personnel",
+      "services": "Android - Géolocalisation - Sécurité",
+      "linkText": "Voir le dépôt",
+      "role": "Projet solo",
+      "description": "Une application de sécurité Android native pour marcher seul. Elle continue de suivre ta position même quand le téléphone tente de la couper pour économiser la batterie, et elle signe chaque check-in pour que personne ne puisse en falsifier un.",
+      "problem": "Une application de sécurité ne vaut la peine que si elle ne s’arrête jamais en silence. Le hic, c’est que les téléphones sont faits pour couper les applications en arrière-plan dès qu’ils veulent économiser l’énergie, c’est-à-dire précisément quand on en aurait besoin.",
+      "approach": "J’ai construit le suivi comme un service que le système a du mal à couper, pour qu’il survive aux modes basse consommation et aux redémarrages. Chaque message de sécurité est signé cryptographiquement, et l’application peut te pointer présent toute seule quand elle détecte une balise Bluetooth de confiance à proximité.",
+      "result": "Elle maintient une trace fiable à travers les conditions mêmes qui cassent d’habitude ce genre d’applications, redémarrages, économiseurs de batterie et limites d’arrière-plan. La fiabilité était tout l’enjeu, c’est donc là qu’est passé l’effort.",
+      "architecture": ["Architecture Android native", "Géolocalisation sécurisée", "Services d’arrière-plan résilients"]
+    },
+    "06": {
+      "metric": "~2-3h/semaine de saisie manuelle, automatisées",
+      "type": "Outil d’automatisation",
+      "category": "Personnel",
+      "services": "C++ - Tableau de bord - Automatisation",
+      "linkText": "Projet à source fermée",
+      "role": "Projet solo",
+      "description": "Un outil de bureau qui garde les écritures comptables synchronisées entre Google Sheets et Sage 50, et classe chacune sous le bon code tout seul. Un modèle d’IA local intervient pour les écritures délicates qu’aucune règle simple ne couvre.",
+      "problem": "En tant que trésorier de la junior-entreprise de mon école, je retapais chaque semaine les écritures à la main entre Google Sheets et le logiciel comptable. C’était lent, et un seul code erroné suffisait à fausser les comptes.",
+      "approach": "J’ai construit un petit outil qui déplace automatiquement les écritures entre les deux systèmes et attribue un code à chacune. Là où une règle claire s’arrête, un modèle d’IA local lit l’écriture et suggère où elle va, pour que je ne tranche que sur les cas particuliers.",
+      "result": "Quelques heures de ressaisie hebdomadaire se sont réduites à un seul clic, avec bien moins d’erreurs et un contrôle qui signale tout ce qui semble anormal avant l’enregistrement.",
+      "architecture": ["Modulaire (architecture cœur/réseau)", "Mappage piloté par la logique", "Authentification OAuth2"]
+    },
+    "07": {
+      "metric": "12k enregistrements · prix/m² +27% après COVID",
+      "type": "Analyse de données",
+      "category": "Personnel",
+      "services": "Analyse exploratoire - Python - Visualisation de données",
+      "linkText": "Voir le dépôt",
+      "role": "Projet solo",
+      "description": "Une étude de dix ans de ventes immobilières françaises dans la région Pays de la Loire, environ 12 000 transactions, pour comprendre ce que le COVID a vraiment fait aux prix sur cinq secteurs.",
+      "problem": "Le COVID est tombé en plein milieu de la décennie que je regardais, ce qui rendait difficile de distinguer son effet réel sur les prix des tendances qui étaient déjà en cours.",
+      "approach": "J’ai nettoyé les transactions et les ai réparties en avant, pendant et après COVID, puis j’ai cartographié les écarts secteur par secteur pour que les tendances se voient plutôt que de se lire seulement dans un tableau.",
+      "result": "Le prix au mètre carré a grimpé de 27% après le COVID alors que le nombre de ventes bougeait à peine, et les cartes ont montré clairement que certains secteurs portaient bien plus de cette hausse que d’autres.",
+      "architecture": ["Analyse exploratoire (EDA)", "Analyse comparative par période", "Cartographie choroplèthe interactive"]
+    },
+    "08": {
+      "metric": "Interface spatiale pilotée par le scroll",
+      "type": "Développement web",
+      "category": "Personnel",
+      "services": "Front End - Animation - React",
+      "linkText": "Voir le code source",
+      "role": "Projet solo",
+      "description": "Le site que tu es en train de lire. J’ai traité mon propre portfolio comme un projet front-end à part entière, bâti autour d’un mouvement piloté par le scroll plutôt qu’une simple liste de liens.",
+      "problem": "La plupart des portfolios de développeurs se ressemblent et ne font que lister des outils. Je voulais que le mien montre ce que je sais réellement construire côté front, pas seulement le prétendre.",
+      "approach": "J’ai conçu le site pour que les projets bougent avec le scroll et donnent une impression de profondeur, tout en le gardant rapide à charger, agréable sur téléphone et calme pour ceux qui préfèrent le mouvement réduit.",
+      "result": "Un site rapide et responsive où le mouvement porte le récit sur ordinateur et laisse place à une mise en page épurée sur mobile. S’il te donne envie de savoir comment il est fait, c’est qu’il fait son travail.",
+      "architecture": ["Orienté composants (principes atomiques)", "Orienté fonctionnalités (structure de pages modulaire)"]
+    }
+  }
+}

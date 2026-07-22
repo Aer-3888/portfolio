@@ -1,1 +1,154 @@
-{}
+{
+  "page": {
+    "heading1": "Things I’ve",
+    "heading2": "built.",
+    "intro": "Some are in people’s pockets. Others only exist because I wanted to know how they worked.",
+    "count": "{{count}} projects, 2024—2026",
+    "footer": "That’s everything for now."
+  },
+  "detail": {
+    "problem": "Problem",
+    "approach": "Approach",
+    "result": "Result",
+    "role": "Role",
+    "techHeading": "The technical bits.",
+    "builtWith": "Built with",
+    "tools": "Tools",
+    "architecture": "Architecture",
+    "openProject": "Open project",
+    "personalProject": "Personal project",
+    "close": "Close project"
+  },
+  "items": {
+    "01": {
+      "metric": "Live on iOS + Android · 1,425+ units sold",
+      "type": "Mobile Development",
+      "category": "Freelance",
+      "services": "Flutter - NFC Auth - DNS Filtering",
+      "linkText": "View Project Website",
+      "role": "Founding Engineer & Tech Lead, Freelance",
+      "description": "A mobile app that helps people break out of compulsive scrolling. It blocks distracting apps across the whole phone, and you unlock them by tapping a physical NFC tag rather than flipping a setting. I built it in Flutter for iPhone and Android while leading a small student team.",
+      "problem": "People already know they scroll too much. The trouble is that most app blockers are one tap away from being switched off, so the moment the itch hits, they give in. The barrier needed to cost something.",
+      "approach": "We paired phone-wide content filtering with a physical key. To open a blocked app you tap an NFC tag, and since the tag can't be cloned, there is no shortcut buried in the settings. We built it once in Flutter so iPhone and Android shipped from one codebase.",
+      "result": "It launched on the App Store and Google Play and has sold 1,425+ units. The hard part was staying alive in the background on phones that aggressively kill apps, which it now does reliably. I led a team of three from the first sketch to release.",
+      "architecture": ["MethodChannels for Native Bridges", "Agile/Scrum Methodology", "Hardware-backed Auth"]
+    },
+    "09": {
+      "metric": "Prompt-injection lab · red team then blue team",
+      "type": "AI Security",
+      "category": "Personal",
+      "services": "LLM Security - RAG - Python",
+      "linkText": "View Repository",
+      "role": "Solo Project",
+      "description": "A security lab built around a deliberately vulnerable AI assistant that answers questions over financial documents. It is a hands-on target for learning how to attack large language model apps and then harden them.",
+      "problem": "LLM apps open a new kind of hole. Because the model reads instructions and data in the same breath, a command hidden inside an ordinary document can quietly take it over. I wanted to see that happen with my own hands rather than just read about it.",
+      "approach": "I built a small retrieval assistant over synthetic financial documents in Python, then attacked my own work in stages. First I red-teamed it to leak data and obey hidden instructions, then I added guardrails as the blue team, and finally I reran every attack to confirm it now fails and mapped each finding to a known security framework.",
+      "result": "The same injections that used to walk straight through are now caught, each one documented with its before and after. It ended up being a repeatable way to show exactly how an LLM app breaks and what actually stops it.",
+      "architecture": ["Local RAG Pipeline", "Red Team / Blue Team", "Framework-Mapped Findings"]
+    },
+    "03": {
+      "metric": "mAP@50 0.90 · 85.8% recall",
+      "type": "Computer Vision",
+      "category": "Personal",
+      "services": "Computer Vision - Python",
+      "linkText": "View Repository",
+      "role": "Solo Project",
+      "description": "A computer-vision project that spots plant disease from photos. It puts several image-recognition models side by side, including YOLO and Faster R-CNN, to see which one holds up on real field images rather than clean lab shots.",
+      "problem": "Catching crop disease early is hard to do by eye once you are looking at whole fields. I wanted to know how well off-the-shelf vision models cope with the awkward photos you actually get outdoors, with odd light and cluttered backgrounds.",
+      "approach": "I trained and compared the models on public plant-disease datasets, then pushed their accuracy up by augmenting the training images to imitate those field conditions on purpose.",
+      "result": "Faster R-CNN came out on top, locating diseased areas around 90% of the time (mAP@50 0.90, 85.8% recall). That gave a clear answer on which approach is worth taking out of the notebook and into a real field.",
+      "architecture": ["Transfer Learning Pipeline", "Multi-Model Comparative Analysis", "Custom Augmentation"]
+    },
+    "10": {
+      "metric": "DQN",
+      "type": "Reinforcement Learning",
+      "category": "Personal",
+      "services": "Reinforcement Learning - Rust - Neural Networks",
+      "linkText": "View Repository",
+      "role": "Solo Project",
+      "description": "A reinforcement-learning agent that teaches itself to survive an Evades-style dodging arena. The Deep Q-Network runs in Rust, with a live web dashboard to steer and watch training as it happens.",
+      "problem": "I wanted to see inside the learning process for myself. How a frame of the game turns into a move, how each bit of experience nudges the network, and how the agent slowly gets better at staying alive.",
+      "approach": "I rebuilt the Evades dodging game as a fast Rust engine, then wrote the Deep Q-Network from the parts up, its neural net, replay buffer and training loop. The agent reads the arena through raycast vision and trains headless for speed, all driven from a live dashboard.",
+      "result": "The agent learns to weave through a moving crowd of enemies on its own. Alongside it, a React and WebSockets dashboard lets me start, tune and watch a run, with survival-time and loss charts updating live.",
+      "architecture": ["DQN", "Headless Parallel Training (Rayon)", "Live Dashboard over WebSockets"]
+    },
+    "04": {
+      "metric": "Cloudflare Workers + D1 · client-side stats",
+      "type": "Mobile Development",
+      "category": "Personal",
+      "services": "Flutter - Cloudflare Workers - D1 Database",
+      "linkText": "View Source Code",
+      "role": "Team of 2",
+      "description": "A mobile app for INSA Rennes students that pulls your grades from the school portal and lets a class pool their results anonymously, so everyone can see where they stand.",
+      "problem": "The portal only ever shows you your own grades. There is no way to tell whether a 12 out of 20 sits above or below the class, and students wanted that context without putting anyone's marks on display.",
+      "approach": "We built an app that reads your grades from the portal and pools them with the rest of the class. The averages and rankings are computed on your own phone, so the server never holds anything that could identify a person.",
+      "result": "The result is a live app that tells you, at a glance, how your marks land against the rest of the class, while keeping every submission anonymous.",
+      "architecture": ["Riverpod (State Management)", "Edge Computing (Serverless)", "Feature-First Architecture"]
+    },
+    "05": {
+      "metric": "Desktop semantic search · SBERT + CLIP",
+      "type": "AI Desktop App",
+      "category": "Personal",
+      "services": "C# / .NET 10 - Avalonia - Semantic Search",
+      "linkText": "Personal Project",
+      "role": "Solo Project",
+      "description": "A desktop app, built in C# and .NET, that searches your text and image files by meaning instead of exact filenames. Ask for what you remember about a file and it finds it, even pulling up a photo from a written description.",
+      "problem": "Finding a file usually means recalling its exact name or the folder you buried it in. I wanted to search the way you would describe something to a friend, by what it is rather than what it is called.",
+      "approach": "I built the app around models that read what is actually inside your files, so plain-language search works across both text and images. Along the way I compared several text and image models to find the best trade-off between accuracy and speed.",
+      "result": "It finds files by meaning across a folder, and behind it sits a clear comparison of the models I tested to decide which ones earned their place.",
+      "architecture": ["Vector Embeddings", "Cross-modal Retrieval", "MVVM Desktop"]
+    },
+    "02": {
+      "metric": "Always-on tracking · tamper-proof check-ins",
+      "type": "Mobile Security",
+      "category": "Personal",
+      "services": "Android - Geolocation - Security",
+      "linkText": "View Repository",
+      "role": "Solo Project",
+      "description": "A native Android safety app for walking alone. It keeps tracking your location even when the phone tries to kill it to save battery, and it signs every check-in so no one can forge one.",
+      "problem": "A safety app is only worth having if it never quietly stops. The catch is that phones are built to shut background apps down the moment they want to save power, which is exactly when you would need it running.",
+      "approach": "I built the tracking as a service the system struggles to kill, so it survives low-power modes and restarts. Each safety message is cryptographically signed, and the app can check you in on its own when it detects a trusted Bluetooth beacon nearby.",
+      "result": "It holds a reliable trail through the exact conditions that usually break these apps, restarts, battery savers and background limits. Reliability was the whole point, so that is where the effort went.",
+      "architecture": ["Native Android Architecture", "Secure Geolocation", "Resilient Background Services"]
+    },
+    "06": {
+      "metric": "~2-3h/week of manual entry, automated",
+      "type": "Automation Tool",
+      "category": "Personal",
+      "services": "C++ - GUI Dashboard - Automation",
+      "linkText": "Closed Source Project",
+      "role": "Solo Project",
+      "description": "A desktop tool that keeps the accounting entries in Google Sheets and Sage 50 in sync, and files each one under the right code on its own. A local AI model steps in for the awkward entries that no simple rule covers.",
+      "problem": "As the accountant of my school's junior enterprise, I retyped entries between Google Sheets and the accounting software by hand every week. It was slow, and one wrong code was enough to throw the books off.",
+      "approach": "I built a small tool that moves entries between the two systems automatically and assigns each one a code. Where a clear rule runs out, a local AI model reads the entry and suggests where it belongs, so I only weigh in on the outliers.",
+      "result": "A few hours of weekly retyping collapsed into a single click, with far fewer slips and a check that flags anything odd before it is saved.",
+      "architecture": ["Modular (Core/Network Architecture)", "Logic-Driven Mapping", "OAuth2 Authentication"]
+    },
+    "07": {
+      "metric": "12k records · price/m² +27% post-COVID",
+      "type": "Data Analysis",
+      "category": "Personal",
+      "services": "Exploratory Data Analysis - Python - Data Visualization",
+      "linkText": "View Repository",
+      "role": "Solo Project",
+      "description": "A study of ten years of French property sales in the Pays de la Loire region, around 12,000 transactions, asking what COVID actually did to prices across five areas.",
+      "problem": "COVID landed right in the middle of the decade I was looking at, which made it hard to tell the pandemic's real effect on prices apart from trends that were already running.",
+      "approach": "I cleaned the transactions and split them into before, during and after COVID, then mapped the differences area by area so the patterns were something you could see rather than just read in a table.",
+      "result": "Prices per square metre rose 27% after COVID while the number of sales barely moved, and the maps made clear that some areas carried far more of that jump than others.",
+      "architecture": ["Exploratory Data Analysis (EDA)", "Period-Based Comparative Analysis", "Interactive Choropleth Mapping"]
+    },
+    "08": {
+      "metric": "Scroll-driven spatial UI",
+      "type": "Web Development",
+      "category": "Personal",
+      "services": "Front End - Animation - React",
+      "linkText": "View Source Code",
+      "role": "Solo Project",
+      "description": "The site you are reading. I treated my own portfolio as a front-end project in its own right, built around scroll-driven motion rather than a plain list of links.",
+      "problem": "Most developer portfolios look identical and just list tools. I wanted mine to show what I can actually build on the front end, not simply claim it.",
+      "approach": "I designed the site so the projects move with your scroll to give a sense of depth, while keeping it quick to load, comfortable on a phone, and calm for anyone who prefers reduced motion.",
+      "result": "A fast, responsive site where the motion carries the story on desktop and gives way to a clean layout on mobile. If it makes you curious how it was built, it is doing its job.",
+      "architecture": ["Component-Driven (Atomic Principles)", "Feature-First (Modular Page Structure)"]
+    }
+  }
+}

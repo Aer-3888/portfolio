@@ -3,12 +3,14 @@ import { useScroll } from "framer-motion";
 import PageNav from "../../components/layout/PageNav";
 import ProjectDetails from "../../components/ProjectDetails";
 import ProjectGallery from "./ProjectGallery";
-import { PROJECTS } from "../../config/siteData";
+import useProjects from "../../hooks/useProjects";
 import useSeo from "../../hooks/useSeo";
 
 export default function ProjectsPage() {
   const { scrollYProgress } = useScroll();
-  const [selectedProject, setSelectedProject] = useState(null);
+  const projects = useProjects();
+  const [selectedId, setSelectedId] = useState(null);
+  const selectedProject = selectedId ? projects.find((p) => p.id === selectedId) ?? null : null;
 
   useSeo({
     title: "Projects | Théo Phan",
@@ -24,12 +26,7 @@ export default function ProjectsPage() {
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace("#", "");
-      if (hash) {
-        const project = PROJECTS.find((p) => p.id === hash);
-        if (project) setSelectedProject(project);
-      } else {
-        setSelectedProject(null);
-      }
+      setSelectedId(hash || null);
     };
 
     handleHashChange();
@@ -38,23 +35,23 @@ export default function ProjectsPage() {
   }, []);
 
   useEffect(() => {
-    if (selectedProject) {
-      window.history.replaceState(null, "", `#${selectedProject.id}`);
+    if (selectedId) {
+      window.history.replaceState(null, "", `#${selectedId}`);
     } else {
       window.history.replaceState(null, "", window.location.pathname);
     }
-  }, [selectedProject]);
+  }, [selectedId]);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#f1eee7] font-sans text-[#171717]">
       <PageNav currentPath="/projects" scrollYProgress={scrollYProgress} isHidden={!!selectedProject} />
 
-      <ProjectGallery onSelect={setSelectedProject} />
+      <ProjectGallery projects={projects} onSelect={(project) => setSelectedId(project.id)} />
 
       <ProjectDetails
         project={selectedProject}
         isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
+        onClose={() => setSelectedId(null)}
       />
 
       <div
