@@ -5,6 +5,7 @@ import HomeButton from "../HomeButton";
 import NavButtons from "../NavButtons";
 import LiquidMenu from "./LiquidMenu";
 import MenuPanel from "../MenuPanel";
+import LanguageSwitcher from "./LanguageSwitcher";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useMobileNavVisible from "../../hooks/useMobileNavVisible";
 
@@ -115,6 +116,7 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
             currentPath={currentPath}
             navOpacity={scrollYProgress ? navOpacity : undefined}
             navPointerEvents={scrollYProgress ? navPointerEvents : undefined}
+            trailing={<LanguageSwitcher className="pl-1 text-white" />}
             className="fixed top-10 right-12 z-[1200] flex gap-10 items-center text-white mix-blend-difference"
           />
 

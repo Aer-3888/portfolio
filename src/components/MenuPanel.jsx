@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import LanguageSwitcher from "./layout/LanguageSwitcher";
 
 export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
   return (
@@ -72,6 +73,7 @@ export default function MenuPanel({ isOpen, onClose, navItems = [] }) {
             </div>
 
             <div className="flex flex-col gap-4 border-t border-white/5 pt-8">
+              <LanguageSwitcher className="text-white/70" />
               <p className="text-[10px] uppercase tracking-[0.3em] text-white/20 font-mono">
                 Get in touch
               </p>
