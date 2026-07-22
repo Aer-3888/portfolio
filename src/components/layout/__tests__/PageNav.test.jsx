@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeAll } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { screen } from "@testing-library/react";
+import { renderWithI18n } from "../../../test-utils";
 import PageNav from "../PageNav";
 
 // Provide window.matchMedia stub for jsdom (required by useMediaQuery before mock intercepts)
@@ -49,11 +49,7 @@ vi.mock("../LiquidMenu", () => ({ default: () => <button>menu</button> }));
 vi.mock("../../MenuPanel", () => ({ default: () => null }));
 
 function renderNav(props = {}) {
-  return render(
-    <MemoryRouter>
-      <PageNav {...props} />
-    </MemoryRouter>
-  );
+  return renderWithI18n(<PageNav {...props} />);
 }
 
 describe("PageNav — mobile", () => {

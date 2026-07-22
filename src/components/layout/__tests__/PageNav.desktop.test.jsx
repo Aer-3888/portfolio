@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeAll } from "vitest";
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { screen } from "@testing-library/react";
+import { renderWithI18n } from "../../../test-utils";
 import PageNav from "../PageNav";
 
 beforeAll(() => {
@@ -63,11 +63,7 @@ vi.mock("../../HomeButton", () => ({ default: () => <a>home</a> }));
 const mockScrollY = { get: () => 0 };
 
 function renderNav(props = {}) {
-  return render(
-    <MemoryRouter>
-      <PageNav scrollYProgress={mockScrollY} {...props} />
-    </MemoryRouter>
-  );
+  return renderWithI18n(<PageNav scrollYProgress={mockScrollY} {...props} />);
 }
 
 describe("PageNav — desktop", () => {
@@ -84,11 +80,7 @@ describe("PageNav — desktop", () => {
   });
 
   it("does not render the wordmark when scrollYProgress is not provided", () => {
-    render(
-      <MemoryRouter>
-        <PageNav />
-      </MemoryRouter>
-    );
+    renderWithI18n(<PageNav />);
     expect(screen.queryByText("Théo Phan")).not.toBeInTheDocument();
   });
 });
