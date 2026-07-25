@@ -30,19 +30,18 @@
     "headlinePre": "J’aime comprendre ",
     "headlineAccent": "pourquoi quelque chose casse",
     "headlinePost": ", puis essayer de le faire marcher.",
-    "body": "C’est comme ça que j’ai fini par travailler avec des services Android en arrière-plan, des tags NFC, la vision par ordinateur, des CTF et des modèles d’IA locaux. J’apprends le plus vite quand je peux tester l’idée moi-même.",
     "principles": [
       {
-        "title": "Je commence petit",
-        "text": "Je construis d’abord la plus petite version utile. Ça me donne quelque chose de réel à tester plutôt qu’un plan que je ne peux que deviner."
+        "title": "Je le construis pièce par pièce.",
+        "text": "Même quand une librairie ferait l’affaire. Une fois, pour savoir ce qui se passe vraiment en dessous."
       },
       {
-        "title": "Je suis le problème",
-        "text": "Si le bug mène à un service Android, un modèle, un message signé ou un tag NFC, j’y vais et j’apprends ce qu’il faut."
+        "title": "Je construis d’abord la version cassée.",
+        "text": "Puis je l’attaque, je la corrige, et je relance la même attaque pour vérifier que le correctif tient."
       },
       {
-        "title": "Je teste moi-même",
-        "text": "J’utilise de vrais téléphones, des images imparfaites et des attaques reproductibles. Je veux trouver le point faible avant que quelqu’un d’autre ait à le faire."
+        "title": "Je teste dans le désordre.",
+        "text": "De vrais téléphones, des photos imparfaites, un réseau qui rame. La machine de démo ne prouve rien."
       }
     ]
   },

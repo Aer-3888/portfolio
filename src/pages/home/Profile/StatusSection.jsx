@@ -26,9 +26,6 @@ function StatusSection() {
               <span className="italic text-[#f04d2f]">{t("status.headlineAccent")}</span>
               {t("status.headlinePost")}
             </p>
-            <p className="ml-auto mt-8 max-w-xl text-sm leading-relaxed text-[#121212]/60 md:text-base">
-              {t("status.body")}
-            </p>
           </motion.div>
         </div>
 

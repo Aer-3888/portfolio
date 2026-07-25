@@ -30,19 +30,18 @@
     "headlinePre": "I like figuring out ",
     "headlineAccent": "why something fails",
     "headlinePost": ", then trying to make it work.",
-    "body": "That is how I ended up working with Android background services, NFC tags, computer vision, CTFs, and local AI models. I learn fastest when I can test the idea myself.",
     "principles": [
       {
-        "title": "I start small",
-        "text": "I usually build the smallest useful version first. It gives me something real to test instead of a plan I can only guess about."
+        "title": "I build it from the parts.",
+        "text": "Even when a library would do it. Once, so I know what is actually happening underneath."
       },
       {
-        "title": "I follow the problem",
-        "text": "If the bug leads into an Android service, a model, a signed message, or an NFC tag, I go there and learn what I need."
+        "title": "I build the broken version first.",
+        "text": "Then attack it, fix it, and run the same attack again to prove the fix holds."
       },
       {
-        "title": "I test it myself",
-        "text": "I use real phones, imperfect images, and repeatable attacks. I want to find the weak part before someone else has to."
+        "title": "I test on the mess.",
+        "text": "Real phones, imperfect photos, bad network. The demo machine proves nothing."
       }
     ]
   },
