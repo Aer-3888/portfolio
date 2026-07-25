@@ -13,7 +13,7 @@ function StatusSection() {
     ? { initial: { opacity: 0 }, whileInView: { opacity: 1 } }
     : { initial: { opacity: 0, y: "100%" }, whileInView: { opacity: 1, y: "0%" } };
 
-  // Beat 3. Items rise a short distance, staggered after the rule has drawn.
+  // Beat 3. Items rise a short distance, overlapping the tail of the rule draw.
   const itemMotion = prefersReducedMotion
     ? { initial: { opacity: 0 }, whileInView: { opacity: 1 } }
     : { initial: { opacity: 0, y: 18 }, whileInView: { opacity: 1, y: 0 } };
@@ -25,13 +25,13 @@ function StatusSection() {
           {t("status.eyebrow")}
         </h2>
 
-        <div className="mt-8 overflow-hidden pb-3 md:mt-10">
+        <div className="mt-8 overflow-hidden md:mt-10">
           <motion.p
             initial={headlineMotion.initial}
             whileInView={headlineMotion.whileInView}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-[20ch] font-serif text-[clamp(2.8rem,6.6vw,6.2rem)] leading-[0.92] tracking-[-0.03em]"
+            className="max-w-[20ch] pb-[0.18em] font-serif text-[clamp(2.8rem,6.6vw,6.2rem)] leading-[0.92] tracking-[-0.03em]"
           >
             {t("status.headlinePre")}
             <span className="italic text-[#f04d2f]">{t("status.headlineAccent")}</span>
@@ -39,6 +39,7 @@ function StatusSection() {
           </motion.p>
         </div>
 
+        {/* Beat 2. The rule draws from the left once the headline is underway. */}
         <motion.div
           aria-hidden="true"
           initial={{ scaleX: prefersReducedMotion ? 1 : 0 }}
