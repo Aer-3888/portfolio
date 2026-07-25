@@ -37,7 +37,7 @@ function StatusSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-60px" }}
               transition={{ duration: 0.6, delay: index * 0.07, ease: [0.22, 1, 0.36, 1] }}
-              className="border-b border-[#121212]/25 py-7 md:border-b-0 md:border-r md:border-[#121212]/25 md:px-10 md:py-9 first:md:pl-0 last:md:border-r-0 last:md:pr-0"
+              className="border-b border-[#121212]/25 py-7 last:border-b-0 md:border-b-0 md:border-r md:border-[#121212]/25 md:px-10 md:py-9 first:md:pl-0 last:md:border-r-0 last:md:pr-0"
             >
               <span className="font-mono text-[10px] tracking-[0.14em] text-[#121212]/45">
                 {String(index + 1).padStart(2, "0")}
