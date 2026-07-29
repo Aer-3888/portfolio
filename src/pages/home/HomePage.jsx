@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import { motion, useScroll } from "framer-motion";
 import { getLangFromPath } from "../../i18n/localizePath";
+import PageTransition from "../../components/layout/PageTransition";
 import Hero from "./Hero/Hero";
 import StatusSection from "./Profile/StatusSection";
 import ExperienceSection from "./Profile/ExperienceSection";
@@ -40,13 +41,18 @@ export default function HomePage() {
   }, [location.state]);
 
   return (
-    <div className="walden overflow-x-hidden">
+    <PageTransition className="walden overflow-x-hidden">
       <PageNav
         currentPath="/"
         scrollYProgress={scrollYProgress}
         isHidden={!!selectedProject || isCvModalOpen || isGalleryOpen}
       />
 
+      {/*
+        The page level entrance lives in PageTransition, which veils the whole
+        route on mount. A second opacity ramp here only stacked another fade on
+        top of it, so this stays a plain container.
+      */}
       <motion.main className="relative z-10 bg-paper">
         <section id="home">
           <Hero onCvToggle={setIsCvModalOpen} />
@@ -71,6 +77,6 @@ export default function HomePage() {
         <CvModal isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />
         <GalleryModal isOpen={isGalleryOpen} onClose={() => setIsGalleryOpen(false)} />
       </Suspense>
-    </div>
+    </PageTransition>
   );
 }

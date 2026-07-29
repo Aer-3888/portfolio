@@ -36,8 +36,8 @@ html.lenis body {
 }
 
 body {
-  background-color: var(--color-dark);
-  color: white;
+  background-color: #f1eee7;
+  color: #171717;
   font-family: var(--font-sans);
 }
 

@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { galleryFiles } from "../../About/galleryData";
 
@@ -6,14 +6,16 @@ const photoSet = [galleryFiles[20], galleryFiles[12], galleryFiles[10]];
 
 export default function HobbySection({ onGalleryOpen }) {
   const { t } = useTranslation("home");
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section className="relative overflow-hidden bg-[#ffca45] px-5 py-24 text-[#121212] sm:px-8 md:px-12 md:py-36">
       <div className="absolute -left-24 top-20 h-64 w-64 rounded-full border border-[#121212]/20 md:h-[30rem] md:w-[30rem]" />
       <div className="relative mx-auto max-w-[1500px]">
         <div className="grid items-center gap-16 md:grid-cols-[0.8fr_1.2fr] md:gap-24">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
           >
@@ -57,8 +59,10 @@ export default function HobbySection({ onGalleryOpen }) {
               aria-label={t("hobbies.galleryAria")}
             >
             <motion.figure
-              initial={{ opacity: 0, rotate: -6, x: -30 }}
-              whileInView={{ opacity: 1, rotate: -5, x: 0 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, rotate: -6, x: -30 }}
+              whileInView={
+                prefersReducedMotion ? undefined : { opacity: 1, rotate: -5, x: 0 }
+              }
               viewport={{ once: true }}
               transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
               className="absolute left-2 top-[8%] z-10 w-[55%] bg-[#f1eee7] p-2 pb-9 shadow-xl sm:p-3 sm:pb-12"
@@ -74,8 +78,10 @@ export default function HobbySection({ onGalleryOpen }) {
             </motion.figure>
 
             <motion.figure
-              initial={{ opacity: 0, rotate: 6, x: 30 }}
-              whileInView={{ opacity: 1, rotate: 5, x: 0 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, rotate: 6, x: 30 }}
+              whileInView={
+                prefersReducedMotion ? undefined : { opacity: 1, rotate: 5, x: 0 }
+              }
               viewport={{ once: true }}
               transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="absolute right-0 top-0 w-[62%] bg-[#2356d8] p-2 pb-9 shadow-xl sm:p-3 sm:pb-12"
@@ -91,8 +97,10 @@ export default function HobbySection({ onGalleryOpen }) {
             </motion.figure>
 
             <motion.figure
-              initial={{ opacity: 0, y: 35, rotate: -2 }}
-              whileInView={{ opacity: 1, y: 0, rotate: -1 }}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 35, rotate: -2 }}
+              whileInView={
+                prefersReducedMotion ? undefined : { opacity: 1, y: 0, rotate: -1 }
+              }
               viewport={{ once: true }}
               transition={{ duration: 0.9, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
               className="absolute bottom-0 left-[16%] z-20 w-[66%] bg-[#f1eee7] p-2 pb-9 shadow-2xl sm:p-3 sm:pb-12"

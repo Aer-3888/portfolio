@@ -6,7 +6,47 @@ import { SOCIALS, EMAIL } from "../../config/siteData";
 import { getLangFromPath } from "../../i18n/localizePath";
 import ArcadeMachine from "./ArcadeMachine";
 import PageNav from "../../components/layout/PageNav";
+import PageTransition from "../../components/layout/PageTransition";
 import useSeo from "../../hooks/useSeo";
+
+const ease = [0.22, 1, 0.36, 1];
+
+const pageSequence = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.12,
+      staggerChildren: 0.11,
+    },
+  },
+};
+
+const sectionSequence = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.09,
+    },
+  },
+};
+
+const riseIn = {
+  hidden: { opacity: 0, y: 24 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.75, ease },
+  },
+};
+
+const lineReveal = {
+  hidden: { opacity: 0, y: "105%" },
+  visible: {
+    opacity: 1,
+    y: "0%",
+    transition: { duration: 0.9, ease },
+  },
+};
 
 export default function ContactPage() {
   const { t } = useTranslation("contact");
@@ -14,6 +54,7 @@ export default function ContactPage() {
   const location = useLocation();
   const [time, setTime] = useState("");
   const [copied, setCopied] = useState(false);
+  const [entranceReady, setEntranceReady] = useState(false);
   const copyTimerRef = useRef(null);
   const prefersReduced = useReducedMotion();
 
@@ -44,6 +85,11 @@ export default function ContactPage() {
 
   useEffect(() => () => window.clearTimeout(copyTimerRef.current), []);
 
+  useEffect(() => {
+    const timer = window.setTimeout(() => setEntranceReady(true), 100);
+    return () => window.clearTimeout(timer);
+  }, []);
+
   const handleCopyEmail = async () => {
     try {
       await navigator.clipboard.writeText(EMAIL);
@@ -56,27 +102,41 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#f1eee7] font-sans text-[#171717]">
+    <PageTransition className="relative min-h-screen overflow-x-hidden bg-[#f1eee7] font-sans text-[#171717]">
       <PageNav currentPath="/contact" />
 
       <motion.main
-        initial={prefersReduced ? false : { opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={
-          prefersReduced ? { duration: 0 } : { duration: 0.8, ease: [0.22, 1, 0.36, 1] }
-        }
+        variants={pageSequence}
+        initial={prefersReduced ? false : "hidden"}
+        animate={prefersReduced || entranceReady ? "visible" : "hidden"}
         className="mx-auto w-full max-w-[1600px] px-5 pb-[calc(var(--safe-bottom)+2.5rem)] pt-[calc(var(--safe-top)+var(--mobile-nav-height)+3rem)] sm:px-8 md:px-12 md:pb-12 md:pt-44"
       >
-        <header className="border-b border-black/20 pb-16 md:pb-24">
+        <motion.header
+          variants={sectionSequence}
+          className="border-b border-black/20 pb-16 md:pb-24"
+        >
           <h1 className="font-serif text-[clamp(4.7rem,10vw,10rem)] leading-[0.76] tracking-[-0.045em]">
-            {t("headlineLine1")}
-            <br />
-            {t("headlineLine2")}
+            <span className="block overflow-hidden pb-[0.08em]">
+              <motion.span variants={lineReveal} className="block">
+                {t("headlineLine1")}
+              </motion.span>
+            </span>
+            <span className="block overflow-hidden pb-[0.08em]">
+              <motion.span variants={lineReveal} className="block">
+                {t("headlineLine2")}
+              </motion.span>
+            </span>
           </h1>
-        </header>
+        </motion.header>
 
-        <div className="grid border-b border-black/20 md:grid-cols-12">
-          <section className="flex flex-col justify-between py-14 md:col-span-7 md:min-h-[34rem] md:py-20 md:pr-12 lg:pr-20">
+        <motion.div
+          variants={sectionSequence}
+          className="grid border-b border-black/20 md:grid-cols-12"
+        >
+          <motion.section
+            variants={riseIn}
+            className="flex flex-col justify-between py-14 md:col-span-7 md:min-h-[34rem] md:py-20 md:pr-12 lg:pr-20"
+          >
             <p className="max-w-md text-sm leading-relaxed text-black/55 md:text-base">
               {t("intro")}
             </p>
@@ -101,16 +161,22 @@ export default function ContactPage() {
                 </span>
               </div>
             </div>
-          </section>
+          </motion.section>
 
-          <aside className="border-t border-black/20 py-8 md:col-span-5 md:border-l md:border-t-0 md:p-8 lg:p-12">
+          <motion.aside
+            variants={riseIn}
+            className="border-t border-black/20 py-8 md:col-span-5 md:border-l md:border-t-0 md:p-8 lg:p-12"
+          >
             <div className="h-[24rem] overflow-hidden md:h-full md:min-h-[30rem]">
               <ArcadeMachine />
             </div>
-          </aside>
-        </div>
+          </motion.aside>
+        </motion.div>
 
-        <div className="grid gap-10 py-10 text-sm text-black/55 sm:grid-cols-2 md:grid-cols-12 md:items-end">
+        <motion.div
+          variants={riseIn}
+          className="grid gap-10 py-10 text-sm text-black/55 sm:grid-cols-2 md:grid-cols-12 md:items-end"
+        >
           <div className="md:col-span-3">
             <p>{t("location")}</p>
             <p className="mt-1 text-black/35">{t("localTime", { time })}</p>
@@ -135,7 +201,7 @@ export default function ContactPage() {
               </a>
             ))}
           </nav>
-        </div>
+        </motion.div>
       </motion.main>
 
       <div
@@ -147,6 +213,6 @@ export default function ContactPage() {
           backgroundSize: "256px 256px",
         }}
       />
-    </div>
+    </PageTransition>
   );
 }

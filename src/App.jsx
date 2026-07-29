@@ -1,11 +1,10 @@
-import { lazy, Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router";
+import { Routes, Route, Navigate, useLocation } from "react-router";
+import { AnimatePresence } from "framer-motion";
 import SmoothScroll from "./components/layout/SmoothScroll";
 import LangLayout from "./components/layout/LangLayout";
-
-const HomePage = lazy(() => import("./pages/home/HomePage"));
-const ContactPage = lazy(() => import("./pages/Contact/ContactPage"));
-const ProjectsPage = lazy(() => import("./pages/Projects/ProjectsPage"));
+import HomePage from "./pages/home/HomePage";
+import ContactPage from "./pages/Contact/ContactPage";
+import ProjectsPage from "./pages/Projects/ProjectsPage";
 
 function PageRoutes() {
   return (
@@ -18,11 +17,35 @@ function PageRoutes() {
   );
 }
 
+/**
+ * What counts as "a different page" for transition purposes.
+ *
+ * The language prefix is dropped so switching between / and /fr swaps copy in
+ * place instead of replaying a full page transition. Project deep links
+ * collapse onto /projects because the gallery drives selection from state, not
+ * navigation, so /projects/:id is the same page arrived at by a shared URL.
+ */
+function routeKey(pathname) {
+  const withoutLang = pathname.replace(/^\/fr(?=\/|$)/, "") || "/";
+
+  return withoutLang.replace(/^\/projects\/.+/, "/projects");
+}
+
 function App() {
+  const location = useLocation();
+
   return (
     <SmoothScroll>
-      <Suspense fallback={<div className="min-h-screen bg-neutral-900" />}>
-        <Routes>
+      {/*
+        `initial` is deliberately left on. Setting it to false suppresses the
+        initial state of every motion descendant on first load, which silently
+        flattens all the whileInView scroll reveals down the page. They have no
+        animate state to fall back on, so they simply render already revealed.
+        The cost of leaving it on is that the first paint runs PageTransition's
+        own fade, which is the page level entrance anyway.
+      */}
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={routeKey(location.pathname)}>
           <Route path="/" element={<LangLayout />}>
             {PageRoutes()}
           </Route>
@@ -31,7 +54,7 @@ function App() {
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-      </Suspense>
+      </AnimatePresence>
     </SmoothScroll>
   );
 }

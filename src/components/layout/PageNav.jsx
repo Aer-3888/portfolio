@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback, memo } from "react";
 import { useTranslation } from "react-i18next";
-import { motion, useTransform, useMotionValue, AnimatePresence } from "framer-motion";
+import { motion, useTransform, useMotionValue, useScroll, AnimatePresence } from "framer-motion";
 import useLocalizedNavigate from "../../i18n/useLocalizedNavigate";
 import HomeButton from "../HomeButton";
 import NavButtons from "../NavButtons";
@@ -39,11 +39,27 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
 
   const staticProgress = useMotionValue(0);
   const progress = scrollYProgress ?? staticProgress;
+  const { scrollY } = useScroll();
 
-  const navOpacity = useTransform(progress, [0, 0.05], [1, 0]);
-  const menuOpacity = useTransform(progress, [0.05, 0.1], [0, 1]);
-  const navPointerEvents = useTransform(progress, (v) => (v > 0.05 ? "none" : "auto"));
-  const menuPointerEvents = useTransform(progress, (v) => (v > 0.05 ? "auto" : "none"));
+  /*
+    Only pages that pass scrollYProgress render the floating blob, so only those
+    may retire the text nav. Anywhere else the text is the only navigation on
+    screen and has to stay put.
+  */
+  const hasBlobTakeover = Boolean(scrollYProgress);
+
+  /*
+    Measured in pixels rather than as a fraction of the document. "Not at the
+    top" should mean the same distance everywhere, and as a fraction of a page
+    as long as the home page, 5% left the text hanging around for several
+    hundred pixels of scrolling.
+  */
+  const TOP_THRESHOLD = 48;
+
+  const navOpacity = useTransform(scrollY, [0, TOP_THRESHOLD], [1, 0]);
+  const menuOpacity = useTransform(scrollY, [TOP_THRESHOLD, TOP_THRESHOLD + 62], [0, 1]);
+  const navPointerEvents = useTransform(scrollY, (v) => (v > TOP_THRESHOLD ? "none" : "auto"));
+  const menuPointerEvents = useTransform(scrollY, (v) => (v > TOP_THRESHOLD ? "auto" : "none"));
 
   const barBackground = useTransform(progress, [0, 0.02], ["rgba(0,0,0,0)", "rgba(10,10,10,0.8)"]);
   const barBlur = useTransform(progress, [0, 0.02], ["blur(0px)", "blur(12px)"]);
@@ -76,7 +92,11 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
         onClick: () => handleNavigate("/projects", "projects"),
       },
       { label: t("nav.story"), path: "/", onClick: () => handleNavigate("/", "about") },
-      { label: t("nav.hello"), path: "/contact", onClick: () => handleNavigate("/contact", "contact") },
+      {
+        label: t("nav.hello"),
+        path: "/contact",
+        onClick: () => handleNavigate("/contact", "contact"),
+      },
     ],
     [handleNavigate, t]
   );
@@ -108,7 +128,11 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
         <>
           {currentPath && currentPath !== "/" && (
             <motion.div
-              style={{ opacity: navOpacity, pointerEvents: navPointerEvents }}
+              style={
+                hasBlobTakeover
+                  ? { opacity: navOpacity, pointerEvents: navPointerEvents }
+                  : undefined
+              }
               className="fixed top-10 left-12 z-[1200]"
             >
               <HomeButton />
@@ -117,13 +141,13 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
           <NavButtons
             items={navItems}
             currentPath={currentPath}
-            navOpacity={scrollYProgress ? navOpacity : undefined}
-            navPointerEvents={scrollYProgress ? navPointerEvents : undefined}
+            navOpacity={hasBlobTakeover ? navOpacity : undefined}
+            navPointerEvents={hasBlobTakeover ? navPointerEvents : undefined}
             trailing={<LanguageSwitcher className="pl-1 text-white" />}
             className="fixed top-10 right-12 z-[1200] flex gap-10 items-center text-white mix-blend-difference"
           />
 
-          {scrollYProgress && (
+          {hasBlobTakeover && (
             <motion.div
               style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
               className="fixed top-8 right-12 z-[1200]"

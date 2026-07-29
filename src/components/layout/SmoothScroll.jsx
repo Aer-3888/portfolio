@@ -15,17 +15,18 @@ export default function SmoothScroll({ children }) {
     history.scrollRestoration = "manual";
   }, []);
 
+  // Scroll reset lives in PageTransition, which mounts only once the outgoing
+  // page has finished exiting. Resetting here would fire the moment the URL
+  // changes, jerking the old page to the top while it is still visible.
   useLayoutEffect(() => {
     if (lenisRef.current) lenisRef.current.destroy();
     lenisRef.current = null;
-    window.scrollTo(0, 0);
   }, [pathname]);
 
   useEffect(() => {
     if (isTouchDevice()) return;
     if (prefersReducedMotion()) return;
 
-    window.scrollTo(0, 0);
     const lenis = new Lenis({
       autoRaf: true,
       lerp: 0.1,

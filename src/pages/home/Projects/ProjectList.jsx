@@ -1,5 +1,11 @@
 import { useRef, useState } from "react";
-import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
+import {
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+  useSpring,
+} from "framer-motion";
 import { useTranslation } from "react-i18next";
 import ProjectDetails from "../../../components/ProjectDetails";
 import useProjects from "../../../hooks/useProjects";
@@ -14,6 +20,7 @@ const STORY_META = [
 
 function StoryCard({ story, project, index, onSelect }) {
   const { t } = useTranslation("home");
+  const prefersReducedMotion = useReducedMotion();
   const imageFirst = index % 2 === 0;
   const imageRef = useRef(null);
   const [isImageHovered, setIsImageHovered] = useState(false);
@@ -39,8 +46,8 @@ function StoryCard({ story, project, index, onSelect }) {
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 36 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 36 }}
+      whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className="grid gap-6 border-t border-white/20 py-12 md:grid-cols-12 md:gap-12 md:py-20"
@@ -139,6 +146,7 @@ function StoryCard({ story, project, index, onSelect }) {
 export default function ProjectList({ selectedProject, setSelectedProject }) {
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation("home");
+  const prefersReducedMotion = useReducedMotion();
   const projects = useProjects();
   const stories = STORY_META.map((meta) => ({
     story: { ...meta, ...t(`projects.stories.${meta.id}`, { returnObjects: true }) },
@@ -148,10 +156,21 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
   return (
     <section id="projects" className="relative overflow-hidden bg-[#121212] text-white">
       <div className="mx-auto max-w-[1500px] px-5 py-24 sm:px-8 md:px-12 md:py-36">
-        <div className="pb-16 md:pb-24">
-          <h2 className="font-serif text-[clamp(3.8rem,8vw,8.5rem)] leading-[0.78] tracking-[-0.04em] text-[#f1eee7]">
+        {/*
+          The headline rises out of a clip mask, the same beat StatusSection
+          opens with. The padding under the text buys room for the descenders,
+          which the mask would otherwise shear off mid rise.
+        */}
+        <div className="overflow-hidden pb-16 md:pb-24">
+          <motion.h2
+            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: "100%" }}
+            whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: "0%" }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            className="pb-[0.18em] font-serif text-[clamp(3.8rem,8vw,8.5rem)] leading-[0.78] tracking-[-0.04em] text-[#f1eee7]"
+          >
             {t("projects.heading")}
-          </h2>
+          </motion.h2>
         </div>
 
         <div>
@@ -166,10 +185,14 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
           ))}
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-6 border-t border-white/20 pt-10 sm:flex-row sm:items-center">
-          <p className="max-w-md text-sm leading-relaxed text-white/45">
-            {t("projects.outro")}
-          </p>
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-60px" }}
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col items-start justify-between gap-6 border-t border-white/20 pt-10 sm:flex-row sm:items-center"
+        >
+          <p className="max-w-md text-sm leading-relaxed text-white/45">{t("projects.outro")}</p>
           <button
             type="button"
             onClick={() => navigate("/projects")}
@@ -178,7 +201,7 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
             {t("projects.cta")}
             <span className="transition-transform group-hover:translate-x-1">→</span>
           </button>
-        </div>
+        </motion.div>
       </div>
 
       <ProjectDetails

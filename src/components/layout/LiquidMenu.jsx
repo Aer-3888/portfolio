@@ -11,13 +11,15 @@ export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineCo
   const prefersReduced = useReducedMotion();
   const { sensorRef, xSpring, ySpring, handleMouseMove, handleMouseLeave } = useMagneticEffect();
 
+  // Roughly half the former amplitude on every channel. The blob still reads as
+  // alive, but it no longer wanders far enough to feel unmoored from its corner.
   const floatAnimation = prefersReduced
     ? undefined
     : {
-        y: [0, -15, 5, 12, 0],
-        x: [0, 10, -5, -11, 0],
-        rotate: [0, 7, -3, -5, 0],
-        scale: [1, 1.15, 0.93, 1.1, 1],
+        y: [0, -8, 3, 6, 0],
+        x: [0, 5, -3, -6, 0],
+        rotate: [0, 3.5, -1.5, -2.5, 0],
+        scale: [1, 1.07, 0.97, 1.05, 1],
       };
 
   return (

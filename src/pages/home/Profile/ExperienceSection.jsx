@@ -1,10 +1,12 @@
 import { memo } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 
 function ExperienceSection() {
   const { t } = useTranslation("home");
   const moments = t("experience.moments", { returnObjects: true });
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <section
       id="experience"
@@ -12,7 +14,13 @@ function ExperienceSection() {
     >
       <div className="mx-auto max-w-[1500px]">
         <div className="relative z-10 grid gap-10 md:grid-cols-[0.75fr_1.25fr] md:gap-20">
-          <div className="md:sticky md:top-28 md:h-fit">
+          <motion.div
+            initial={prefersReducedMotion ? false : { opacity: 0, y: 28 }}
+            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="md:sticky md:top-28 md:h-fit"
+          >
             <span className="font-serif text-2xl italic leading-none tracking-[-0.03em] text-[#121212]/70">
               {t("experience.eyebrow")}
             </span>
@@ -22,16 +30,20 @@ function ExperienceSection() {
             <p className="mt-8 max-w-sm text-sm leading-relaxed text-[#121212]/60">
               {t("experience.intro")}
             </p>
-          </div>
+          </motion.div>
 
           <div className="relative border-t border-[#121212]">
             {moments.map((moment, index) => (
               <motion.article
                 key={moment.year + moment.title}
-                initial={{ opacity: 0, x: 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={prefersReducedMotion ? false : { opacity: 0, x: 24 }}
+                whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
                 viewport={{ once: true, margin: "-70px" }}
-                transition={{ duration: 0.7, delay: index * 0.04, ease: [0.22, 1, 0.36, 1] }}
+                transition={{
+                  duration: 0.7,
+                  delay: prefersReducedMotion ? 0 : index * 0.04,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 className="grid gap-4 border-b border-[#121212]/25 py-9 sm:grid-cols-[7rem_1fr] md:py-12"
               >
                 <div>

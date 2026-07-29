@@ -3,6 +3,7 @@ import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import { useScroll } from "framer-motion";
 import PageNav from "../../components/layout/PageNav";
+import PageTransition from "../../components/layout/PageTransition";
 import ProjectDetails from "../../components/ProjectDetails";
 import ProjectGallery from "./ProjectGallery";
 import useProjects from "../../hooks/useProjects";
@@ -25,10 +26,6 @@ export default function ProjectsPage() {
   });
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.replace("#", "");
       setSelectedId(hash || null);
@@ -48,7 +45,7 @@ export default function ProjectsPage() {
   }, [selectedId]);
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#f1eee7] font-sans text-[#171717]">
+    <PageTransition className="relative min-h-screen overflow-x-hidden bg-[#f1eee7] font-sans text-[#171717]">
       <PageNav currentPath="/projects" scrollYProgress={scrollYProgress} isHidden={!!selectedProject} />
 
       <ProjectGallery projects={projects} onSelect={(project) => setSelectedId(project.id)} />
@@ -68,6 +65,6 @@ export default function ProjectsPage() {
           backgroundSize: "256px 256px",
         }}
       />
-    </div>
+    </PageTransition>
   );
 }
