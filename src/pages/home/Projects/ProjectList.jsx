@@ -1,11 +1,5 @@
 import { useRef, useState } from "react";
-import {
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-} from "framer-motion";
+import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import ProjectDetails from "../../../components/ProjectDetails";
 import useProjects from "../../../hooks/useProjects";
@@ -20,7 +14,6 @@ const STORY_META = [
 
 function StoryCard({ story, project, index, onSelect }) {
   const { t } = useTranslation("home");
-  const prefersReducedMotion = useReducedMotion();
   const imageFirst = index % 2 === 0;
   const imageRef = useRef(null);
   const [isImageHovered, setIsImageHovered] = useState(false);
@@ -46,8 +39,8 @@ function StoryCard({ story, project, index, onSelect }) {
 
   return (
     <motion.article
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 36 }}
-      whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
       className="grid gap-6 border-t border-white/20 py-12 md:grid-cols-12 md:gap-12 md:py-20"
@@ -146,7 +139,6 @@ function StoryCard({ story, project, index, onSelect }) {
 export default function ProjectList({ selectedProject, setSelectedProject }) {
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation("home");
-  const prefersReducedMotion = useReducedMotion();
   const projects = useProjects();
   const stories = STORY_META.map((meta) => ({
     story: { ...meta, ...t(`projects.stories.${meta.id}`, { returnObjects: true }) },
@@ -163,8 +155,8 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
         */}
         <div className="overflow-hidden pb-16 md:pb-24">
           <motion.h2
-            initial={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: "100%" }}
-            whileInView={prefersReducedMotion ? { opacity: 1 } : { opacity: 1, y: "0%" }}
+            initial={{ opacity: 0, y: "100%" }}
+            whileInView={{ opacity: 1, y: "0%" }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
             className="pb-[0.18em] font-serif text-[clamp(3.8rem,8vw,8.5rem)] leading-[0.78] tracking-[-0.04em] text-[#f1eee7]"
@@ -186,8 +178,8 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
         </div>
 
         <motion.div
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-          whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-60px" }}
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="flex flex-col items-start justify-between gap-6 border-t border-white/20 pt-10 sm:flex-row sm:items-center"
