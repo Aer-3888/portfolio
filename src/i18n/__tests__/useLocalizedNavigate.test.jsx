@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from "vitest";
 import { renderHook } from "@testing-library/react";
 
 const navigateMock = vi.fn();
-vi.mock("react-router-dom", () => ({ useNavigate: () => navigateMock }));
+vi.mock("react-router", () => ({ useNavigate: () => navigateMock }));
 vi.mock("react-i18next", () => ({ useTranslation: () => ({ i18n: { language: "fr" } }) }));
 
 import useLocalizedNavigate from "../useLocalizedNavigate";

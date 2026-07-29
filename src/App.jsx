@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router";
 import SmoothScroll from "./components/layout/SmoothScroll";
 import LangLayout from "./components/layout/LangLayout";
 

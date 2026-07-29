@@ -11,13 +11,9 @@ const CV_URLS = {
 export default function CvModal({ isOpen, onClose }) {
   const { t, i18n } = useTranslation("home");
   const { t: tc } = useTranslation("common");
-  const [lang, setLang] = useState(i18n.language === "fr" ? "fr" : "en");
+  const [manualLang, setManualLang] = useState(null);
+  const lang = manualLang ?? (i18n.language === "fr" ? "fr" : "en");
   const modalRef = useRef(null);
-
-  // Default the CV to the site language, still overridable via the toggle.
-  useEffect(() => {
-    setLang(i18n.language === "fr" ? "fr" : "en");
-  }, [i18n.language]);
 
   // Lock body scroll
   useEffect(() => {
@@ -105,7 +101,7 @@ export default function CvModal({ isOpen, onClose }) {
                   {["en", "fr"].map((l) => (
                     <button
                       key={l}
-                      onClick={() => setLang(l)}
+                      onClick={() => setManualLang(l)}
                       className={`px-2.5 py-1 rounded text-[9px] font-mono font-bold uppercase tracking-wider transition-all ${
                         lang === l
                           ? "bg-neutral-800 text-white"

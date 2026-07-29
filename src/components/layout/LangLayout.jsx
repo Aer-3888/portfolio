@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import { getLangFromPath } from "../../i18n/localizePath";
 

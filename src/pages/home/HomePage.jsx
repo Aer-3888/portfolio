@@ -1,5 +1,5 @@
 import { useEffect, useState, lazy, Suspense } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import { motion, useScroll } from "framer-motion";
 import { getLangFromPath } from "../../i18n/localizePath";
