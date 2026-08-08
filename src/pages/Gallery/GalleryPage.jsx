@@ -8,6 +8,7 @@ import useSeo from "../../hooks/useSeo";
 import { getLangFromPath } from "../../i18n/localizePath";
 import { galleryPhotos } from "./galleryPhotos";
 import GalleryFrame from "./GalleryFrame";
+import GalleryContactSheet from "./GalleryContactSheet";
 
 export default function GalleryPage() {
   const { scrollYProgress } = useScroll();
@@ -60,6 +61,8 @@ export default function GalleryPage() {
             <GalleryFrame key={photo.slug} photo={photo} />
           ))}
         </div>
+
+        <GalleryContactSheet photos={galleryPhotos} />
       </main>
     </PageTransition>
   );

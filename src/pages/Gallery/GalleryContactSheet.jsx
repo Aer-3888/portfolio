@@ -1,0 +1,62 @@
+import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import { useLenis } from "../../components/layout/ScrollContext";
+
+/*
+  A scroll aid, not a second gallery. No captions and no viewer of its own, so
+  the only job here is getting the reader back up to a frame they remember.
+*/
+export default function GalleryContactSheet({ photos }) {
+  const { t } = useTranslation("gallery");
+  const lenis = useLenis();
+
+  const jumpTo = useCallback(
+    (slug) => {
+      const el = document.getElementById(`frame-${slug}`);
+      if (!el) return;
+      // Lenis is absent on touch and under reduced motion, so fall back.
+      if (lenis) lenis.scrollTo(el, { offset: -80 });
+      else el.scrollIntoView({ block: "start" });
+    },
+    [lenis]
+  );
+
+  return (
+    <section className="mt-40 border-t border-stone pt-10">
+      <div className="flex items-baseline justify-between">
+        <h2 className="font-mono text-[10px] uppercase tracking-[0.14em] text-ash">
+          {t("sheetHeading")}
+        </h2>
+        <span className="font-mono text-[10px] uppercase tracking-[0.14em] text-pebble">
+          {photos.length}
+        </span>
+      </div>
+
+      <ul className="mt-8 grid grid-cols-4 gap-3 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10">
+        {photos.map((photo) => (
+          <li key={photo.slug}>
+            <button
+              type="button"
+              onClick={() => jumpTo(photo.slug)}
+              aria-label={t("sheetAria", { index: photo.index, place: photo.place })}
+              className="group block w-full cursor-pointer text-left"
+            >
+              <img
+                src={photo.src.thumb}
+                width={photo.width}
+                height={photo.height}
+                alt={photo.alt}
+                loading="lazy"
+                decoding="async"
+                className="aspect-square w-full object-cover grayscale transition duration-500 group-hover:grayscale-0"
+              />
+              <span aria-hidden="true" className="mt-1 block font-mono text-[9px] text-pebble">
+                {String(photo.index).padStart(2, "0")}
+              </span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}

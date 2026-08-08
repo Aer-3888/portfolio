@@ -54,9 +54,17 @@ vi.mock("../galleryPhotos", () => ({
 
 describe("GalleryPage", () => {
   it("renders every photo in sequence order", () => {
-    renderWithI18n(<GalleryPage />, { route: "/gallery" });
-    const images = screen.getAllByRole("img");
+    // Scoped to the sequence figures, because the contact sheet repeats every
+    // photo further down the page with the same alt text.
+    const { container } = renderWithI18n(<GalleryPage />, { route: "/gallery" });
+    const images = [...container.querySelectorAll("figure img")];
     expect(images.map((i) => i.getAttribute("alt"))).toEqual(["first frame", "second frame"]);
+  });
+
+  it("closes the page with the contact sheet", () => {
+    renderWithI18n(<GalleryPage />, { route: "/gallery" });
+    expect(screen.getByRole("heading", { level: 2, name: /all frames/i })).toBeInTheDocument();
+    expect(screen.getAllByRole("button")).toHaveLength(2);
   });
 
   it("shows the title plate", () => {
