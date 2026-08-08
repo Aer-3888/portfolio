@@ -35,7 +35,7 @@ function upsertAlternate(hreflang, href) {
   el.setAttribute("href", href);
 }
 
-export default function useSeo({ title, description, path = "/", lang = "en" }) {
+export default function useSeo({ title, description, path = "/", lang = "en", image }) {
   useEffect(() => {
     const canonical = SITE_URL + localizePath(path, lang);
     if (title) {
@@ -49,10 +49,17 @@ export default function useSeo({ title, description, path = "/", lang = "en" }) 
       upsertMeta("name", "twitter:description", description);
     }
     upsertMeta("property", "og:locale", lang === "fr" ? "fr_FR" : "en_US");
+    // Only written when a caller supplies one. Routes without their own image
+    // keep inheriting the static card declared in index.html.
+    if (image) {
+      const absolute = image.startsWith("http") ? image : SITE_URL + image;
+      upsertMeta("property", "og:image", absolute);
+      upsertMeta("name", "twitter:image", absolute);
+    }
     upsertLink("canonical", canonical);
     upsertMeta("property", "og:url", canonical);
     upsertAlternate("en", SITE_URL + localizePath(path, "en"));
     upsertAlternate("fr", SITE_URL + localizePath(path, "fr"));
     upsertAlternate("x-default", SITE_URL + localizePath(path, "en"));
-  }, [title, description, path, lang]);
+  }, [title, description, path, lang, image]);
 }

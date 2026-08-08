@@ -20,3 +20,46 @@ describe("useSeo hreflang", () => {
     expect(canonical.getAttribute("href")).toMatch(/\/fr\/contact$/);
   });
 });
+
+describe("useSeo og:image", () => {
+  it("leaves og:image alone when no image is given", () => {
+    document.head.querySelector('meta[property="og:image"]')?.remove();
+    renderHook(() => useSeo({ title: "T", description: "D", path: "/projects" }));
+    expect(document.head.querySelector('meta[property="og:image"]')).toBeNull();
+  });
+
+  it("writes an absolute og:image when given a path", () => {
+    renderHook(() =>
+      useSeo({ title: "T", description: "D", path: "/gallery/a", image: "/images/x.webp" })
+    );
+    expect(document.head.querySelector('meta[property="og:image"]')).toHaveAttribute(
+      "content",
+      "https://portfolio-theo.pages.dev/images/x.webp"
+    );
+  });
+
+  it("mirrors the image onto twitter:image", () => {
+    renderHook(() =>
+      useSeo({ title: "T", description: "D", path: "/gallery/a", image: "/images/x.webp" })
+    );
+    expect(document.head.querySelector('meta[name="twitter:image"]')).toHaveAttribute(
+      "content",
+      "https://portfolio-theo.pages.dev/images/x.webp"
+    );
+  });
+
+  it("passes an already absolute image through unchanged", () => {
+    renderHook(() =>
+      useSeo({
+        title: "T",
+        description: "D",
+        path: "/gallery/a",
+        image: "https://cdn.example/x.webp",
+      })
+    );
+    expect(document.head.querySelector('meta[property="og:image"]')).toHaveAttribute(
+      "content",
+      "https://cdn.example/x.webp"
+    );
+  });
+});
