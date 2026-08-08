@@ -6,6 +6,7 @@ import HomePage from "./pages/home/HomePage";
 import ContactPage from "./pages/Contact/ContactPage";
 import ProjectsPage from "./pages/Projects/ProjectsPage";
 import GalleryPage from "./pages/Gallery/GalleryPage";
+import PhotoPage from "./pages/Gallery/PhotoPage";
 
 function PageRoutes() {
   return (
@@ -15,6 +16,7 @@ function PageRoutes() {
       <Route path="projects" element={<ProjectsPage />} />
       <Route path="projects/:id" element={<ProjectsPage />} />
       <Route path="gallery" element={<GalleryPage />} />
+      <Route path="gallery/:slug" element={<PhotoPage />} />
     </>
   );
 }
@@ -26,6 +28,11 @@ function PageRoutes() {
  * place instead of replaying a full page transition. Project deep links
  * collapse onto /projects because the gallery drives selection from state, not
  * navigation, so /projects/:id is the same page arrived at by a shared URL.
+ *
+ * /gallery/:slug deliberately does NOT collapse the same way. The projects case
+ * works because the detail is a modal over the page that is already mounted. A
+ * photo is its own page, so collapsing it would stop AnimatePresence swapping
+ * GalleryPage for PhotoPage and leave the wrong component on screen.
  */
 function routeKey(pathname) {
   const withoutLang = pathname.replace(/^\/fr(?=\/|$)/, "") || "/";
