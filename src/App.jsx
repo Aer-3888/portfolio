@@ -5,6 +5,7 @@ import LangLayout from "./components/layout/LangLayout";
 import HomePage from "./pages/home/HomePage";
 import ContactPage from "./pages/Contact/ContactPage";
 import ProjectsPage from "./pages/Projects/ProjectsPage";
+import GalleryPage from "./pages/Gallery/GalleryPage";
 
 function PageRoutes() {
   return (
@@ -13,6 +14,7 @@ function PageRoutes() {
       <Route path="contact" element={<ContactPage />} />
       <Route path="projects" element={<ProjectsPage />} />
       <Route path="projects/:id" element={<ProjectsPage />} />
+      <Route path="gallery" element={<GalleryPage />} />
     </>
   );
 }
