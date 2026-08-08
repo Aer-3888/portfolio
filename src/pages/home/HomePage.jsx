@@ -14,7 +14,6 @@ import PageNav from "../../components/layout/PageNav";
 import useSeo from "../../hooks/useSeo";
 
 const CvModal = lazy(() => import("../About/CvModal"));
-const GalleryModal = lazy(() => import("../About/GalleryInspector"));
 
 export default function HomePage() {
   const location = useLocation();
@@ -22,7 +21,6 @@ export default function HomePage() {
   const { scrollYProgress } = useScroll();
   const [selectedProject, setSelectedProject] = useState(null);
   const [isCvModalOpen, setIsCvModalOpen] = useState(false);
-  const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
   useSeo({
     title: t("home.title"),
@@ -45,7 +43,7 @@ export default function HomePage() {
       <PageNav
         currentPath="/"
         scrollYProgress={scrollYProgress}
-        isHidden={!!selectedProject || isCvModalOpen || isGalleryOpen}
+        isHidden={!!selectedProject || isCvModalOpen}
       />
 
       {/*
@@ -68,14 +66,13 @@ export default function HomePage() {
         </section>
 
         <section id="hobbies">
-          <HobbySection onGalleryOpen={() => setIsGalleryOpen(true)} />
+          <HobbySection />
         </section>
       </motion.main>
       <Footer />
 
       <Suspense fallback={null}>
         <CvModal isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />
-        <GalleryModal isOpen={isGalleryOpen} onClose={() => setIsGalleryOpen(false)} />
       </Suspense>
     </PageTransition>
   );

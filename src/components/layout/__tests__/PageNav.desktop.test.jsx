@@ -79,6 +79,11 @@ describe("PageNav — desktop", () => {
     expect(screen.getByText("Hello")).toBeInTheDocument();
   });
 
+  it("offers a gallery destination", () => {
+    renderNav({ currentPath: "/" });
+    expect(screen.getByText("Photos")).toBeInTheDocument();
+  });
+
   it("does not render the wordmark when scrollYProgress is not provided", () => {
     renderWithI18n(<PageNav />);
     expect(screen.queryByText("Théo Phan")).not.toBeInTheDocument();

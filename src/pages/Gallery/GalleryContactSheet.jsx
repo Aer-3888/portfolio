@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useLenis } from "../../components/layout/ScrollContext";
+import useScrollToElement from "../../hooks/useScrollToElement";
 
 /*
   A scroll aid, not a second gallery. No captions and no viewer of its own, so
@@ -8,17 +8,14 @@ import { useLenis } from "../../components/layout/ScrollContext";
 */
 export default function GalleryContactSheet({ photos }) {
   const { t } = useTranslation("gallery");
-  const lenis = useLenis();
+  const scrollToElement = useScrollToElement();
 
   const jumpTo = useCallback(
     (slug) => {
-      const el = document.getElementById(`frame-${slug}`);
-      if (!el) return;
-      // Lenis is absent on touch and under reduced motion, so fall back.
-      if (lenis) lenis.scrollTo(el, { offset: -80 });
-      else el.scrollIntoView({ block: "start" });
+      // Leaves room for the fixed nav above the frame it lands on.
+      scrollToElement(document.getElementById(`frame-${slug}`), { offset: -80 });
     },
-    [lenis]
+    [scrollToElement]
   );
 
   return (

@@ -1,7 +1,7 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import Lenis from "lenis";
-import { ScrollProvider } from "./ScrollContext";
+import ScrollProvider from "./ScrollProvider";
 
 const isTouchDevice = () =>
   window.matchMedia("(pointer: coarse)").matches || navigator.maxTouchPoints > 0;
@@ -10,9 +10,6 @@ const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: r
 
 export default function SmoothScroll({ children }) {
   const lenisRef = useRef(null);
-  // The ref alone cannot publish the instance, because writing to it never
-  // re-renders, so consumers of the context would read null forever.
-  const [lenis, setLenis] = useState(null);
   const { pathname } = useLocation();
 
   useEffect(() => {
@@ -25,28 +22,26 @@ export default function SmoothScroll({ children }) {
   useLayoutEffect(() => {
     if (lenisRef.current) lenisRef.current.destroy();
     lenisRef.current = null;
-    setLenis(null);
   }, [pathname]);
 
   useEffect(() => {
     if (isTouchDevice()) return;
     if (prefersReducedMotion()) return;
 
-    const instance = new Lenis({
+    lenisRef.current = new Lenis({
       autoRaf: true,
       lerp: 0.1,
       smoothWheel: true,
       wheelMultiplier: 1.0,
     });
-    lenisRef.current = instance;
-    setLenis(instance);
 
     return () => {
       if (lenisRef.current) lenisRef.current.destroy();
       lenisRef.current = null;
-      setLenis(null);
     };
   }, [pathname]);
 
-  return <ScrollProvider lenis={lenis}>{children}</ScrollProvider>;
+  // The ref is passed down rather than the instance, so creating or destroying
+  // Lenis never re-renders the tree. See useScrollToElement for why.
+  return <ScrollProvider lenisRef={lenisRef}>{children}</ScrollProvider>;
 }

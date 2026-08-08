@@ -4,9 +4,9 @@ import userEvent from "@testing-library/user-event";
 import { renderWithI18n } from "../../../test-utils";
 import GalleryContactSheet from "../GalleryContactSheet";
 
-const scrollTo = vi.fn();
-vi.mock("../../../components/layout/ScrollContext", () => ({
-  useLenis: () => ({ scrollTo }),
+const { scrollToElement } = vi.hoisted(() => ({ scrollToElement: vi.fn() }));
+vi.mock("../../../hooks/useScrollToElement", () => ({
+  default: () => scrollToElement,
 }));
 
 const photos = [
@@ -15,7 +15,7 @@ const photos = [
 ];
 
 beforeEach(() => {
-  scrollTo.mockClear();
+  scrollToElement.mockClear();
   document.body.replaceChildren();
 });
 
@@ -41,7 +41,7 @@ describe("GalleryContactSheet", () => {
     expect(screen.getByRole("button", { name: /Brest/ })).toBeInTheDocument();
   });
 
-  it("scrolls to the matching frame through lenis when one exists", async () => {
+  it("scrolls to the frame matching the thumbnail", async () => {
     const target = document.createElement("div");
     target.id = "frame-b";
     document.body.appendChild(target);
@@ -49,12 +49,15 @@ describe("GalleryContactSheet", () => {
     renderWithI18n(<GalleryContactSheet photos={photos} />);
     await userEvent.click(screen.getAllByRole("button")[1]);
 
-    expect(scrollTo).toHaveBeenCalledWith(target, expect.objectContaining({ offset: expect.any(Number) }));
+    expect(scrollToElement).toHaveBeenCalledWith(
+      target,
+      expect.objectContaining({ offset: expect.any(Number) })
+    );
   });
 
-  it("does nothing when the target frame is not on the page", async () => {
+  it("hands over nothing when the target frame is not on the page", async () => {
     renderWithI18n(<GalleryContactSheet photos={photos} />);
     await userEvent.click(screen.getAllByRole("button")[0]);
-    expect(scrollTo).not.toHaveBeenCalled();
+    expect(scrollToElement).toHaveBeenCalledWith(null, expect.anything());
   });
 });

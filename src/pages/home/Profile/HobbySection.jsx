@@ -1,10 +1,11 @@
 import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
-import { galleryFiles } from "../../About/galleryData";
+import { galleryPhotos } from "../../Gallery/galleryPhotos";
 
-const photoSet = [galleryFiles[20], galleryFiles[12], galleryFiles[10]];
+const photoSet = [galleryPhotos[20], galleryPhotos[12], galleryPhotos[10]];
 
-export default function HobbySection({ onGalleryOpen }) {
+export default function HobbySection() {
   const { t } = useTranslation("home");
   const prefersReducedMotion = useReducedMotion();
 
@@ -52,9 +53,8 @@ export default function HobbySection({ onGalleryOpen }) {
           </motion.div>
 
           <div className="relative">
-            <button
-              type="button"
-              onClick={onGalleryOpen}
+            <Link
+              to="/gallery"
               className="group relative mx-auto block h-[34rem] w-full max-w-[42rem] cursor-pointer text-left sm:h-[44rem] md:h-[48rem]"
               aria-label={t("hobbies.galleryAria")}
             >
@@ -68,12 +68,12 @@ export default function HobbySection({ onGalleryOpen }) {
               className="absolute left-2 top-[8%] z-10 w-[55%] bg-[#f1eee7] p-2 pb-9 shadow-xl sm:p-3 sm:pb-12"
             >
               <img
-                src={photoSet[1].url}
+                src={photoSet[1].src.mid}
                 alt={t("hobbies.alt1")}
                 className="aspect-[4/5] w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
               />
               <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-[#121212]/55 sm:bottom-4 sm:left-4">
-                {photoSet[1].meta.loc} · © Théo Phan
+                {photoSet[1].place} · © Théo Phan
               </figcaption>
             </motion.figure>
 
@@ -87,12 +87,12 @@ export default function HobbySection({ onGalleryOpen }) {
               className="absolute right-0 top-0 w-[62%] bg-[#2356d8] p-2 pb-9 shadow-xl sm:p-3 sm:pb-12"
             >
               <img
-                src={photoSet[0].url}
+                src={photoSet[0].src.mid}
                 alt={t("hobbies.alt2")}
                 className="aspect-[4/5] w-full object-cover"
               />
               <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-white/70 sm:bottom-4 sm:left-4">
-                {photoSet[0].meta.loc} · © Théo Phan
+                {photoSet[0].place} · © Théo Phan
               </figcaption>
             </motion.figure>
 
@@ -106,25 +106,24 @@ export default function HobbySection({ onGalleryOpen }) {
               className="absolute bottom-0 left-[16%] z-20 w-[66%] bg-[#f1eee7] p-2 pb-9 shadow-2xl sm:p-3 sm:pb-12"
             >
               <img
-                src={photoSet[2].url}
+                src={photoSet[2].src.mid}
                 alt={t("hobbies.alt3")}
                 className="aspect-[4/3] w-full object-cover"
               />
               <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-[#121212]/55 sm:bottom-4 sm:left-4">
-                {photoSet[2].meta.loc} · © Théo Phan
+                {photoSet[2].place} · © Théo Phan
               </figcaption>
             </motion.figure>
-            </button>
+            </Link>
 
-            <button
-              type="button"
-              onClick={onGalleryOpen}
+            <Link
+              to="/gallery"
               className="group absolute right-2 top-[56%] z-30 grid h-28 w-28 cursor-pointer place-items-center rounded-full bg-[#2356d8] p-4 text-center font-mono text-[10px] uppercase leading-tight tracking-[0.1em] text-white shadow-xl transition duration-300 hover:-translate-y-1 hover:rotate-6 hover:scale-105 sm:h-32 sm:w-32"
               aria-label={t("hobbies.viewPhotos")}
             >
               <span>{t("hobbies.viewPhotos")}</span>
               <span className="text-lg transition-transform group-hover:rotate-12">↗</span>
-            </button>
+            </Link>
           </div>
         </div>
       </div>
