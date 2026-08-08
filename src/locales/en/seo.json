@@ -10,5 +10,13 @@
   "contact": {
     "title": "Contact | Théo Phan",
     "description": "Get in touch with Théo Phan, CS student at INSA Rennes, open to a summer 2027 internship."
+  },
+  "gallery": {
+    "title": "Photography | Théo Phan",
+    "description": "Photographs by Théo Phan, twenty five frames in a deliberate order, with the camera settings behind each one."
+  },
+  "photo": {
+    "title": "{{place}} | Photography | Théo Phan",
+    "description": "{{place}}, {{date}}. A photograph by Théo Phan."
   }
 }

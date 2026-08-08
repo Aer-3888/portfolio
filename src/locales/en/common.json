@@ -1,5 +1,5 @@
 {
-  "nav": { "work": "Work", "story": "Story", "hello": "Hello", "home": "Home" },
+  "nav": { "work": "Work", "story": "Story", "hello": "Hello", "home": "Home", "gallery": "Photos" },
   "language": { "label": "Language", "en": "EN", "fr": "FR", "switchTo": "Switch to English" },
   "branding": { "tagline": "Making things" },
   "menu": { "heading": "Navigation", "close": "Close", "getInTouch": "Get in touch", "toggle": "Toggle menu" },

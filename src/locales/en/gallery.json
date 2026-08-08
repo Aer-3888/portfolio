@@ -1,0 +1,15 @@
+{
+  "eyebrow": "Photography",
+  "title": "Frames",
+  "intro": "A camera is how I pay attention. These are the frames worth keeping, in the order I want them read.",
+  "count": "{{count}} frames",
+  "sheetHeading": "All frames",
+  "sheetAria": "Jump to frame {{index}}, {{place}}",
+  "placard": { "copyright": "© Théo Phan" },
+  "photo": {
+    "back": "Back to the gallery",
+    "prev": "Previous frame",
+    "next": "Next frame",
+    "of": "{{index}} of {{total}}"
+  }
+}

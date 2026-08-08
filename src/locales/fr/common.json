@@ -1,5 +1,5 @@
 {
-  "nav": { "work": "Projets", "story": "Parcours", "hello": "Contact", "home": "Accueil" },
+  "nav": { "work": "Projets", "story": "Parcours", "hello": "Contact", "home": "Accueil", "gallery": "Photos" },
   "language": { "label": "Langue", "en": "EN", "fr": "FR", "switchTo": "Passer en français" },
   "branding": { "tagline": "Je fabrique des choses" },
   "menu": { "heading": "Navigation", "close": "Fermer", "getInTouch": "Me contacter", "toggle": "Ouvrir le menu" },

@@ -10,5 +10,13 @@
   "contact": {
     "title": "Contact | Théo Phan",
     "description": "Contacte Théo Phan, étudiant en informatique à l’INSA Rennes, ouvert à un stage d’été 2027."
+  },
+  "gallery": {
+    "title": "Photographie | Théo Phan",
+    "description": "Les photographies de Théo Phan, vingt cinq images dans un ordre choisi, avec les réglages qui les ont faites."
+  },
+  "photo": {
+    "title": "{{place}} | Photographie | Théo Phan",
+    "description": "{{place}}, {{date}}. Une photographie de Théo Phan."
   }
 }

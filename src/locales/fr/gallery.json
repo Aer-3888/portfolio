@@ -1,0 +1,15 @@
+{
+  "eyebrow": "Photographie",
+  "title": "Images",
+  "intro": "L'appareil photo, c'est ma façon de regarder. Voici les images que je garde, dans l'ordre où je veux qu'on les lise.",
+  "count": "{{count}} images",
+  "sheetHeading": "Toutes les images",
+  "sheetAria": "Aller à l'image {{index}}, {{place}}",
+  "placard": { "copyright": "© Théo Phan" },
+  "photo": {
+    "back": "Retour à la galerie",
+    "prev": "Image précédente",
+    "next": "Image suivante",
+    "of": "{{index}} sur {{total}}"
+  }
+}
