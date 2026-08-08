@@ -6,15 +6,8 @@ import useSeo from "../../hooks/useSeo";
 import { getLangFromPath } from "../../i18n/localizePath";
 import { galleryPhotos, findPhotoBySlug, photoNeighbours, formatCaptureDate } from "./galleryPhotos";
 
-/*
-  A real route, not a lightbox. That costs a page transition between frames and
-  buys a shareable URL, working browser history, and no focus trap or scroll lock
-  to maintain. The sequence on /gallery is the way to browse. This is where a
-  shared link lands.
-
-  Near black is the one deliberate departure from the paper palette, because a
-  light surround weakens a photograph.
-*/
+// A real route, not a lightbox, so there is no focus trap or scroll lock here.
+// Near black is the one departure from the paper palette.
 export default function PhotoPage() {
   const { slug } = useParams();
   const location = useLocation();
@@ -74,8 +67,7 @@ export default function PhotoPage() {
             {technical}
           </p>
           <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.12em] text-white/30">
-            {t("photo.of", { index: photo.index, total: galleryPhotos.length })} ·{" "}
-            {t("placard.copyright")}
+            {t("photo.of", { index: photo.index, total: galleryPhotos.length })}
           </p>
         </figcaption>
 
@@ -90,10 +82,7 @@ export default function PhotoPage() {
               </Link>
             )}
           </span>
-          {/*
-            The slug travels back through router state so GalleryPage can undo
-            PageTransition's scroll reset and land the reader on this frame.
-          */}
+          {/* The slug travels back so GalleryPage can restore the scroll. */}
           <Link
             to="/gallery"
             state={{ scrollTo: photo.slug }}

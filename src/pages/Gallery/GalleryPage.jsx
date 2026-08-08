@@ -23,12 +23,8 @@ export default function GalleryPage() {
     lang: getLangFromPath(location.pathname),
   });
 
-  /*
-    PageTransition resets scroll to the top on mount, which is right for a fresh
-    arrival and wrong when the reader is coming back from a photo page. The photo
-    page hands the slug back through router state, and this lands them on the
-    frame they left. Same mechanism the home page uses for its section links.
-  */
+  // PageTransition resets scroll on mount, so returning from a photo page needs
+  // the slug handed back through router state to undo it.
   useEffect(() => {
     const slug = location.state?.scrollTo;
     if (!slug) return;

@@ -8,7 +8,6 @@ const KEYS = [
   "count",
   "sheetHeading",
   "sheetAria",
-  "placard.copyright",
   "photo.back",
   "photo.prev",
   "photo.next",

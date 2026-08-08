@@ -1,23 +1,11 @@
 import { createContext, useCallback, useContext } from "react";
 
-/*
-  The context carries a ref, not the Lenis instance. SmoothScroll creates and
-  destroys Lenis inside effects, and publishing the instance as state would mean
-  calling setState from an effect on every route change, cascading renders for a
-  value nothing renders from.
-
-  Consumers only ever need Lenis inside an event handler, so reading it from a
-  stable ref at call time is both simpler and cheaper.
-*/
+// Carries a ref, not the Lenis instance. Nothing renders from it, and state here
+// would mean setState from an effect on every route change.
 export const ScrollContext = createContext(null);
 
-/**
- * Returns a stable callback that scrolls an element into view.
- *
- * Falls back to native scrolling when Lenis is absent, which is the normal case
- * on touch devices and under reduced motion, and also when no provider is
- * mounted at all, as in isolated component tests.
- */
+// Falls back to native scrolling when Lenis is absent, which is the normal case
+// on touch, under reduced motion, and with no provider mounted.
 export default function useScrollToElement() {
   const lenisRef = useContext(ScrollContext);
 

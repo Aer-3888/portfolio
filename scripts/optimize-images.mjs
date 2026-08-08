@@ -15,11 +15,10 @@ const publicDir = path.join(root, "public");
 
 // Longest-edge caps per use. Project cards sit in a ~700px 4:3 frame, so these
 // cover retina without shipping DSLR raws.
-//
-// Three derivatives per gallery photo. The contact sheet draws at roughly 120px,
-// the half and third weight sequence frames at roughly 600px, and the full weight
-// frames plus the per photo page at full width.
+// Gallery widths map to contact sheet, sequence frame, and full page.
 const GALLERY_WIDTHS = { thumb: 400, mid: 1200, full: 2000 };
+// Photographs are compressed lighter than the screenshots and cutouts elsewhere.
+const GALLERY_QUALITY = 92;
 const CARD_MAX = 1400;
 const HERO_MAX = 1100; // me_.png is 796x1024, so this keeps it native.
 
@@ -81,8 +80,8 @@ async function readPhotoExif(src) {
   };
 }
 
-// Machine truth only. Curation lives in src/pages/Gallery/gallerySequence.js and
-// is merged at module load, so re-running this script never touches copy.
+// Machine truth only. Curation lives in src/pages/Gallery/gallerySequence.js, so
+// re-running this never touches copy.
 async function writeGalleryData(photos) {
   const body = photos
     .map(
@@ -134,7 +133,7 @@ async function run() {
     let dims = null;
     for (const [key, width] of Object.entries(GALLERY_WIDTHS)) {
       const dest = path.join(outDir, "Gallery", `${name}-${width}.webp`);
-      const info = await toWebp(src, dest, width, 78);
+      const info = await toWebp(src, dest, width, GALLERY_QUALITY);
       add(info);
       srcs[key] = `Gallery/${name}-${width}.webp`;
       if (key === "full") dims = { width: info.width, height: info.height };

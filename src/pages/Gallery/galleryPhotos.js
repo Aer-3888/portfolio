@@ -1,14 +1,8 @@
 import { generatedPhotos } from "../../data/gallery.generated";
 import { sequence } from "./gallerySequence";
 
-/**
- * Machine truth and curation are separate files so regenerating EXIF can never
- * overwrite hand written copy. This joins them on `name`.
- *
- * A generated photo missing from the sequence is skipped, not appended, so
- * dropping a JPEG into the folder never silently publishes it. A sequence entry
- * with no generated photo is a mistake worth failing loudly on.
- */
+// Joins generated EXIF with hand written curation on `name`. Photos missing from
+// the sequence are skipped so a stray JPEG never publishes itself.
 export function mergeGallery(generated, seq) {
   const byName = new Map(generated.map((p) => [p.name, p]));
 
@@ -29,15 +23,8 @@ export function mergeGallery(generated, seq) {
   return { photos, skipped };
 }
 
-/**
- * The capture date comes from EXIF, so there is nothing to keep in sync and
- * nothing to write by hand. Day precision is more than a placard needs, so this
- * renders month and year.
- *
- * Parsed into an explicit UTC date and formatted in UTC. Passing the raw string
- * to `new Date` parses it as UTC midnight, which a viewer in the Americas would
- * see as the previous day, and the first of any month would fall back a month.
- */
+// Formatted in explicit UTC. Parsing the raw string would land on the previous
+// day west of Greenwich, dropping the first of a month into the month before.
 export function formatCaptureDate(taken, lang = "en") {
   if (!taken) return "";
   const [year, month, day] = taken.split("-").map(Number);
@@ -64,8 +51,8 @@ export function findPhotoBySlug(slug) {
   return galleryPhotos.find((p) => p.slug === slug) ?? null;
 }
 
-// Deliberately does not wrap. The order is authored, so looping past the last
-// frame back to the first would undercut the sequence.
+// Does not wrap. The order is authored, so looping past the last frame would
+// undercut the sequence.
 export function photoNeighbours(slug) {
   const i = galleryPhotos.findIndex((p) => p.slug === slug);
   if (i === -1) return { prev: null, next: null };

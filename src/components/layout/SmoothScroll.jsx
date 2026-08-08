@@ -41,7 +41,7 @@ export default function SmoothScroll({ children }) {
     };
   }, [pathname]);
 
-  // The ref is passed down rather than the instance, so creating or destroying
-  // Lenis never re-renders the tree. See useScrollToElement for why.
+  // The ref goes down, not the instance, so creating or destroying Lenis never
+  // re-renders the tree.
   return <ScrollProvider lenisRef={lenisRef}>{children}</ScrollProvider>;
 }

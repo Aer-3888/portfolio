@@ -18,9 +18,7 @@ vi.mock("framer-motion", async () => {
 
 vi.mock("../../../components/layout/PageNav", () => ({ default: () => <nav /> }));
 
-// vi.mock factories are hoisted above the whole module, so the fixture has to be
-// hoisted with them. A plain top level const is not initialised yet when the
-// factory runs.
+// Hoisted because vi.mock factories run before top level consts initialise.
 const { photos } = vi.hoisted(() => ({
   photos: [
     {

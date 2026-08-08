@@ -20,8 +20,7 @@ vi.mock("framer-motion", async () => {
 
 vi.mock("../../../components/layout/PageNav", () => ({ default: () => <nav /> }));
 
-// GalleryFrame pulls formatCaptureDate from this module too, so the mock has to
-// supply it or every frame throws.
+// GalleryFrame pulls formatCaptureDate from here too, so the mock must supply it.
 vi.mock("../galleryPhotos", () => ({
   formatCaptureDate: () => "July 2024",
   galleryPhotos: [
@@ -53,9 +52,8 @@ vi.mock("../galleryPhotos", () => ({
 }));
 
 describe("GalleryPage", () => {
+  // Scoped to figures because the contact sheet repeats every alt text below.
   it("renders every photo in sequence order", () => {
-    // Scoped to the sequence figures, because the contact sheet repeats every
-    // photo further down the page with the same alt text.
     const { container } = renderWithI18n(<GalleryPage />, { route: "/gallery" });
     const images = [...container.querySelectorAll("figure img")];
     expect(images.map((i) => i.getAttribute("alt"))).toEqual(["first frame", "second frame"]);

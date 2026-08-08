@@ -29,10 +29,8 @@ function PageRoutes() {
  * collapse onto /projects because the gallery drives selection from state, not
  * navigation, so /projects/:id is the same page arrived at by a shared URL.
  *
- * /gallery/:slug deliberately does NOT collapse the same way. The projects case
- * works because the detail is a modal over the page that is already mounted. A
- * photo is its own page, so collapsing it would stop AnimatePresence swapping
- * GalleryPage for PhotoPage and leave the wrong component on screen.
+ * /gallery/:slug must NOT collapse the same way. A photo is its own page, so
+ * collapsing it would leave GalleryPage mounted instead of PhotoPage.
  */
 function routeKey(pathname) {
   const withoutLang = pathname.replace(/^\/fr(?=\/|$)/, "") || "/";

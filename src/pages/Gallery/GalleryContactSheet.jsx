@@ -2,17 +2,14 @@ import { useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import useScrollToElement from "../../hooks/useScrollToElement";
 
-/*
-  A scroll aid, not a second gallery. No captions and no viewer of its own, so
-  the only job here is getting the reader back up to a frame they remember.
-*/
+// A scroll aid, not a second gallery. No captions, no viewer of its own.
 export default function GalleryContactSheet({ photos }) {
   const { t } = useTranslation("gallery");
   const scrollToElement = useScrollToElement();
 
   const jumpTo = useCallback(
     (slug) => {
-      // Leaves room for the fixed nav above the frame it lands on.
+      // Offset leaves room for the fixed nav above the frame.
       scrollToElement(document.getElementById(`frame-${slug}`), { offset: -80 });
     },
     [scrollToElement]

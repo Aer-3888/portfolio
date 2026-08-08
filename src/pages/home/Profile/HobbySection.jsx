@@ -73,7 +73,7 @@ export default function HobbySection() {
                 className="aspect-[4/5] w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
               />
               <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-[#121212]/55 sm:bottom-4 sm:left-4">
-                {photoSet[1].place} · © Théo Phan
+                {photoSet[1].place}
               </figcaption>
             </motion.figure>
 
@@ -92,7 +92,7 @@ export default function HobbySection() {
                 className="aspect-[4/5] w-full object-cover"
               />
               <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-white/70 sm:bottom-4 sm:left-4">
-                {photoSet[0].place} · © Théo Phan
+                {photoSet[0].place}
               </figcaption>
             </motion.figure>
 
@@ -111,7 +111,7 @@ export default function HobbySection() {
                 className="aspect-[4/3] w-full object-cover"
               />
               <figcaption className="absolute bottom-3 left-3 font-mono text-[8px] uppercase tracking-[0.1em] text-[#121212]/55 sm:bottom-4 sm:left-4">
-                {photoSet[2].place} · © Théo Phan
+                {photoSet[2].place}
               </figcaption>
             </motion.figure>
             </Link>

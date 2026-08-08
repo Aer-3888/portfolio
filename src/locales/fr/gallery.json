@@ -5,7 +5,6 @@
   "count": "{{count}} images",
   "sheetHeading": "Toutes les images",
   "sheetAria": "Aller à l'image {{index}}, {{place}}",
-  "placard": { "copyright": "© Théo Phan" },
   "photo": {
     "back": "Retour à la galerie",
     "prev": "Image précédente",

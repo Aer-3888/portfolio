@@ -49,12 +49,17 @@ describe("GalleryFrame", () => {
     expect(img).toHaveAttribute("height", "1333");
   });
 
-  it("offers all three derivatives to the browser", () => {
+  it("never offers the thumbnail derivative to a frame", () => {
     renderWithI18n(<GalleryFrame photo={photo} />);
     const srcset = screen.getByAltText(photo.alt).getAttribute("srcset");
-    expect(srcset).toContain("/t-400.webp 400w");
+    expect(srcset).not.toContain("400w");
     expect(srcset).toContain("/t-1200.webp 1200w");
     expect(srcset).toContain("/t-2000.webp 2000w");
+  });
+
+  it("falls back to the full size when srcset is ignored", () => {
+    renderWithI18n(<GalleryFrame photo={photo} />);
+    expect(screen.getByAltText(photo.alt)).toHaveAttribute("src", "/t-2000.webp");
   });
 
   it("shows the place and the capture date read from EXIF", () => {
@@ -72,9 +77,8 @@ describe("GalleryFrame", () => {
     expect(technical).toHaveTextContent("ISO 100");
   });
 
+  // Both variants sit in the DOM and CSS picks one, so twice is correct here.
   it("renders a condensed aperture alongside it for small screens", () => {
-    // Both variants are in the DOM and CSS picks one, so the aperture appearing
-    // twice is the intended behaviour rather than a duplication bug.
     renderWithI18n(<GalleryFrame photo={photo} />);
     expect(screen.getAllByText(/f\/11/)).toHaveLength(2);
   });

@@ -3,9 +3,7 @@ import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { formatCaptureDate } from "./galleryPhotos";
 
-// Widths the frame actually occupies, so the browser can pick the smallest
-// derivative that still covers the render. Kept in sync with the grid in
-// GalleryPage: full spans the measure, half is two up, third is three up.
+// Rendered width per weight. Keep in sync with the grid in GalleryPage.
 const SIZES = {
   full: "(min-width: 768px) 72vw, 92vw",
   half: "(min-width: 768px) 36vw, 92vw",
@@ -18,11 +16,8 @@ const WIDTH_CLASS = {
   third: "col-span-3 md:col-span-2",
 };
 
-/*
-  A full weight portrait would otherwise run taller than the viewport and turn
-  the page into a scroll tunnel, so full frames are capped by height and centred.
-  Half and third frames are narrow enough to just fill their column.
-*/
+// Full frames are capped by height, or a full weight portrait runs taller than
+// the viewport.
 const IMAGE_CLASS = {
   full: "mx-auto max-h-[82vh] w-auto max-w-full",
   half: "w-full",
@@ -30,7 +25,7 @@ const IMAGE_CLASS = {
 };
 
 export default function GalleryFrame({ photo }) {
-  const { t, i18n } = useTranslation("gallery");
+  const { i18n } = useTranslation("gallery");
   const prefersReducedMotion = useReducedMotion();
   const { exif } = photo;
 
@@ -51,9 +46,10 @@ export default function GalleryFrame({ photo }) {
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
     >
       <Link to={`/gallery/${photo.slug}`} className="group block">
+        {/* 400px is contact sheet only, too soft for a frame at any size. */}
         <img
-          src={photo.src.mid}
-          srcSet={`${photo.src.thumb} 400w, ${photo.src.mid} 1200w, ${photo.src.full} 2000w`}
+          src={photo.src.full}
+          srcSet={`${photo.src.mid} 1200w, ${photo.src.full} 2000w`}
           sizes={SIZES[photo.weight]}
           width={photo.width}
           height={photo.height}
@@ -80,9 +76,6 @@ export default function GalleryFrame({ photo }) {
             {exif.aperture}
           </span>
           {note && <span className="mt-3 block max-w-prose text-sm leading-relaxed text-ash">{note}</span>}
-        </span>
-        <span className="font-mono text-[9px] uppercase tracking-[0.12em] text-pebble">
-          {t("placard.copyright")}
         </span>
       </figcaption>
     </motion.figure>
