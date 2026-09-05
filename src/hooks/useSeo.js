@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { localizePath } from "../i18n/localizePath";
 
 // Update document metadata for each route.
-const SITE_URL = "https://portfolio-theo.pages.dev";
+const SITE_URL = "https://aerworks.net";
 
 function upsertMeta(attr, key, content) {
   let el = document.head.querySelector(`meta[${attr}="${key}"]`);

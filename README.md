@@ -4,7 +4,7 @@ A personal portfolio built as a project in its own right: a scroll-driven, spati
 custom motion, smooth scrolling, and a minimalist editorial design. Fast on mobile, fully
 keyboard accessible, and respectful of reduced-motion preferences.
 
-**Live:** [portfolio-theo.pages.dev](https://portfolio-theo.pages.dev)
+**Live:** [aerworks.net](https://aerworks.net)
 
 ![Home page demo](docs/demo.gif)
 

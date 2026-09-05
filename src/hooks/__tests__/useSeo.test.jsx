@@ -34,7 +34,7 @@ describe("useSeo og:image", () => {
     );
     expect(document.head.querySelector('meta[property="og:image"]')).toHaveAttribute(
       "content",
-      "https://portfolio-theo.pages.dev/images/x.webp"
+      "https://aerworks.net/images/x.webp"
     );
   });
 
@@ -44,7 +44,7 @@ describe("useSeo og:image", () => {
     );
     expect(document.head.querySelector('meta[name="twitter:image"]')).toHaveAttribute(
       "content",
-      "https://portfolio-theo.pages.dev/images/x.webp"
+      "https://aerworks.net/images/x.webp"
     );
   });
 
