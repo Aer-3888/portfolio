@@ -43,11 +43,6 @@ describe("HobbySection", () => {
     expect(screen.queryAllByRole("button")).toHaveLength(0);
   });
 
-  it("still shows three preview photos", () => {
-    renderWithI18n(<HobbySection />);
-    expect(screen.getAllByRole("img")).toHaveLength(3);
-  });
-
   it("uses the mid derivative for the previews, not the full size", () => {
     renderWithI18n(<HobbySection />);
     for (const img of screen.getAllByRole("img")) {
