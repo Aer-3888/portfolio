@@ -5,62 +5,25 @@ import { useTranslation } from "react-i18next";
 function ExperienceSection() {
   const { t } = useTranslation("home");
   const moments = t("experience.moments", { returnObjects: true });
-  const prefersReducedMotion = useReducedMotion();
+  const reduced = useReducedMotion();
 
   return (
-    <section
-      id="experience"
-      className="relative overflow-hidden bg-[#ded8cc] px-5 py-24 text-[#121212] sm:px-8 md:px-12 md:py-36"
-    >
-      <div className="mx-auto max-w-[1500px]">
-        <div className="relative z-10 grid gap-10 md:grid-cols-[0.75fr_1.25fr] md:gap-20">
-          <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 28 }}
-            whileInView={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="md:sticky md:top-28 md:h-fit"
+    <section id="experience" className="bg-ground px-6 pb-24 pt-8 text-ink md:px-10 md:pb-32">
+      <div className="mx-auto grid max-w-[100rem] grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-5 md:gap-6">
+        {moments.map((moment, index) => (
+          <motion.article
+            key={moment.year + moment.title}
+            initial={reduced ? false : { opacity: 0, y: 16 }}
+            whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ duration: 0.55, delay: reduced ? 0 : index * 0.05 }}
+            className="border-t border-rule pt-4"
           >
-            <span className="font-serif text-2xl italic leading-none tracking-[-0.03em] text-[#121212]/70">
-              {t("experience.eyebrow")}
-            </span>
-            <h2 className="mt-5 max-w-[8ch] font-serif text-[clamp(4rem,7vw,7.5rem)] leading-[0.8] tracking-[-0.04em]">
-              {t("experience.headline")}
-            </h2>
-            <p className="mt-8 max-w-sm text-sm leading-relaxed text-[#121212]/60">
-              {t("experience.intro")}
-            </p>
-          </motion.div>
-
-          <div className="relative border-t border-[#121212]">
-            {moments.map((moment, index) => (
-              <motion.article
-                key={moment.year + moment.title}
-                initial={prefersReducedMotion ? false : { opacity: 0, x: 24 }}
-                whileInView={prefersReducedMotion ? undefined : { opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-70px" }}
-                transition={{
-                  duration: 0.7,
-                  delay: prefersReducedMotion ? 0 : index * 0.04,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="grid gap-4 border-b border-[#121212]/25 py-9 sm:grid-cols-[7rem_1fr] md:py-12"
-              >
-                <div>
-                  <span className="font-serif text-3xl italic text-[#c8452b]">{moment.year}</span>
-                </div>
-                <div>
-                  <h3 className="max-w-2xl font-serif text-3xl leading-[0.98] md:text-5xl">
-                    {moment.title}
-                  </h3>
-                  <p className="mt-5 max-w-xl text-sm leading-relaxed text-[#121212]/60">
-                    {moment.detail}
-                  </p>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
+            <span className="text-sm text-accent-deep">{moment.year}</span>
+            <h3 className="mt-3 font-sans text-sm font-medium">{moment.title}</h3>
+            <p className="mt-1 text-sm leading-relaxed text-ash">{moment.detail}</p>
+          </motion.article>
+        ))}
       </div>
     </section>
   );

@@ -1,47 +1,26 @@
 {
   "hero": {
-    "passLabel": "Boarding pass",
-    "carrier": "INSA Rennes",
-    "docValue": "2027",
-    "passengerLabel": "Passenger",
-    "passengerValue": "Théo Phan",
-    "fromLabel": "From",
-    "fromValue": "RNS · Rennes",
-    "fromCode": "RNS",
-    "fromCity": "Rennes, France",
-    "toLabel": "To",
-    "toValue": "ANY",
-    "toCode": "ANY",
-    "routeSub": "curiosity is my compass",
-    "route": "RNS → ANY",
-    "ctaProjects": "Read the stories",
-    "ctaCv": "View my CV",
-    "classLabel": "Class",
-    "classValue": "CS Engineer",
-    "seatLabel": "Seat",
-    "seatValue": "4INFO",
-    "boardingLabel": "Boarding",
-    "boardingValue": "Summer ’27",
-    "stubBoardsLabel": "Boards",
-    "scroll": "( Scroll to begin )"
+    "identity": "I’m Théo Phan, a computer science student at INSA Rennes. I like building apps and learning how they behave outside a demo.",
+    "headline": "I build things that need to work.",
+    "portraitAlt": "Théo Phan smiling and holding a phone",
+    "ctaWork": "View projects",
+    "ctaCv": "Download CV"
   },
   "status": {
     "eyebrow": "How I work",
-    "headlinePre": "I like figuring out ",
-    "headlineAccent": "why something fails",
-    "headlinePost": ", then trying to make it work.",
+    "headline": "I like figuring out why something fails, then trying to make it work.",
     "principles": [
       {
-        "title": "I build it from the parts.",
-        "text": "Even when a library would do it. Once, so I know what is actually happening underneath."
+        "title": "Start with the parts",
+        "text": "Sometimes I rebuild what a library could do, once, so I understand what is happening underneath."
       },
       {
-        "title": "I build the broken version first.",
-        "text": "Then attack it, fix it, and run the same attack again to prove the fix holds."
+        "title": "Test on the mess",
+        "text": "Real phones, imperfect photos, and bad networks are where the useful problems begin."
       },
       {
-        "title": "I test on the mess.",
-        "text": "Real phones, imperfect photos, bad network. The demo machine proves nothing."
+        "title": "Keep the evidence",
+        "text": "A working demo is a start. I want to know what changed and whether the fix holds."
       }
     ]
   },
@@ -52,35 +31,36 @@
     "moments": [
       {
         "year": "2023",
-        "title": "Learned to make applications hold together.",
-        "detail": "At IUT Nantes, full-stack projects taught me the full path from an idea and a data model to something another person can actually use."
+        "title": "IUT Nantes",
+        "detail": "Learning to make applications hold together."
       },
       {
         "year": "2025",
-        "title": "Pointed computer vision at fiber-optic defects.",
-        "detail": "At FPT Telecom, accuracy was only one part of the job. Latency, messy images, documentation, and leaving a maintainable pipeline behind mattered too."
+        "title": "FPT Telecom",
+        "detail": "Computer vision for fiber-optic defects."
       },
       {
         "year": "2025",
-        "title": "Helped turn an NFC tag into a shipped product.",
-        "detail": "Waiki was the first time I led a team from a blank page to both app stores. It taught me that background reliability and team clarity are product features."
+        "title": "Waiki",
+        "detail": "A small team, a physical key, and two app stores."
       },
       {
         "year": "2026",
-        "title": "Started breaking systems to understand them.",
-        "detail": "CTFs pulled me into cryptography, forensics, and OSINT. GardeFou brought that mindset to AI: build the vulnerable thing, attack it, then prove the defense works."
+        "title": "Security and AI",
+        "detail": "CTFs, prompt injection, and systems built to be tested."
       },
       {
         "year": "Now",
-        "title": "Studying AI, while keeping one foot outside the model.",
-        "detail": "I’m at INSA Rennes, building backend tools for an accessibility association and looking for a summer 2027 internship where software meets a hard, real problem."
+        "title": "INSA Rennes",
+        "detail": "Computer science, security labs, and new questions."
       }
     ]
   },
   "projects": {
-    "heading": "A few things I’ve built.",
+    "heading": "Selected work",
+    "intro": "A few things I have made and learned from.",
     "outro": "There are more experiments, useful tools, and ideas that got slightly out of hand.",
-    "cta": "See the whole archive",
+    "cta": "See all projects",
     "open": "Open {{title}}",
     "storyAria": "Open {{title}} case study",
     "stories": {
@@ -105,15 +85,9 @@
     }
   },
   "hobbies": {
-    "eyebrow": "Away from the keyboard",
-    "headlinePre": "I collect ",
-    "headlineAccent": "ways of seeing.",
+    "heading": "Photography",
     "body": "Photography makes me slow down and notice geometry, light, and the one detail that changes the frame. It is the opposite of debugging, and somehow the same skill.",
-    "boulderingLabel": "Bouldering",
-    "boulderingText": "A problem you solve with your whole body. Fall, adjust one move, try again.",
-    "escapeLabel": "Escape games",
-    "escapeText": "Pattern recognition, questionable theories, and a timer making every idea louder.",
-    "viewPhotos": "View photos",
+    "viewPhotos": "See more photos",
     "galleryAria": "Open photography gallery",
     "alt1": "A photograph from Théo’s visual diary",
     "alt2": "A sunset cityscape photographed by Théo",
@@ -122,12 +96,26 @@
   "footer": {
     "location": "Rennes, France",
     "availability": "Summer 2027 internship",
-    "role": "CS engineering @ INSA Rennes"
+    "role": "CS engineering @ INSA Rennes",
+    "backToTop": "Back to top"
   },
   "gallery": {
     "counter": "Visual Diary · {{index}} of {{total}}"
   },
   "cv": {
     "download": "Download"
+  },
+  "pairings": {
+    "01": {
+      "claimBefore": "Classification. ",
+      "claimAccent": "By hand, then by machine.",
+      "intro": "Hübner drew a specimen, named it, and placed it in a taxonomy. Two hundred years later, the same problem answered by a model on photographs taken in a field.",
+      "historicalAlt": "An 1806 engraving of a moth with its wings spread, printed as a halftone plate",
+      "historicalCaption": "Plate I. Jacob Hübner, Sammlung exotischer Schmetterlinge, Augsburg, 1806.",
+      "historicalNote": "Drawn from the specimen, named, and placed in a taxonomy by eye.",
+      "evidenceAlt": "Apple leaves under detection boxes labelled Apple Scab Leaf, with confidence scores up to 0.94",
+      "evidenceCaption": "Plate II. Plant Detection, YOLOv8, 2025. mAP@50 0.90, recall 85.8%.",
+      "evidenceNote": "Found, boxed and scored at 0.94 confidence on photographs taken in the field."
+    }
   }
 }

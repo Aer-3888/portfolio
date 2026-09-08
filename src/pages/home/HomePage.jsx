@@ -1,4 +1,4 @@
-import { useEffect, useState, lazy, Suspense } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
 import { motion, useScroll } from "framer-motion";
@@ -13,14 +13,11 @@ import HobbySection from "./Profile/HobbySection";
 import PageNav from "../../components/layout/PageNav";
 import useSeo from "../../hooks/useSeo";
 
-const CvModal = lazy(() => import("../About/CvModal"));
-
 export default function HomePage() {
   const location = useLocation();
   const { t } = useTranslation("seo");
   const { scrollYProgress } = useScroll();
   const [selectedProject, setSelectedProject] = useState(null);
-  const [isCvModalOpen, setIsCvModalOpen] = useState(false);
 
   useSeo({
     title: t("home.title"),
@@ -43,26 +40,21 @@ export default function HomePage() {
       <PageNav
         currentPath="/"
         scrollYProgress={scrollYProgress}
-        isHidden={!!selectedProject || isCvModalOpen}
+        isHidden={!!selectedProject}
       />
 
-      {/*
-        The page level entrance lives in PageTransition, which veils the whole
-        route on mount. A second opacity ramp here only stacked another fade on
-        top of it, so this stays a plain container.
-      */}
-      <motion.main className="relative z-10 bg-paper">
+      <motion.main className="relative z-10 bg-ground">
         <section id="home">
-          <Hero onCvToggle={setIsCvModalOpen} />
+          <Hero />
+        </section>
+
+        <section id="projects">
+          <ProjectList selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         </section>
 
         <section id="about">
           <StatusSection />
           <ExperienceSection />
-        </section>
-
-        <section id="projects">
-          <ProjectList selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
         </section>
 
         <section id="hobbies">
@@ -71,9 +63,6 @@ export default function HomePage() {
       </motion.main>
       <Footer />
 
-      <Suspense fallback={null}>
-        <CvModal isOpen={isCvModalOpen} onClose={() => setIsCvModalOpen(false)} />
-      </Suspense>
     </PageTransition>
   );
 }
