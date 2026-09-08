@@ -15,42 +15,117 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* Global styles and custom utilities */
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Instrument Serif", Georgia, "Times New Roman", serif;
-  --font-mono: "Space Mono", ui-monospace, SFMono-Regular, monospace;
-  --color-dark: #0a0a0a;
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-text: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+
+  /* Compatibility aliases for older components. */
+  --font-serif: ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
+
   --safe-top: env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --mobile-nav-height: 5rem;
 
-  /* Walden light palette (home page) */
-  --color-paper: #ffffff; /* page canvas */
-  --color-ink: #3f3f3f; /* primary text, borders */
-  --color-stone: #d3cec5; /* hairline borders, dividers */
-  --color-sumi: #030302; /* filled buttons / highest emphasis */
-  --color-ash: #686867; /* secondary text, captions */
-  --color-pebble: #acacac; /* quietest separators, disabled */
+  --color-ground: #f6f5f1;
+  --color-paper: #ffffff;
+  --color-ink: #202821;
+  --color-ash: #5e675f;
+  --color-rule: #cbd0c6;
+  --color-rule-strong: #8b948b;
 
+  --color-band: #202821;
+  --color-band-paper: #29342a;
+  --color-band-ink: #f6f5f1;
+  --color-band-ash: #bdc3bc;
+  --color-band-rule: #3f4a40;
+  --color-band-rule-strong: #707b70;
+
+  --color-accent: #234bdd;
+  --color-accent-deep: #1c3db8;
+  --color-accent-soft: #6d88ef;
+
+  /* Compatibility colors for pages still using the older token names. */
+  --color-dark: #202821;
+  --color-sumi: #202821;
+  --color-stone: #cbd0c6;
+  --color-pebble: #8b948b;
+  --color-mist: #ebece5;
+  --color-mat: #f6f5f1;
+  --color-sage: #8b948b;
+  --color-mauve: #bdc3bc;
+  --color-rose: #6d88ef;
+  --color-ochre: #234bdd;
+  --color-brick: #1c3db8;
+
+  --text-display: clamp(1.75rem, 3vw, 2.75rem);
+  --text-display--line-height: 1.15;
+  --text-display--letter-spacing: -0.01em;
+
+  --text-heading: clamp(1.375rem, 2vw, 1.875rem);
+  --text-heading--line-height: 1.2;
+
+  --text-numeral: clamp(1.75rem, 3vw, 2.75rem);
+  --text-numeral--line-height: 1;
+  --text-numeral--letter-spacing: -0.02em;
+
+  --text-subhead: 1.25rem;
+  --text-subhead--line-height: 1.4;
+
+  --text-body-lg: 1.1875rem;
+  --text-body-lg--line-height: 1.6;
+
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.65;
+
+  --text-small: 0.9375rem;
+  --text-small--line-height: 1.5;
+
+  --text-caption: 0.875rem;
+  --text-caption--line-height: 1.45;
+
+  --ease-site: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --spacing-motif: 60vh;
 }
 
 body {
-  background-color: #f1eee7;
-  color: #171717;
-  font-family: var(--font-sans);
+  background-color: var(--color-ground);
+  color: var(--color-ink);
+  font-family: var(--font-text);
 }
 
 #root {
   min-height: 100%;
 }
 
-/* Light canvas for the home page wrapper */
 .walden {
-  background-color: var(--color-paper);
+  background-color: var(--color-ground);
   color: var(--color-ink);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+/* Headings never leave a single word stranded on the last line. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p,
+li,
+figcaption,
+blockquote {
+  text-wrap: pretty;
+}
+
+/* Legacy print effect used by older pages. */
+@utility misregister {
+  text-shadow:
+    -1px 1px 0 color-mix(in srgb, var(--color-accent) 26%, transparent),
+    1px -1px 0 color-mix(in srgb, var(--color-ash) 20%, transparent);
 }
 
 @utility transform-style-3d {
@@ -83,20 +158,25 @@ a,
   touch-action: manipulation;
 }
 
+/* Keep focus visible against light and dark sections. */
 :focus-visible {
-  outline: 2px solid currentColor;
+  outline: 2px solid var(--color-accent-deep);
   outline-offset: 4px;
 }
 
-/* Global selection color, warm stone, in keeping with the quiet palette */
+.band :focus-visible,
+.on-band :focus-visible {
+  outline-color: var(--color-accent-soft);
+}
+
 ::selection {
-  background-color: rgba(211, 206, 197, 0.6); /* stone */
-  color: #030302;
+  background-color: color-mix(in oklab, var(--color-accent) 22%, transparent);
+  color: var(--color-ink);
 }
 
 ::-moz-selection {
-  background-color: rgba(211, 206, 197, 0.6);
-  color: #030302;
+  background-color: color-mix(in oklab, var(--color-accent) 22%, transparent);
+  color: var(--color-ink);
 }
 
 @media (prefers-reduced-motion: reduce) {

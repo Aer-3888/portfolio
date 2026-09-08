@@ -79,7 +79,7 @@ export default function CvModal({ isOpen, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25 }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-md p-2 md:p-8"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/95 backdrop-blur-md p-2 md:p-8"
           onClick={onClose}
         >
           <motion.div
@@ -88,24 +88,24 @@ export default function CvModal({ isOpen, onClose }) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-5xl h-[90vh] md:h-[85vh] bg-neutral-900 border border-white/10 rounded-xl md:rounded-2xl overflow-hidden flex flex-col shadow-2xl"
+            className="relative w-full max-w-5xl h-[90vh] md:h-[85vh] bg-band border border-ground/10 rounded-xl md:rounded-2xl overflow-hidden flex flex-col shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-4 h-12 bg-neutral-950/80 border-b border-white/5 shrink-0">
+            <div className="flex items-center justify-between px-4 h-12 bg-band/80 border-b border-ground/5 shrink-0">
               <div className="flex items-center gap-3">
-                <span className="font-mono text-[9px] text-neutral-500 uppercase tracking-widest">
+                <span className="font-mono text-[9px] text-pebble uppercase tracking-widest">
                   cv.pdf
                 </span>
-                <div className="flex gap-1 bg-black/40 p-0.5 rounded-md">
+                <div className="flex gap-1 bg-ink/40 p-0.5 rounded-md">
                   {["en", "fr"].map((l) => (
                     <button
                       key={l}
                       onClick={() => setManualLang(l)}
                       className={`px-2.5 py-1 rounded text-[9px] font-mono font-bold uppercase tracking-wider transition-all ${
                         lang === l
-                          ? "bg-neutral-800 text-white"
-                          : "text-neutral-500 hover:text-neutral-300"
+                          ? "bg-ink/70 text-ground"
+                          : "text-pebble hover:text-mauve"
                       }`}
                     >
                       {l}
@@ -118,14 +118,14 @@ export default function CvModal({ isOpen, onClose }) {
                 <a
                   href={`${import.meta.env.BASE_URL}cv${lang === "fr" ? "" : "_en"}.pdf`}
                   download
-                  className="px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider bg-neutral-800 text-white hover:bg-slate-600 transition-colors"
+                  className="px-4 py-1.5 rounded-md text-[9px] font-mono font-bold uppercase tracking-wider bg-ink/70 text-ground hover:bg-accent transition-colors"
                 >
                   {t("cv.download")}
                 </a>
                 <button
                   onClick={onClose}
                   aria-label={tc("cv.closeAria")}
-                  className="p-1.5 rounded-md text-neutral-500 hover:text-white hover:bg-neutral-800 transition-colors"
+                  className="p-1.5 rounded-md text-pebble hover:text-ground hover:bg-ink/70 transition-colors"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -149,7 +149,7 @@ export default function CvModal({ isOpen, onClose }) {
             <iframe
               src={CV_URLS[lang]}
               title="CV Preview"
-              className="flex-1 w-full bg-neutral-800"
+              className="flex-1 w-full bg-ink/70"
               style={{ border: "none" }}
             />
           </motion.div>

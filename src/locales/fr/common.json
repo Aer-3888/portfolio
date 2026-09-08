@@ -1,7 +1,26 @@
 {
-  "nav": { "work": "Projets", "story": "Parcours", "hello": "Contact", "home": "Accueil", "gallery": "Photos" },
-  "language": { "label": "Langue", "en": "EN", "fr": "FR", "switchTo": "Passer en français" },
-  "branding": { "tagline": "Je fabrique des choses" },
-  "menu": { "heading": "Navigation", "close": "Fermer", "getInTouch": "Me contacter", "toggle": "Ouvrir le menu" },
-  "cv": { "closeAria": "Fermer l’aperçu du CV" }
+  "nav": {
+    "work": "Projets",
+    "about": "À propos",
+    "home": "Accueil",
+    "gallery": "Photos"
+  },
+  "language": {
+    "label": "Langue",
+    "en": "EN",
+    "fr": "FR",
+    "switchTo": "Passer en français"
+  },
+  "branding": {
+    "tagline": "Je fabrique des choses"
+  },
+  "menu": {
+    "close": "Fermer",
+    "downloadCv": "Télécharger le CV",
+    "toggle": "Ouvrir le menu"
+  },
+  "cv": {
+    "closeAria": "Fermer l’aperçu du CV"
+  },
+  "skipToContent": "Aller au contenu"
 }

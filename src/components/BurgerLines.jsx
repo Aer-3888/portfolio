@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import palette from "../config/palette";
 
 const topLineVariants = {
   closed: { rotate: 0, y: 0 },
@@ -15,7 +16,7 @@ const bottomLineVariants = {
   open: { rotate: -45, y: -8 },
 };
 
-export default function BurgerLines({ isOpen, lineColor = "#000000" }) {
+export default function BurgerLines({ isOpen, lineColor = palette.ink }) {
   return (
     <div className="relative z-20 flex flex-col gap-[6px] p-4 items-center justify-center">
       <motion.span

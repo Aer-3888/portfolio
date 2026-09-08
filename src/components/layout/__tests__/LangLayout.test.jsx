@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router";
 
 const changeLanguage = vi.fn();
 vi.mock("react-i18next", () => ({
-  useTranslation: () => ({ i18n: { language: "en", changeLanguage } }),
+  useTranslation: () => ({ t: (key) => key, i18n: { language: "en", changeLanguage } }),
 }));
 
 import LangLayout from "../LangLayout";
@@ -35,5 +35,11 @@ describe("LangLayout", () => {
   it("does not change language when already en on /", () => {
     renderAt("/");
     expect(changeLanguage).not.toHaveBeenCalled();
+  });
+  it("offers a skip link that targets the main landmark", () => {
+    const { container } = renderAt("/");
+    const skip = screen.getByRole("link", { name: "skipToContent" });
+    expect(skip).toHaveAttribute("href", "#main-content");
+    expect(container.querySelector("#main-content")).not.toBeNull();
   });
 });

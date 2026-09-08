@@ -102,7 +102,7 @@ export default function ContactPage() {
   };
 
   return (
-    <PageTransition className="relative min-h-screen overflow-x-hidden bg-[#f1eee7] font-sans text-[#171717]">
+    <PageTransition className="relative min-h-screen overflow-x-hidden bg-ground font-sans text-ink">
       <PageNav currentPath="/contact" />
 
       <motion.main
@@ -113,7 +113,7 @@ export default function ContactPage() {
       >
         <motion.header
           variants={sectionSequence}
-          className="border-b border-black/20 pb-16 md:pb-24"
+          className="border-b border-ink/20 pb-16 md:pb-24"
         >
           <h1 className="font-serif text-[clamp(4.7rem,10vw,10rem)] leading-[0.76] tracking-[-0.045em]">
             <span className="block overflow-hidden pb-[0.08em]">
@@ -131,20 +131,20 @@ export default function ContactPage() {
 
         <motion.div
           variants={sectionSequence}
-          className="grid border-b border-black/20 md:grid-cols-12"
+          className="grid border-b border-ink/20 md:grid-cols-12"
         >
           <motion.section
             variants={riseIn}
             className="flex flex-col justify-between py-14 md:col-span-7 md:min-h-[34rem] md:py-20 md:pr-12 lg:pr-20"
           >
-            <p className="max-w-md text-sm leading-relaxed text-black/55 md:text-base">
+            <p className="max-w-md text-sm leading-relaxed text-ink/55 md:text-base">
               {t("intro")}
             </p>
 
             <div className="mt-20 md:mt-24">
               <a
                 href={`mailto:${EMAIL}`}
-                className="inline-block break-all text-[clamp(1.35rem,3.2vw,3.8rem)] leading-tight tracking-[-0.035em] text-black transition-colors hover:text-[#2356d8]"
+                className="inline-block break-all text-[clamp(1.35rem,3.2vw,3.8rem)] leading-tight tracking-[-0.035em] text-ink transition-colors hover:text-accent-deep"
               >
                 {EMAIL}
               </a>
@@ -152,11 +152,11 @@ export default function ContactPage() {
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="min-h-11 cursor-pointer bg-[#ffca45] px-5 text-sm text-black transition-transform hover:-translate-y-0.5"
+                  className="min-h-11 cursor-pointer bg-ochre px-5 text-sm text-ink transition-transform hover:-translate-y-0.5"
                 >
                   {copied ? t("copied") : t("copy")}
                 </button>
-                <span aria-live="polite" className="text-xs text-black/40">
+                <span aria-live="polite" className="text-xs text-ink/40">
                   {copied ? t("copiedHint") : t("copyHint")}
                 </span>
               </div>
@@ -165,7 +165,7 @@ export default function ContactPage() {
 
           <motion.aside
             variants={riseIn}
-            className="border-t border-black/20 py-8 md:col-span-5 md:border-l md:border-t-0 md:p-8 lg:p-12"
+            className="border-t border-ink/20 py-8 md:col-span-5 md:border-l md:border-t-0 md:p-8 lg:p-12"
           >
             <div className="h-[24rem] overflow-hidden md:h-full md:min-h-[30rem]">
               <ArcadeMachine />
@@ -175,11 +175,11 @@ export default function ContactPage() {
 
         <motion.div
           variants={riseIn}
-          className="grid gap-10 py-10 text-sm text-black/55 sm:grid-cols-2 md:grid-cols-12 md:items-end"
+          className="grid gap-10 py-10 text-sm text-ink/55 sm:grid-cols-2 md:grid-cols-12 md:items-end"
         >
           <div className="md:col-span-3">
             <p>{t("location")}</p>
-            <p className="mt-1 text-black/35">{t("localTime", { time })}</p>
+            <p className="mt-1 text-ink/35">{t("localTime", { time })}</p>
           </div>
           <p className="max-w-xs md:col-span-4">{t("availability")}</p>
           <nav
@@ -192,10 +192,10 @@ export default function ContactPage() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex cursor-pointer items-center gap-2 text-black transition-colors hover:text-[#2356d8]"
+                className="group inline-flex cursor-pointer items-center gap-2 text-ink transition-colors hover:text-accent-deep"
               >
                 {social.label}
-                <span className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                <span className="transition-transform duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
                   ↗
                 </span>
               </a>

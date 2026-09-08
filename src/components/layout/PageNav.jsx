@@ -2,29 +2,23 @@ import { useState, useMemo, useCallback, memo } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, useTransform, useMotionValue, useScroll, AnimatePresence } from "framer-motion";
 import useLocalizedNavigate from "../../i18n/useLocalizedNavigate";
-import HomeButton from "../HomeButton";
 import NavButtons from "../NavButtons";
 import LiquidMenu from "./LiquidMenu";
 import MenuPanel from "../MenuPanel";
 import LanguageSwitcher from "./LanguageSwitcher";
 import useMediaQuery from "../../hooks/useMediaQuery";
 import useMobileNavVisible from "../../hooks/useMobileNavVisible";
+import palette from "../../config/palette";
 
 const Branding = memo(function Branding({ className = "", onClick }) {
-  const { t } = useTranslation();
   return (
     <motion.button
       onClick={onClick}
-      className={`group flex flex-col items-start cursor-pointer mix-blend-difference ${className}`}
+      className={`cursor-pointer font-display text-[1.8rem] leading-none tracking-[-0.02em] text-ink ${className}`}
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 400, damping: 30 }}
     >
-      <span className="text-sm font-medium tracking-tight transition-colors text-white/90 group-hover:text-white">
-        Théo Phan
-      </span>
-      <span className="text-[10px] uppercase tracking-[0.3em] leading-none transition-colors text-white/40 group-hover:text-white/60">
-        {t("branding.tagline")}
-      </span>
+      Théo Phan
     </motion.button>
   );
 });
@@ -41,19 +35,10 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
   const progress = scrollYProgress ?? staticProgress;
   const { scrollY } = useScroll();
 
-  /*
-    Only pages that pass scrollYProgress render the floating blob, so only those
-    may retire the text nav. Anywhere else the text is the only navigation on
-    screen and has to stay put.
-  */
+  // Pages with scroll progress hand navigation over to the floating blob.
   const hasBlobTakeover = Boolean(scrollYProgress);
 
-  /*
-    Measured in pixels rather than as a fraction of the document. "Not at the
-    top" should mean the same distance everywhere, and as a fraction of a page
-    as long as the home page, 5% left the text hanging around for several
-    hundred pixels of scrolling.
-  */
+  // A pixel threshold keeps the handover consistent across page lengths.
   const TOP_THRESHOLD = 48;
 
   const navOpacity = useTransform(scrollY, [0, TOP_THRESHOLD], [1, 0]);
@@ -61,12 +46,12 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
   const navPointerEvents = useTransform(scrollY, (v) => (v > TOP_THRESHOLD ? "none" : "auto"));
   const menuPointerEvents = useTransform(scrollY, (v) => (v > TOP_THRESHOLD ? "auto" : "none"));
 
-  const barBackground = useTransform(progress, [0, 0.02], ["rgba(0,0,0,0)", "rgba(10,10,10,0.8)"]);
+  const barBackground = useTransform(progress, [0, 0.02], ["rgba(246,245,241,0)", "rgba(246,245,241,0.94)"]);
   const barBlur = useTransform(progress, [0, 0.02], ["blur(0px)", "blur(12px)"]);
   const barBorder = useTransform(
     progress,
     [0, 0.02],
-    ["rgba(255,255,255,0)", "rgba(255,255,255,0.1)"]
+    ["rgba(203,208,198,0)", "rgba(203,208,198,1)"]
   );
 
   const handleNavigate = useCallback(
@@ -96,12 +81,7 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
         path: "/gallery",
         onClick: () => handleNavigate("/gallery"),
       },
-      { label: t("nav.story"), path: "/", onClick: () => handleNavigate("/", "about") },
-      {
-        label: t("nav.hello"),
-        path: "/contact",
-        onClick: () => handleNavigate("/contact", "contact"),
-      },
+      { label: t("nav.about"), path: "/", onClick: () => handleNavigate("/", "about") },
     ],
     [handleNavigate, t]
   );
@@ -131,31 +111,31 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
     <>
       {isDesktop ? (
         <>
-          {currentPath && currentPath !== "/" && (
-            <motion.div
-              style={
-                hasBlobTakeover
-                  ? { opacity: navOpacity, pointerEvents: navPointerEvents }
-                  : undefined
-              }
-              className="fixed top-10 left-12 z-[1200]"
-            >
-              <HomeButton />
-            </motion.div>
-          )}
-          <NavButtons
-            items={navItems}
-            currentPath={currentPath}
-            navOpacity={hasBlobTakeover ? navOpacity : undefined}
-            navPointerEvents={hasBlobTakeover ? navPointerEvents : undefined}
-            trailing={<LanguageSwitcher className="pl-1 text-white" />}
-            className="fixed top-10 right-12 z-[1200] flex gap-10 items-center text-white mix-blend-difference"
-          />
+          <motion.header
+            style={
+              hasBlobTakeover
+                ? { opacity: navOpacity, pointerEvents: navPointerEvents }
+                : undefined
+            }
+            className="fixed inset-x-0 top-0 z-[1200] border-b border-rule bg-ground/95 px-6 py-6 backdrop-blur-md md:px-10"
+          >
+            <div className="mx-auto flex max-w-[100rem] items-center justify-between gap-8">
+              <Branding onClick={handleNavigateHome} />
+              <NavButtons
+                items={navItems}
+                currentPath={currentPath}
+                trailing={<LanguageSwitcher className="pl-1 text-ink" />}
+                className="flex items-center gap-8 text-ink"
+                buttonClass="cursor-pointer py-2 text-sm transition-colors hover:text-accent-deep"
+                activeButtonClass="cursor-pointer py-2 text-sm text-accent-deep"
+              />
+            </div>
+          </motion.header>
 
           {hasBlobTakeover && (
             <motion.div
               style={{ opacity: menuOpacity, pointerEvents: menuPointerEvents }}
-              className="fixed top-8 right-12 z-[1200]"
+              className="fixed right-8 top-6 z-[1200] md:right-10"
             >
               <AnimatePresence mode="wait">
                 {!isMenuOpen && (
@@ -178,8 +158,8 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
                     <LiquidMenu
                       isOpen={isMenuOpen}
                       toggle={() => setIsMenuOpen((v) => !v)}
-                      blobColor={isHomeLight ? "#686867" : "#ffffff"}
-                      lineColor={isHomeLight ? "#ffffff" : "#000000"}
+                      blobColor={isHomeLight ? palette.accent : palette.paper}
+                      lineColor={isHomeLight ? palette.ground : palette.ink}
                     />
                   </motion.div>
                 )}
@@ -195,15 +175,13 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
             borderBottom: `1px solid`,
             borderColor: barBorder,
           }}
-          className={`fixed top-0 left-0 right-0 z-[1200] flex min-h-20 items-center px-5 pb-3 pt-[calc(var(--safe-top)+0.75rem)] sm:px-6 transition-all duration-500 ${
-            currentPath === "/" ? "justify-end" : "justify-between"
-          } ${
+          className={`fixed top-0 left-0 right-0 z-[1200] flex min-h-20 items-center justify-between px-5 pb-3 pt-[calc(var(--safe-top)+0.75rem)] sm:px-6 transition-all duration-500 ${
             mobileNavVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 pointer-events-none -translate-y-full"
           }`}
         >
-          {currentPath !== "/" && <Branding onClick={handleNavigateHome} />}
+          <Branding onClick={handleNavigateHome} />
 
           <div className="relative">
             <AnimatePresence mode="wait">
@@ -218,8 +196,8 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
                   <LiquidMenu
                     isOpen={isMenuOpen}
                     toggle={() => setIsMenuOpen(true)}
-                    blobColor="#ffffff"
-                    lineColor="#000000"
+                    blobColor={palette.accent}
+                    lineColor={palette.ground}
                   />
                 </motion.div>
               )}

@@ -4,8 +4,9 @@ import { useTranslation } from "react-i18next";
 import useMagneticEffect from "../../hooks/useMagneticEffect";
 import BurgerLines from "../BurgerLines";
 import LiquidBackground from "../LiquidBackground";
+import palette from "../../config/palette";
 
-export default function LiquidMenu({ isOpen, toggle, blobColor = "white", lineColor = "#000000" }) {
+export default function LiquidMenu({ isOpen, toggle, blobColor = palette.paper, lineColor = palette.ink }) {
   const { t } = useTranslation();
   const [isHovered, setIsHovered] = useState(false);
   const prefersReduced = useReducedMotion();

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
+import palette from "../../config/palette";
 
 const RATINGS = [
   { max: 150, key: "inhuman" },
@@ -12,11 +13,11 @@ const RATINGS = [
 ];
 
 const COLORS = {
-  idle: "#2356d8",
-  waiting: "#2356d8",
-  active: "#ffca45",
-  early: "#f04d2f",
-  result: "#171717",
+  idle: palette.accent,
+  waiting: palette.accent,
+  active: palette.ochre,
+  early: palette.brick,
+  result: palette.ink,
 };
 
 function getRatingKey(milliseconds) {
@@ -67,13 +68,13 @@ export default function ArcadeMachine() {
     else trigger();
   };
 
-  const textColor = state === "active" ? "#171717" : "#f1eee7";
+  const textColor = state === "active" ? palette.ink : palette.ground;
 
   return (
     <button
       type="button"
       onClick={handleClick}
-      className="flex h-full w-full cursor-pointer select-none flex-col text-left transition-colors duration-300 focus-visible:outline-offset-[-4px]"
+      className="flex h-full w-full cursor-pointer select-none flex-col text-left transition-colors duration-200 focus-visible:outline-offset-[-4px]"
       style={{ backgroundColor: COLORS[state], color: textColor }}
       aria-label={t("arcade.ariaLabel")}
     >

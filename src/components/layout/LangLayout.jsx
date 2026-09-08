@@ -5,7 +5,7 @@ import { getLangFromPath } from "../../i18n/localizePath";
 
 export default function LangLayout() {
   const location = useLocation();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = getLangFromPath(location.pathname);
 
   useEffect(() => {
@@ -13,5 +13,17 @@ export default function LangLayout() {
     document.documentElement.lang = lang;
   }, [lang, i18n]);
 
-  return <Outlet />;
+  return (
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-none focus:bg-ink focus:px-4 focus:py-3 focus:text-sm focus:text-ground"
+      >
+        {t("skipToContent")}
+      </a>
+      <div id="main-content" tabIndex={-1}>
+        <Outlet />
+      </div>
+    </>
+  );
 }

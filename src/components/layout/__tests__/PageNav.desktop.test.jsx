@@ -43,6 +43,7 @@ vi.mock("framer-motion", async () => {
     motion: {
       ...actual.motion,
       div: mockComponent("div"),
+      header: mockComponent("header"),
       nav: mockComponent("nav"),
       span: mockComponent("span"),
       aside: mockComponent("aside"),
@@ -67,16 +68,16 @@ function renderNav(props = {}) {
 }
 
 describe("PageNav — desktop", () => {
-  it("does not render the wordmark on desktop (the menu carries nav)", () => {
+  it("renders the wordmark in the top navigation", () => {
     renderNav();
-    expect(screen.queryByText("Théo Phan")).not.toBeInTheDocument();
+    expect(screen.getByText("Théo Phan")).toBeInTheDocument();
   });
 
   it("renders nav links on desktop", () => {
     renderNav();
     expect(screen.getByText("Work")).toBeInTheDocument();
-    expect(screen.getByText("Story")).toBeInTheDocument();
-    expect(screen.getByText("Hello")).toBeInTheDocument();
+    expect(screen.getByText("About")).toBeInTheDocument();
+    expect(screen.queryByText("Hello")).not.toBeInTheDocument();
   });
 
   it("offers a gallery destination", () => {
@@ -84,8 +85,8 @@ describe("PageNav — desktop", () => {
     expect(screen.getByText("Photos")).toBeInTheDocument();
   });
 
-  it("does not render the wordmark when scrollYProgress is not provided", () => {
+  it("keeps the wordmark on pages without scroll takeover", () => {
     renderWithI18n(<PageNav />);
-    expect(screen.queryByText("Théo Phan")).not.toBeInTheDocument();
+    expect(screen.getByText("Théo Phan")).toBeInTheDocument();
   });
 });
