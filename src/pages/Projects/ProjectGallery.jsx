@@ -49,7 +49,7 @@ function ProjectGallery({ projects = [], onSelect }) {
         variants={headerSequence}
         initial={prefersReduced ? false : "hidden"}
         animate={prefersReduced || entranceReady ? "visible" : "hidden"}
-        className="mb-20 grid gap-10 border-b border-black/20 pb-14 md:mb-28 md:grid-cols-12 md:items-end md:pb-20"
+        className="mb-20 grid gap-10 border-b border-ink/20 pb-14 md:mb-28 md:grid-cols-12 md:items-end md:pb-20"
       >
         <h1 className="max-w-5xl font-serif text-[clamp(4.5rem,10vw,10rem)] leading-[0.76] tracking-[-0.045em] md:col-span-9">
           <span className="block overflow-hidden pb-[0.08em]">
@@ -64,10 +64,10 @@ function ProjectGallery({ projects = [], onSelect }) {
           </span>
         </h1>
         <motion.div variants={riseIn} className="md:col-span-3 md:pb-2">
-          <p className="max-w-sm text-sm leading-relaxed text-black/60 md:text-base">
+          <p className="max-w-sm text-sm leading-relaxed text-ink/60 md:text-base">
             {t("page.intro")}
           </p>
-          <p className="mt-5 text-xs text-black/40">
+          <p className="mt-5 text-xs text-ink/40">
             {t("page.count", { count: projects.length })}
           </p>
         </motion.div>
@@ -84,7 +84,7 @@ function ProjectGallery({ projects = [], onSelect }) {
         whileInView={prefersReduced ? undefined : { opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.65, ease }}
-        className="mt-28 border-t border-black/20 pt-8 text-sm text-black/45 md:mt-40"
+        className="mt-28 border-t border-ink/20 pt-8 text-sm text-ink/45 md:mt-40"
       >
         {t("page.footer")}
       </motion.p>

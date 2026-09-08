@@ -2,19 +2,7 @@ import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-
-const PROJECT_ACCENTS = {
-  "01": "#ffca45",
-  "09": "#f04d2f",
-  "03": "#b9d878",
-  "10": "#2356d8",
-  "04": "#9fc5d1",
-  "05": "#c4b6d9",
-  "02": "#ef9478",
-  "06": "#79aa98",
-  "07": "#dbb266",
-  "08": "#c9c1b5",
-};
+import { accentFor } from "../config/projectAccents";
 
 function RichText({ text, className }) {
   const parts = text.split(/(\*\*[^*]+\*\*|__[^_]+__)/g);
@@ -44,9 +32,9 @@ function DetailList({ label, items }) {
   if (!items?.length) return null;
 
   return (
-    <div className="border-t border-white/20 pt-4">
-      <p className="mb-3 text-xs text-white/40">{label}</p>
-      <p className="max-w-xl text-sm leading-relaxed text-[#f1eee7] md:text-base">
+    <div className="border-t border-ground/20 pt-4">
+      <p className="mb-3 text-xs text-ground/40">{label}</p>
+      <p className="max-w-xl text-sm leading-relaxed text-ground md:text-base">
         {items.map((item, index) => (
           <span key={item}>
             <span>{item}</span>
@@ -128,7 +116,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
   if (!project) return null;
 
-  const accent = PROJECT_ACCENTS[project.id] ?? "#c9c1b5";
+  const accent = accentFor(project.id);
   const hasExternalLink = project.url && project.url !== "#" && !project.isClosedSource;
   const storySections = [
     { label: t("detail.problem"), text: project.problem },
@@ -148,15 +136,15 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
           animate={{ opacity: 1, y: 0 }}
           exit={prefersReduced ? { opacity: 0 } : { opacity: 0, y: 24 }}
           transition={{ duration: prefersReduced ? 0.1 : 0.55, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[2000] overflow-hidden bg-[#f1eee7] text-[#171717]"
+          className="fixed inset-0 z-[2000] overflow-hidden bg-ground text-ink"
         >
           <button
             type="button"
             onClick={onClose}
             aria-label={t("detail.close")}
-            className="group fixed right-4 top-[calc(var(--safe-top)+1rem)] z-50 grid h-12 w-12 cursor-pointer place-items-center rounded-full bg-[#f1eee7] text-2xl text-black shadow-[0_4px_24px_rgba(0,0,0,0.16)] transition-transform duration-300 hover:rotate-[-8deg] hover:scale-105 md:right-8 md:top-8"
+            className="group fixed right-4 top-[calc(var(--safe-top)+1rem)] z-50 grid h-12 w-12 cursor-pointer place-items-center rounded-full bg-ground text-2xl text-ink shadow-[0_4px_24px_rgba(0,0,0,0.16)] transition-transform duration-300 hover:rotate-[-8deg] hover:scale-105 md:right-8 md:top-8"
           >
-            <span className="transition-transform duration-300 group-hover:rotate-90">×</span>
+            <span className="transition-transform duration-150 group-hover:rotate-90">×</span>
           </button>
 
           <div
@@ -166,8 +154,8 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
           >
             <article>
               <header className="grid min-h-[100svh] md:grid-cols-12">
-                <div className="order-2 flex flex-col border-black/20 px-5 py-12 sm:px-8 md:order-1 md:col-span-5 md:border-r md:px-12 md:pb-14 md:pt-32 lg:px-16">
-                  <div className="mb-12 flex items-center justify-between gap-4 text-xs text-black/45">
+                <div className="order-2 flex flex-col border-ink/20 px-5 py-12 sm:px-8 md:order-1 md:col-span-5 md:border-r md:px-12 md:pb-14 md:pt-32 lg:px-16">
+                  <div className="mb-12 flex items-center justify-between gap-4 text-xs text-ink/45">
                     <span>{project.type}</span>
                     <span>{project.year}</span>
                   </div>
@@ -181,13 +169,13 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
 
                   <RichText
                     text={project.description}
-                    className="mt-10 max-w-xl text-base leading-relaxed text-black/65 md:text-lg"
+                    className="mt-10 max-w-xl text-base leading-relaxed text-ink/65 md:text-lg"
                   />
 
                   {project.role && (
-                    <div className="mt-10 border-t border-black/20 pt-4">
-                      <p className="text-xs text-black/40">{t("detail.role")}</p>
-                      <p className="mt-2 text-sm text-black/75">{project.role}</p>
+                    <div className="mt-10 border-t border-ink/20 pt-4">
+                      <p className="text-xs text-ink/40">{t("detail.role")}</p>
+                      <p className="mt-2 text-sm text-ink/75">{project.role}</p>
                     </div>
                   )}
 
@@ -197,15 +185,15 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group inline-flex cursor-pointer items-center gap-4 border-b border-black pb-1 text-sm text-black"
+                        className="group inline-flex cursor-pointer items-center gap-4 border-b border-ink pb-1 text-sm text-ink"
                       >
                         {project.linkText || t("detail.openProject")}
-                        <span className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                        <span className="transition-transform duration-150 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
                           ↗
                         </span>
                       </a>
                     ) : (
-                      <p className="text-sm text-black/45">
+                      <p className="text-sm text-ink/45">
                         {project.linkText || t("detail.personalProject")}
                       </p>
                     )}
@@ -216,7 +204,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                   className="relative order-1 min-h-[58svh] p-4 pt-[calc(var(--safe-top)+5rem)] sm:p-6 sm:pt-[calc(var(--safe-top)+5.5rem)] md:order-2 md:col-span-7 md:min-h-screen md:p-10"
                   style={{ backgroundColor: accent }}
                 >
-                  <div className="relative h-full min-h-[50svh] overflow-hidden bg-[#171717] md:min-h-0">
+                  <div className="relative h-full min-h-[50svh] overflow-hidden bg-band md:min-h-0">
                     <img
                       src={project.detailImg || project.img}
                       alt={project.title}
@@ -224,9 +212,9 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                       fetchPriority="high"
                       className="h-full w-full object-cover"
                     />
-                    <div className="pointer-events-none absolute inset-0 bg-black/[0.04]" />
+                    <div className="pointer-events-none absolute inset-0 bg-ink/[0.04]" />
                     {project.imageCredit && (
-                      <span className="absolute bottom-3 left-4 text-[10px] text-white/75 [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]">
+                      <span className="absolute bottom-3 left-4 text-[10px] text-ground/75 [text-shadow:0_1px_4px_rgba(0,0,0,0.7)]">
                         {project.imageCredit}
                       </span>
                     )}
@@ -235,16 +223,16 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
               </header>
 
               {storySections.length > 0 && (
-                <section className="border-y border-black/20 px-5 py-20 sm:px-8 md:px-12 md:py-28 lg:px-16">
+                <section className="border-y border-ink/20 px-5 py-20 sm:px-8 md:px-12 md:py-28 lg:px-16">
                   <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-3 md:gap-10">
                     {storySections.map(({ label, text }) => (
-                      <div key={label} className="border-t border-black/20 pt-5">
+                      <div key={label} className="border-t border-ink/20 pt-5">
                         <h3 className="mb-8 font-serif text-3xl leading-none md:text-4xl">
                           {label}
                         </h3>
                         <RichText
                           text={text}
-                          className="text-sm leading-relaxed text-black/60 md:text-base"
+                          className="text-sm leading-relaxed text-ink/60 md:text-base"
                         />
                       </div>
                     ))}
@@ -252,7 +240,7 @@ export default function ProjectDetails({ project, isOpen, onClose }) {
                 </section>
               )}
 
-              <section className="bg-[#171717] px-5 py-20 text-[#f1eee7] sm:px-8 md:px-12 md:py-28 lg:px-16">
+              <section className="bg-band px-5 py-20 text-ground sm:px-8 md:px-12 md:py-28 lg:px-16">
                 <div className="mx-auto grid max-w-[1500px] gap-14 md:grid-cols-12 md:gap-10">
                   <h3 className="font-serif text-5xl leading-[0.86] tracking-[-0.025em] md:col-span-4 md:text-7xl">
                     {t("detail.techHeading")}

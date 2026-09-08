@@ -57,7 +57,7 @@
       "description": "Un projet de vision par ordinateur qui repère les maladies des plantes à partir de photos. Il met plusieurs modèles de reconnaissance d’images côte à côte, dont YOLO et Faster R-CNN, pour voir lequel tient la route sur de vraies images de terrain plutôt que sur des clichés propres de laboratoire.",
       "problem": "Repérer tôt une maladie des cultures est difficile à l’œil dès qu’on regarde des champs entiers. Je voulais savoir à quel point les modèles de vision prêts à l’emploi s’en sortent avec les photos peu idéales qu’on obtient réellement en extérieur, avec une lumière étrange et des arrière-plans chargés.",
       "approach": "J’ai entraîné et comparé les modèles sur des jeux de données publics de maladies des plantes, puis j’ai amélioré leur précision en augmentant les images d’entraînement pour imiter volontairement ces conditions de terrain.",
-      "result": "Faster R-CNN est arrivé en tête, localisant les zones malades environ 90% du temps (mAP@50 0,90, 85,8% de rappel). Cela a donné une réponse claire sur l’approche qui vaut la peine de sortir du notebook pour aller sur le terrain.",
+      "result": "Faster R-CNN est arrivé en tête, retrouvant environ 86% des zones malades (85,8% de rappel, mAP@50 0,90). Cela a donné une réponse claire sur l’approche qui vaut la peine de sortir du notebook pour aller sur le terrain.",
       "architecture": ["Pipeline d’apprentissage par transfert", "Analyse comparative multi-modèles", "Augmentation sur mesure"]
     },
     "10": {
@@ -83,7 +83,7 @@
       "description": "Une application mobile pour les étudiants de l’INSA Rennes qui récupère tes notes depuis le portail de l’école et permet à une classe de mettre ses résultats en commun de façon anonyme, pour que chacun voie où il se situe.",
       "problem": "Le portail ne montre jamais que tes propres notes. Impossible de savoir si un 12 sur 20 est au-dessus ou en dessous de la classe, et les étudiants voulaient ce repère sans exposer les notes de personne.",
       "approach": "Nous avons construit une application qui lit tes notes depuis le portail et les met en commun avec le reste de la classe. Les moyennes et les classements sont calculés sur ton propre téléphone, donc le serveur ne détient jamais rien qui puisse identifier une personne.",
-      "result": "Le résultat est une application en direct qui te dit, d’un coup d’œil, comment tes notes se situent par rapport au reste de la classe, tout en gardant chaque envoi anonyme.",
+      "result": "L’application te montre d’un coup d’œil comment tes notes se situent par rapport au reste de la classe, et chaque envoi reste anonyme.",
       "architecture": ["Riverpod (gestion d’état)", "Edge Computing (serverless)", "Architecture orientée fonctionnalités"]
     },
     "05": {
@@ -109,7 +109,7 @@
       "description": "Une application de sécurité Android native pour marcher seul. Elle continue de suivre ta position même quand le téléphone tente de la couper pour économiser la batterie, et elle signe chaque check-in pour que personne ne puisse en falsifier un.",
       "problem": "Une application de sécurité ne vaut la peine que si elle ne s’arrête jamais en silence. Le hic, c’est que les téléphones sont faits pour couper les applications en arrière-plan dès qu’ils veulent économiser l’énergie, c’est-à-dire précisément quand on en aurait besoin.",
       "approach": "J’ai construit le suivi comme un service que le système a du mal à couper, pour qu’il survive aux modes basse consommation et aux redémarrages. Chaque message de sécurité est signé cryptographiquement, et l’application peut te pointer présent toute seule quand elle détecte une balise Bluetooth de confiance à proximité.",
-      "result": "Elle maintient une trace fiable à travers les conditions mêmes qui cassent d’habitude ce genre d’applications, redémarrages, économiseurs de batterie et limites d’arrière-plan. La fiabilité était tout l’enjeu, c’est donc là qu’est passé l’effort.",
+      "result": "Elle maintient une trace fiable à travers les conditions mêmes qui cassent d’habitude ce genre d’applications : redémarrages, économiseurs de batterie et limites d’arrière-plan. La fiabilité était tout l’enjeu, c’est donc là qu’est passé l’effort.",
       "architecture": ["Architecture Android native", "Géolocalisation sécurisée", "Services d’arrière-plan résilients"]
     },
     "06": {
@@ -148,7 +148,7 @@
       "description": "Le site que tu es en train de lire. J’ai traité mon propre portfolio comme un projet front-end à part entière, bâti autour d’un mouvement piloté par le scroll plutôt qu’une simple liste de liens.",
       "problem": "La plupart des portfolios de développeurs se ressemblent et ne font que lister des outils. Je voulais que le mien montre ce que je sais réellement construire côté front, pas seulement le prétendre.",
       "approach": "J’ai conçu le site pour que les projets bougent avec le scroll et donnent une impression de profondeur, tout en le gardant rapide à charger, agréable sur téléphone et calme pour ceux qui préfèrent le mouvement réduit.",
-      "result": "Un site rapide et responsive où le mouvement porte le récit sur ordinateur et laisse place à une mise en page épurée sur mobile. S’il te donne envie de savoir comment il est fait, c’est qu’il fait son travail.",
+      "result": "Un site rapide et responsive où le mouvement porte le récit sur ordinateur et laisse place à une mise en page épurée sur mobile.",
       "architecture": ["Orienté composants (principes atomiques)", "Orienté fonctionnalités (structure de pages modulaire)"]
     }
   }

@@ -43,7 +43,7 @@ export default function PhotoPage() {
     .join("  ");
 
   return (
-    <PageTransition className="min-h-screen bg-sumi text-white">
+    <PageTransition className="min-h-screen bg-sumi text-ground">
       <PageNav currentPath="/gallery" />
 
       <main className="flex min-h-screen flex-col items-center justify-center gap-8 px-5 py-28 sm:px-8">
@@ -59,14 +59,14 @@ export default function PhotoPage() {
         />
 
         <figcaption className="w-full max-w-4xl">
-          <p className="text-sm text-white/85">
+          <p className="text-sm text-ground/85">
             {photo.place}
             {date ? `, ${date}` : ""}
           </p>
-          <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.12em] text-white/45">
+          <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.12em] text-ground/45">
             {technical}
           </p>
-          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.12em] text-white/30">
+          <p className="mt-1 font-mono text-[9px] uppercase tracking-[0.12em] text-ground/30">
             {t("photo.of", { index: photo.index, total: galleryPhotos.length })}
           </p>
         </figcaption>
@@ -76,7 +76,7 @@ export default function PhotoPage() {
             {prev && (
               <Link
                 to={`/gallery/${prev.slug}`}
-                className="text-white/50 transition-colors hover:text-white"
+                className="text-ground/50 transition-colors hover:text-ground"
               >
                 {t("photo.prev")}
               </Link>
@@ -86,7 +86,7 @@ export default function PhotoPage() {
           <Link
             to="/gallery"
             state={{ scrollTo: photo.slug }}
-            className="flex-1 text-center text-white/50 transition-colors hover:text-white"
+            className="flex-1 text-center text-ground/50 transition-colors hover:text-ground"
           >
             {t("photo.back")}
           </Link>
@@ -94,7 +94,7 @@ export default function PhotoPage() {
             {next && (
               <Link
                 to={`/gallery/${next.slug}`}
-                className="text-white/50 transition-colors hover:text-white"
+                className="text-ground/50 transition-colors hover:text-ground"
               >
                 {t("photo.next")}
               </Link>

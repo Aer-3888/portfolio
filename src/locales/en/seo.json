@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Théo Phan | Curiosity is my compass",
-    "description": "Théo Phan is a computer-science engineer building at the intersection of AI, mobile, security, hardware, and the real world."
+    "description": "Théo Phan is a computer-science engineer working across AI, mobile, security, and hardware, on problems that leave the screen."
   },
   "projects": {
     "title": "Projects | Théo Phan",
@@ -13,7 +13,7 @@
   },
   "gallery": {
     "title": "Photography | Théo Phan",
-    "description": "Photographs by Théo Phan, twenty five frames in a deliberate order, with the camera settings behind each one."
+    "description": "Photographs by Théo Phan, twenty-five frames in a deliberate order, with the camera settings behind each one."
   },
   "photo": {
     "title": "{{place}} | Photography | Théo Phan",

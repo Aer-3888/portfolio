@@ -1,7 +1,7 @@
 {
   "home": {
     "title": "Théo Phan | La curiosité comme boussole",
-    "description": "Théo Phan est un ingénieur en informatique qui construit au croisement de l’IA, du mobile, de la sécurité, du matériel et du monde réel."
+    "description": "Théo Phan est un ingénieur en informatique qui travaille en IA, mobile, sécurité et matériel, sur des problèmes qui sortent de l’écran."
   },
   "projects": {
     "title": "Projets | Théo Phan",
@@ -13,7 +13,7 @@
   },
   "gallery": {
     "title": "Photographie | Théo Phan",
-    "description": "Les photographies de Théo Phan, vingt cinq images dans un ordre choisi, avec les réglages qui les ont faites."
+    "description": "Les photographies de Théo Phan, vingt-cinq images dans un ordre choisi, avec les réglages qui les ont faites."
   },
   "photo": {
     "title": "{{place}} | Photographie | Théo Phan",

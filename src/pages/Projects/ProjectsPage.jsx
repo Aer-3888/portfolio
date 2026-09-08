@@ -45,7 +45,7 @@ export default function ProjectsPage() {
   }, [selectedId]);
 
   return (
-    <PageTransition className="relative min-h-screen overflow-x-hidden bg-[#f1eee7] font-sans text-[#171717]">
+    <PageTransition className="relative min-h-screen overflow-x-hidden bg-ground font-sans text-ink">
       <PageNav currentPath="/projects" scrollYProgress={scrollYProgress} isHidden={!!selectedProject} />
 
       <ProjectGallery projects={projects} onSelect={(project) => setSelectedId(project.id)} />
