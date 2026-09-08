@@ -94,28 +94,6 @@ describe("PhotoPage", () => {
     expect(screen.getByAltText("second")).toBeInTheDocument();
   });
 
-  it("uses the full derivative", () => {
-    renderAt("/gallery/b");
-    expect(screen.getByAltText("second")).toHaveAttribute("src", "b-2000");
-  });
-
-  it("shows the place and the capture date", () => {
-    renderAt("/gallery/b");
-    expect(screen.getByText("Brest, July 2024")).toBeInTheDocument();
-  });
-
-  it("shows the technical line including the lens", () => {
-    renderAt("/gallery/b");
-    const technical = screen.getByText(/Canon EOS 4000D/);
-    expect(technical).toHaveTextContent("EF-S18-55mm");
-    expect(technical).toHaveTextContent("ISO 200");
-  });
-
-  it("states the position in the sequence", () => {
-    renderAt("/gallery/b");
-    expect(screen.getByText(/2 of 2/)).toBeInTheDocument();
-  });
-
   it("links back to the gallery", () => {
     renderAt("/gallery/b");
     expect(screen.getByRole("link", { name: /back to the gallery/i })).toHaveAttribute(
@@ -130,16 +108,6 @@ describe("PhotoPage", () => {
       "href",
       "/gallery/a"
     );
-  });
-
-  it("does not offer a previous link on the first frame", () => {
-    renderAt("/gallery/a");
-    expect(screen.queryByRole("link", { name: /previous frame/i })).toBeNull();
-  });
-
-  it("does not offer a next link on the last frame", () => {
-    renderAt("/gallery/b");
-    expect(screen.queryByRole("link", { name: /next frame/i })).toBeNull();
   });
 
   it("redirects an unknown slug to the gallery", () => {

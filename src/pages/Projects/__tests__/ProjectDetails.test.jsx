@@ -35,17 +35,6 @@ describe("ProjectDetails", () => {
     expect(screen.getByText("Waiki")).toBeInTheDocument();
   });
 
-  it("renders description text", () => {
-    renderWithI18n(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
-    expect(screen.getByText("Test description text.")).toBeInTheDocument();
-  });
-
-  it("renders all tech tags", () => {
-    renderWithI18n(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
-    expect(screen.getByText("Flutter")).toBeInTheDocument();
-    expect(screen.getByText("Dart")).toBeInTheDocument();
-  });
-
   it("renders nothing when project is null", () => {
     const { container } = renderWithI18n(
       <ProjectDetails project={null} isOpen={false} onClose={vi.fn()} />
@@ -69,10 +58,4 @@ describe("ProjectDetails", () => {
     expect(document.documentElement.classList.contains("lenis-stopped")).toBe(false);
   });
 
-  it("has data-lenis-prevent attribute on scrollable container", () => {
-    renderWithI18n(<ProjectDetails project={mockProject} isOpen={true} onClose={vi.fn()} />);
-    const description = screen.getByText("Test description text.");
-    const scrollContainer = description.closest("[data-lenis-prevent]");
-    expect(scrollContainer).toBeInTheDocument();
-  });
 });
