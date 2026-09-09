@@ -1,0 +1,170 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\footskip}{4pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-8pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+% --- CUSTOM COMMANDS ---
+\newcommand{\resumeItem}[1]{
+  \item\small{#1 \vspace{0pt}}
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{0pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \vspace{1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-3pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-2pt}}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[label=\textbullet]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-4pt}}
+
+\begin{document}
+
+%----------HEADING----------
+\begin{center}
+    \textbf{\Huge Théo Phan} \\ \vspace{2pt}
+    \large Software Engineering / Site Reliability Engineering Intern \\ \vspace{3pt}
+    \small \textbf{Expected graduation: June 2028} $|$ \textbf{Available May to September 2027}, full-time, 13 to 17 weeks \\ \vspace{3pt}
+    \small
+    \href{mailto:theo.phan.quoc.huy@gmail.com}{\underline{theo.phan.quoc.huy@gmail.com}} $|$
+    \href{tel:+33613620366}{\underline{+33 6 13 62 03 66}} $|$
+    \href{https://linkedin.com/in/theophanquochuy/}{\underline{LinkedIn}} $|$
+    \href{https://github.com/Aer-3888}{\underline{GitHub}} $|$
+    \href{https://aerworks.net/}{\underline{Portfolio}} $|$
+    French citizen (EU), open to relocation
+\end{center}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {INSA Rennes, Engineering Degree (Master's level) in Computer Science}{2025 -- 2028}
+      {Penultimate year (4th of 5), AI specialization. Algorithms \& data structures, OS, databases, networks}{Rennes, France}
+    \resumeSubheading
+      {IUT de Nantes, Bachelor of Technology in Computer Science}{2023 -- 2025}
+      {Track: Application Development, Design and Validation}{Nantes, France}
+  \resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Founding Engineer \& Tech Lead, Waiki}{2025 -- Present}
+      {Early-stage startup -- NFC hardware, mobile/web applications and cloud platform}{Hybrid}
+      \resumeItemListStart
+          \resumeItem{Led a team of 3 and \textbf{shipped to production} a Flutter iOS/Android app for an NFC product with \textbf{1{,}600+ units sold}. Implemented offline state synchronization and AES-128 CMAC tag authentication}
+          \resumeItem{Expanding Waiki+ with an \textbf{Expo iOS/Android/web parental app} and a spec-first, modular \textbf{Go API} backed by PostgreSQL and \textbf{Redis}. Added generated OpenAPI clients, Prometheus metrics and point-in-time backups to Cloudflare R2}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Software Engineer Intern, Applied Machine Learning}{April -- June 2025}
+      {FPT Telecom -- real-time defect detection on fiber optic cabling}{Hanoi, Vietnam}
+      \resumeItemListStart
+        \resumeItem{Built and deployed an \textbf{end-to-end Python pipeline} for real-time defect detection in technicians' mobile tooling, covering data collection, annotation, augmentation, \textbf{PyTorch/YOLOv8} training and inference}
+        \resumeItem{Compared \textbf{YOLOv8} and \textbf{Faster R-CNN} using mAP, precision, recall and latency. Added automated checks for missing data and class imbalance before training}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Backend Developer (Volunteer), Gnut06}{2026 -- Present}
+      {Nonprofit using VR/AR for the inclusion of people with disabilities}{Remote}
+      \resumeItemListStart
+        \resumeItem{Develop features and the \textbf{Doctrine/MySQL} data layer of a \textbf{Symfony 7.1/PHP} platform in Docker. Refactor legacy modules through a Git workflow with peer code review}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------
+\section{Projects}
+  \resumeSubHeadingListStart
+
+    \resumeProjectHeading
+      {\textbf{\href{https://github.com/Aer-3888/Notes_insa}{\underline{Campus Hub}}}}{\emph{Flutter, TypeScript, Cloudflare Workers, D1 (SQL)}}
+      \resumeItemListStart
+        \resumeItem{Developing a \textbf{Flutter campus hub} for INSA Rennes students that combines timetables, grades, weather and an interactive campus map with biometric authentication and encrypted offline access}
+        \resumeItem{Built a \textbf{TypeScript API} on \textbf{Cloudflare Workers} and D1 that validates, batches and aggregates cohort grade submissions. Salted user hashes and SQL upserts replace repeat submissions without storing usernames}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{\href{https://github.com/Aer-3888/iaj_evades}{\underline{IAJ Evades, Deep Reinforcement-Learning Agent}}}}{\emph{Rust, TypeScript, DQN, WebSockets}}
+      \resumeItemListStart
+        \resumeItem{Implemented a \textbf{Deep Q-Network and neural network from scratch in Rust} over a custom game engine, with experience replay, target-network updates and Rayon-based parallel training}
+        \resumeItem{Added an Axum/React dashboard that streams training metrics over \textbf{WebSockets}, supports live parameter tuning and resumes jobs from JSON checkpoints}
+      \resumeItemListEnd
+
+    \resumeProjectHeading
+      {\textbf{Accounting Automation Pipeline}}{\emph{C++20, Qt6, Google Sheets API, Sage 50, Ollama}}
+      \resumeItemListStart
+        \resumeItem{Built a \textbf{C++20/Qt6} pipeline that validates and reconciles accounting entries between Google Sheets and Sage 50, eliminating a recurring \textbf{\textasciitilde 2--3 hours of manual work per week}}
+        \resumeItem{Added a local \textbf{Ollama} model to suggest account codes for ambiguous entries, reducing manual lookups while keeping accounting data on-device}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------SKILLS-----------
+\section{Skills}
+\begin{itemize}[nosep,leftmargin=0.15in,label=\textbullet]
+    \resumeItem{\textbf{Programming:} Python, C++, Java, Go, Rust, JavaScript/TypeScript, SQL.}
+    \resumeItem{\textbf{Core CS \& Systems:} data structures \& algorithms, OOP, concurrency, operating systems, distributed systems, networks.}
+    \resumeItem{\textbf{Backend \& Infrastructure:} Unix/Linux, Docker, CI/CD, REST/OpenAPI, PostgreSQL, Redis, Cloudflare, Prometheus.}
+    \resumeItem{\textbf{ML \& Security:} PyTorch, TensorFlow, DQN, YOLOv8/OpenCV, AES-CMAC.}
+    \resumeItem{\textbf{Languages:} French and Vietnamese (native), English (C1).}
+\end{itemize}
+
+%-----------EXTRACURRICULAR-----------
+\section{Extracurricular}
+\begin{itemize}[nosep,leftmargin=0.15in,label=\textbullet]
+    \resumeItem{\textbf{CTF} (Team Crabe): \textbf{71\textsuperscript{st}/757} at \href{https://ctftime.org/event/3105}{\underline{Midnight Flag CTF 2026}}, 2\textsuperscript{nd} place IUT CTF.}
+    \resumeItem{\textbf{Accountant}, Junior Entreprise Ouest INSA: manage financial flows for a student-run engineering consultancy.}
+\end{itemize}
+
+\end{document}

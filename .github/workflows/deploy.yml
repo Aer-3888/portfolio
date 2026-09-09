@@ -40,8 +40,18 @@ jobs:
           root_file: cv_en.tex
           working_directory: cv
 
+      - name: Compile CV (Google)
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: resume_phan_theo.tex
+          working_directory: cv/Google
+
       - name: Move CVs to public
-        run: cp cv/cv.pdf public/cv.pdf && cp cv/cv_en.pdf public/cv_en.pdf
+        run: |
+          cp cv/cv.pdf public/cv.pdf
+          cp cv/cv_en.pdf public/cv_en.pdf
+          mkdir -p public/2ee313c6de7e1c7f30c97bf2e0dd2759
+          cp cv/Google/resume_phan_theo.pdf public/2ee313c6de7e1c7f30c97bf2e0dd2759/resume_phan_theo.pdf
 
       - name: Lint
         run: npm run lint

@@ -36,3 +36,6 @@ dist-ssr
 .*
 
 cv/*
+!cv/Google/
+cv/Google/*
+!cv/Google/resume_phan_theo.tex
