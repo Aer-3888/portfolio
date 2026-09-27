@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
   motion,
   useMotionValue,
@@ -21,6 +21,8 @@ const SCREEN_FILL = 0.5;
 const clamp01 = (n) => Math.min(1, Math.max(0, n));
 const lerp = (from, to, t) => from + (to - from) * t;
 const span = (t, from, to) => clamp01((t - from) / (to - from));
+// Zero velocity at both ends, so consecutive phases join without a kink.
+const smooth = (t) => t * t * (3 - 2 * t);
 
 // Offsets ignore transforms, so entrance and scroll motion never skew the fit.
 function offsetWithin(el, root) {
@@ -50,6 +52,7 @@ function measure({ viewport, figure, list, slot }) {
     ty: vh / 2 - cy,
     w,
     h,
+    radius: SCREEN.radius * k,
     pushEnd: (PUSH / 100) * vh,
     distance: ((PUSH + MORPH) / 100) * vh,
     slot: offsetWithin(slot, list),
@@ -65,10 +68,12 @@ export default function HomeStage({ onSelect }) {
   const figureRef = useRef(null);
   const listRef = useRef(null);
   const slotRef = useRef(null);
+  const appRef = useRef(null);
+  const photoRef = useRef(null);
+  const textRef = useRef(null);
 
   const geom = useMotionValue(null);
   const [slotBox, setSlotBox] = useState(null);
-  const [phase, setPhase] = useState("hero");
 
   const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
 
@@ -94,11 +99,16 @@ export default function HomeStage({ onSelect }) {
     return () => observer.disconnect();
   }, [geom]);
 
+  // Decode both frame images up front so their first paint can't stall a frame.
+  useEffect(() => {
+    for (const img of [appRef.current, photoRef.current]) img?.decode?.().catch(() => {});
+  }, [slotBox]);
+
   // Scroll in px past the top of the track, and the two phases as 0 to 1.
   const s = useTransform(() => scrollYProgress.get() * (geom.get()?.distance ?? 0));
   const pushT = useTransform(() => {
     const g = geom.get();
-    return g ? clamp01(s.get() / g.pushEnd) : 0;
+    return g ? smooth(clamp01(s.get() / g.pushEnd)) : 0;
   });
   const morphT = useTransform(() => {
     const g = geom.get();
@@ -108,9 +118,9 @@ export default function HomeStage({ onSelect }) {
   useMotionValueEvent(s, "change", (x) => {
     const g = geom.get();
     if (!g) return;
-    if (x < g.pushEnd / 2) setPhase("hero");
-    else if (x < g.pushEnd) setPhase("push");
-    else setPhase(x < g.distance - 0.5 ? "morph" : "landed");
+    // Written to the DOM directly: a React render here costs a frame mid-scroll.
+    const inert = x >= g.pushEnd / 2;
+    if (textRef.current && textRef.current.inert !== inert) textRef.current.inert = inert;
   });
 
   // The push: the whole photo comes closer about the phone screen and levels it.
@@ -122,31 +132,41 @@ export default function HomeStage({ onSelect }) {
     originX: SCREEN.cx / PORTRAIT.width,
     originY: SCREEN.cy / (PORTRAIT.width * 1.25),
     opacity: useTransform(morphT, [0, 0.15], [1, 0]),
+    willChange: "transform",
   };
   const textStyle = { opacity: useTransform(pushT, [0, 0.5], [1, 0]) };
 
   // The morph: a container from the levelled screen to where the first project
   // image will sit once the list has risen under it.
+  const eased = useTransform(morphT, smooth);
   const frame = {
     x: useTransform(() => {
       const g = geom.get();
       if (!g) return 0;
-      return (1 - morphT.get()) * (g.vw / 2 - (g.slot.left + g.slot.width / 2));
+      return (1 - eased.get()) * (g.vw / 2 - (g.slot.left + g.slot.width / 2));
     }),
     y: useTransform(() => {
       const g = geom.get();
       if (!g) return 0;
-      return (1 - morphT.get()) * (g.vh / 2 - (g.slot.top + g.slot.height / 2));
+      return (1 - eased.get()) * (g.vh / 2 - (g.slot.top + g.slot.height / 2));
     }),
     scaleX: useTransform(() => {
       const g = geom.get();
-      return g ? lerp((g.w * g.push) / g.slot.width, 1, morphT.get()) : 1;
+      return g ? lerp((g.w * g.push) / g.slot.width, 1, eased.get()) : 1;
     }),
     scaleY: useTransform(() => {
       const g = geom.get();
-      return g ? lerp((g.h * g.push) / g.slot.height, 1, morphT.get()) : 1;
+      return g ? lerp((g.h * g.push) / g.slot.height, 1, eased.get()) : 1;
     }),
   };
+  // The screen's rounded corners flatten into the project image, kept circular
+  // under the non-uniform scale.
+  const frameRadius = useTransform(() => {
+    const g = geom.get();
+    if (!g) return "0px";
+    const r = g.radius * g.push * (1 - eased.get());
+    return `${r / frame.scaleX.get()}px / ${r / frame.scaleY.get()}px`;
+  });
   const counterX = useTransform(frame.scaleX, (v) => 1 / v);
   const counterY = useTransform(frame.scaleY, (v) => 1 / v);
 
@@ -165,6 +185,17 @@ export default function HomeStage({ onSelect }) {
     );
   });
 
+  // The frame exists only during the hand-off, the list image only after it.
+  const frameVisibility = useTransform(() => {
+    const g = geom.get();
+    const x = s.get();
+    return g && x >= g.pushEnd && x < g.distance - 0.5 ? "visible" : "hidden";
+  });
+  const leadVisibility = useTransform(() => {
+    const g = geom.get();
+    return g && s.get() >= g.distance - 0.5 ? "visible" : "hidden";
+  });
+
   const start = geom.get();
 
   return (
@@ -175,7 +206,7 @@ export default function HomeStage({ onSelect }) {
             figureRef={figureRef}
             figureStyle={figureStyle}
             textStyle={textStyle}
-            textInert={phase !== "hero"}
+            textRef={textRef}
           />
         </div>
 
@@ -187,20 +218,22 @@ export default function HomeStage({ onSelect }) {
             <motion.div
               style={{
                 ...frame,
+                borderRadius: frameRadius,
+                visibility: frameVisibility,
+                willChange: "transform",
                 left: slotBox.left,
                 top: slotBox.top,
                 width: slotBox.width,
                 height: slotBox.height,
               }}
-              className={
-                phase === "morph" ? "absolute overflow-hidden bg-ink" : "invisible absolute"
-              }
+              className="absolute overflow-hidden bg-ink"
             >
               <motion.div
                 style={{ scaleX: counterX, scaleY: counterY }}
                 className="absolute inset-0"
               >
                 <motion.img
+                  ref={appRef}
                   src={WAIKI_SCREEN}
                   alt=""
                   style={{
@@ -216,6 +249,7 @@ export default function HomeStage({ onSelect }) {
                   className="absolute left-1/2 top-1/2 max-w-none object-cover"
                 />
                 <motion.img
+                  ref={photoRef}
                   src={lead.img}
                   alt=""
                   style={{ opacity: photoOpacity }}
@@ -228,7 +262,7 @@ export default function HomeStage({ onSelect }) {
       </div>
 
       <div ref={listRef} className="relative z-10 -mt-[100svh]">
-        <ProjectList onSelect={onSelect} lead={{ ref: slotRef, hidden: phase !== "landed" }} />
+        <ProjectList onSelect={onSelect} lead={{ ref: slotRef, visibility: leadVisibility }} />
       </div>
     </div>
   );

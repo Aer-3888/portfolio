@@ -11,7 +11,7 @@ export default function Hero({
   figureRef,
   figureStyle,
   textStyle,
-  textInert = false,
+  textRef,
   screen = <PhoneScreen />,
 }) {
   const { t } = useTranslation("home");
@@ -29,7 +29,7 @@ export default function Hero({
       >
         <motion.div
           style={textStyle}
-          inert={textInert}
+          ref={textRef}
           className="flex flex-col gap-12 md:col-span-7 md:pb-12"
         >
           <div className="md:my-auto">

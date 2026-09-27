@@ -26,9 +26,10 @@ function StoryCard({ story, project, index, onSelect, lead }) {
         aria-label={t("projects.storyAria", { title: project.title })}
       >
         <figure>
-          <div
+          <motion.div
             ref={lead?.ref}
-            className={clsx("overflow-hidden bg-mist", lead?.hidden && "invisible")}
+            style={lead ? { visibility: lead.visibility } : undefined}
+            className="overflow-hidden bg-mist"
           >
             <img
               src={project.img}
@@ -36,7 +37,7 @@ function StoryCard({ story, project, index, onSelect, lead }) {
               loading={lead ? "eager" : "lazy"}
               className="aspect-[3/2] w-full object-cover transition duration-500 ease-site group-hover:scale-[1.015]"
             />
-          </div>
+          </motion.div>
           <figcaption className="pt-3 text-sm text-ash">{project.type}</figcaption>
         </figure>
       </button>
