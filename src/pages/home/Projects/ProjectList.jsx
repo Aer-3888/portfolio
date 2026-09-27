@@ -1,17 +1,20 @@
+import clsx from "clsx";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import useLocalizedNavigate from "../../../i18n/useLocalizedNavigate";
 import useStories from "./useStories";
 
-function StoryCard({ story, project, index, onSelect }) {
+// `lead` lets the home stage land its transition on this card's image.
+function StoryCard({ story, project, index, onSelect, lead }) {
   const { t } = useTranslation("home");
   const reduced = useReducedMotion();
   const imageFirst = index % 2 === 0;
+  const still = reduced || Boolean(lead);
 
   return (
     <motion.article
-      initial={reduced ? false : { opacity: 0, y: 24 }}
-      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+      initial={still ? false : { opacity: 0, y: 24 }}
+      whileInView={still ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
       className="grid items-center gap-8 border-t border-rule py-8 md:grid-cols-[minmax(0,1.05fr)_minmax(18rem,.55fr)] md:gap-[8%] md:pb-16"
@@ -23,11 +26,14 @@ function StoryCard({ story, project, index, onSelect }) {
         aria-label={t("projects.storyAria", { title: project.title })}
       >
         <figure>
-          <div className="overflow-hidden bg-mist">
+          <div
+            ref={lead?.ref}
+            className={clsx("overflow-hidden bg-mist", lead?.hidden && "invisible")}
+          >
             <img
               src={project.img}
               alt=""
-              loading="lazy"
+              loading={lead ? "eager" : "lazy"}
               className="aspect-[3/2] w-full object-cover transition duration-500 ease-site group-hover:scale-[1.015]"
             />
           </div>
@@ -53,14 +59,14 @@ function StoryCard({ story, project, index, onSelect }) {
   );
 }
 
-export default function ProjectList({ onSelect }) {
+export default function ProjectList({ onSelect, lead, className }) {
   const reduced = useReducedMotion();
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation("home");
   const stories = useStories();
 
   return (
-    <section id="projects" className="bg-ground text-ink">
+    <section id="projects" className={clsx("bg-ground text-ink", className)}>
       <div className="mx-auto max-w-[100rem] px-6 py-24 md:px-10 md:py-32">
         <header className="mb-14 grid gap-6 md:grid-cols-[minmax(0,1fr)_27%] md:items-end md:gap-12">
           <motion.h2
@@ -83,6 +89,7 @@ export default function ProjectList({ onSelect }) {
               project={project}
               index={index}
               onSelect={onSelect}
+              lead={index === 0 ? lead : undefined}
             />
           ))}
         </div>

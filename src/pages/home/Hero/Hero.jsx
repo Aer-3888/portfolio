@@ -7,7 +7,13 @@ import PhoneScreen from "../Stage/PhoneScreen";
 
 const PORTRAIT = `${import.meta.env.BASE_URL}images/optimized/me_.webp`;
 
-export default function Hero({ figureRef, screen = <PhoneScreen /> }) {
+export default function Hero({
+  figureRef,
+  figureStyle,
+  textStyle,
+  textInert = false,
+  screen = <PhoneScreen />,
+}) {
   const { t } = useTranslation("home");
   const { pathname } = useLocation();
   const lang = getLangFromPath(pathname);
@@ -21,7 +27,11 @@ export default function Hero({ figureRef, screen = <PhoneScreen /> }) {
         {...reveal(reduced)}
         className="mx-auto grid max-w-[100rem] gap-12 md:min-h-[calc(100svh-6rem)] md:grid-cols-12 md:gap-6"
       >
-        <div className="flex flex-col gap-12 md:col-span-7 md:pb-12">
+        <motion.div
+          style={textStyle}
+          inert={textInert}
+          className="flex flex-col gap-12 md:col-span-7 md:pb-12"
+        >
           <div className="md:my-auto">
             <h1 className="font-display text-[clamp(4.5rem,11vw,13rem)] leading-[0.9] tracking-[-0.03em]">
               {t("hero.headline")}
@@ -54,10 +64,11 @@ export default function Hero({ figureRef, screen = <PhoneScreen /> }) {
               </div>
             ))}
           </dl>
-        </div>
+        </motion.div>
 
-        <figure
+        <motion.figure
           ref={figureRef}
+          style={figureStyle}
           className="relative mx-auto w-full max-w-[22rem] self-end md:col-span-5 md:col-start-8 md:mx-0 md:max-w-[calc((100svh-6rem)*0.8)] md:justify-self-end"
         >
           <img
@@ -69,7 +80,7 @@ export default function Hero({ figureRef, screen = <PhoneScreen /> }) {
             className="block aspect-[4/5] w-full object-cover object-top grayscale transition duration-500 hover:grayscale-0"
           />
           {screen}
-        </figure>
+        </motion.figure>
       </motion.div>
     </section>
   );

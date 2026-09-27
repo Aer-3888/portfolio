@@ -2,10 +2,8 @@
 export const PORTRAIT = { width: 796, height: 1024 };
 export const SCREEN = { cx: 181.7, cy: 445.1, width: 150, height: 324, rotate: -3.4 };
 
-// The key on the Waiki home screen and in the product photo, as fractions of
-// each image, so the zoom stays on it and the crossfade lands key on key.
-export const KEY_ORIGIN = { x: 0.5, y: 0.36, width: 0.54 };
-export const PHOTO_KEY = { x: 0.59, y: 0.61, width: 0.46 };
+// Where the key sits on the Waiki home screen, so the zoom stays on it.
+export const KEY_ORIGIN = { x: 0.5, y: 0.36 };
 
 export const WAIKI_SCREEN = `${import.meta.env.BASE_URL}images/optimized/waiki-screen.webp`;
 

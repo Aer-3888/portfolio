@@ -32,7 +32,7 @@ describe("HomeStage", () => {
     expect(onSelect).toHaveBeenCalledWith(expect.objectContaining({ id: "09" }));
   });
 
-  it("opens the project on screen when the frame is clicked", () => {
+  it("opens the first project from its image", () => {
     const onSelect = vi.fn();
     renderWithI18n(<HomeStage onSelect={onSelect} />);
 

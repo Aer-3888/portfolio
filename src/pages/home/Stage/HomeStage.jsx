@@ -1,6 +1,4 @@
-import { useCallback, useLayoutEffect, useRef, useState } from "react";
-import clsx from "clsx";
-import { useTranslation } from "react-i18next";
+import { useLayoutEffect, useRef, useState } from "react";
 import {
   motion,
   useMotionValue,
@@ -9,24 +7,22 @@ import {
   useTransform,
 } from "framer-motion";
 import Hero from "../Hero/Hero";
+import ProjectList from "../Projects/ProjectList";
 import useStories from "../Projects/useStories";
-import useLocalizedNavigate from "../../../i18n/useLocalizedNavigate";
-import useScrollToElement from "../../../hooks/useScrollToElement";
-import { DURATION, EASE } from "../../../config/motion";
-import { KEY_ORIGIN, PHOTO_KEY, PORTRAIT, SCREEN, WAIKI_SCREEN } from "./screenGeometry";
+import { KEY_ORIGIN, PORTRAIT, SCREEN, WAIKI_SCREEN } from "./screenGeometry";
 
-// Scroll lengths in vh: the lift off the phone, then one stretch per project.
-const LIFT = 100;
-const PANEL = 70;
-const FADE = PANEL * 0.1;
-
-// Photographs fill the frame. Screenshots sit on the ink ground.
-const FILLS = new Set(["01"]);
+// Scroll lengths in vh: the photo pushes in, then the list rises while the
+// screen travels into the first project image.
+const PUSH = 60;
+const MORPH = 100;
+// Screen height at the end of the push, as a share of the viewport.
+const SCREEN_FILL = 0.5;
 
 const clamp01 = (n) => Math.min(1, Math.max(0, n));
 const lerp = (from, to, t) => from + (to - from) * t;
+const span = (t, from, to) => clamp01((t - from) / (to - from));
 
-// Offsets ignore transforms, so the hero's entrance rise does not skew the fit.
+// Offsets ignore transforms, so entrance and scroll motion never skew the fit.
 function offsetWithin(el, root) {
   let left = 0;
   let top = 0;
@@ -37,295 +33,203 @@ function offsetWithin(el, root) {
   return { left, top, width: el.offsetWidth, height: el.offsetHeight };
 }
 
-function measure(figure, slot, root) {
-  const f = offsetWithin(figure, root);
-  const s = offsetWithin(slot, root);
+function measure({ viewport, figure, list, slot }) {
+  const vw = viewport.offsetWidth;
+  const vh = viewport.offsetHeight;
+  const f = offsetWithin(figure, viewport);
   const k = f.width / PORTRAIT.width;
+  const w = SCREEN.width * k;
+  const h = SCREEN.height * k;
+  const cx = f.left + SCREEN.cx * k;
+  const cy = f.top + SCREEN.cy * k;
   return {
-    dx: f.left + SCREEN.cx * k - (s.left + s.width / 2),
-    dy: f.top + SCREEN.cy * k - (s.top + s.height / 2),
-    w: SCREEN.width * k,
-    h: SCREEN.height * k,
-    W: s.width,
-    H: s.height,
+    vw,
+    vh,
+    push: (SCREEN_FILL * vh) / h,
+    tx: vw / 2 - cx,
+    ty: vh / 2 - cy,
+    w,
+    h,
+    pushEnd: (PUSH / 100) * vh,
+    distance: ((PUSH + MORPH) / 100) * vh,
+    slot: offsetWithin(slot, list),
   };
 }
 
-function StagePanel({ v, index, src, fill, keyScale }) {
-  const at = LIFT + index * PANEL;
-  const range = index === 0 ? [LIFT * 0.45, LIFT * 0.8] : [at - FADE, at + FADE];
-  const opacity = useTransform(v, range, [0, 1]);
-
-  // The first panel starts with its key over the app's key, then settles.
-  const scale = useTransform(() => lerp(keyScale.get(), 1, opacity.get()));
-  const x = useTransform(opacity, [0, 1], [`${(0.5 - PHOTO_KEY.x) * 100}%`, "0%"]);
-  const y = useTransform(opacity, [0, 1], [`${(0.5 - PHOTO_KEY.y) * 100}%`, "0%"]);
-  const matchCut = index === 0 ? { scale, x, y, originX: PHOTO_KEY.x, originY: PHOTO_KEY.y } : {};
-
-  return (
-    <motion.span style={{ opacity }} className="absolute inset-0 block overflow-hidden bg-ink">
-      <motion.img
-        src={src}
-        alt=""
-        decoding="async"
-        style={matchCut}
-        className={clsx("h-full w-full", fill ? "object-cover" : "object-contain p-8")}
-      />
-    </motion.span>
-  );
-}
-
-function StageCaption({ v, index, count, story, project, interactive, onSelect, onFocusPanel }) {
-  const { t } = useTranslation("home");
-  const at = LIFT + index * PANEL;
-  const next = at + PANEL;
-  const fadeIn = index === 0 ? [LIFT * 0.7, LIFT * 0.95] : [at, at + FADE];
-  const last = index === count - 1;
-  const opacity = useTransform(
-    v,
-    last ? fadeIn : [...fadeIn, next - FADE, next],
-    last ? [0, 1] : [0, 1, 1, 0]
-  );
-
-  return (
-    <motion.article
-      style={{ opacity }}
-      className={clsx(
-        "col-start-1 row-start-1",
-        interactive ? "pointer-events-auto" : "pointer-events-none"
-      )}
-    >
-      <p className="text-sm text-ash">{project.type}</p>
-      <h3 className="mt-3 font-display text-[clamp(2.5rem,4vw,3.5rem)] leading-none tracking-[-0.025em]">
-        {project.title}
-      </h3>
-      <p className="mt-5 max-w-md text-base leading-relaxed text-ash">{story.note}</p>
-      {story.result && <p className="mt-5 text-sm text-accent-deep">{story.result}</p>}
-      <button
-        type="button"
-        onClick={() => onSelect(project)}
-        onFocus={() => onFocusPanel(index)}
-        className="mt-7 cursor-pointer border-b border-accent pb-1.5 text-sm transition-colors hover:text-accent-deep"
-      >
-        {t("projects.open", { title: project.title })}
-      </button>
-    </motion.article>
-  );
-}
-
 export default function HomeStage({ onSelect }) {
-  const { t } = useTranslation("home");
-  const navigate = useLocalizedNavigate();
-  const scrollToElement = useScrollToElement();
   const stories = useStories();
-  const count = stories.length;
-  const distance = LIFT + PANEL * count;
+  const lead = stories[0]?.project;
 
-  const sectionRef = useRef(null);
-  const stickyRef = useRef(null);
+  const trackRef = useRef(null);
+  const viewportRef = useRef(null);
   const figureRef = useRef(null);
+  const listRef = useRef(null);
   const slotRef = useRef(null);
-  const markerRefs = useRef([]);
 
   const geom = useMotionValue(null);
-  const [appSize, setAppSize] = useState(null);
-  const [active, setActive] = useState(0);
-  const [heroGone, setHeroGone] = useState(false);
+  const [slotBox, setSlotBox] = useState(null);
+  const [phase, setPhase] = useState("hero");
 
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ["start start", "end end"] });
-  const v = useTransform(scrollYProgress, (p) => p * distance);
+  const { scrollYProgress } = useScroll({ target: trackRef, offset: ["start start", "end end"] });
 
   useLayoutEffect(() => {
     const update = () => {
-      if (!figureRef.current || !slotRef.current || !stickyRef.current) return;
-      const next = measure(figureRef.current, slotRef.current, stickyRef.current);
+      const parts = {
+        viewport: viewportRef.current,
+        figure: figureRef.current,
+        list: listRef.current,
+        slot: slotRef.current,
+      };
+      if (Object.values(parts).some((el) => !el)) return;
+      const next = measure(parts);
       geom.set(next);
-      setAppSize({ width: next.w, height: next.h });
+      setSlotBox(next.slot);
     };
     update();
     const observer = new ResizeObserver(update);
-    observer.observe(stickyRef.current);
+    observer.observe(viewportRef.current);
     observer.observe(figureRef.current.parentElement);
+    observer.observe(listRef.current);
     document.fonts?.ready.then(update);
     return () => observer.disconnect();
   }, [geom]);
 
-  useMotionValueEvent(v, "change", (x) => {
-    setActive(Math.min(count - 1, Math.max(0, Math.floor((x - LIFT) / PANEL))));
-    setHeroGone(x > LIFT * 0.4);
+  // Scroll in px past the top of the track, and the two phases as 0 to 1.
+  const s = useTransform(() => scrollYProgress.get() * (geom.get()?.distance ?? 0));
+  const pushT = useTransform(() => {
+    const g = geom.get();
+    return g ? clamp01(s.get() / g.pushEnd) : 0;
+  });
+  const morphT = useTransform(() => {
+    const g = geom.get();
+    return g ? span(s.get(), g.pushEnd, g.distance) : 0;
   });
 
-  const lift = useTransform(v, (x) => clamp01(x / LIFT));
-  const x = useTransform(() => (geom.get()?.dx ?? 0) * (1 - lift.get()));
-  const y = useTransform(() => (geom.get()?.dy ?? 0) * (1 - lift.get()));
-  const rotate = useTransform(lift, (t) => SCREEN.rotate * (1 - t));
-  const scaleX = useTransform(() => {
+  useMotionValueEvent(s, "change", (x) => {
     const g = geom.get();
-    return g ? lerp(g.w / g.W, 1, lift.get()) : 1;
+    if (!g) return;
+    if (x < g.pushEnd / 2) setPhase("hero");
+    else if (x < g.pushEnd) setPhase("push");
+    else setPhase(x < g.distance - 0.5 ? "morph" : "landed");
   });
-  const scaleY = useTransform(() => {
-    const g = geom.get();
-    return g ? lerp(g.h / g.H, 1, lift.get()) : 1;
-  });
-  const counterX = useTransform(scaleX, (s) => 1 / s);
-  const counterY = useTransform(scaleY, (s) => 1 / s);
 
-  // Smallest scale that keeps the app screen covering the growing window
-  // while it zooms about the key.
+  // The push: the whole photo comes closer about the phone screen and levels it.
+  const figureStyle = {
+    x: useTransform(() => (geom.get()?.tx ?? 0) * pushT.get()),
+    y: useTransform(() => (geom.get()?.ty ?? 0) * pushT.get()),
+    scale: useTransform(() => lerp(1, geom.get()?.push ?? 1, pushT.get())),
+    rotate: useTransform(pushT, (t) => -SCREEN.rotate * t),
+    originX: SCREEN.cx / PORTRAIT.width,
+    originY: SCREEN.cy / (PORTRAIT.width * 1.25),
+    opacity: useTransform(morphT, [0, 0.15], [1, 0]),
+  };
+  const textStyle = { opacity: useTransform(pushT, [0, 0.5], [1, 0]) };
+
+  // The morph: a container from the levelled screen to where the first project
+  // image will sit once the list has risen under it.
+  const frame = {
+    x: useTransform(() => {
+      const g = geom.get();
+      if (!g) return 0;
+      return (1 - morphT.get()) * (g.vw / 2 - (g.slot.left + g.slot.width / 2));
+    }),
+    y: useTransform(() => {
+      const g = geom.get();
+      if (!g) return 0;
+      return (1 - morphT.get()) * (g.vh / 2 - (g.slot.top + g.slot.height / 2));
+    }),
+    scaleX: useTransform(() => {
+      const g = geom.get();
+      return g ? lerp((g.w * g.push) / g.slot.width, 1, morphT.get()) : 1;
+    }),
+    scaleY: useTransform(() => {
+      const g = geom.get();
+      return g ? lerp((g.h * g.push) / g.slot.height, 1, morphT.get()) : 1;
+    }),
+  };
+  const counterX = useTransform(frame.scaleX, (v) => 1 / v);
+  const counterY = useTransform(frame.scaleY, (v) => 1 / v);
+
+  // A short crossfade while the container is still small.
+  const appOpacity = useTransform(morphT, [0.05, 0.3], [1, 0]);
+  const photoOpacity = useTransform(morphT, [0.05, 0.3], [0, 1]);
   const appScale = useTransform(() => {
     const g = geom.get();
     if (!g) return 1;
-    const winW = scaleX.get() * g.W;
-    const winH = scaleY.get() * g.H;
-    const shift = (0.5 - KEY_ORIGIN.y) * g.h;
+    const startW = g.w * g.push;
+    const startH = g.h * g.push;
     return Math.max(
       1,
-      winW / g.w,
-      (winH / 2 - shift) / (KEY_ORIGIN.y * g.h),
-      (winH / 2 + shift) / ((1 - KEY_ORIGIN.y) * g.h)
+      (frame.scaleX.get() * g.slot.width) / startW,
+      (frame.scaleY.get() * g.slot.height) / startH
     );
   });
 
-  // Scale at which the photo's key matches the app key's current size.
-  const keyScale = useTransform(() => {
-    const g = geom.get();
-    if (!g) return 1;
-    return (KEY_ORIGIN.width * g.w * appScale.get()) / (PHOTO_KEY.width * g.W);
-  });
-
-  const heroOpacity = useTransform(v, [0, LIFT * 0.4], [1, 0]);
-  const headOpacity = useTransform(v, [LIFT * 0.7, LIFT * 0.95], [0, 1]);
-
-  const focusPanel = useCallback(
-    (index) => {
-      if (index !== active || !heroGone) scrollToElement(markerRefs.current[index]);
-    },
-    [active, heroGone, scrollToElement]
-  );
-
-  const current = stories[active];
+  const start = geom.get();
 
   return (
-    <section
-      id="home"
-      ref={sectionRef}
-      className="relative"
-      style={{ height: `${distance + 100}vh` }}
-    >
-      {stories.map(({ story }, index) => (
+    <div id="home" className="relative">
+      <div ref={trackRef} className="relative" style={{ height: `${100 + PUSH + MORPH}vh` }}>
+        <div ref={viewportRef} className="sticky top-0 z-0 h-svh overflow-hidden bg-ground">
+          <Hero
+            figureRef={figureRef}
+            figureStyle={figureStyle}
+            textStyle={textStyle}
+            textInert={phase !== "hero"}
+          />
+        </div>
+
         <div
-          key={story.id}
-          id={index === 0 ? "projects" : undefined}
-          ref={(el) => {
-            markerRefs.current[index] = el;
-          }}
           aria-hidden="true"
-          className="absolute inset-x-0 h-px"
-          style={{ top: `${index === 0 ? LIFT : LIFT + index * PANEL + FADE * 2}vh` }}
-        />
-      ))}
-
-      <div ref={stickyRef} className="sticky top-0 h-svh overflow-hidden bg-ground">
-        <motion.div style={{ opacity: heroOpacity }} inert={heroGone}>
-          <Hero figureRef={figureRef} screen={null} />
-        </motion.div>
-
-        <div className="pointer-events-none absolute inset-0 px-10">
-          <div className="mx-auto grid h-full max-w-[100rem] grid-cols-12 items-center gap-6 pb-10 pt-24">
-            <div className="col-span-4 flex flex-col gap-10">
-              <motion.h2 style={{ opacity: headOpacity }} className="text-sm text-ash">
-                {t("projects.heading")}
-                <span aria-hidden="true" className="tabular-nums">
-                  {t("projects.counter", { current: active + 1, total: count })}
-                </span>
-              </motion.h2>
-
-              <div className="grid">
-                {stories.map(({ story, project }, index) => (
-                  <StageCaption
-                    key={story.id}
-                    v={v}
-                    index={index}
-                    count={count}
-                    story={story}
-                    project={project}
-                    interactive={heroGone && index === active}
-                    onSelect={onSelect}
-                    onFocusPanel={focusPanel}
-                  />
-                ))}
-              </div>
-
-              <motion.div style={{ opacity: headOpacity }}>
-                <button
-                  type="button"
-                  onClick={() => navigate("/projects")}
-                  className={clsx(
-                    "cursor-pointer text-sm transition-colors hover:text-accent-deep",
-                    heroGone ? "pointer-events-auto" : "pointer-events-none"
-                  )}
-                >
-                  {t("projects.cta")}
-                </button>
-              </motion.div>
-            </div>
-
-            <div
-              ref={slotRef}
-              className="relative col-span-8 col-start-5 aspect-[3/2] w-full max-w-[calc((100svh-9rem)*1.5)] justify-self-end"
+          className="pointer-events-none sticky top-0 z-20 -mt-[100svh] h-svh"
+        >
+          {slotBox && start && lead && (
+            <motion.div
+              style={{
+                ...frame,
+                left: slotBox.left,
+                top: slotBox.top,
+                width: slotBox.width,
+                height: slotBox.height,
+              }}
+              className={
+                phase === "morph" ? "absolute overflow-hidden bg-ink" : "invisible absolute"
+              }
             >
               <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: DURATION.enter, delay: DURATION.enter, ease: EASE }}
-                style={{ x, y, rotate }}
+                style={{ scaleX: counterX, scaleY: counterY }}
                 className="absolute inset-0"
               >
-                <motion.button
-                  type="button"
-                  onClick={() => onSelect(current.project)}
-                  aria-label={t("projects.storyAria", { title: current.project.title })}
-                  tabIndex={-1}
-                  style={{ scaleX, scaleY }}
-                  className="pointer-events-auto absolute inset-0 cursor-pointer overflow-hidden bg-ink"
-                >
-                  <motion.span
-                    style={{ scaleX: counterX, scaleY: counterY }}
-                    className="absolute inset-0 block"
-                  >
-                    {appSize && (
-                      <motion.img
-                        src={WAIKI_SCREEN}
-                        alt=""
-                        fetchPriority="high"
-                        style={{
-                          ...appSize,
-                          x: "-50%",
-                          y: "-50%",
-                          scale: appScale,
-                          originX: KEY_ORIGIN.x,
-                          originY: KEY_ORIGIN.y,
-                        }}
-                        className="absolute left-1/2 top-1/2 max-w-none object-cover"
-                      />
-                    )}
-                    {stories.map(({ story, project }, index) => (
-                      <StagePanel
-                        key={story.id}
-                        v={v}
-                        index={index}
-                        src={project.img}
-                        fill={FILLS.has(project.id)}
-                        keyScale={keyScale}
-                      />
-                    ))}
-                  </motion.span>
-                </motion.button>
+                <motion.img
+                  src={WAIKI_SCREEN}
+                  alt=""
+                  style={{
+                    width: start.w * start.push,
+                    height: start.h * start.push,
+                    x: "-50%",
+                    y: "-50%",
+                    scale: appScale,
+                    originX: KEY_ORIGIN.x,
+                    originY: KEY_ORIGIN.y,
+                    opacity: appOpacity,
+                  }}
+                  className="absolute left-1/2 top-1/2 max-w-none object-cover"
+                />
+                <motion.img
+                  src={lead.img}
+                  alt=""
+                  style={{ opacity: photoOpacity }}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
               </motion.div>
-            </div>
-          </div>
+            </motion.div>
+          )}
         </div>
       </div>
-    </section>
+
+      <div ref={listRef} className="relative z-10 -mt-[100svh]">
+        <ProjectList onSelect={onSelect} lead={{ ref: slotRef, hidden: phase !== "landed" }} />
+      </div>
+    </div>
   );
 }
