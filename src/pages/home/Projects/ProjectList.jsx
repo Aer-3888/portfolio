@@ -17,7 +17,12 @@ function StoryCard({ story, project, index, onSelect, lead }) {
       whileInView={still ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-      className="grid items-center gap-8 border-t border-rule py-8 md:grid-cols-[minmax(0,1.05fr)_minmax(18rem,.55fr)] md:gap-[8%] md:pb-16"
+      className={clsx(
+        "grid items-center gap-8 border-t border-rule py-8 md:gap-[8%] md:pb-16",
+        imageFirst
+          ? "md:grid-cols-[minmax(0,1.05fr)_minmax(18rem,.55fr)]"
+          : "md:grid-cols-[minmax(18rem,.55fr)_minmax(0,1.05fr)]"
+      )}
     >
       <button
         type="button"
