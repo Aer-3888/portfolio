@@ -13,40 +13,52 @@ export default function Hero({ figureRef, screen = <PhoneScreen /> }) {
   const lang = getLangFromPath(pathname);
   const reduced = useReducedMotion();
   const cvUrl = `${import.meta.env.BASE_URL}cv${lang === "fr" ? "" : "_en"}.pdf`;
+  const facts = t("hero.facts", { returnObjects: true });
 
   return (
-    <section className="bg-ground px-6 pb-16 pt-24 text-ink md:px-10 md:pb-20 md:pt-28">
+    <section className="bg-ground px-6 pt-28 text-ink md:px-10 md:pt-24">
       <motion.div
         {...reveal(reduced)}
-        className="mx-auto grid max-w-[100rem] items-center gap-12 md:min-h-[calc(100svh-7rem)] md:grid-cols-[minmax(0,1fr)_18rem] md:gap-[7%] lg:grid-cols-[minmax(0,1fr)_22rem]"
+        className="mx-auto grid max-w-[100rem] gap-12 md:min-h-[calc(100svh-6rem)] md:grid-cols-12 md:gap-6"
       >
-        <div>
-          <h1 className="max-w-[9ch] font-display text-[clamp(4rem,8.2vw,7.9rem)] leading-[0.95] tracking-[-0.04em]">
-            {t("hero.headline")}
-          </h1>
+        <div className="flex flex-col gap-12 md:col-span-7 md:pb-12">
+          <div className="md:my-auto">
+            <h1 className="font-display text-[clamp(4.5rem,11vw,13rem)] leading-[0.9] tracking-[-0.03em]">
+              {t("hero.headline")}
+            </h1>
 
-          <p className="mt-9 max-w-md text-body text-ash md:mt-10">{t("hero.identity")}</p>
+            <p className="mt-8 max-w-[36ch] text-body-lg text-ash">{t("hero.identity")}</p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4 font-sans text-small">
-            <Link
-              to={localizePath("/projects", lang)}
-              className="underline decoration-accent-deep decoration-1 underline-offset-8 transition-colors duration-200 ease-site hover:text-accent-deep"
-            >
-              {t("hero.ctaWork")}
-            </Link>
-            <a
-              href={cvUrl}
-              download
-              className="underline decoration-rule-strong decoration-1 underline-offset-8 transition-colors duration-200 ease-site hover:text-accent-deep"
-            >
-              {t("hero.ctaCv")}
-            </a>
+            <div className="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4 text-small">
+              <a
+                href={cvUrl}
+                download
+                className="underline decoration-accent-deep decoration-1 underline-offset-8 transition-colors duration-200 ease-site hover:text-accent-deep"
+              >
+                {t("hero.ctaCv")}
+              </a>
+              <Link
+                to={localizePath("/projects", lang)}
+                className="underline decoration-rule-strong decoration-1 underline-offset-8 transition-colors duration-200 ease-site hover:text-accent-deep"
+              >
+                {t("hero.ctaWork")}
+              </Link>
+            </div>
           </div>
+
+          <dl className="grid gap-6 border-t border-rule pt-6 sm:grid-cols-3">
+            {facts.map((fact) => (
+              <div key={fact.label}>
+                <dt className="text-caption text-ash">{fact.label}</dt>
+                <dd className="mt-1 text-small tabular-nums">{fact.value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
 
         <figure
           ref={figureRef}
-          className="relative mx-auto w-full max-w-[20rem] md:max-w-[18rem] lg:max-w-[22rem]"
+          className="relative mx-auto w-full max-w-[22rem] self-end md:col-span-5 md:col-start-8 md:mx-0 md:max-w-[calc((100svh-6rem)*0.8)] md:justify-self-end"
         >
           <img
             src={PORTRAIT}

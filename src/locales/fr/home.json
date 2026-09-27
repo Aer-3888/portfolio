@@ -1,7 +1,21 @@
 {
   "hero": {
-    "identity": "Je suis Théo Phan, étudiant en informatique à l’INSA Rennes. J’aime construire des applications et comprendre comment elles se comportent hors d’une démo.",
-    "headline": "Je construis des choses qui doivent fonctionner.",
+    "identity": "Étudiant en informatique à l’INSA Rennes. Je construis des applications mobiles, des modèles de vision par ordinateur et des outils de sécurité pour l’IA.",
+    "facts": [
+      {
+        "label": "En ligne",
+        "value": "Waiki, sur iOS et Android, 1 425+ ventes"
+      },
+      {
+        "label": "Recherche",
+        "value": "Un stage pour l’été 2027"
+      },
+      {
+        "label": "Basé à",
+        "value": "Rennes, France"
+      }
+    ],
+    "headline": "Théo Phan",
     "portraitAlt": "Théo Phan souriant, tenant un téléphone ouvert sur l’app Waiki",
     "ctaWork": "Voir les projets",
     "ctaCv": "Télécharger le CV"

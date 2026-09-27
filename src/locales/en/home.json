@@ -1,7 +1,21 @@
 {
   "hero": {
-    "identity": "I’m Théo Phan, a computer science student at INSA Rennes. I like building apps and learning how they behave outside a demo.",
-    "headline": "I build things that need to work.",
+    "identity": "Computer science student at INSA Rennes. I build mobile apps, computer vision models and AI security tools.",
+    "facts": [
+      {
+        "label": "Shipped",
+        "value": "Waiki, on iOS and Android, 1,425+ units sold"
+      },
+      {
+        "label": "Looking for",
+        "value": "A summer 2027 internship"
+      },
+      {
+        "label": "Based in",
+        "value": "Rennes, France"
+      }
+    ],
+    "headline": "Théo Phan",
     "portraitAlt": "Théo Phan smiling and holding up a phone with the Waiki app open",
     "ctaWork": "View projects",
     "ctaCv": "Download CV"

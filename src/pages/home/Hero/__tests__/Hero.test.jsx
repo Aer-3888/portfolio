@@ -27,11 +27,18 @@ describe("Hero", () => {
     );
   });
 
-  it("renders the statement in French", async () => {
+  it("leads with the name and states the availability", () => {
+    renderWithI18n(<Hero />);
+
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Théo Phan");
+    expect(screen.getByText("A summer 2027 internship")).toBeInTheDocument();
+  });
+
+  it("renders the introduction in French", async () => {
     await i18n.changeLanguage("fr");
     renderWithI18n(<Hero />, { route: "/fr" });
 
-    const heading = screen.getByRole("heading", { level: 1 });
-    expect(heading).toHaveTextContent(/Je construis des choses qui doivent fonctionner\./i);
+    expect(screen.getByText(/Étudiant en informatique à l’INSA Rennes/)).toBeInTheDocument();
+    expect(screen.getByText("Un stage pour l’été 2027")).toBeInTheDocument();
   });
 });

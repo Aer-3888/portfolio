@@ -9,10 +9,10 @@ afterEach(async () => {
 });
 
 describe("HomeStage", () => {
-  it("keeps the hero statement and the CV download", () => {
+  it("keeps the hero and the CV download", () => {
     renderWithI18n(<HomeStage onSelect={() => {}} />);
 
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(/things that need to work/i);
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Théo Phan");
     expect(screen.getByRole("link", { name: /download cv/i })).toHaveAttribute("href", "/cv_en.pdf");
   });
 
