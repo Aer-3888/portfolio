@@ -1,6 +1,4 @@
-// One-off / re-runnable image optimizer.
-// Keeps every original in public/images and writes resized WebP derivatives into
-// public/images/optimized (mirroring the folder layout), plus a small favicon set.
+// Writes resized WebP copies of public/images into public/images/optimized, plus favicons.
 // Run with: npm run optimize:images
 import sharp from "sharp";
 import exifr from "exifr";
@@ -13,9 +11,8 @@ const imagesDir = path.join(root, "public", "images");
 const outDir = path.join(imagesDir, "optimized");
 const publicDir = path.join(root, "public");
 
-// Longest-edge caps per use. Project cards sit in a ~700px 4:3 frame, so these
-// cover retina without shipping DSLR raws.
-// Gallery widths map to contact sheet, sequence frame, and full page.
+// Longest-edge caps per use, sized for retina without shipping raws.
+// Gallery widths are the contact sheet, sequence frame and full page.
 const GALLERY_WIDTHS = { thumb: 400, mid: 1200, full: 2000 };
 // Photographs are compressed lighter than the screenshots and cutouts elsewhere.
 const GALLERY_QUALITY = 92;
@@ -177,10 +174,7 @@ async function run() {
   console.log(`\nDerivatives total: ${mb(before)}MB originals -> ${mb(after)}MB WebP`);
 }
 
-// 1200x630 Open Graph card: hero cutout on the right, name + role on the paper canvas.
-// Site tokens: paper #ffffff, ink #3f3f3f, stone #d3cec5, ash #686867, pebble #acacac.
-// Text is rendered by librsvg via the SVG below; if Inter is not installed on this machine
-// it falls back to a system sans, which is fine for a share card.
+// 1200x630 Open Graph card. librsvg falls back to a system sans without Inter.
 async function generateOgImage() {
   const W = 1200;
   const H = 630;

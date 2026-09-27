@@ -11,20 +11,19 @@ import ProjectList from "../Projects/ProjectList";
 import useStories from "../Projects/useStories";
 import { KEY_ORIGIN, PORTRAIT, SCREEN, WAIKI_SCREEN } from "./screenGeometry";
 
-// Scroll lengths in vh: the photo pushes in, then the list rises while the
-// screen travels into the first project image.
+// Scroll lengths in vh.
 const PUSH = 60;
 const MORPH = 100;
-// Screen height at the end of the push, as a share of the viewport.
+// Screen height after the push, as a share of the viewport.
 const SCREEN_FILL = 0.5;
 
 const clamp01 = (n) => Math.min(1, Math.max(0, n));
 const lerp = (from, to, t) => from + (to - from) * t;
 const span = (t, from, to) => clamp01((t - from) / (to - from));
-// Zero velocity at both ends, so consecutive phases join without a kink.
+// Eases both ends so phases join without a kink.
 const smooth = (t) => t * t * (3 - 2 * t);
 
-// Offsets ignore transforms, so entrance and scroll motion never skew the fit.
+// Offsets ignore transforms, unlike getBoundingClientRect.
 function offsetWithin(el, root) {
   let left = 0;
   let top = 0;
@@ -99,12 +98,12 @@ export default function HomeStage({ onSelect }) {
     return () => observer.disconnect();
   }, [geom]);
 
-  // Decode both frame images up front so their first paint can't stall a frame.
+  // Pre-decode so the first paint can't stall a frame.
   useEffect(() => {
     for (const img of [appRef.current, photoRef.current]) img?.decode?.().catch(() => {});
   }, [slotBox]);
 
-  // Scroll in px past the top of the track, and the two phases as 0 to 1.
+  // Scroll px into the track, and each phase as 0 to 1.
   const s = useTransform(() => scrollYProgress.get() * (geom.get()?.distance ?? 0));
   const pushT = useTransform(() => {
     const g = geom.get();
@@ -118,12 +117,11 @@ export default function HomeStage({ onSelect }) {
   useMotionValueEvent(s, "change", (x) => {
     const g = geom.get();
     if (!g) return;
-    // Written to the DOM directly: a React render here costs a frame mid-scroll.
+    // Set on the DOM, a React render here drops a frame.
     const inert = x >= g.pushEnd / 2;
     if (textRef.current && textRef.current.inert !== inert) textRef.current.inert = inert;
   });
 
-  // The push: the whole photo comes closer about the phone screen and levels it.
   const figureStyle = {
     x: useTransform(() => (geom.get()?.tx ?? 0) * pushT.get()),
     y: useTransform(() => (geom.get()?.ty ?? 0) * pushT.get()),
@@ -136,8 +134,7 @@ export default function HomeStage({ onSelect }) {
   };
   const textStyle = { opacity: useTransform(pushT, [0, 0.5], [1, 0]) };
 
-  // The morph: a container from the levelled screen to where the first project
-  // image will sit once the list has risen under it.
+  // The screen becomes the first project image at its final position.
   const eased = useTransform(morphT, smooth);
   const frame = {
     x: useTransform(() => {
@@ -159,8 +156,7 @@ export default function HomeStage({ onSelect }) {
       return g ? lerp((g.h * g.push) / g.slot.height, 1, eased.get()) : 1;
     }),
   };
-  // The screen's rounded corners flatten into the project image, kept circular
-  // under the non-uniform scale.
+  // Per-axis radius keeps corners round under the uneven scale.
   const frameRadius = useTransform(() => {
     const g = geom.get();
     if (!g) return "0px";
@@ -170,7 +166,6 @@ export default function HomeStage({ onSelect }) {
   const counterX = useTransform(frame.scaleX, (v) => 1 / v);
   const counterY = useTransform(frame.scaleY, (v) => 1 / v);
 
-  // A short crossfade while the container is still small.
   const appOpacity = useTransform(morphT, [0.05, 0.3], [1, 0]);
   const photoOpacity = useTransform(morphT, [0.05, 0.3], [0, 1]);
   const appScale = useTransform(() => {
@@ -185,7 +180,6 @@ export default function HomeStage({ onSelect }) {
     );
   });
 
-  // The frame exists only during the hand-off, the list image only after it.
   const frameVisibility = useTransform(() => {
     const g = geom.get();
     const x = s.get();

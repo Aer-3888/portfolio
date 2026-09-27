@@ -2,7 +2,7 @@
 export const PORTRAIT = { width: 796, height: 1024 };
 export const SCREEN = { cx: 181.7, cy: 445.1, width: 150, height: 324, rotate: -3.4, radius: 8 };
 
-// Where the key sits on the Waiki home screen, so the zoom stays on it.
+// The key on the Waiki screen, used as the zoom origin.
 export const KEY_ORIGIN = { x: 0.5, y: 0.36 };
 
 export const WAIKI_SCREEN = `${import.meta.env.BASE_URL}images/optimized/waiki-screen.webp`;

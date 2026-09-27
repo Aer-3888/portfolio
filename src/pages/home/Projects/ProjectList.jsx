@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import useLocalizedNavigate from "../../../i18n/useLocalizedNavigate";
 import useStories from "./useStories";
 
-// `lead` lets the home stage land its transition on this card's image.
+// `lead` is the image slot the home stage lands on.
 function StoryCard({ story, project, index, onSelect, lead }) {
   const { t } = useTranslation("home");
   const reduced = useReducedMotion();
