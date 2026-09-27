@@ -2,7 +2,7 @@
   "hero": {
     "identity": "Je suis Théo Phan, étudiant en informatique à l’INSA Rennes. J’aime construire des applications et comprendre comment elles se comportent hors d’une démo.",
     "headline": "Je construis des choses qui doivent fonctionner.",
-    "portraitAlt": "Théo Phan souriant et tenant un téléphone",
+    "portraitAlt": "Théo Phan souriant, tenant un téléphone ouvert sur l’app Waiki",
     "ctaWork": "Voir les projets",
     "ctaCv": "Télécharger le CV"
   },
@@ -61,6 +61,7 @@
     "intro": "Quelques projets que j’ai réalisés et dont j’ai appris.",
     "outro": "Il y a d’autres expériences, des outils utiles et des idées qui ont un peu dérapé.",
     "cta": "Voir tous les projets",
+    "counter": " · {{current}} / {{total}}",
     "open": "Ouvrir {{title}}",
     "storyAria": "Ouvrir l’étude de cas {{title}}",
     "stories": {

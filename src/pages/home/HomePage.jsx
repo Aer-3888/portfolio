@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { useTranslation } from "react-i18next";
-import { motion, useScroll } from "framer-motion";
+import { motion, useReducedMotion, useScroll } from "framer-motion";
 import { getLangFromPath } from "../../i18n/localizePath";
 import PageTransition from "../../components/layout/PageTransition";
 import Hero from "./Hero/Hero";
@@ -11,13 +11,19 @@ import ProjectList from "./Projects/ProjectList";
 import Footer from "./Footer/Footer";
 import HobbySection from "./Profile/HobbySection";
 import PageNav from "../../components/layout/PageNav";
+import ProjectDetails from "../../components/ProjectDetails";
+import useMediaQuery from "../../hooks/useMediaQuery";
 import useSeo from "../../hooks/useSeo";
+import HomeStage from "./Stage/HomeStage";
 
 export default function HomePage() {
   const location = useLocation();
   const { t } = useTranslation("seo");
   const { scrollYProgress } = useScroll();
   const [selectedProject, setSelectedProject] = useState(null);
+  const wide = useMediaQuery("(min-width: 1280px)");
+  const reduced = useReducedMotion();
+  const staged = wide && !reduced;
 
   useSeo({
     title: t("home.title"),
@@ -36,7 +42,7 @@ export default function HomePage() {
   }, [location.state]);
 
   return (
-    <PageTransition className="walden overflow-x-hidden">
+    <PageTransition className="walden overflow-x-clip">
       <PageNav
         currentPath="/"
         scrollYProgress={scrollYProgress}
@@ -44,13 +50,16 @@ export default function HomePage() {
       />
 
       <motion.main className="relative z-10 bg-ground">
-        <section id="home">
-          <Hero />
-        </section>
-
-        <section id="projects">
-          <ProjectList selectedProject={selectedProject} setSelectedProject={setSelectedProject} />
-        </section>
+        {staged ? (
+          <HomeStage onSelect={setSelectedProject} />
+        ) : (
+          <>
+            <section id="home">
+              <Hero />
+            </section>
+            <ProjectList onSelect={setSelectedProject} />
+          </>
+        )}
 
         <section id="about">
           <StatusSection />
@@ -62,6 +71,12 @@ export default function HomePage() {
         </section>
       </motion.main>
       <Footer />
+
+      <ProjectDetails
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
 
     </PageTransition>
   );

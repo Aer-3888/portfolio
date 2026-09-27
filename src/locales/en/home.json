@@ -2,7 +2,7 @@
   "hero": {
     "identity": "I’m Théo Phan, a computer science student at INSA Rennes. I like building apps and learning how they behave outside a demo.",
     "headline": "I build things that need to work.",
-    "portraitAlt": "Théo Phan smiling and holding a phone",
+    "portraitAlt": "Théo Phan smiling and holding up a phone with the Waiki app open",
     "ctaWork": "View projects",
     "ctaCv": "Download CV"
   },
@@ -61,6 +61,7 @@
     "intro": "A few things I have made and learned from.",
     "outro": "There are more experiments, useful tools, and ideas that got slightly out of hand.",
     "cta": "See all projects",
+    "counter": " · {{current}} / {{total}}",
     "open": "Open {{title}}",
     "storyAria": "Open {{title}} case study",
     "stories": {

@@ -151,6 +151,7 @@ async function run() {
     "eda_housing.png",
     "t1-injection-demo.png",
     "notes-insa-collage.png",
+    "waiki-screen.png",
   ];
   for (const f of cards) {
     const dest = path.join(outDir, f.replace(/\.png$/i, ".webp"));

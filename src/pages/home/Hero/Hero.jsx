@@ -3,10 +3,11 @@ import { motion, useReducedMotion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { getLangFromPath, localizePath } from "../../../i18n/localizePath";
 import { reveal } from "../../../config/motion";
+import PhoneScreen from "../Stage/PhoneScreen";
 
 const PORTRAIT = `${import.meta.env.BASE_URL}images/optimized/me_.webp`;
 
-export default function Hero() {
+export default function Hero({ figureRef, screen = <PhoneScreen /> }) {
   const { t } = useTranslation("home");
   const { pathname } = useLocation();
   const lang = getLangFromPath(pathname);
@@ -14,10 +15,10 @@ export default function Hero() {
   const cvUrl = `${import.meta.env.BASE_URL}cv${lang === "fr" ? "" : "_en"}.pdf`;
 
   return (
-    <section className="bg-ground px-6 pb-16 pt-28 text-ink md:px-10 md:pb-20 md:pt-36">
+    <section className="bg-ground px-6 pb-16 pt-24 text-ink md:px-10 md:pb-20 md:pt-28">
       <motion.div
         {...reveal(reduced)}
-        className="mx-auto grid max-w-[100rem] items-end gap-12 md:min-h-[calc(100svh-9rem)] md:grid-cols-[minmax(0,1fr)_14rem] md:gap-[8%]"
+        className="mx-auto grid max-w-[100rem] items-center gap-12 md:min-h-[calc(100svh-7rem)] md:grid-cols-[minmax(0,1fr)_18rem] md:gap-[7%] lg:grid-cols-[minmax(0,1fr)_22rem]"
       >
         <div>
           <h1 className="max-w-[9ch] font-display text-[clamp(4rem,8.2vw,7.9rem)] leading-[0.95] tracking-[-0.04em]">
@@ -43,15 +44,19 @@ export default function Hero() {
           </div>
         </div>
 
-        <figure className="mx-auto w-full max-w-[13.75rem] -rotate-4 grayscale transition duration-500 hover:grayscale-0 md:mb-[10vh] md:max-w-none">
+        <figure
+          ref={figureRef}
+          className="relative mx-auto w-full max-w-[20rem] md:max-w-[18rem] lg:max-w-[22rem]"
+        >
           <img
             src={PORTRAIT}
             alt={t("hero.portraitAlt")}
             width={796}
             height={1024}
             fetchPriority="high"
-            className="block aspect-[4/5] w-full object-cover object-top"
+            className="block aspect-[4/5] w-full object-cover object-top grayscale transition duration-500 hover:grayscale-0"
           />
+          {screen}
         </figure>
       </motion.div>
     </section>

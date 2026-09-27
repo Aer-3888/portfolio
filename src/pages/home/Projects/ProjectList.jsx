@@ -1,10 +1,7 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import ProjectDetails from "../../../components/ProjectDetails";
-import useProjects from "../../../hooks/useProjects";
 import useLocalizedNavigate from "../../../i18n/useLocalizedNavigate";
-
-const STORY_IDS = ["01", "09", "10", "03"];
+import useStories from "./useStories";
 
 function StoryCard({ story, project, index, onSelect }) {
   const { t } = useTranslation("home");
@@ -56,15 +53,11 @@ function StoryCard({ story, project, index, onSelect }) {
   );
 }
 
-export default function ProjectList({ selectedProject, setSelectedProject }) {
+export default function ProjectList({ onSelect }) {
   const reduced = useReducedMotion();
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation("home");
-  const projects = useProjects();
-  const stories = STORY_IDS.map((id) => ({
-    story: { id, ...t(`projects.stories.${id}`, { returnObjects: true }) },
-    project: projects.find((project) => project.id === id),
-  })).filter(({ project }) => project);
+  const stories = useStories();
 
   return (
     <section id="projects" className="bg-ground text-ink">
@@ -89,7 +82,7 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
               story={story}
               project={project}
               index={index}
-              onSelect={setSelectedProject}
+              onSelect={onSelect}
             />
           ))}
         </div>
@@ -104,12 +97,6 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
           </button>
         </div>
       </div>
-
-      <ProjectDetails
-        project={selectedProject}
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
     </section>
   );
 }
