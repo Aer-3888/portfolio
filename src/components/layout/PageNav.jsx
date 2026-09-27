@@ -81,7 +81,7 @@ export default function PageNav({ currentPath, scrollYProgress, isHidden = false
         path: "/gallery",
         onClick: () => handleNavigate("/gallery"),
       },
-      { label: t("nav.about"), path: "/", onClick: () => handleNavigate("/", "about") },
+      { label: t("nav.about"), path: "/#about", onClick: () => handleNavigate("/", "about") },
     ],
     [handleNavigate, t]
   );

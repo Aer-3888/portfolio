@@ -1,23 +1,28 @@
+import clsx from "clsx";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslation } from "react-i18next";
-import ProjectDetails from "../../../components/ProjectDetails";
-import useProjects from "../../../hooks/useProjects";
 import useLocalizedNavigate from "../../../i18n/useLocalizedNavigate";
+import useStories from "./useStories";
 
-const STORY_IDS = ["01", "09", "10", "03"];
-
-function StoryCard({ story, project, index, onSelect }) {
+// `lead` is the image slot the home stage lands on.
+function StoryCard({ story, project, index, onSelect, lead }) {
   const { t } = useTranslation("home");
   const reduced = useReducedMotion();
   const imageFirst = index % 2 === 0;
+  const still = reduced || Boolean(lead);
 
   return (
     <motion.article
-      initial={reduced ? false : { opacity: 0, y: 24 }}
-      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+      initial={still ? false : { opacity: 0, y: 24 }}
+      whileInView={still ? undefined : { opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-      className="grid items-center gap-8 border-t border-rule py-8 md:grid-cols-[minmax(0,1.05fr)_minmax(18rem,.55fr)] md:gap-[8%] md:pb-16"
+      className={clsx(
+        "grid items-center gap-8 border-t border-rule py-8 md:gap-[8%] md:pb-16",
+        imageFirst
+          ? "md:grid-cols-[minmax(0,1.05fr)_minmax(18rem,.55fr)]"
+          : "md:grid-cols-[minmax(18rem,.55fr)_minmax(0,1.05fr)]"
+      )}
     >
       <button
         type="button"
@@ -26,14 +31,18 @@ function StoryCard({ story, project, index, onSelect }) {
         aria-label={t("projects.storyAria", { title: project.title })}
       >
         <figure>
-          <div className="overflow-hidden bg-mist">
+          <motion.div
+            ref={lead?.ref}
+            style={lead ? { visibility: lead.visibility } : undefined}
+            className="overflow-hidden bg-mist"
+          >
             <img
               src={project.img}
               alt=""
-              loading="lazy"
+              loading={lead ? "eager" : "lazy"}
               className="aspect-[3/2] w-full object-cover transition duration-500 ease-site group-hover:scale-[1.015]"
             />
-          </div>
+          </motion.div>
           <figcaption className="pt-3 text-sm text-ash">{project.type}</figcaption>
         </figure>
       </button>
@@ -56,18 +65,14 @@ function StoryCard({ story, project, index, onSelect }) {
   );
 }
 
-export default function ProjectList({ selectedProject, setSelectedProject }) {
+export default function ProjectList({ onSelect, lead, className }) {
   const reduced = useReducedMotion();
   const navigate = useLocalizedNavigate();
   const { t } = useTranslation("home");
-  const projects = useProjects();
-  const stories = STORY_IDS.map((id) => ({
-    story: { id, ...t(`projects.stories.${id}`, { returnObjects: true }) },
-    project: projects.find((project) => project.id === id),
-  })).filter(({ project }) => project);
+  const stories = useStories();
 
   return (
-    <section id="projects" className="bg-ground text-ink">
+    <section id="projects" className={clsx("bg-ground text-ink", className)}>
       <div className="mx-auto max-w-[100rem] px-6 py-24 md:px-10 md:py-32">
         <header className="mb-14 grid gap-6 md:grid-cols-[minmax(0,1fr)_27%] md:items-end md:gap-12">
           <motion.h2
@@ -89,7 +94,8 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
               story={story}
               project={project}
               index={index}
-              onSelect={setSelectedProject}
+              onSelect={onSelect}
+              lead={index === 0 ? lead : undefined}
             />
           ))}
         </div>
@@ -104,12 +110,6 @@ export default function ProjectList({ selectedProject, setSelectedProject }) {
           </button>
         </div>
       </div>
-
-      <ProjectDetails
-        project={selectedProject}
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
     </section>
   );
 }
